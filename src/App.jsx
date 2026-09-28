@@ -16,6 +16,7 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
+import OAuthConsent from '@/pages/OAuthConsent';
 import { Toaster as LegacyToaster } from 'sonner';
 const HomeSEOAgency = lazy(() => import('@/pages/home-seo-agency'));
 const HomeConsulting = lazy(() => import('@/pages/home-consulting'));
@@ -31,7 +32,7 @@ const Pricing = lazy(() => import('@/pages/pricing'));
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError } = useAuth();
   const location = useLocation();
-  const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password'].includes(location.pathname.toLowerCase());
+  const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password', '/oauth/consent'].includes(location.pathname.toLowerCase());
 
   // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
@@ -51,6 +52,7 @@ const AuthenticatedApp = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/oauth/consent" element={<OAuthConsent />} />
         <Route element={<AgencyLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<AgencyContact />} />
