@@ -1,7 +1,9 @@
 {
   "type": "supabase",
   "scopes": [
+    "organizations:read",
     "projects:read",
+    "projects:write",
     "database:read",
     "database:write"
   ]
