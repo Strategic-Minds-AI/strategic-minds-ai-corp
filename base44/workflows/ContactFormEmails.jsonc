@@ -1,0 +1,43 @@
+{
+  "name": "Contact Form Emails",
+  "description": "When a contact-form Lead is created, email the site owner and auto-reply to the lead.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Lead",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.form_type == \"contact\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "contact_form_emails",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_emails": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "send-form-emails",
+            "args": {
+              "form_type": "contact",
+              "name": "${ .trigger.data.name }",
+              "email": "${ .trigger.data.email }",
+              "message": "${ .trigger.data.message }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send contact emails",
+            "description": "Owner + lead auto-reply"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Newsletter Form Layout 2 Emails",
+  "description": "When a newsletter-layout-2 Lead is created, email the site owner and welcome the subscriber.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Lead",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.form_type == \"newsletter_v2\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "newsletter_layout2_emails",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_emails": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "send-form-emails",
+            "args": {
+              "form_type": "newsletter_v2",
+              "email": "${ .trigger.data.email }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send newsletter (layout 2) emails",
+            "description": "Owner + subscriber welcome"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "name": "Testimonial",
+  "properties": {
+    "display_order": {
+      "type": "number",
+      "description": "Display order"
+    },
+    "name": {
+      "type": "string",
+      "description": "Customer name"
+    },
+    "company": {
+      "type": "string",
+      "description": "Customer company or role"
+    },
+    "comment": {
+      "type": "string",
+      "description": "Customer testimonial"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Customer portrait image URL"
+    },
+    "rating": {
+      "type": "number",
+      "description": "Star rating"
+    },
+    "variant": {
+      "type": "string",
+      "description": "Display group: default, featured, or layout_2"
+    }
+  },
+  "required": [
+    "display_order",
+    "name",
+    "company",
+    "comment",
+    "image_url",
+    "rating",
+    "variant"
+  ],
+  "rls": {
+    "create": false,
+    "read": true,
+    "update": false,
+    "delete": false
+  }
+}

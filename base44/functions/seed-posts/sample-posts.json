@@ -1,0 +1,80 @@
+[
+  {
+    "display_order": 1,
+    "title": "How to Build a Digital Growth Engine",
+    "slug": "how-to-build-a-digital-growth-engine",
+    "publish_date": "2026-07-10T09:00:00",
+    "excerpt": "Build a repeatable digital growth system by connecting positioning, acquisition, conversion, and weekly learning loops.",
+    "content_markdown": "## Start with one measurable journey\n\nA growth engine is not a single campaign, channel, or landing page. It is the system that connects your positioning, acquisition, conversion, retention, and learning loops into one repeatable operating rhythm.\n\nPick the path that matters most this quarter. That might be demo requests, qualified calls, newsletter signups, or trials. Then align every touchpoint around helping the visitor make that decision with less friction.\n\n![Modern agency workspace](https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80)\n\n## Turn learning into cadence\n\nReview channel performance, heatmaps, sales objections, and customer feedback on a weekly cadence. The best growth teams do not wait for a major redesign to improve. They ship small, clear improvements that compound over time.\n\nWhen the system works, every campaign teaches the next one what to say, where to spend, and which audience segments deserve more attention.",
+    "image_url": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
+    "image_alt": "Modern agency workspace",
+    "author_name": "Maya Chen",
+    "author_image_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=96&h=96&q=80",
+    "categories": "Strategy, Growth"
+  },
+  {
+    "display_order": 2,
+    "title": "A Practical Guide to Better Landing Page Conversion",
+    "slug": "practical-guide-to-better-landing-page-conversion",
+    "publish_date": "2026-07-09T09:00:00",
+    "excerpt": "Improve landing page conversion by clarifying the promise, placing proof near objections, and making the next step obvious.",
+    "content_markdown": "## Make the first screen earn attention\n\nStrong landing pages do not win because they are clever. They win because they answer the visitor's most important questions in the right order and remove doubt before the call to action appears.\n\nYour hero section should explain who the offer is for, what outcome it creates, and why the visitor should believe you. If any of those pieces are missing, visual polish will not compensate.\n\n![Marketing analytics dashboard](https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80)\n\n## Pair proof with the objection\n\nTestimonials, logos, metrics, and examples work best when they appear beside the point they validate. Do not hide proof in a section visitors may never reach.\n\nConversion improves when the page feels like a guided conversation rather than a brochure. Every section should make the next click feel easier.",
+    "image_url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+    "image_alt": "Marketing analytics dashboard",
+    "author_name": "Jordan Ellis",
+    "author_image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=96&h=96&q=80",
+    "categories": "Conversion, UX"
+  },
+  {
+    "display_order": 3,
+    "title": "Customer Research for Sharper Brand Messaging",
+    "slug": "customer-research-for-sharper-brand-messaging",
+    "publish_date": "2026-07-08T09:00:00",
+    "excerpt": "Use customer interviews and buyer language to create clearer brand messaging, stronger pages, and better campaign copy.",
+    "content_markdown": "## Listen for buying moments\n\nBrand messaging becomes easier when it is built from customer language rather than internal assumptions. The phrases buyers repeat are often more powerful than anything created in a brainstorming session.\n\nInterview recent customers, lost deals, and qualified prospects. Look for the words they use to describe the problem, the trigger that made it urgent, and the risk they feared before choosing a solution.\n\n![Team reviewing customer research](https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80)\n\n## Translate research into page structure\n\nUse the research to decide headline hierarchy, FAQ order, proof points, and call-to-action language. The goal is not to quote customers everywhere; it is to make visitors feel understood quickly.\n\nWhen messaging reflects real buyer language, campaigns become easier to write and easier to test.",
+    "image_url": "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80",
+    "image_alt": "Team reviewing customer research",
+    "author_name": "Amara Okafor",
+    "author_image_url": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=96&h=96&q=80",
+    "categories": "Brand, Strategy"
+  },
+  {
+    "display_order": 4,
+    "title": "Paid Search Lessons for Lean Marketing Teams",
+    "slug": "paid-search-lessons-for-lean-marketing-teams",
+    "publish_date": "2026-07-07T09:00:00",
+    "excerpt": "Make paid search more useful by grouping intent clearly, protecting budget, and using ad tests to improve messaging.",
+    "content_markdown": "## Protect budget with intent\n\nLean teams need paid search accounts that teach quickly. That means fewer campaigns, cleaner intent groups, and landing pages that make attribution easy to understand.\n\nBefore increasing spend, separate keywords by the job they represent. A visitor comparing vendors needs a different page than someone searching for a template, checklist, or definition.\n\n![Marketing team planning paid search campaigns](https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80)\n\n## Use creative testing to improve strategy\n\nAd copy tests are not just optimization exercises. They reveal which pain points, outcomes, and proof points buyers respond to before they ever reach the site.\n\nWhen paid search is structured around learning, even modest budgets can produce insights that improve the entire marketing system.",
+    "image_url": "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80",
+    "image_alt": "Marketing team planning paid search campaigns",
+    "author_name": "Sofia Martinez",
+    "author_image_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=96&h=96&q=80",
+    "categories": "Paid Media, Growth"
+  },
+  {
+    "display_order": 5,
+    "title": "Turning Analytics Into Weekly Marketing Decisions",
+    "slug": "turning-analytics-into-weekly-marketing-decisions",
+    "publish_date": "2026-07-06T09:00:00",
+    "excerpt": "Turn dashboards into decisions with a weekly analytics rhythm focused on constraints, experiments, and revenue movement.",
+    "content_markdown": "## Separate signal from noise\n\nDashboards are only useful when they change decisions. The best marketing analytics setup is not the one with the most charts; it is the one that helps a team decide what to do next.\n\nTrack a small set of metrics that connect directly to revenue movement: qualified traffic, conversion rate, pipeline quality, and customer acquisition cost. Everything else should support those decisions.\n\n![Analytics dashboard on a laptop](https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80)\n\n## Make each meeting produce an action\n\nIf a metric is down, write the next experiment. If a channel is working, decide how to scale it responsibly. If a page is unclear, assign the copy or design improvement immediately.\n\nAnalytics should create momentum. The faster the team converts insight into action, the faster the marketing system improves.",
+    "image_url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+    "image_alt": "Analytics dashboard on a laptop",
+    "author_name": "Ethan Brooks",
+    "author_image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=96&h=96&q=80",
+    "categories": "Analytics, Growth"
+  },
+  {
+    "display_order": 6,
+    "title": "Design Systems for Faster Campaign Launches",
+    "slug": "design-systems-for-faster-campaign-launches",
+    "publish_date": "2026-07-05T09:00:00",
+    "excerpt": "Launch campaigns faster by turning recurring page sections, proof patterns, and CTA rules into a practical design system.",
+    "content_markdown": "## Systemize the sections that repeat\n\nCampaign speed improves when teams stop redesigning the same pieces from scratch. A practical design system gives marketers reusable sections, clear content rules, and enough flexibility to launch without breaking the brand.\n\nMost campaigns reuse the same patterns: hero, proof, benefits, comparison, FAQ, pricing, and CTA. Define those patterns once, then let teams combine them based on the offer.\n\n![Team collaborating on a campaign design system](https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80)\n\n## Give copy and design the same rules\n\nReusable components work best when paired with messaging guidance. A CTA block should not just define spacing and color; it should explain what kind of promise belongs there.\n\nWhen design systems include strategy, teams launch faster and each new campaign still feels intentional.",
+    "image_url": "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=80",
+    "image_alt": "Team collaborating on a campaign design system",
+    "author_name": "Priya Raman",
+    "author_image_url": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=96&h=96&q=80",
+    "categories": "Design, UX"
+  }
+]

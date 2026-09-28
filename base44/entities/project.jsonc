@@ -1,0 +1,75 @@
+{
+  "name": "Project",
+  "type": "object",
+  "properties": {
+    "display_order": {
+      "type": "number",
+      "description": "Display order"
+    },
+    "title": {
+      "type": "string",
+      "description": "Project title"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug"
+    },
+    "publish_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Publish date"
+    },
+    "excerpt": {
+      "type": "string",
+      "description": "Short summary"
+    },
+    "content_markdown": {
+      "type": "string",
+      "format": "richtext",
+      "description": "Case study content"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "Featured image URL"
+    },
+    "image_alt": {
+      "type": "string",
+      "description": "Featured image alt text"
+    },
+    "categories": {
+      "type": "string",
+      "description": "Comma-separated categories"
+    },
+    "metric_1_value": {
+      "type": "string",
+      "description": "First metric value"
+    },
+    "metric_1_label": {
+      "type": "string",
+      "description": "First metric label"
+    },
+    "metric_2_value": {
+      "type": "string",
+      "description": "Second metric value"
+    },
+    "metric_2_label": {
+      "type": "string",
+      "description": "Second metric label"
+    },
+    "metric_3_value": {
+      "type": "string",
+      "description": "Third metric value"
+    },
+    "metric_3_label": {
+      "type": "string",
+      "description": "Third metric label"
+    }
+  },
+  "required": ["display_order", "title", "slug", "publish_date", "excerpt", "content_markdown"],
+  "rls": {
+    "create": false,
+    "read": true,
+    "update": false,
+    "delete": false
+  }
+}

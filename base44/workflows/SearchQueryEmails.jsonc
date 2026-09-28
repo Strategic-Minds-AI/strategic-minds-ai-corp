@@ -1,0 +1,41 @@
+{
+  "name": "Search Query Emails",
+  "description": "When a visitor runs a site search, notify the site owner of the search query.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Lead",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.form_type == \"search\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "search_query_emails",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_emails": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "send-form-emails",
+            "args": {
+              "form_type": "search",
+              "query": "${ .trigger.data.query }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send search query email",
+            "description": "Owner-only search insight"
+          }
+        }
+      }
+    ]
+  }
+}

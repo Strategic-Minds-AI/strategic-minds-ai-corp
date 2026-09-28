@@ -1,0 +1,42 @@
+{
+  "name": "Newsletter Form Emails",
+  "description": "When a newsletter-form Lead is created, email the site owner and welcome the subscriber.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Lead",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.form_type == \"newsletter\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "newsletter_form_emails",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_emails": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "send-form-emails",
+            "args": {
+              "form_type": "newsletter",
+              "name": "${ .trigger.data.name }",
+              "email": "${ .trigger.data.email }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send newsletter emails",
+            "description": "Owner + subscriber welcome"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "Lead",
+  "type": "object",
+  "properties": {
+    "form_type": {
+      "type": "string",
+      "enum": [
+        "contact",
+        "quotation",
+        "newsletter",
+        "newsletter_v2",
+        "pricing",
+        "search"
+      ],
+      "description": "Which form the submission came from"
+    },
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "website": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "query": {
+      "type": "string"
+    },
+    "plan_title": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "form_type"
+  ]
+}

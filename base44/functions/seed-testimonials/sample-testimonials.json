@@ -1,0 +1,83 @@
+[
+  {
+    "name": "Avery Morgan",
+    "company": "CEO - Base44",
+    "comment": "Base44 helped us clarify our story and turn a scattered website into a focused acquisition channel. The new pages feel polished, fast, and much easier for our team to manage.",
+    "rating": 5,
+    "variant": "default",
+    "display_order": 1,
+    "image_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=360&h=360&q=80"
+  },
+  {
+    "name": "Nolan Price",
+    "company": "Head of Growth - Base44",
+    "comment": "The team brought structure to our marketing. We now have clearer messaging, stronger landing pages, and a repeatable process for testing new offers.",
+    "rating": 5,
+    "variant": "default",
+    "display_order": 2,
+    "image_url": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=360&h=360&q=80"
+  },
+  {
+    "name": "Iris Bennett",
+    "company": "Brand Director - Base44 Studio",
+    "comment": "Base44 gave us a digital presence that finally matches the quality of our work. The strategy, visuals, and content system all feel connected.",
+    "rating": 5,
+    "variant": "default",
+    "display_order": 3,
+    "image_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=360&h=360&q=80"
+  },
+  {
+    "name": "Leah Patel",
+    "company": "VP Marketing - Base44 Labs",
+    "comment": "We needed a partner who could move quickly without making the brand feel generic. Base44 delivered a site that is sharper, cleaner, and built around conversion.",
+    "rating": 5,
+    "variant": "featured",
+    "display_order": 4,
+    "image_url": "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=360&h=360&q=80"
+  },
+  {
+    "name": "Miles Carter",
+    "company": "Founder - Base44 Ventures",
+    "comment": "The process was refreshingly practical. Base44 focused on what would improve pipeline first, then gave our team reusable patterns for everything after launch.",
+    "rating": 5,
+    "variant": "featured",
+    "display_order": 5,
+    "image_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=360&h=360&q=80"
+  },
+  {
+    "name": "Rina Kapoor",
+    "company": "Product Marketing - Base44",
+    "comment": "Base44 translated a complex product into a simple story. Our sales team immediately started using the new messaging in calls and follow-up emails.",
+    "rating": 5,
+    "variant": "featured",
+    "display_order": 6,
+    "image_url": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=360&h=360&q=80"
+  },
+  {
+    "name": "Theo Grant",
+    "company": "Revenue Lead - Base44",
+    "comment": "Our campaigns now feel like one system instead of disconnected assets. Base44 connected the landing pages, proof points, and analytics into a workflow we can actually scale.",
+    "rating": 5,
+    "variant": "layout_2",
+    "display_order": 7,
+    "image_url": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=360&h=360&q=80"
+  },
+  {
+    "name": "Elena Rossi",
+    "company": "Operations Director - Base44 Studio",
+    "comment": "Base44 gave us speed without sacrificing quality. We launched new service pages faster and finally have a content structure the whole team understands.",
+    "rating": 5,
+    "variant": "layout_2",
+    "display_order": 8,
+    "image_url": "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=360&h=360&q=80"
+  },
+  {
+    "name": "Julian Hayes",
+    "company": "Managing Partner - Base44 Collective",
+    "comment": "The difference was clarity. Base44 helped us say less, prove more, and guide prospects toward the right next step without adding friction.",
+    "rating": 5,
+    "variant": "layout_2",
+    "display_order": 9,
+    "image_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=360&h=360&q=80"
+  }
+]

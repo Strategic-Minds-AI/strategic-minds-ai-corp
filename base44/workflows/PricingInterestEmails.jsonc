@@ -1,0 +1,41 @@
+{
+  "name": "Pricing Interest Emails",
+  "description": "When a pricing-table Start button creates a Lead, notify the site owner of the plan interest.",
+  "trigger": {
+    "config": {
+      "trigger_type": "entity",
+      "entity_name": "Lead",
+      "events": [
+        "create"
+      ]
+    },
+    "condition": "${ .trigger.data.form_type == \"pricing\" }"
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "pricing_interest_emails",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "send_emails": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "send-form-emails",
+            "args": {
+              "form_type": "pricing",
+              "plan_title": "${ .trigger.data.plan_title }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Send pricing interest email",
+            "description": "Owner-only plan notification"
+          }
+        }
+      }
+    ]
+  }
+}
