@@ -57,6 +57,7 @@ const SectionIconBoxes = ({ noTitle }: { noTitle?: boolean }) => {
             return (
               <motion.div
                 key={iconBox.title}
+                className="h-full"
                 variants={fadeInAnimationVariants}
                 initial="initial"
                 whileInView="animate"

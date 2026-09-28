@@ -14,7 +14,7 @@ const IconBox = ({
   return (
     <div
       className={cn(
-        "hover-shadow z-[1] overflow-hidden rounded-md border border-border bg-card px-7 py-9 before:absolute before:left-0 before:top-0 before:block before:h-[.3125rem] before:w-0 before:bg-primary before:transition-all before:duration-200 hover:before:w-full",
+        "hover-shadow z-[1] h-full overflow-hidden rounded-md border border-border bg-card px-7 py-9 before:absolute before:left-0 before:top-0 before:block before:h-[.3125rem] before:w-0 before:bg-primary before:transition-all before:duration-200 hover:before:w-full",
         className,
       )}
     >

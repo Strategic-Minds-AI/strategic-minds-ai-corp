@@ -21,8 +21,8 @@ const Footer = () => {
       <div className="container">
         <div className="pb-16 pt-28">
           <div className="gap-10 space-y-10 md:grid md:grid-cols-12 md:space-y-0">
-            <div className="col-span-3">
-              <Link to="/" className="shrink-0">
+            <div className="col-span-12 xl:col-span-3">
+              <Link to="/" className="inline-flex shrink-0">
                 <SiteLogo
                   width={123}
                   height={39}

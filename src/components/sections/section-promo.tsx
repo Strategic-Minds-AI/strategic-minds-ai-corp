@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const SectionPromo = () => {
   return (
     <section className="relative py-14 lg:py-24">
-      <div className="container grid items-center gap-10 md:grid-cols-2 lg:gap-16">
+      <div className="container grid items-stretch gap-10 md:grid-cols-2 lg:gap-16">
         <PromoTriangle />
         <div>
           <h2 className="max-w-md">
