@@ -1,0 +1,75 @@
+{
+  "name": "CommerceOrder",
+  "type": "object",
+  "properties": {
+    "catalog_item_id": {
+      "type": "string"
+    },
+    "item_title": {
+      "type": "string"
+    },
+    "customer_email": {
+      "type": "string"
+    },
+    "customer_name": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending_payment",
+        "paid_awaiting_approval",
+        "approved",
+        "expired"
+      ]
+    },
+    "checkout_session_id": {
+      "type": "string"
+    },
+    "stripe_subscription_id": {
+      "type": "string"
+    },
+    "client_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "amount_cents": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "catalog_item_id",
+    "item_title",
+    "customer_email",
+    "status",
+    "amount_cents",
+    "currency"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

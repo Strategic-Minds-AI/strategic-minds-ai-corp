@@ -1,0 +1,59 @@
+{
+  "name": "CatalogQuote",
+  "type": "object",
+  "properties": {
+    "catalog_item_id": {
+      "type": "string"
+    },
+    "item_title": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "reviewed"
+      ],
+      "default": "new"
+    }
+  },
+  "required": [
+    "catalog_item_id",
+    "item_title",
+    "name",
+    "email",
+    "message",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

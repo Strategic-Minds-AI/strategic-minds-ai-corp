@@ -1,0 +1,61 @@
+{
+  "name": "CatalogItem",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "one_time",
+        "subscription",
+        "quote"
+      ]
+    },
+    "price_cents": {
+      "type": "number"
+    },
+    "currency": {
+      "type": "string",
+      "default": "usd"
+    },
+    "interval": {
+      "type": "string",
+      "enum": [
+        "month",
+        "year"
+      ]
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "title",
+    "kind",
+    "active"
+  ],
+  "rls": {
+    "read": true,
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
