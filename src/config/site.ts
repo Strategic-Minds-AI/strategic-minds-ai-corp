@@ -23,6 +23,7 @@ export const mainNav: NavItem[] = [
       { title: "Marketing", href: "/" },
       { title: "SEO Agency", href: "/seo-agency" },
       { title: "Consulting", href: "/consulting" },
+      { title: "Portal", href: "/portal" },
     ],
   },
   { title: "Services", href: "/services" },

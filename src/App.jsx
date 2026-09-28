@@ -10,6 +10,8 @@ import ScrollToTop from './components/ScrollToTop';
 import Home from '@/pages/home';
 import AgencyContact from '@/pages/AgencyContact';
 import AgencyLayout from '@/components/agency/AgencyLayout';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import Portal from '@/pages/Portal';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
@@ -61,6 +63,9 @@ const AuthenticatedApp = () => {
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fportal" replace />} />}>
+            <Route path="/portal" element={<Portal />} />
+          </Route>
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
