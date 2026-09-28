@@ -15,8 +15,7 @@ const SectionLatestNews = () => {
           }}
         >
           <SectionTitle
-            subtitle="Here are the best features that makes margin the most powerful, fast and
-        user-friendly platform."
+            subtitle="Ideas, insights, and practical perspectives for growing your business."
             sectionClasses="mx-auto max-w-xl text-center mb-12"
             titleClasses="mb-3 text-center"
             subtitleClasses="text-md font-medium"

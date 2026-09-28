@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 
 const SectionPromo = () => {
   return (
-    <section className="relative pb-28 pt-10 lg:pb-64 lg:pt-24">
-      <PromoTriangle />
-      <div className="container">
-        <div className="lg:ml-auto lg:w-[45%]">
+    <section className="relative py-14 lg:py-24">
+      <div className="container grid items-center gap-10 md:grid-cols-2 lg:gap-16">
+        <PromoTriangle />
+        <div>
           <h2 className="max-w-md">
             Is your website driving sales for your business?
           </h2>
-          <p className="mb-10 text-lg">
+          <p className="mb-7 text-sm leading-relaxed">
             As you may already know, there are an infinite number of things you
             can test on your site to help you increase sales. From layout to
             copy to design, there are limitless combinations of changes that may

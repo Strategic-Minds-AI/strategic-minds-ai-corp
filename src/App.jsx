@@ -7,7 +7,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
-import StrategicHome from '@/pages/StrategicHome';
+import Home from '@/pages/home';
 import AgencyContact from '@/pages/AgencyContact';
 import AgencyLayout from '@/components/agency/AgencyLayout';
 import Login from '@/pages/Login';
@@ -50,7 +50,7 @@ const AuthenticatedApp = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route element={<AgencyLayout />}>
-          <Route path="/" element={<StrategicHome />} />
+          <Route path="/" element={<Home />} />
           <Route path="/contact" element={<AgencyContact />} />
           <Route path="/seo-agency" element={<HomeSEOAgency />} />
           <Route path="/consulting" element={<HomeConsulting />} />

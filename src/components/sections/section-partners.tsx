@@ -10,12 +10,12 @@ const SectionPartners = () => {
       />
       <div className="container relative max-w-6xl">
         <SectionTitle
-          subtitle="An idea that takes the parts of a structure and turns whole system."
+          subtitle="Strategy, marketing, and technology working together."
           sectionClasses="mx-auto max-w-xl text-center mb-12"
           titleClasses="mb-3 text-center text-white"
           subtitleClasses="text-md font-medium text-white"
         >
-          Join thousands of independent entrepreneurs who tried Margin
+          A stronger foundation for business growth
         </SectionTitle>
         <div className="flex flex-wrap justify-center">
           <img

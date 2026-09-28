@@ -38,7 +38,7 @@ const fadeInAnimationVariants = {
 
 const SectionIconBoxes = ({ noTitle }: { noTitle?: boolean }) => {
   return (
-    <section className="py-16 lg:py-24">
+    <section id="expertise" className="scroll-mt-28 border-t border-border py-14 lg:py-20">
       <div className="container">
         {!noTitle && (
           <div className="flex justify-center">
@@ -52,7 +52,7 @@ const SectionIconBoxes = ({ noTitle }: { noTitle?: boolean }) => {
           </div>
         )}
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-10">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:gap-6">
           {iconBoxes.map((iconBox, index) => {
             return (
               <motion.div

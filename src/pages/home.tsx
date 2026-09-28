@@ -11,7 +11,7 @@ import {Helmet} from "react-helmet"
 const Home = useFramerTransition(
 	<>
 		<Helmet>
-			<title>Margin React Template</title>
+			<title>Strategic Minds AI — Marketing & Business Growth</title>
 		</Helmet>
 		<main className="relative">
 			<SectionHero />

@@ -33,26 +33,7 @@ const Footer = () => {
               <p className="mb-8 mt-6">
                 Tools to Effectively Build Your Brand and Grow Your Business.
               </p>
-              <div className="flex space-x-2">
-                <a
-                  href="https://x.com"
-                  className="mb-2 flex h-10 w-10 items-center justify-center rounded bg-black text-white transition-colors hover:bg-foreground hover:text-white"
-                >
-                  <FontAwesomeIcon icon={faXTwitter} width={15} />
-                </a>
-                <a
-                  href="https://www.facebook.com"
-                  className="mb-2 flex h-10 w-10 items-center justify-center rounded bg-[#324e8c] text-white transition-colors hover:bg-foreground hover:text-white"
-                >
-                  <FontAwesomeIcon icon={faFacebook} width={15} />
-                </a>
-                <a
-                  href="https://www.youtube.com"
-                  className="mb-2 flex h-10 w-10 items-center justify-center rounded bg-[#cd201f] text-white transition-colors hover:bg-foreground hover:text-white"
-                >
-                  <FontAwesomeIcon icon={faYoutube} width={15} />
-                </a>
-              </div>
+
             </div>
 
             {footerNav &&
@@ -87,28 +68,8 @@ const Footer = () => {
               ))}
             <div className="col-span-3 xl:col-span-2">
               <h2 className="mb-4 text-sm">Company</h2>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <address className="-mt-px leading-6">
-                    8910 University Center Lane Suite 620 San Diego, CA 92102
-                  </address>
-                </li>
-                <li>
-                  <span>Phone: </span>
-                  <a
-                    href="tel:+1-800-1554-456-123"
-                    className="hover:text-primary"
-                  >
-                    + 1 (800) 155 4561
-                  </a>
-                </li>
-                <li>
-                  <span>Email: </span>
-                  <a href="mailto:hi@margin.com" className="hover:text-primary">
-                    hi@margin.com
-                  </a>
-                </li>
-              </ul>
+              <p className="mb-5 text-sm leading-relaxed">Start a conversation about your next stage of growth.</p>
+              <Link to="/contact" className="text-sm font-medium text-primary">Contact our team →</Link>
             </div>
           </div>
         </div>
@@ -116,10 +77,7 @@ const Footer = () => {
       <div className="border-t py-12">
         <div className="container text-center">
           <span className="text-xs">
-            © {new Date().getFullYear()} Margin, Made by{" "}
-            <a href="https://base44.com" className="hover:text-primary">
-              Base44
-            </a>
+            © {new Date().getFullYear()} Strategic Minds AI. All rights reserved.
           </span>
         </div>
       </div>

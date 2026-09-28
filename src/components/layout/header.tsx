@@ -21,14 +21,14 @@ const Header = () => {
   const stickyHeader = () => {
     if (window !== undefined) {
       let windowHeight = window.scrollY
-      windowHeight > 10 ? setStickyClass("bg-white dark:bg-slate-900 lg:py-3 py-3") : setStickyClass("")
+      windowHeight > 10 ? setStickyClass("lg:py-3 py-3 shadow-sm") : setStickyClass("")
     }
   }
 
   return (
     <>
-      <header className="fixed top-0 z-20 w-full">
-        <div className={cn("flex items-center px-4 py-5 transition-all lg:py-12 xl:px-20", stickyClass)}>
+      <header className="fixed top-0 z-20 w-full border-b border-border bg-background">
+        <div className={cn("mx-auto flex max-w-[1440px] items-center px-6 py-5 transition-all lg:py-6 xl:px-10", stickyClass)}>
           <Link to="/" className="mr-12 shrink-0">
             <SiteLogo
               width={123}
@@ -44,13 +44,7 @@ const Header = () => {
             <MobileNav mainNavItems={mainNav} />
 
             <div className="hidden lg:ml-auto lg:inline-block">
-              <a
-                href="tel:63-995-3959"
-                className="inline-block rounded-md bg-gradient-to-l from-primary to-tertiary px-4 py-2.5 text-center font-bold text-white"
-              >
-                <span className="block text-xxs">Call us for Free</span>
-                <span className="text-md">63-995-3959</span>
-              </a>
+              <Link to="/contact" className="inline-flex items-center rounded bg-primary px-5 py-3 text-xs font-medium text-primary-foreground">Book a Consultation →</Link>
             </div>
           </div>
         </div>

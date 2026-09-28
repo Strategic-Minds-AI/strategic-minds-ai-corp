@@ -94,6 +94,7 @@ export function MobileNav({ mainNavItems, triggerIcon = "default" }: MobileNavPr
                       <div>
                         <Link
                           to={item.href}
+                          onClick={() => setIsOpen(false)}
                           className="block border-b py-4 text-sm transition-colors hover:text-primary focus:text-primary"
                         >
                           {item.title}
