@@ -1,0 +1,59 @@
+{
+  "name": "ClientInfrastructure",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "client_id": {
+      "type": "string"
+    },
+    "github_repo": {
+      "type": "string"
+    },
+    "github_url": {
+      "type": "string"
+    },
+    "vercel_id": {
+      "type": "string"
+    },
+    "vercel_url": {
+      "type": "string"
+    },
+    "railway_id": {
+      "type": "string"
+    },
+    "railway_url": {
+      "type": "string"
+    },
+    "railway_service_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "client_id"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
