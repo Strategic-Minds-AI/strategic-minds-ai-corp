@@ -35,6 +35,7 @@ export default {
       "7xl": ["4rem", { lineHeight: "normal" }],
     },
     extend: {
+      fontFamily: { heading: ['var(--font-heading)'], body: ['var(--font-body)'], display: ['var(--font-display)'] },
       colors: {
         slate: {
           base: "#64748B",
@@ -53,19 +54,13 @@ export default {
         },
         yellow: "#fbc02d",
         green: "#44d88d",
-        border: "#E8ECED",
-        input: "#E8ECED",
-        ring: "hsl(222.2 84% 4.9%)",
-        background: "#ffffff",
-        foreground: "#333b69",
-        primary: {
-          DEFAULT: "#fa6262",
-          foreground: "#ffffff",
-        },
-        secondary: {
-          DEFAULT: "#4c86e7",
-          foreground: "#ffffff",
-        },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--border))',
+        ring: 'hsl(var(--ring))',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        primary: { DEFAULT: 'hsl(var(--primary))', foreground: 'hsl(var(--primary-foreground))' },
+        secondary: { DEFAULT: 'hsl(var(--secondary))', foreground: 'hsl(var(--secondary-foreground))' },
         tertiary: {
           DEFAULT: "#F8875F",
         },
@@ -76,18 +71,9 @@ export default {
           DEFAULT: "hsl(0 84.2% 60.2%)",
           foreground: "hsl(210 40% 98%)",
         },
-        muted: {
-          DEFAULT: "#f7f9fa",
-          foreground: "#6a798c",
-        },
-        popover: {
-          DEFAULT: "hsl(0 0% 100%)",
-          foreground: "hsl(224 71.4% 4.1%)",
-        },
-        card: {
-          DEFAULT: "hsl(0 0% 100%)",
-          foreground: "hsl(222.2 84% 4.9%)",
-        },
+        muted: { DEFAULT: 'hsl(var(--muted))', foreground: 'hsl(var(--muted-foreground))' },
+        popover: { DEFAULT: 'hsl(var(--popover))', foreground: 'hsl(var(--popover-foreground))' },
+        card: { DEFAULT: 'hsl(var(--card))', foreground: 'hsl(var(--card-foreground))' },
       },
       typography: ({ theme }) => ({
         DEFAULT: {

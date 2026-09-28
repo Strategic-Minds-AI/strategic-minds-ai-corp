@@ -1,0 +1,6 @@
+import { FileText } from 'lucide-react';
+import NewsletterForm from '@/components/forms/newsletter-form';
+
+export default function AgencyResources() {
+  return <section id="resources" className="scroll-mt-24 border-t border-border bg-muted/60 py-20"><div className="agency-container grid items-center gap-10 lg:grid-cols-2 lg:gap-20"><div><p className="agency-eyebrow mb-5 flex items-center gap-2"><FileText size={14} /> THE BUSINESS FIELDNOTES / NO. 01</p><h2 className="agency-heading">7 ways to improve<br /><em>your business.</em></h2><p className="max-w-md text-sm leading-relaxed">A practical starting point for clearer priorities, better processes, and smarter growth. Download our free checklist and choose your next move.</p><p className="mt-6 text-[10px] uppercase tracking-[0.16em] text-muted-foreground">7 actionable ideas / A focused next step / Yours to keep</p></div><div className="border border-border bg-background p-6 md:p-9"><h3 className="mb-6 font-display text-xl font-normal">Small changes. A better foundation.</h3><NewsletterForm /></div></div></section>;
+}

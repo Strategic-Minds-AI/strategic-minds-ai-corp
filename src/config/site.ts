@@ -1,11 +1,11 @@
 // Central site configuration — update these values to customise the template.
 
-export const SITE_NAME = "Margin";
+export const SITE_NAME = "Strategic Minds AI";
 
 export const siteConfig = {
   name: SITE_NAME,
-  description: "Tools to Effectively Build Your Brand and Grow Your Business.",
-  url: "https://margin.com",
+  description: "AI strategy, intelligent automation, and thoughtful digital experiences for a stronger business.",
+  url: "",
 };
 
 export type NavItem = {

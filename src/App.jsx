@@ -1,32 +1,70 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { lazy, Suspense } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
-import Blank from '@/pages/Blank';
+import StrategicHome from '@/pages/StrategicHome';
+import AgencyContact from '@/pages/AgencyContact';
+import AgencyLayout from '@/components/agency/AgencyLayout';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import ForgotPassword from '@/pages/ForgotPassword';
+import ResetPassword from '@/pages/ResetPassword';
+import { Toaster as LegacyToaster } from 'sonner';
+const HomeSEOAgency = lazy(() => import('@/pages/home-seo-agency'));
+const HomeConsulting = lazy(() => import('@/pages/home-consulting'));
+const Projects = lazy(() => import('@/pages/projects'));
+const SingleProject = lazy(() => import('@/pages/single-project'));
+const Blog = lazy(() => import('@/pages/blog'));
+const SinglePost = lazy(() => import('@/pages/single-post'));
+const About = lazy(() => import('@/pages/about'));
+const Services = lazy(() => import('@/pages/services'));
+const Pricing = lazy(() => import('@/pages/pricing'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
-  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+  const { isLoadingAuth, isLoadingPublicSettings, authError } = useAuth();
+  const location = useLocation();
+  const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password'].includes(location.pathname.toLowerCase());
 
   // Show loading spinner while checking app public settings or auth
   if (isLoadingPublicSettings || isLoadingAuth) {
     return null;
   }
 
-  // Handle authentication errors
-  if (authError) {
-    return null;
-  }
+  // Keep the platform's access checks while allowing the authentication pages to render.
+  if (authError?.type === 'user_not_registered' && !isAuthPage) return <UserNotRegisteredError />;
+  if (authError?.type === 'auth_required' && !isAuthPage) return <Navigate to={`/login?returnTo=${encodeURIComponent(location.pathname + location.search)}`} replace />;
+  if (authError && !['auth_required', 'user_not_registered'].includes(authError.type)) return <p className="p-8 text-center" role="alert">Unable to load the site. Please refresh and try again.</p>;
 
   // Render the main app
   return (
-    <Routes>
-      <Route path="*" element={<Blank />} />
-    </Routes>
+    <Suspense fallback={<div className="p-12 text-center" role="status">Loading…</div>}>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route element={<AgencyLayout />}>
+          <Route path="/" element={<StrategicHome />} />
+          <Route path="/contact" element={<AgencyContact />} />
+          <Route path="/seo-agency" element={<HomeSEOAgency />} />
+          <Route path="/consulting" element={<HomeConsulting />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/projects/:slug" element={<SingleProject />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/post/:slug" element={<SinglePost />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/pricing" element={<Pricing />} />
+          <Route path="*" element={<PageNotFound />} />
+        </Route>
+      </Routes>
+    </Suspense>
   );
 };
 
@@ -41,6 +79,7 @@ function App() {
           <AuthenticatedApp />
         </Router>
         <Toaster />
+        <LegacyToaster richColors />
       </QueryClientProvider>
     </AuthProvider>
   )
