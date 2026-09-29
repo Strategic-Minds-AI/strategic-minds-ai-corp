@@ -11,7 +11,7 @@ const About = useFramerTransition(
 			<title>About</title>
 		</Helmet>
 		<main className="relative">
-			<SectionPageTitle subtitle="Strategy, intelligence, automation and growth — grounded in responsible delivery and measurable business outcomes.">
+			<SectionPageTitle subtitle="Strategy, intelligence, automation and growth — grounded in responsible delivery and measurable business outcomes." ctaLabel="Meet with our team">
 				About Strategic Minds AI
 			</SectionPageTitle>
 			<HomeProcess />

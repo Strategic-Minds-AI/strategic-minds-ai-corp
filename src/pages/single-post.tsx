@@ -15,7 +15,7 @@ import { Helmet } from "react-helmet";
 import ReactMarkdown from "react-markdown";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import BuildingHeroBackdrop from '@/components/agency/BuildingHeroBackdrop';
+import PageHero from '@/components/agency/PageHero';
 
 const SinglePostContent = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -60,33 +60,7 @@ const SinglePostContent = () => {
         <title>{post.title}</title>
       </Helmet>
       <main className="relative">
-        <section className="site-hero relative isolate flex min-h-[620px] items-center overflow-hidden border-b border-border bg-muted pb-16 pt-28 md:pt-24">
-          <BuildingHeroBackdrop />
-          <div className="agency-container"><div className="max-w-2xl">
-            <h1 className="mb-5 font-heading text-4xl font-bold tracking-tight text-foreground md:text-5xl">{post.title}</h1>
-            {post.author_name && (
-              <div className="inline-flex flex-wrap items-center text-base font-medium text-foreground lg:text-md">
-                {post.author_image_url && (
-                  <img
-                    src={post.author_image_url}
-                    alt={post.author_name}
-                    width={48}
-                    height={48}
-                    className="mr-4 rounded-full"
-                    />
-                )}
-                <span itemProp="author" itemType="https://schema.org/Person">
-                  {"by "}
-                  {post.author_name}
-                </span>
-                <span className="block">
-                  <span className="mx-2 inline-block">-</span>
-                  {getDate(post.publish_date)}
-                </span>
-              </div>
-            )}
-          </div></div>
-        </section>
+        <PageHero eyebrow="INSIGHTS / STRATEGIC MINDS AI" title={post.title} description={post.excerpt} ctaLabel="Discuss these ideas" details={post.author_name && <div className="flex flex-wrap items-center gap-2">{post.author_image_url && <img src={post.author_image_url} alt="" width={48} height={48} className="mr-2 rounded-full" />}<span>By {post.author_name} · {getDate(post.publish_date)}</span></div>} />
         <section className="border-b pb-24 pt-16">
           <div className="container">
             <div className="mx-auto max-w-[50rem]">

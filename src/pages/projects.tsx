@@ -10,10 +10,8 @@ const Projects = useFramerTransition(
     </Helmet>
     <main className="relative">
       <SectionPageTitle
-        subtitle="Focus on engaging, reusable content that decrease the cost per leads
-				while helps you to increase profits margin. Margin strives to
-				deliver the tools and support that helps companies grow with
-				unparalleled success."
+        subtitle="Explore projects shaped by clear strategy, thoughtful execution and practical business outcomes."
+        ctaLabel="Discuss your next project"
       >
         Projects
       </SectionPageTitle>

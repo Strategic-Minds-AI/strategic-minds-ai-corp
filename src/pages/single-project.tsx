@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 import ReactMarkdown from "react-markdown";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import BuildingHeroBackdrop from '@/components/agency/BuildingHeroBackdrop';
+import PageHero from '@/components/agency/PageHero';
 
 const SingleProjectContent = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -45,12 +45,7 @@ const SingleProjectContent = () => {
         <title>{project.title}</title>
       </Helmet>
       <main className="relative">
-        <section className="site-hero relative isolate flex min-h-[620px] items-center overflow-hidden border-b border-border bg-muted pb-16 pt-28 md:pt-24">
-          <BuildingHeroBackdrop />
-          <div className="agency-container"><div className="max-w-2xl">
-            <h1 className="mb-5 font-heading text-4xl font-bold tracking-tight text-foreground md:text-5xl">{project.title}</h1>
-          </div></div>
-        </section>
+        <PageHero eyebrow="OUR WORK / STRATEGIC MINDS AI" title={project.title} description={project.excerpt} ctaLabel="Discuss a similar project" />
 
         {(project.metric_1_value ||
           project.metric_1_label ||
@@ -58,7 +53,7 @@ const SingleProjectContent = () => {
           project.metric_2_label ||
           project.metric_3_value ||
           project.metric_3_label) && (
-          <div className="relative z-[1] -m-20 mx-auto mb-5 flex max-w-[50rem] flex-wrap items-center space-y-5 lg:flex-nowrap lg:space-x-10 lg:space-y-0">
+          <div className="relative z-[1] mx-auto mt-10 mb-5 flex max-w-[50rem] flex-wrap items-center space-y-5 lg:flex-nowrap lg:space-x-10 lg:space-y-0">
             {project.metric_1_value || project.metric_1_label ? (
               <div className="w-full rounded border border-border bg-card p-12 shadow-sm lg:flex-1">
                 {project.metric_1_value && (

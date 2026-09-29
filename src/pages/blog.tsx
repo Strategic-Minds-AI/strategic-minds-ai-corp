@@ -9,7 +9,7 @@ const Blog = useFramerTransition(
 			<title>Blog</title>
 		</Helmet>
 		<main className="relative">
-			<SectionPageTitle>Blog</SectionPageTitle>
+			<SectionPageTitle subtitle="Ideas and practical guidance for building smarter, more resilient businesses." ctaLabel="Talk about your AI goals">Blog</SectionPageTitle>
 			<section className="border-b py-24">
 				<div className="container">
 					<PostList limit={6} showPagination={true} />

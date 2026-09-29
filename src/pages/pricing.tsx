@@ -12,7 +12,7 @@ const Pricing = useFramerTransition(
 			<title>Pricing</title>
 		</Helmet>
 		<main className="relative">
-			<SectionPageTitle subtitle="Transparent starting points for strategy, implementation and ongoing growth. Enterprise work is custom quoted.">
+			<SectionPageTitle subtitle="Transparent starting points for strategy, implementation and ongoing growth. Enterprise work is custom quoted." ctaLabel="Discuss your investment">
 				Services & Pricing
 			</SectionPageTitle>
 			<EngagementPaths />

@@ -10,7 +10,7 @@ const Contact = useFramerTransition(
       <title>Contact</title>
     </Helmet>
     <main className="relative">
-      <SectionPageTitle subtitle="Let’s have a dicussion about your business">
+      <SectionPageTitle subtitle="Tell us what you're working toward, and let's explore the right next step together." ctaLabel="Start a conversation" ctaHref="#contact-form">
         Contact
       </SectionPageTitle>
       <SectionContactForm />
