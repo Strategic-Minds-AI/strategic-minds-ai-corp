@@ -1,0 +1,58 @@
+{
+  "name": "VaultAccessKey",
+  "type": "object",
+  "properties": {
+    "owner_id": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "token_hash": {
+      "type": "string"
+    },
+    "prefix": {
+      "type": "string"
+    },
+    "scope": {
+      "type": "string",
+      "enum": [
+        "directory:read"
+      ]
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "revoked": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "owner_id",
+    "label",
+    "token_hash",
+    "prefix",
+    "scope",
+    "expires_at"
+  ],
+  "rls": {
+    "read": false,
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

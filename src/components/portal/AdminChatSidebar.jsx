@@ -5,7 +5,7 @@ import AdminDriveFolderCreator from './AdminDriveFolderCreator';
 const groups = [
   ['Projects & files', [['clients','Clients & projects'], ['projects','Project requests'], ['ingestion','Ingestion']]],
   ['Business', [['crm','CRM'], ['commerce','Commerce']]],
-  ['Systems', [['infrastructure','Infrastructure'], ['provisioning','Site provisioning'], ['google-workspace','Google Workspace'], ['chatgpt','MCP connection']]],
+  ['Systems', [['infrastructure','Infrastructure'], ['provisioning','Site provisioning'], ['google-workspace','Google Workspace'], ['vault','Account & API vault'], ['chatgpt','MCP connection']]],
 ];
 export default function AdminChatSidebar({ chats, selectedId, view, onView, onNew, onSelect, onSettings, onDelete, onQuickTask, projects = [], collapsed, onCollapse }) {
   const [open, setOpen] = useState(false);

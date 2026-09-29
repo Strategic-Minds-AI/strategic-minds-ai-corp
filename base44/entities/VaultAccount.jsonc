@@ -1,0 +1,77 @@
+{
+  "name": "VaultAccount",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "provider": {
+      "type": "string",
+      "enum": [
+        "github",
+        "github_app",
+        "supabase",
+        "drive",
+        "railway",
+        "vercel",
+        "e2b",
+        "private_sandbox",
+        "other"
+      ]
+    },
+    "management_url": {
+      "type": "string"
+    },
+    "connector_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "provider"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    }
+  }
+}
