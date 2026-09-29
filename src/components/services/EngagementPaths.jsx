@@ -1,0 +1,6 @@
+import { Link } from 'react-router-dom';
+import { engagementPaths } from './serviceCatalog';
+
+export default function EngagementPaths() {
+  return <section className="border-y border-border bg-muted py-16" aria-label="Ways to work together"><div className="agency-container"><p className="agency-eyebrow mb-3">WAYS TO WORK TOGETHER</p><h2 className="agency-heading mb-4">Start with clarity. Build for impact. Scale with confidence.</h2><p className="mb-9 max-w-2xl text-sm">One-time projects and ongoing partnerships are priced separately. Enterprise work is scoped individually.</p><div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">{engagementPaths.map(path => <article key={path.name} className="flex flex-col rounded border border-border bg-card p-6"><h3 className="mb-3 text-sm tracking-widest">{path.name}</h3><p className="mb-4 text-xl font-semibold text-foreground">{path.price}</p><p className="mb-8 text-sm leading-relaxed">{path.summary}</p><Link to="/contact" className="mt-auto text-sm font-medium text-primary underline">{path.cta} →</Link></article>)}</div></div></section>;
+}

@@ -1,6 +1,6 @@
 import useFramerTransition from "@/hooks/use-transition";
 import SectionHero from "@/components/sections/section-hero";
-import SectionIconBoxes from "@/components/sections/section-icon-boxes";
+import ServiceSpotlight from "@/components/services/ServiceSpotlight";
 import SectionLatestNews from "@/components/sections/section-latest-news";
 import SectionPartners from "@/components/sections/section-partners";
 import SectionPromo from "@/components/sections/section-promo";
@@ -15,7 +15,7 @@ const Home = useFramerTransition(
 		</Helmet>
 		<main className="relative">
 			<SectionHero />
-			<SectionIconBoxes />
+			<ServiceSpotlight />
 			<SectionPromo />
       <SectionTestimonialsSlider />
 			<SectionLatestNews />

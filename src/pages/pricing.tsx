@@ -1,6 +1,9 @@
 import useFramerTransition from "@/hooks/use-transition";
 import SectionPageTitle from "@/components/sections/section-page-title";
 import CommerceCatalog from "@/components/commerce/CommerceCatalog";
+import EngagementPaths from "@/components/services/EngagementPaths";
+import PricingOverview from "@/components/services/PricingOverview";
+import MarketContext from "@/components/services/MarketContext";
 import {Helmet} from "react-helmet"
 
 const Pricing = useFramerTransition(
@@ -9,9 +12,12 @@ const Pricing = useFramerTransition(
 			<title>Pricing</title>
 		</Helmet>
 		<main className="relative">
-			<SectionPageTitle subtitle="Explore our services, subscriptions and custom projects.">
+			<SectionPageTitle subtitle="Transparent starting points for strategy, implementation and ongoing growth. Enterprise work is custom quoted.">
 				Services & Pricing
 			</SectionPageTitle>
+			<EngagementPaths />
+			<PricingOverview />
+			<MarketContext />
 			<CommerceCatalog />
 		</main>
 	</>

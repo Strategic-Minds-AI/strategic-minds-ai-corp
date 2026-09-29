@@ -9,6 +9,7 @@ export default function CommerceCatalog() {
   const [error, setError] = useState('');
   useEffect(() => { base44.entities.CatalogItem.list('-created_date', 100).then(data => setItems(data.filter(x => x.active))).catch(e => setError(e.message || 'Catalog unavailable.')).finally(() => setLoading(false)); }, []);
   const checkout = new URLSearchParams(window.location.search).get('checkout');
+  if (!loading && !error && !items.length && !checkout) return null;
   return <section className="agency-container py-16" aria-label="Services catalog">
     {checkout === 'success' && <p role="status" className="mb-6 rounded border border-primary bg-muted p-4 text-sm">Thank you. Your payment is being confirmed; our team will review your order before work begins.</p>}
     {checkout === 'cancelled' && <p role="status" className="mb-6 rounded border border-border p-4 text-sm">Checkout was cancelled. Nothing has been charged.</p>}

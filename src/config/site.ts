@@ -46,10 +46,11 @@ export const footerNav: NavItem[] = [
   {
     title: "Services",
     items: [
-      { title: "Digital Marketing", href: "/services" },
-      { title: "SEO and PPC", href: "/services" },
-      { title: "Marketing Analytics", href: "/services" },
-      { title: "Content Marketing", href: "/services" },
+      { title: "AI Strategy & Consulting", href: "/services#strategy" },
+      { title: "AI Automation & Agents", href: "/services#automation" },
+      { title: "Data Intelligence", href: "/services#data" },
+      { title: "AI Marketing & Search", href: "/services#marketing" },
+      { title: "Custom AI Solutions", href: "/services#software" },
     ],
   },
   {
@@ -75,10 +76,11 @@ export const footerNav2: NavItem[] = [
   {
     title: "Services",
     items: [
-      { title: "Digital Marketing", href: "/services" },
-      { title: "SEO and PPC", href: "/services" },
-      { title: "Marketing Analytics", href: "/services" },
-      { title: "Content Marketing", href: "/services" },
+      { title: "AI Strategy & Consulting", href: "/services#strategy" },
+      { title: "AI Automation & Agents", href: "/services#automation" },
+      { title: "Data Intelligence", href: "/services#data" },
+      { title: "AI Marketing & Search", href: "/services#marketing" },
+      { title: "Custom AI Solutions", href: "/services#software" },
     ],
   },
   {
