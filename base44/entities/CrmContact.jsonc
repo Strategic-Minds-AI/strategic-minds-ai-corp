@@ -1,0 +1,91 @@
+{
+  "name": "CrmContact",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "source": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "new",
+        "contacted",
+        "qualified",
+        "closed"
+      ],
+      "default": "new"
+    },
+    "follow_up_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "follow_up_subject": {
+      "type": "string"
+    },
+    "follow_up_body": {
+      "type": "string"
+    },
+    "follow_up_status": {
+      "type": "string",
+      "enum": [
+        "paused",
+        "scheduled",
+        "sending",
+        "sent",
+        "failed"
+      ],
+      "default": "paused"
+    },
+    "last_sent_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "google_resource_name": {
+      "type": "string"
+    },
+    "calendar_event_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "email"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -28,6 +28,18 @@ export default async function(req) {
       body: JSON.stringify({ id, form_type, name, email, message }),
     });
     if (!response.ok) throw new Error('Could not save submission');
+    if (form_type === 'contact') {
+      try {
+        const existing = await base44.asServiceRole.entities.CrmContact.filter({ source_id: id });
+        if (!existing.length) await base44.asServiceRole.entities.CrmContact.create({
+          name, email, notes: message, source: 'Website contact form', source_id: id, status: 'new',
+          follow_up_at: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
+          follow_up_subject: 'Following up from Strategic Minds AI',
+          follow_up_body: `Hi ${name.split(' ')[0]},\n\nThank you for reaching out to Strategic Minds AI. I wanted to follow up on your inquiry and see if a short strategy conversation would be helpful. You can reach us directly at +1 772-209-0266, or reply with a good time to connect.\n\nBest,\nStrategic Minds AI`,
+          follow_up_status: 'paused',
+        });
+      } catch (crmError) { console.error('CRM intake failed:', crmError.message); }
+    }
     return Response.json({ ok: true });
   } catch (error) {
     console.error('Lead submission failed:', error.message);
