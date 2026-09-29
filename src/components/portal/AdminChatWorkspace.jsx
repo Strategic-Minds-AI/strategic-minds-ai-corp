@@ -9,6 +9,7 @@ import AdminAccountOverview from './AdminAccountOverview';
 import AdminAccountBar from './AdminAccountBar';
 import AdminViewClose from './AdminViewClose';
 import AdminVault from '@/components/portal/vault/AdminVault';
+import ApexDiscovery from '@/components/portal/apex/ApexDiscovery';
 import { runChatAction } from './adminChatActions';
 
 export default function AdminChatWorkspace(props) {
@@ -23,6 +24,7 @@ export default function AdminChatWorkspace(props) {
   const [projectId, setProjectId] = useState('');
   const [quickTask, setQuickTask] = useState(null);
   const [mode, setMode] = useState(null);
+  const [executionMode, setExecutionMode] = useState('plan');
   const [attachments, setAttachments] = useState([]);
   const [uploading, setUploading] = useState(false);
   async function addFiles(files) {
@@ -53,11 +55,12 @@ export default function AdminChatWorkspace(props) {
   };
   async function send(e) {
     e.preventDefault(); const text = draft.trim() || (attachments.length ? 'Please analyze these attachments.' : ''); if (!text || sending || uploading) return;
+    if (executionMode === 'plan' && mode === 'image') { setError('Plan mode does not generate images. Switch to Build for an image draft.'); return; }
     if (quickTask && mode === 'image') { setError('Finish this project task before creating an image.'); return; }
     if (mode === 'image' && attachments.some(file => !/\.(png|jpe?g|webp)$/i.test(file.name))) { setError('Image creation can use photos as references; remove other attached files first.'); return; }
-    if (quickTask && !projectId) { setError('Choose a project first so the output can be saved to its Drive folder.'); return; }
+    if (quickTask && executionMode === 'build' && !projectId) { setError('Choose a project first so the output can be saved to its Drive folder.'); return; }
     if (quickTask === 'notes' && text.includes('[Paste client notes here before sending]')) { setError('Paste the notes before requesting a summary.'); return; }
-    const task = quickTask; const destination = projectId;
+    const task = executionMode === 'build' ? quickTask : null; const destination = projectId;
     const id = selectedId || crypto.randomUUID();
     const existing = chats.find(c => c.id === id);
     const files = attachments; const selectedMode = mode;
@@ -65,7 +68,7 @@ export default function AdminChatWorkspace(props) {
     setSelectedId(id); setDraft(''); setError(''); setSending(true);
     setChats(prev => [{ id, title: existing?.title || text.slice(0, 42), messages: next }, ...prev.filter(c => c.id !== id)]);
     try {
-      const answer = await runChatAction({ messages: next, mode: selectedMode, attachments: files });
+      const answer = await runChatAction({ messages: next, mode: selectedMode, attachments: files, executionMode });
       setChats(prev => prev.map(c => c.id === id ? { ...c, messages: [...next, { role: 'assistant', ...answer }] } : c));
       setAttachments([]); setMode(null); setQuickTask(null);
       if (task) {
@@ -81,6 +84,6 @@ export default function AdminChatWorkspace(props) {
   }
   return <main className="fixed inset-0 z-50 flex overflow-hidden bg-background font-body text-foreground">
     <AdminChatSidebar chats={chats} selectedId={selectedId} view={view} onView={setView} onNew={newChat} onSelect={select} onDelete={remove} onQuickTask={startQuickTask} onSettings={() => setView('settings')} projects={props.projects} collapsed={sidebarCollapsed} onCollapse={setSidebarCollapsed}/>
-    {view === 'chat' ? <AdminChatConversation chat={current} draft={draft} onDraft={setDraft} onSend={send} sending={sending} error={error} projects={props.projects} projectId={projectId} onProject={id => { setProjectId(id); if (quickTask) startQuickTask(quickTask, id); }} quickTask={quickTask} onAccount={openAccount} mode={mode} onMode={setMode} attachments={attachments} onFiles={addFiles} onRemoveFile={index => setAttachments(previous => previous.filter((_, i) => i !== index))} uploading={uploading}/> : view.startsWith('account:') ? <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex min-h-16 items-center border-b border-border bg-background px-5 py-2 pl-16"><AdminAccountBar active={view.split(':')[1]} onSelect={openAccount}/><AdminViewClose onClick={() => setView('chat')}/></header><AdminAccountOverview key={view} provider={view.split(':')[1]}/></div> : view === 'settings' ? <AdminChatSettings chats={chats} onClear={() => { setChats([]); setSelectedId(null); }} onBack={() => setView('chatgpt')} onClose={() => setView('chat')} onVault={() => setView('vault')}/> : <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex min-h-16 flex-wrap items-center gap-3 border-b border-border bg-background px-5 py-2 pl-16"><AdminAccountBar active={view} onSelect={openAccount}/><span className="text-xs font-medium capitalize text-muted-foreground">{view === 'chatgpt' ? 'MCP connection' : view.replace('-', ' ')}</span><AdminViewClose onClick={() => setView('chat')}/></header><div className="p-5 md:p-8">{props.loadError && <p role="alert" className="mb-5 text-sm text-destructive">{props.loadError} <button type="button" onClick={props.onRefresh} className="underline">Retry</button></p>}{view === 'vault' ? <AdminVault onOpen={setView} onDraft={prompt => { newChat(); setDraft(prompt); }}/>: <AdminPortalWorkspace {...props} active={view}/>}</div></div>}
+    {view === 'chat' ? <AdminChatConversation chat={current} draft={draft} onDraft={setDraft} onSend={send} sending={sending} error={error} projects={props.projects} projectId={projectId} onProject={id => { setProjectId(id); if (quickTask) startQuickTask(quickTask, id); }} quickTask={quickTask} onAccount={openAccount} mode={mode} onMode={setMode} attachments={attachments} onFiles={addFiles} onRemoveFile={index => setAttachments(previous => previous.filter((_, i) => i !== index))} uploading={uploading} executionMode={executionMode} onExecutionMode={setExecutionMode}/> : view.startsWith('account:') ? <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex min-h-16 items-center border-b border-border bg-background px-5 py-2 pl-16"><AdminAccountBar active={view.split(':')[1]} onSelect={openAccount}/><AdminViewClose onClick={() => setView('chat')}/></header><AdminAccountOverview key={view} provider={view.split(':')[1]}/></div> : view === 'settings' ? <AdminChatSettings chats={chats} onClear={() => { setChats([]); setSelectedId(null); }} onBack={() => setView('chatgpt')} onClose={() => setView('chat')} onVault={() => setView('vault')}/> : <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex min-h-16 flex-wrap items-center gap-3 border-b border-border bg-background px-5 py-2 pl-16"><AdminAccountBar active={view} onSelect={openAccount}/><span className="text-xs font-medium capitalize text-muted-foreground">{view === 'chatgpt' ? 'MCP connection' : view.replace('-', ' ')}</span><AdminViewClose onClick={() => setView('chat')}/></header><div className="p-5 md:p-8">{props.loadError && <p role="alert" className="mb-5 text-sm text-destructive">{props.loadError} <button type="button" onClick={props.onRefresh} className="underline">Retry</button></p>}{view === 'discovery' ? <ApexDiscovery/> : view === 'vault' ? <AdminVault onOpen={setView} onDraft={prompt => { newChat(); setExecutionMode('build'); setDraft(prompt); }}/>: <AdminPortalWorkspace {...props} active={view}/>}</div></div>}
   </main>;
 }

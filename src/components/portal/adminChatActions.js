@@ -1,6 +1,9 @@
 import { base44 } from '@/api/base44Client';
 
-export async function runChatAction({ messages, mode, attachments }) {
+export async function runChatAction({ messages, mode, attachments, executionMode = 'plan' }) {
+  if (executionMode === 'plan' && mode === 'image') throw new Error('Plan mode does not create images.');
+  const guidance = executionMode === 'plan' ? 'PLAN MODE: Analyze and draft a plan only. Identify evidence, unknown capabilities, required permissions, approvals, validation and rollback. Do not claim to execute actions or make changes.' : 'BUILD MODE — DRAFT ONLY: Produce reviewable implementation drafts. No sandbox, browser or computer worker is connected to this assistant. Do not claim execution, deployment or independent validation. Flag production mutations, customer messages, secrets, permissions and new spend as requiring explicit operator approval.';
+  const guidedMessages = messages.map((message, index) => index === messages.length - 1 ? { ...message, content: `${guidance}\n\n${message.content}` } : message);
   const text = messages.at(-1).content;
   if (mode === 'image') {
     const referenceUrls = await Promise.all(attachments.filter(file => /\.(png|jpe?g|webp)$/i.test(file.name)).map(async file => {
@@ -16,7 +19,7 @@ export async function runChatAction({ messages, mode, attachments }) {
       return result.signed_url;
     }));
     const user = await base44.auth.me();
-    const context = messages.slice(-8).map(m => `${m.role}: ${m.content}`).join('\n\n');
+    const context = guidedMessages.slice(-8).map(m => `${m.role}: ${m.content}`).join('\n\n');
     const result = await base44.integrations.Core.InvokeLLM({
       prompt: `You are the Strategic Minds AI agency administrator's assistant. Do not claim access to portal records or permission to change them. Follow these personal response preferences when appropriate:\n${(user.assistant_instructions || '').slice(0, 15000)}\n\nConversation:\n${context}\n\n${mode === 'web' ? 'Use current online information. Include source links for factual claims; say when a fact cannot be verified.' : 'Analyze the attached files in the context of the latest user message.'}`,
       ...(urls.length ? { file_urls: urls } : {}),
@@ -24,6 +27,6 @@ export async function runChatAction({ messages, mode, attachments }) {
     });
     return { content: typeof result === 'string' ? result : JSON.stringify(result) };
   }
-  const { data } = await base44.functions.invoke('adminAssistant', { messages });
+  const { data } = await base44.functions.invoke('adminAssistant', { messages, executionMode });
   return { content: data.reply };
 }

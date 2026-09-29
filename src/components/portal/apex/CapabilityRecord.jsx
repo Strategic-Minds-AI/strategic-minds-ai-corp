@@ -1,0 +1,3 @@
+export default function CapabilityRecord({ record }) {
+  return <details className="rounded-lg border border-border bg-card p-4"><summary className="cursor-pointer text-sm text-foreground"><span className="font-semibold">{record.capability_name}</span><span className="ml-3 inline-block text-xs text-muted-foreground">{record.availability} · {record.health_status}</span></summary><dl className="mt-4 grid gap-3 text-xs sm:grid-cols-2">{Object.entries(record).map(([key,value]) => <div key={key} className="min-w-0"><dt className="font-medium text-foreground">{key.replaceAll('_', ' ')}</dt><dd className="m-0 break-words text-muted-foreground">{value === null ? 'Not verified / not applicable' : String(value)}</dd></div>)}</dl></details>;
+}
