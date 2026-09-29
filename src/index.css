@@ -125,8 +125,19 @@
   .agency-site-backdrop :is(button:not(:disabled), a.agency-button, a[class*="rounded"]):active {
     transform: translateY(0);
   }
-  .agency-site-backdrop main :is(h2, h3, p) {
-    animation: agency-text-entrance .55s ease-out both;
+  .agency-site-backdrop .agency-scroll-reveal {
+    opacity: 0;
+    transform: translateY(22px) scale(.985);
+    transition: opacity .65s ease-out, transform .65s cubic-bezier(.2,.7,.2,1);
+    will-change: opacity, transform;
+  }
+  .agency-site-backdrop .agency-scroll-reveal:nth-child(3n + 2) { transition-delay: 70ms; }
+  .agency-site-backdrop .agency-scroll-reveal:nth-child(3n) { transition-delay: 140ms; }
+  .agency-site-backdrop .agency-scroll-image { transform: translateY(12px) scale(1.04); }
+  .agency-site-backdrop .agency-scroll-reveal.agency-revealed {
+    opacity: 1;
+    transform: none;
+    will-change: auto;
   }
   .agency-site-backdrop .agency-hero-eyebrow { animation: agency-text-entrance .55s ease-out both; }
   .agency-site-backdrop .agency-hero-title { animation: agency-text-entrance .7s .1s ease-out both; }
@@ -151,9 +162,10 @@
     .agency-site-backdrop { background-attachment: scroll; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .agency-site-backdrop, .agency-hero-image, .agency-site-backdrop main :is(h2, h3, p),
+    .agency-site-backdrop, .agency-hero-image,
     .agency-site-backdrop .agency-hero-eyebrow, .agency-site-backdrop .agency-hero-title,
     .agency-site-backdrop .agency-hero-description { animation: none; }
+    .agency-site-backdrop .agency-scroll-reveal { opacity: 1; transform: none; transition: none; }
     .agency-site-backdrop :is(a, button) { transition: none; }
     .agency-site-backdrop :is(button:not(:disabled), a.agency-button, a[class*="rounded"]):is(:hover, :active) { transform: none; box-shadow: none; }
   }
