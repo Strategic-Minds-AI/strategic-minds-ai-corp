@@ -63,6 +63,7 @@ export default {
         secondary: { DEFAULT: 'hsl(var(--secondary))', foreground: 'hsl(var(--secondary-foreground))' },
         tertiary: { DEFAULT: 'hsl(var(--tertiary))' },
         quaternary: { DEFAULT: 'hsl(var(--quaternary))' },
+        consoleAccent: { DEFAULT: 'hsl(var(--console-accent))' },
         destructive: {
           DEFAULT: "hsl(0 84.2% 60.2%)",
           foreground: "hsl(210 40% 98%)",

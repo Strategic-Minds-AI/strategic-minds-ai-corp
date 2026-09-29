@@ -26,6 +26,7 @@
     --ring: 219 100% 50%;
     --tertiary: 207 100% 55%;
     --quaternary: 225 90% 32%;
+    --console-accent: 216 100% 40%;
   }
   .dark {
     --background: 222 45% 8%;
@@ -44,6 +45,7 @@
     --ring: 216 100% 67%;
     --tertiary: 207 90% 60%;
     --quaternary: 225 85% 38%;
+    --console-accent: 216 100% 40%;
   }
 
   * {
