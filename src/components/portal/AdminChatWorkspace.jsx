@@ -7,6 +7,8 @@ import AdminChatSettings from './AdminChatSettings';
 import AdminPortalWorkspace from './AdminPortalWorkspace';
 import AdminAccountOverview from './AdminAccountOverview';
 import AdminAccountBar from './AdminAccountBar';
+import AdminViewClose from './AdminViewClose';
+import { runChatAction } from './adminChatActions';
 
 export default function AdminChatWorkspace(props) {
   const { user } = useAuth();
@@ -19,6 +21,22 @@ export default function AdminChatWorkspace(props) {
   const [error, setError] = useState('');
   const [projectId, setProjectId] = useState('');
   const [quickTask, setQuickTask] = useState(null);
+  const [mode, setMode] = useState(null);
+  const [attachments, setAttachments] = useState([]);
+  const [uploading, setUploading] = useState(false);
+  async function addFiles(files) {
+    if (!files.length) return;
+    if (attachments.length + files.length > 5 || files.some(file => file.size > 20 * 1024 * 1024)) { setError('Attach up to five files, each under 20 MB.'); return; }
+    setUploading(true); setError('');
+    try {
+      const uploaded = await Promise.all(files.map(async file => {
+        const result = await base44.integrations.Core.UploadPrivateFile({ file });
+        return { name: file.name, file_uri: result.file_uri };
+      }));
+      setAttachments(previous => [...previous, ...uploaded]);
+    } catch (error) { setError(error.message || 'Could not upload those files.'); }
+    finally { setUploading(false); }
+  }
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const openAccount = account => setView(['vercel', 'supabase', 'railway', 'github'].includes(account) ? `account:${account}` : account);
   useEffect(() => { localStorage.setItem(key, JSON.stringify(chats)); }, [chats, key]);
@@ -33,32 +51,35 @@ export default function AdminChatWorkspace(props) {
     setDraft(task === 'notes' ? `Summarize these client notes for ${project?.title || 'the selected project'}. Identify decisions, open questions and next actions. Do not invent facts.\n\n${notes || '[Paste client notes here before sending]'}` : `Create a reusable, practical project outline template for ${project?.title || 'the selected project'}, with objectives, scope, milestones, deliverables, responsibilities, risks and next steps. ${project?.progress_note ? `Project context: ${project.progress_note.slice(0, 1200)}` : ''}`);
   };
   async function send(e) {
-    e.preventDefault(); const text = draft.trim(); if (!text || sending) return;
+    e.preventDefault(); const text = draft.trim() || (attachments.length ? 'Please analyze these attachments.' : ''); if (!text || sending || uploading) return;
+    if (quickTask && mode === 'image') { setError('Finish this project task before creating an image.'); return; }
+    if (mode === 'image' && attachments.some(file => !/\.(png|jpe?g|webp)$/i.test(file.name))) { setError('Image creation can use photos as references; remove other attached files first.'); return; }
     if (quickTask && !projectId) { setError('Choose a project first so the output can be saved to its Drive folder.'); return; }
     if (quickTask === 'notes' && text.includes('[Paste client notes here before sending]')) { setError('Paste the notes before requesting a summary.'); return; }
     const task = quickTask; const destination = projectId;
     const id = selectedId || crypto.randomUUID();
     const existing = chats.find(c => c.id === id);
-    const next = [...(existing?.messages || []), { role: 'user', content: text }];
+    const files = attachments; const selectedMode = mode;
+    const next = [...(existing?.messages || []), { role: 'user', content: text, ...(files.length ? { attachments: files } : {}) }];
     setSelectedId(id); setDraft(''); setError(''); setSending(true);
     setChats(prev => [{ id, title: existing?.title || text.slice(0, 42), messages: next }, ...prev.filter(c => c.id !== id)]);
     try {
-      const { data } = await base44.functions.invoke('adminAssistant', { messages: next });
-      setChats(prev => prev.map(c => c.id === id ? { ...c, messages: [...next, { role: 'assistant', content: data.reply }] } : c));
-      setQuickTask(null);
+      const answer = await runChatAction({ messages: next, mode: selectedMode, attachments: files });
+      setChats(prev => prev.map(c => c.id === id ? { ...c, messages: [...next, { role: 'assistant', ...answer }] } : c));
+      setAttachments([]); setMode(null); setQuickTask(null);
       if (task) {
         try {
           const label = task === 'notes' ? 'Client notes summary' : 'Project outline';
           const name = `${label} ${new Date().toISOString().replace(/[:.]/g, '-')}.md`;
-          const saved = await base44.functions.invoke('agencyDriveIngest', { action: 'saveProjectText', projectId: destination, name, content: `# ${label}\n\n${data.reply}`, approved: true });
-          setChats(prev => prev.map(c => c.id === id ? { ...c, messages: [...next, { role: 'assistant', content: data.reply, savedUrl: saved.data.file.webViewLink }] } : c));
+          const saved = await base44.functions.invoke('agencyDriveIngest', { action: 'saveProjectText', projectId: destination, name, content: `# ${label}\n\n${answer.content}`, approved: true });
+          setChats(prev => prev.map(c => c.id === id ? { ...c, messages: [...next, { role: 'assistant', ...answer, savedUrl: saved.data.file.webViewLink }] } : c));
         } catch (saveError) { setError(`The answer is here, but Drive saving failed: ${saveError.response?.data?.error || saveError.message}`); }
       }
-    } catch (err) { setError(err.response?.data?.error || err.message || 'Could not send message. You can try again.'); }
+    } catch (err) { setDraft(text); setError(err.response?.data?.error || err.message || 'Could not send message. You can try again.'); }
     finally { setSending(false); }
   }
   return <main className="fixed inset-0 z-50 flex overflow-hidden bg-background font-body text-foreground">
     <AdminChatSidebar chats={chats} selectedId={selectedId} view={view} onView={setView} onNew={newChat} onSelect={select} onDelete={remove} onQuickTask={startQuickTask} onSettings={() => setView('settings')} projects={props.projects} collapsed={sidebarCollapsed} onCollapse={setSidebarCollapsed}/>
-    {view === 'chat' ? <AdminChatConversation chat={current} draft={draft} onDraft={setDraft} onSend={send} sending={sending} error={error} projects={props.projects} projectId={projectId} onProject={id => { setProjectId(id); if (quickTask) startQuickTask(quickTask, id); }} quickTask={quickTask} onAccount={openAccount}/> : view.startsWith('account:') ? <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex min-h-16 items-center border-b border-border bg-background px-5 py-2 pl-16"><AdminAccountBar active={view.split(':')[1]} onSelect={openAccount}/></header><AdminAccountOverview key={view} provider={view.split(':')[1]}/></div> : view === 'settings' ? <AdminChatSettings chats={chats} onClear={() => { setChats([]); setSelectedId(null); }} onBack={() => setView('chatgpt')}/> : <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex min-h-16 flex-wrap items-center gap-3 border-b border-border bg-background px-5 py-2 pl-16"><AdminAccountBar active={view} onSelect={openAccount}/><span className="text-xs font-medium capitalize text-muted-foreground">{view === 'chatgpt' ? 'MCP connection' : view.replace('-', ' ')}</span></header><div className="p-5 md:p-8">{props.loadError && <p role="alert" className="mb-5 text-sm text-destructive">{props.loadError} <button type="button" onClick={props.onRefresh} className="underline">Retry</button></p>}<AdminPortalWorkspace {...props} active={view}/></div></div>}
+    {view === 'chat' ? <AdminChatConversation chat={current} draft={draft} onDraft={setDraft} onSend={send} sending={sending} error={error} projects={props.projects} projectId={projectId} onProject={id => { setProjectId(id); if (quickTask) startQuickTask(quickTask, id); }} quickTask={quickTask} onAccount={openAccount} mode={mode} onMode={setMode} attachments={attachments} onFiles={addFiles} onRemoveFile={index => setAttachments(previous => previous.filter((_, i) => i !== index))} uploading={uploading}/> : view.startsWith('account:') ? <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex min-h-16 items-center border-b border-border bg-background px-5 py-2 pl-16"><AdminAccountBar active={view.split(':')[1]} onSelect={openAccount}/><AdminViewClose onClick={() => setView('chat')}/></header><AdminAccountOverview key={view} provider={view.split(':')[1]}/></div> : view === 'settings' ? <AdminChatSettings chats={chats} onClear={() => { setChats([]); setSelectedId(null); }} onBack={() => setView('chatgpt')} onClose={() => setView('chat')}/> : <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex min-h-16 flex-wrap items-center gap-3 border-b border-border bg-background px-5 py-2 pl-16"><AdminAccountBar active={view} onSelect={openAccount}/><span className="text-xs font-medium capitalize text-muted-foreground">{view === 'chatgpt' ? 'MCP connection' : view.replace('-', ' ')}</span><AdminViewClose onClick={() => setView('chat')}/></header><div className="p-5 md:p-8">{props.loadError && <p role="alert" className="mb-5 text-sm text-destructive">{props.loadError} <button type="button" onClick={props.onRefresh} className="underline">Retry</button></p>}<AdminPortalWorkspace {...props} active={view}/></div></div>}
   </main>;
 }

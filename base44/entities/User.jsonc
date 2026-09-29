@@ -1,4 +1,6 @@
 {
+  "name": "User",
+  "type": "object",
   "properties": {
     "role": {
       "type": "string",
@@ -7,11 +9,14 @@
         "admin",
         "user"
       ]
+    },
+    "assistant_instructions": {
+      "type": "string",
+      "maxLength": 15000,
+      "description": "Personal instructions for the agency assistant"
     }
   },
   "required": [
     "role"
-  ],
-  "name": "User",
-  "type": "object"
+  ]
 }
