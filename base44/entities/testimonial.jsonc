@@ -1,5 +1,5 @@
 {
-  "name": "Testimonial",
+  "name": "testimonial",
   "type": "object",
   "properties": {
     "display_order": {
@@ -29,9 +29,21 @@
     "variant": {
       "type": "string",
       "description": "Display group: default, featured, or layout_2"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
     }
   },
-  "required": ["display_order", "name", "company", "comment", "image_url", "rating", "variant"],
+  "required": [
+    "display_order",
+    "name",
+    "company",
+    "comment",
+    "image_url",
+    "rating",
+    "variant"
+  ],
   "rls": {
     "create": false,
     "read": true,

@@ -1,6 +1,6 @@
 {
-  "type": "object",
   "name": "Testimonial",
+  "type": "object",
   "properties": {
     "display_order": {
       "type": "number",
@@ -29,6 +29,10 @@
     "variant": {
       "type": "string",
       "description": "Display group: default, featured, or layout_2"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000
     }
   },
   "required": [
