@@ -1,0 +1,156 @@
+{
+  "name": "AdminChatTurn",
+  "type": "object",
+  "properties": {
+    "owner_id": {
+      "type": "string"
+    },
+    "chat_key": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "turn_key": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "user_message": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "user"
+          ]
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 60000
+        },
+        "attachments": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "maxLength": 200
+              },
+              "file_uri": {
+                "type": "string",
+                "maxLength": 1000
+              }
+            },
+            "required": [
+              "name",
+              "file_uri"
+            ]
+          }
+        }
+      },
+      "required": [
+        "role",
+        "content"
+      ]
+    },
+    "assistant_message": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "assistant"
+          ]
+        },
+        "content": {
+          "type": "string",
+          "maxLength": 60000
+        },
+        "imageUrl": {
+          "type": "string",
+          "maxLength": 2000
+        },
+        "savedUrl": {
+          "type": "string",
+          "maxLength": 2000
+        }
+      },
+      "required": [
+        "role",
+        "content"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "complete",
+        "failed"
+      ]
+    },
+    "error": {
+      "type": "string",
+      "maxLength": 400
+    }
+  },
+  "required": [
+    "owner_id",
+    "chat_key",
+    "turn_key",
+    "user_message",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    }
+  }
+}

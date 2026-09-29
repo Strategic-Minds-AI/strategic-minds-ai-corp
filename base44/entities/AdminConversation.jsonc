@@ -1,0 +1,85 @@
+{
+  "name": "AdminConversation",
+  "type": "object",
+  "properties": {
+    "owner_id": {
+      "type": "string"
+    },
+    "chat_key": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 120
+    },
+    "archived": {
+      "type": "boolean",
+      "default": false
+    },
+    "last_activity": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "owner_id",
+    "chat_key",
+    "title",
+    "archived",
+    "last_activity"
+  ],
+  "rls": {
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "read": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "created_by_id": "{{user.id}}"
+        }
+      ]
+    }
+  }
+}
