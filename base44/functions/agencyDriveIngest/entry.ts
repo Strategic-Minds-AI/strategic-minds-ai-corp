@@ -42,6 +42,11 @@ export default async function(req: Request): Promise<Response> {
       const file = await google('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,webViewLink,md5Checksum,parents', { method: 'POST', headers: { 'Content-Type': `multipart/related; boundary=${boundary}` }, body: payload });
       return { file, sha256 };
     };
+    if (body.action === 'recentFiles') {
+      const q = new URLSearchParams({ q: 'trashed = false', fields: 'nextPageToken,files(id,name,mimeType,modifiedTime,webViewLink)', pageSize: '20', orderBy: 'modifiedTime desc' });
+      const data = await google(`https://www.googleapis.com/drive/v3/files?${q}`);
+      return Response.json({ files: data.files || [] });
+    }
     if (body.action === 'folders') {
       const pageToken = body.pageToken || '';
       if (typeof pageToken !== 'string' || pageToken.length > 500) return Response.json({ error: 'Invalid page.' }, { status: 400 });

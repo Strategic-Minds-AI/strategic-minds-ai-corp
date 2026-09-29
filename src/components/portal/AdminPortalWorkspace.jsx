@@ -7,12 +7,14 @@ import AdminCommerce from '@/components/commerce/AdminCommerce';
 import CrmPanel from './CrmPanel';
 import ChatGPTConnection from './ChatGPTConnection';
 import AdminIngestion from './AdminIngestion';
+import GoogleWorkspacePanel from './GoogleWorkspacePanel';
 
 export default function AdminPortalWorkspace({ projects, requests, clients, selectedId, onSelectProject, onRefresh, active }) {
   const selected = projects.find(p => p.id === selectedId);
   return <div className="min-w-0">
       {active === 'chatgpt' && <ChatGPTConnection />}
       {active === 'ingestion' && <AdminIngestion projects={projects}/>}
+      {active === 'google-workspace' && <GoogleWorkspacePanel />}
       {active === 'crm' && <CrmPanel />}
       {active === 'clients' && <div className="grid gap-5"><AdminClientInvite onDone={onRefresh} /><AdminProjectForm clients={clients} onDone={onRefresh} /></div>}
       {active === 'commerce' && <AdminCommerce clients={clients} onDone={onRefresh} />}
