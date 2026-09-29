@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, SquarePen, Search, MessageSquare, Settings2, X, LayoutGrid } from 'lucide-react';
+import { Menu, SquarePen, Search, Settings2, X, LayoutGrid } from 'lucide-react';
 const tools = [['crm','CRM'], ['clients','Clients & projects'], ['commerce','Commerce'], ['infrastructure','Infrastructure'], ['provisioning','Site provisioning'], ['projects','Project requests'], ['chatgpt','MCP connection']];
 export default function AdminChatSidebar({ chats, selectedId, view, onView, onNew, onSelect, onSettings, onDelete }) {
   const [open, setOpen] = useState(false);
