@@ -15,6 +15,7 @@ import { Helmet } from "react-helmet";
 import ReactMarkdown from "react-markdown";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import BuildingHeroBackdrop from '@/components/agency/BuildingHeroBackdrop';
 
 const SinglePostContent = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -58,19 +59,13 @@ const SinglePostContent = () => {
       <Helmet>
         <title>{post.title}</title>
       </Helmet>
-      <main className="relative mt-[4.5rem] lg:mt-[161px]">
-        <div className="relative flex flex-col items-center justify-center px-4 py-20 before:absolute before:inset-0 before:z-[1] before:bg-foreground/75 sm:h-96 lg:h-[30rem]">
-          {post.image_url && (
-            <img
-              src={post.image_url}
-              alt={post.image_alt ?? post.title}
-              className="absolute inset-0 mb-6 h-full w-full object-cover"
-            />
-          )}
-          <div className="relative z-[1] mx-auto max-w-4xl text-center">
-            <h1 className="mb-5 text-white lg:text-5xl">{post.title}</h1>
+      <main className="relative">
+        <section className="site-hero relative isolate flex min-h-[620px] items-center overflow-hidden border-b border-border bg-muted pb-16 pt-28 md:pt-24">
+          <BuildingHeroBackdrop />
+          <div className="agency-container"><div className="max-w-2xl">
+            <h1 className="mb-5 font-heading text-4xl font-bold tracking-tight text-foreground md:text-5xl">{post.title}</h1>
             {post.author_name && (
-              <div className="inline-flex flex-nowrap items-center text-base font-medium text-white lg:text-md">
+              <div className="inline-flex flex-wrap items-center text-base font-medium text-foreground lg:text-md">
                 {post.author_image_url && (
                   <img
                     src={post.author_image_url}
@@ -78,7 +73,7 @@ const SinglePostContent = () => {
                     width={48}
                     height={48}
                     className="mr-4 rounded-full"
-                  />
+                    />
                 )}
                 <span itemProp="author" itemType="https://schema.org/Person">
                   {"by "}
@@ -90,8 +85,8 @@ const SinglePostContent = () => {
                 </span>
               </div>
             )}
-          </div>
-        </div>
+          </div></div>
+        </section>
         <section className="border-b pb-24 pt-16">
           <div className="container">
             <div className="mx-auto max-w-[50rem]">
@@ -135,6 +130,7 @@ const SinglePostContent = () => {
               </div>
             </div>
             <article className="post-content prose prose-lg mx-auto max-w-[50rem] dark:prose-invert prose-headings:text-foreground">
+              {post.image_url && <img src={post.image_url} alt={post.image_alt ?? post.title} className="mb-10 w-full rounded-md object-cover" />}
               <ReactMarkdown>{post.content_markdown}</ReactMarkdown>
             </article>
           </div>

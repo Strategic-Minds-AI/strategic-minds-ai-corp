@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import BuildingHeroBackdrop from '@/components/agency/BuildingHeroBackdrop';
 
 type SectionPageTitleProps = {
   children: React.ReactNode;
@@ -14,7 +15,8 @@ const SectionPageTitle = ({
   subtitleClasses,
 }: SectionPageTitleProps) => {
   return (
-    <section className="border-b border-border bg-gradient-to-br from-background via-muted to-background pb-16 pt-36 lg:pb-20 lg:pt-44">
+    <section className="site-hero relative isolate flex min-h-[620px] items-center overflow-hidden border-b border-border bg-muted pb-16 pt-28 md:pt-24">
+      <BuildingHeroBackdrop />
       <div className="agency-container">
         <div className="max-w-3xl">
           <p className="agency-eyebrow mb-5">STRATEGIC MINDS AI / REAL BUSINESS IMPACT</p>

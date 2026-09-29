@@ -2,11 +2,11 @@ import { BarChart3, ShieldCheck, UsersRound } from 'lucide-react';
 import NewsletterForm from '@/components/forms/newsletter-form';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
+import BuildingHeroBackdrop from '@/components/agency/BuildingHeroBackdrop';
 
 export default function SectionHero() {
   return <section className="site-hero relative isolate overflow-hidden bg-muted pb-12 pt-28 lg:pt-36">
-    <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=2200&q=85" alt="" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
-    <div className="pointer-events-none absolute inset-0 -z-10 bg-background/90 md:bg-gradient-to-r md:from-background md:via-background/95 md:to-background/25" />
+    <BuildingHeroBackdrop />
     <div className="agency-container">
       <div className="mb-9 flex min-h-[480px] items-center">
         <div className="relative z-10 max-w-2xl py-6">

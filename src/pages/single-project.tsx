@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import ReactMarkdown from "react-markdown";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import BuildingHeroBackdrop from '@/components/agency/BuildingHeroBackdrop';
 
 const SingleProjectContent = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -43,19 +44,13 @@ const SingleProjectContent = () => {
       <Helmet>
         <title>{project.title}</title>
       </Helmet>
-      <main className="relative mt-[4.5rem] lg:mt-[161px]">
-        <div className="relative flex h-96 flex-col items-center justify-center px-4 py-16 before:absolute before:inset-0 before:z-[1] before:bg-foreground/75 lg:h-[30rem]">
-          {project.image_url && (
-            <img
-              src={project.image_url}
-              alt={project.image_alt ?? project.title}
-              className="absolute inset-0 mb-6 h-full w-full object-cover"
-            />
-          )}
-          <div className="relative z-[1] mx-auto max-w-4xl text-center">
-            <h1 className="mb-5 text-white lg:text-5xl">{project.title}</h1>
-          </div>
-        </div>
+      <main className="relative">
+        <section className="site-hero relative isolate flex min-h-[620px] items-center overflow-hidden border-b border-border bg-muted pb-16 pt-28 md:pt-24">
+          <BuildingHeroBackdrop />
+          <div className="agency-container"><div className="max-w-2xl">
+            <h1 className="mb-5 font-heading text-4xl font-bold tracking-tight text-foreground md:text-5xl">{project.title}</h1>
+          </div></div>
+        </section>
 
         {(project.metric_1_value ||
           project.metric_1_label ||
@@ -114,6 +109,7 @@ const SingleProjectContent = () => {
         <section className="pb-24 pt-16">
           <div className="container">
             <article className="prose prose-lg mx-auto max-w-[50rem] dark:prose-invert prose-headings:text-foreground">
+              {project.image_url && <img src={project.image_url} alt={project.image_alt ?? project.title} className="mb-10 w-full rounded-md object-cover" />}
               <ReactMarkdown>{project.content_markdown}</ReactMarkdown>
             </article>
           </div>
