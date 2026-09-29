@@ -20,7 +20,7 @@ interface MainNavProps {
 export default function MainNav({ items }: MainNavProps) {
   return (
     <>
-      <NavigationMenu className="hidden lg:block">
+      <NavigationMenu className="hidden xl:block">
         <NavigationMenuList>
           {items &&
             items.map(item => (

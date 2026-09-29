@@ -18,7 +18,7 @@ export function MobileNav({ mainNavItems, triggerIcon = "default" }: MobileNavPr
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       {triggerIcon === "default" && (
         <SheetTrigger asChild>
-          <button className="group flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-transparent hover:bg-primary focus:border-transparent focus:bg-primary dark:border-transparent dark:bg-white/[.15] dark:hover:bg-primary lg:ml-5 lg:hidden">
+          <button className="group flex h-8 w-8 items-center justify-center rounded-full border transition-colors hover:border-transparent hover:bg-primary focus:border-transparent focus:bg-primary dark:border-transparent dark:bg-white/[.15] dark:hover:bg-primary xl:ml-5 xl:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -36,7 +36,7 @@ export function MobileNav({ mainNavItems, triggerIcon = "default" }: MobileNavPr
 
       {triggerIcon === "style-2" && (
         <SheetTrigger asChild>
-          <button className="group ml-2 flex h-8 w-8 items-center justify-center rounded-full transition-colors lg:ml-5 lg:hidden">
+          <button className="group ml-2 flex h-8 w-8 items-center justify-center rounded-full transition-colors xl:ml-5 xl:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

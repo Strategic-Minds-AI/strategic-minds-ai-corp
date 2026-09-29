@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 @layer base {
+  html { font-size: 17px; }
+  @media (min-width: 1312px) { html { font-size: 18px; } }
   :root {
     --radius: 0.5rem;
     --font-heading: 'Roboto', sans-serif;
@@ -92,8 +94,9 @@
 }
 
 @layer components {
-  .agency-container { @apply mx-auto w-full max-w-[1320px] px-6 md:px-10 xl:px-16; }
-  .agency-eyebrow { @apply font-body text-[9px] font-medium uppercase tracking-[0.2em] text-primary; }
+  .agency-container { @apply mx-auto w-full px-6 md:px-10 xl:px-16; }
+  .container { @apply mx-auto w-full px-6 md:px-10 xl:px-16; max-width: none; }
+  .agency-eyebrow { @apply font-body text-[11px] font-medium uppercase tracking-[0.2em] text-primary; }
   .agency-heading { @apply font-display text-3xl font-normal leading-tight tracking-tight text-foreground md:text-4xl; }
   .agency-button { @apply inline-flex min-h-12 items-center justify-center gap-6 rounded-sm bg-primary px-6 py-3 text-xs font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50; }
   .agency-input { @apply mt-2 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary; }

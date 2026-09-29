@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <>
       <header className="fixed top-0 z-20 w-full border-b border-border bg-background/95 shadow-sm backdrop-blur-sm">
-        <div className={cn("mx-auto flex max-w-[1440px] items-center px-6 py-4 transition-all lg:py-5 xl:px-10", stickyClass)}>
+        <div className={cn("mx-auto flex w-full items-center px-6 py-4 transition-all lg:py-5 md:px-10 xl:px-16", stickyClass)}>
           <Link to="/" className="mr-12 shrink-0">
             <SiteLogo
               width={123}
