@@ -1,4 +1,5 @@
 const sections = [
+  ['chatgpt', 'ChatGPT connection'],
   ['crm', 'AI-assisted CRM'],
   ['clients', 'Clients & projects'],
   ['commerce', 'Commerce'],
