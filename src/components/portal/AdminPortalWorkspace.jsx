@@ -8,11 +8,13 @@ import CrmPanel from './CrmPanel';
 import ChatGPTConnection from './ChatGPTConnection';
 import AdminIngestion from './AdminIngestion';
 import GoogleWorkspacePanel from './GoogleWorkspacePanel';
+import AdminPhoneLink from '@/components/portal/phone/AdminPhoneLink';
 
 export default function AdminPortalWorkspace({ projects, requests, clients, selectedId, onSelectProject, onRefresh, active }) {
   const selected = projects.find(p => p.id === selectedId);
   return <div className="min-w-0">
       {active === 'chatgpt' && <ChatGPTConnection />}
+      {active === 'phone' && <AdminPhoneLink />}
       {active === 'ingestion' && <AdminIngestion projects={projects}/>}
       {active === 'google-workspace' && <GoogleWorkspacePanel />}
       {active === 'crm' && <CrmPanel />}

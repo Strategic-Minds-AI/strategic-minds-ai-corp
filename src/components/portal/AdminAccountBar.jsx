@@ -8,6 +8,7 @@ const accounts = [
   ['github', 'GitHub'],
   ['ingestion', 'Drive files'],
   ['crm', 'Google contacts & CRM'],
+  ['phone', 'Phone & WhatsApp'],
 ];
 
 export default function AdminAccountBar({ active, onSelect }) {
