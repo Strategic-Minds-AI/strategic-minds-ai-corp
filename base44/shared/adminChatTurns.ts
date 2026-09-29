@@ -8,7 +8,7 @@ export async function beginTurn(base44, ownerId, body, importing = false) {
   const existing = await base44.entities.AdminChatTurn.filter({ owner_id: ownerId, chat_key: body.chatKey, turn_key: turnKey }, 'created_date', 100);
   if (existing.length >= 100) throw new Error('Turn references need reconciliation.');
   let turn = existing[0];
-  if (turn && JSON.stringify(turn.user_message) !== JSON.stringify(userMessage)) return { error: 'The turn reference belongs to a different message.', status: 409 };
+  if (turn && JSON.stringify(chatMessage(turn.user_message, 'user')) !== JSON.stringify(userMessage)) return { error: 'The turn reference belongs to a different message.', status: 409 };
   if (!turn) turn = await base44.entities.AdminChatTurn.create({ owner_id: ownerId, chat_key: body.chatKey, turn_key: turnKey, user_message: userMessage, ...(assistantMessage ? { assistant_message: assistantMessage } : {}), status: assistantMessage ? 'complete' : importing ? 'failed' : 'pending', error: '' });
   else if (importing && assistantMessage && !turn.assistant_message) turn = await base44.entities.AdminChatTurn.update(turn.id, { assistant_message: assistantMessage, status: 'complete', error: '' });
   if ((await findConversation(base44, ownerId, body.chatKey)).archived) {
@@ -26,7 +26,7 @@ export async function finishTurn(base44, ownerId, body, failed = false) {
   if (!rows.length) return { error: 'The saved conversation turn was not found.', status: 404 };
   if (failed && rows.some(row => row.assistant_message)) return { turn: rows.find(row => row.assistant_message) };
   const message = failed ? null : chatMessage(body.assistantMessage, 'assistant');
-  if (!failed && rows.some(row => row.assistant_message && (row.assistant_message.content !== message.content || row.assistant_message.imageUrl !== message.imageUrl))) return { error: 'A different response is already saved; it will not be overwritten.', status: 409 };
+  if (!failed && rows.some(row => row.assistant_message && (row.assistant_message.content !== message.content || (row.assistant_message.imageUrl || undefined) !== message.imageUrl))) return { error: 'A different response is already saved; it will not be overwritten.', status: 409 };
   const savedUrl = rows.find(row => row.assistant_message?.savedUrl)?.assistant_message?.savedUrl;
   if (!failed && savedUrl && message.savedUrl && message.savedUrl !== savedUrl) return { error: 'A different Drive result is already saved.', status: 409 };
   if (!failed && savedUrl) message.savedUrl = savedUrl;

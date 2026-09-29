@@ -5,8 +5,8 @@ export function chatKey(value) {
 export function chatMessage(value, role) {
   const allowed = role === 'user' ? ['role','content','attachments'] : ['role','content','imageUrl','savedUrl'];
   if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).some(key => !allowed.includes(key)) || value.role !== role || typeof value.content !== 'string' || !value.content.trim() || value.content.length > 60000) throw new Error('Invalid or oversized chat message.');
-  const result = { role, content: value.content };
-  if (value.attachments !== undefined) {
+  const result = { role, content: value.content, ...(role === 'user' ? { attachments: [] } : {}) };
+  if (value.attachments != null) {
     if (!Array.isArray(value.attachments) || value.attachments.length > 5 || value.attachments.some(file => !file || Object.keys(file).some(key => !['name','file_uri'].includes(key)) || typeof file.name !== 'string' || !file.name || file.name.length > 200 || typeof file.file_uri !== 'string' || !file.file_uri || file.file_uri.length > 1000 || /^data:/i.test(file.file_uri))) throw new Error('Use private upload references, not file contents or public URLs.');
     result.attachments = value.attachments.map(file => ({ name: file.name, file_uri: file.file_uri }));
   }
