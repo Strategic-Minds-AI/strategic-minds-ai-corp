@@ -54,7 +54,7 @@ export default function AdminChatWorkspace(props) {
     finally { setSending(false); }
   }
   return <main className="fixed inset-0 z-50 flex overflow-hidden bg-background font-body text-foreground">
-    <AdminChatSidebar chats={chats} selectedId={selectedId} view={view} onView={setView} onNew={newChat} onSelect={select} onDelete={remove} onQuickTask={startQuickTask} onSettings={() => setView('settings')}/>
+    <AdminChatSidebar chats={chats} selectedId={selectedId} view={view} onView={setView} onNew={newChat} onSelect={select} onDelete={remove} onQuickTask={startQuickTask} onSettings={() => setView('settings')} projects={props.projects}/>
     {view === 'chat' ? <AdminChatConversation chat={current} draft={draft} onDraft={setDraft} onSend={send} sending={sending} error={error} projects={props.projects} projectId={projectId} onProject={id => { setProjectId(id); if (quickTask) startQuickTask(quickTask, id); }} quickTask={quickTask}/> : view === 'settings' ? <AdminChatSettings chats={chats} onClear={() => { setChats([]); setSelectedId(null); }} onBack={() => setView('chatgpt')}/> : <div className="min-w-0 flex-1 overflow-y-auto bg-background"><header className="sticky top-0 z-10 flex h-16 items-center border-b border-border bg-background px-6 pl-16 text-sm font-semibold capitalize text-foreground md:pl-7">{view === 'chatgpt' ? 'MCP connection' : view.replace('-', ' ')}</header><div className="p-5 md:p-8">{props.loadError && <p role="alert" className="mb-5 text-sm text-destructive">{props.loadError} <button type="button" onClick={props.onRefresh} className="underline">Retry</button></p>}<AdminPortalWorkspace {...props} active={view}/></div></div>}
   </main>;
 }
