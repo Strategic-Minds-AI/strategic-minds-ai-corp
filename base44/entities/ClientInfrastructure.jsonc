@@ -8,6 +8,16 @@
     "client_id": {
       "type": "string"
     },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "code",
+          "data"
+        ]
+      }
+    },
     "github_repo": {
       "type": "string"
     },
@@ -27,6 +37,9 @@
       "type": "string"
     },
     "railway_service_id": {
+      "type": "string"
+    },
+    "supabase_ref": {
       "type": "string"
     }
   },

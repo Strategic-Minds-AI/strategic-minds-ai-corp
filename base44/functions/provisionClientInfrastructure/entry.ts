@@ -31,9 +31,13 @@ export default async function(req) {
       const name = typeof body.name === 'string' ? body.name.trim() : '';
       const clientId = typeof body.clientId === 'string' ? body.clientId : '';
       if (name.length < 3 || name.length > 80 || !clientId) return Response.json({ error: 'Choose a client and enter a project name (3–80 characters).' }, { status: 400 });
-      const client = await base44.entities.User.get(clientId);
+      let client;
+      try { client = await base44.entities.User.get(clientId); }
+      catch { return Response.json({ error: 'Choose a registered client.' }, { status: 400 }); }
       if (!client || client.role !== 'user') return Response.json({ error: 'Choose a registered client.' }, { status: 400 });
-      const item = await base44.entities.ClientInfrastructure.create({ name, client_id: clientId });
+      const capabilities = body.capabilities;
+      if (!Array.isArray(capabilities) || !capabilities.length || capabilities.some(c => !['code', 'data'].includes(c))) return Response.json({ error: 'Select Code, Data, or both.' }, { status: 400 });
+      const item = await base44.entities.ClientInfrastructure.create({ name, client_id: clientId, capabilities: [...new Set(capabilities)] });
       return Response.json({ item });
     }
     if (!['github', 'vercel', 'railway', 'railwayService'].includes(body.action) || typeof body.id !== 'string') return Response.json({ error: 'Invalid provisioning request.' }, { status: 400 });
