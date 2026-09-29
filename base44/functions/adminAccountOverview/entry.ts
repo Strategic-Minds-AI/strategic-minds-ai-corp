@@ -24,7 +24,7 @@ export default async function(req: Request): Promise<Response> {
       items = (Array.isArray(data) ? data : []).map((p: any) => ({ id: p.id, name: p.name, detail: p.region || '', url: `https://supabase.com/dashboard/project/${encodeURIComponent(p.id)}` }));
     } else if (provider === 'github') {
       const { accessToken } = await base44.asServiceRole.connectors.getConnection('github');
-      const response = await fetch('https://api.github.com/user/repos?sort=updated&per_page=100&affiliation=owner,collaborator,organization_member', { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' } });
+      const response = await fetch('https://api.github.com/user/repos?sort=updated&per_page=100&affiliation=owner,collaborator,organization_member', { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'StrategicMindsAI' } });
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'GitHub request failed.');
       items = (Array.isArray(data) ? data : []).map((p: any) => ({ id: String(p.id), name: p.full_name, detail: p.description || '', url: p.html_url }));
