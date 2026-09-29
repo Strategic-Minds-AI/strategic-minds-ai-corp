@@ -6,7 +6,7 @@ export default function SectionHero() {
     eyebrow="AI TRANSFORMATION FOR WHAT'S NEXT"
     title={<>Strategy. Intelligence. <span className="text-primary">Automation. Growth.</span></>}
     description="We design and deploy AI systems that help businesses operate smarter, make better decisions and accelerate measurable growth."
-    note="Engagements starting at $2,500 · Managed AI from $2,500/month · Enterprise solutions available"
+    note="Engagements starting at $375 · Managed AI from $375/month · Enterprise solutions available"
     ctaLabel="Book an Executive Consultation"
     secondaryLabel="Explore Our Services"
     secondaryHref="/services"
