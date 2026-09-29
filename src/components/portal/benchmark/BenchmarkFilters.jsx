@@ -1,0 +1,3 @@
+export default function BenchmarkFilters({ criteria, query, onQuery, domain, onDomain }) {
+  return <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(180px,280px)]"><label className="text-xs">Find capabilities<input type="search" value={query} onChange={event => onQuery(event.target.value)} placeholder="Search a system or enhancement" className="agency-input"/></label><label className="text-xs">System category<select value={domain} onChange={event => onDomain(event.target.value)} className="agency-input"><option value="">All systems</option>{[...new Set(criteria.map(item => item.domain))].map(value => <option key={value} value={value}>{value}</option>)}</select></label></div>;
+}

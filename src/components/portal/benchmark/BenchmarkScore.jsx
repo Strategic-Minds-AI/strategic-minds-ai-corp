@@ -1,0 +1,4 @@
+export default function BenchmarkScore({ report, criterionCount }) {
+  const items = [['Verified feature parity', `${report?.feature_parity ?? 0}%`, `${report?.complete_features ?? 0} / ${criterionCount} capabilities fully proven`], ['Acceptance-check coverage', `${report?.check_coverage ?? 0}%`, `${report?.passed ?? 0} / ${criterionCount * 4} checks passed`], ['Release decision', report?.release_approved ? 'Approved' : 'Blocked', 'Every check must pass; unknowns never count as success']];
+  return <div className="grid gap-3 sm:grid-cols-3">{items.map(([label, value, detail]) => <section key={label} className="rounded-xl border border-border bg-card p-5"><p className="mb-3 text-xs text-muted-foreground">{label}</p><p className="mb-2 text-3xl font-semibold text-foreground">{value}</p><p className="mb-0 text-xs text-muted-foreground">{detail}</p></section>)}</div>;
+}

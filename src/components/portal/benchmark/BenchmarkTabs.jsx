@@ -1,0 +1,4 @@
+const sections = [['overview','Benchmarks'], ['comparison','Comparison'], ['audit','Forensic audit'], ['library','Prompt library'], ['validation','Tests & scoring'], ['jobs','Enhancement records']];
+export default function BenchmarkTabs({ active, onSelect }) {
+  return <nav aria-label="Benchmark sections" className="flex flex-wrap gap-2 border-b border-border pb-3">{sections.map(([id, label]) => <button type="button" key={id} aria-pressed={active === id} onClick={() => onSelect(id)} className={`rounded-lg px-3 py-2 text-xs font-medium ${active === id ? 'bg-primary text-primary-foreground' : 'bg-muted text-foreground hover:text-primary'}`}>{label}</button>)}</nav>;
+}

@@ -1,0 +1,3 @@
+export default function BenchmarkSources({ sources }) {
+  return <section className="space-y-3"><h2 className="mb-2 text-lg">Research sources</h2><p className="text-xs text-muted-foreground">Observed September 29, 2026. Vendor claims are documented claims, not independent competitor runtime tests; pricing and availability can change.</p><div className="grid gap-3 md:grid-cols-2">{sources.map(source => <article key={source.id} className="rounded-lg border border-border bg-card p-4"><a href={source.url} target="_blank" rel="noopener noreferrer" className="text-sm font-medium text-primary underline">{source.publisher} · {source.title}</a><p className="mb-0 mt-2 text-xs text-muted-foreground">{source.evidence}</p></article>)}</div></section>;
+}

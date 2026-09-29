@@ -12,6 +12,7 @@ import AgencyContact from '@/pages/AgencyContact';
 import AgencyLayout from '@/components/agency/AgencyLayout';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Portal from '@/pages/Portal';
+import Benchmark from '@/pages/Benchmark';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
@@ -67,6 +68,7 @@ const AuthenticatedApp = () => {
           <Route path="/pricing" element={<Pricing />} />
           <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fportal" replace />} />}>
             <Route path="/portal" element={<Portal />} />
+            <Route path="/portal/benchmark" element={<Benchmark />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Route>
