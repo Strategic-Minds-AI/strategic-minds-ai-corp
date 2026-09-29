@@ -12,7 +12,7 @@ export default function AdminPortalWorkspace({ projects, requests, clients, sele
   const selected = projects.find(p => p.id === selectedId);
   return <div className="min-w-0">
       {active === 'chatgpt' && <ChatGPTConnection />}
-      {active === 'ingestion' && <AdminIngestion />}
+      {active === 'ingestion' && <AdminIngestion projects={projects}/>}
       {active === 'crm' && <CrmPanel />}
       {active === 'clients' && <div className="grid gap-5"><AdminClientInvite onDone={onRefresh} /><AdminProjectForm clients={clients} onDone={onRefresh} /></div>}
       {active === 'commerce' && <AdminCommerce clients={clients} onDone={onRefresh} />}

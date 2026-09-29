@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Menu, SquarePen, Search, Settings2, X, LayoutGrid } from 'lucide-react';
+import AdminChatQuickTasks from './AdminChatQuickTasks';
 const tools = [['ingestion','Ingestion'], ['crm','CRM'], ['clients','Clients & projects'], ['commerce','Commerce'], ['infrastructure','Infrastructure'], ['provisioning','Site provisioning'], ['projects','Project requests'], ['chatgpt','MCP connection']];
-export default function AdminChatSidebar({ chats, selectedId, view, onView, onNew, onSelect, onSettings, onDelete }) {
+export default function AdminChatSidebar({ chats, selectedId, view, onView, onNew, onSelect, onSettings, onDelete, onQuickTask }) {
   const [open, setOpen] = useState(false);
   const [searching, setSearching] = useState(false);
   const [query, setQuery] = useState('');
@@ -17,6 +18,7 @@ export default function AdminChatSidebar({ chats, selectedId, view, onView, onNe
       <div className="mt-5 min-h-0 flex-1 overflow-y-auto"><p className="px-3 pb-2 text-xs font-semibold text-muted-foreground">Recent</p>
         {chats.filter(c => !query || (c.title + ' ' + c.messages.map(m => m.content).join(' ')).toLowerCase().includes(query.toLowerCase())).map(c => <div key={c.id} className={`group flex items-center rounded-lg hover:bg-consoleAccent ${view === 'chat' && selectedId === c.id ? 'bg-muted' : ''}`}><button type="button" onClick={() => choose(() => onSelect(c.id))} className="min-w-0 flex-1 truncate px-3 py-2 text-left text-sm text-foreground group-hover:text-primary-foreground" title={c.title}>{c.title}</button><button type="button" aria-label={`Delete ${c.title}`} onClick={() => onDelete(c.id)} className="rounded p-2 text-muted-foreground group-hover:text-primary-foreground hover:text-primary-foreground" title="Delete chat"><X size={15}/></button></div>)}
         {chats.length === 0 && <p className="px-3 text-xs text-muted-foreground">Your conversations will appear here.</p>}
+        <AdminChatQuickTasks onChoose={task => choose(() => onQuickTask(task))}/>
         <p className="mt-6 px-3 pb-2 text-xs font-semibold text-muted-foreground">Agency tools</p>{tools.map(([id,label]) => <button key={id} type="button" onClick={() => choose(() => onView(id))} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground ${view === id ? 'bg-muted font-medium' : ''}`}><LayoutGrid size={16}/>{label}</button>)}
       </div>
       <button type="button" onClick={() => choose(onSettings)} className="flex items-center gap-3 rounded-lg border-t border-border px-3 py-4 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Settings2 size={17}/> Settings</button>
