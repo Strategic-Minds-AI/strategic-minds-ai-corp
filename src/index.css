@@ -99,6 +99,7 @@
     background-position: center;
     background-size: cover;
     background-attachment: fixed;
+    animation: agency-background-drift 24s ease-in-out infinite alternate;
   }
   .dark .agency-site-backdrop {
     background-image: linear-gradient(hsl(var(--background) / .94), hsl(var(--background) / .94)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=2000&q=85');
@@ -113,6 +114,49 @@
   .agency-eyebrow { @apply font-body text-[11px] font-medium uppercase tracking-[0.2em] text-primary; }
   .agency-heading { @apply font-display text-3xl font-normal leading-tight tracking-tight text-foreground md:text-4xl; }
   .agency-button { @apply inline-flex min-h-12 items-center justify-center gap-6 rounded-sm bg-primary px-6 py-3 text-xs font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50; }
+  /* Shared motion for public-facing links, buttons, typography and the hero image. */
+  .agency-site-backdrop :is(a, button) {
+    transition: color .25s ease, background-color .25s ease, border-color .25s ease, box-shadow .3s ease, opacity .25s ease, transform .3s ease;
+  }
+  .agency-site-backdrop :is(button:not(:disabled), a.agency-button, a[class*="rounded"]):hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px hsl(var(--primary) / .15);
+  }
+  .agency-site-backdrop :is(button:not(:disabled), a.agency-button, a[class*="rounded"]):active {
+    transform: translateY(0);
+  }
+  .agency-site-backdrop main :is(h2, h3, p) {
+    animation: agency-text-entrance .55s ease-out both;
+  }
+  .agency-site-backdrop .agency-hero-eyebrow { animation: agency-text-entrance .55s ease-out both; }
+  .agency-site-backdrop .agency-hero-title { animation: agency-text-entrance .7s .1s ease-out both; }
+  .agency-site-backdrop .agency-hero-description { animation: agency-text-entrance .7s .2s ease-out both; }
+  .agency-hero-image {
+    transform-origin: right top;
+    animation: agency-image-drift 16s ease-in-out infinite alternate;
+  }
+  @keyframes agency-text-entrance {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes agency-image-drift {
+    from { transform: scale(1); }
+    to { transform: scale(1.025); }
+  }
+  @keyframes agency-background-drift {
+    from { background-position: 50% 50%; }
+    to { background-position: 52% 50%; }
+  }
+  @media (max-width: 1024px) {
+    .agency-site-backdrop { background-attachment: scroll; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .agency-site-backdrop, .agency-hero-image, .agency-site-backdrop main :is(h2, h3, p),
+    .agency-site-backdrop .agency-hero-eyebrow, .agency-site-backdrop .agency-hero-title,
+    .agency-site-backdrop .agency-hero-description { animation: none; }
+    .agency-site-backdrop :is(a, button) { transition: none; }
+    .agency-site-backdrop :is(button:not(:disabled), a.agency-button, a[class*="rounded"]):is(:hover, :active) { transform: none; box-shadow: none; }
+  }
   .agency-input { @apply mt-2 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary; }
   a:focus-visible, button:focus-visible { @apply outline outline-2 outline-offset-4 outline-primary; }
   .material-input:focus {
