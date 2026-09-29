@@ -1,0 +1,7 @@
+export default function AdminGmailAccountRow({ account, state, active, busy, onConnect, onDisconnect, onSelect }) {
+  return <li className="flex flex-wrap items-center gap-2 rounded-lg border border-border p-3 text-sm">
+    <div className="min-w-0 flex-1"><p className="mb-0 font-semibold text-foreground">{account.label} {active && <span className="text-xs text-primary">· Selected</span>}</p>
+      <p className="truncate text-xs text-muted-foreground">{!state ? 'Checking connection…' : state.error ? state.error : state.connected ? state.email : 'Not connected'}</p></div>
+    {state?.connected ? <><button type="button" disabled={!!busy || active} onClick={onSelect} className="rounded-lg border border-border px-3 py-1.5 text-xs text-foreground disabled:opacity-50">{active ? 'Selected' : 'Select'}</button><button type="button" disabled={!!busy} onClick={onDisconnect} className="rounded-lg px-2 py-1.5 text-xs text-destructive disabled:opacity-50">Disconnect</button></> : state && !state.error && <button type="button" disabled={!!busy} onClick={onConnect} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground disabled:opacity-50">{busy ? 'Connecting…' : 'Connect'}</button>}
+  </li>;
+}

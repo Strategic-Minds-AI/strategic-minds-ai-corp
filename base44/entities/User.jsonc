@@ -14,6 +14,10 @@
       "type": "string",
       "maxLength": 15000,
       "description": "Personal instructions for the agency assistant"
+    },
+    "active_gmail_connector_id": {
+      "type": "string",
+      "description": "Selected Gmail inbox connection for the admin workspace"
     }
   },
   "required": [
