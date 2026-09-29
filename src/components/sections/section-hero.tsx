@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 export default function SectionHero() {
-  return <section className="relative isolate overflow-hidden bg-muted pb-12 pt-28 lg:pt-36">
+  return <section className="site-hero relative isolate overflow-hidden bg-muted pb-12 pt-28 lg:pt-36">
     <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=2200&q=85" alt="" className="absolute inset-0 -z-20 h-full w-full object-cover object-center" />
     <div className="pointer-events-none absolute inset-0 -z-10 bg-background/90 md:bg-gradient-to-r md:from-background md:via-background/95 md:to-background/25" />
     <div className="agency-container">

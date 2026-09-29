@@ -8,5 +8,5 @@ export default function AgencyLayout() {
   useEffect(() => {
     if (hash) document.getElementById(hash.slice(1))?.scrollIntoView();
   }, [pathname, hash]);
-  return <div className="min-h-screen bg-background font-body text-muted-foreground"><a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-background focus:p-4">Skip to content</a><AgencyHeader /><div id="main-content" tabIndex={-1} className={pathname === '/contact' ? 'pt-24' : ''}><Outlet /></div><AgencyFooter /></div>;
+  return <div className="agency-site-backdrop min-h-screen bg-background font-body text-muted-foreground"><a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-background focus:p-4">Skip to content</a><AgencyHeader /><div id="main-content" tabIndex={-1} className={pathname === '/contact' ? 'pt-24' : ''}><Outlet /></div><AgencyFooter /></div>;
 }
