@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Menu, SquarePen, Search, Settings2, X, LayoutGrid, ChevronDown, Plus } from 'lucide-react';
+import { Menu, SquarePen, Search, Settings2, X, LayoutGrid, ChevronDown, Plus, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import AdminChatQuickTasks from './AdminChatQuickTasks';
 import AdminDriveFolderCreator from './AdminDriveFolderCreator';
 const groups = [
@@ -7,7 +7,7 @@ const groups = [
   ['Business', [['crm','CRM'], ['commerce','Commerce']]],
   ['Systems', [['infrastructure','Infrastructure'], ['provisioning','Site provisioning'], ['chatgpt','MCP connection']]],
 ];
-export default function AdminChatSidebar({ chats, selectedId, view, onView, onNew, onSelect, onSettings, onDelete, onQuickTask, projects = [] }) {
+export default function AdminChatSidebar({ chats, selectedId, view, onView, onNew, onSelect, onSettings, onDelete, onQuickTask, projects = [], collapsed, onCollapse }) {
   const [open, setOpen] = useState(false);
   const [searching, setSearching] = useState(false);
   const [query, setQuery] = useState('');
@@ -15,10 +15,11 @@ export default function AdminChatSidebar({ chats, selectedId, view, onView, onNe
   const [createOpen, setCreateOpen] = useState(false);
   const choose = (fn) => { fn(); setOpen(false); };
   return <>
+    {collapsed && <button type="button" aria-label="Expand sidebar" title="Expand sidebar" onClick={() => onCollapse(false)} className="absolute left-4 top-4 z-20 hidden rounded-lg p-2 text-foreground hover:bg-muted md:block"><PanelLeftOpen size={20}/></button>}
     <button aria-label="Open sidebar" type="button" onClick={() => setOpen(true)} className="absolute left-4 top-4 z-10 rounded-lg p-2 text-foreground hover:bg-consoleAccent hover:text-primary-foreground md:hidden"><Menu size={22}/></button>
     {open && <button type="button" aria-label="Close sidebar" onClick={() => setOpen(false)} className="fixed inset-0 z-30 bg-foreground/30 md:hidden"/>}
-    <aside aria-label="Admin workspace" className={`absolute inset-y-0 left-0 z-40 flex w-[270px] flex-col border-r border-border bg-background p-3 transition-transform md:relative md:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}>
-      <div className="flex items-center justify-between px-2 pb-3 pt-1"><span className="text-sm font-semibold text-foreground">Strategic Minds AI</span><button type="button" aria-label="Close sidebar" onClick={() => setOpen(false)} className="rounded p-2 md:hidden"><X size={18}/></button></div>
+    <aside aria-label="Admin workspace" className={`absolute inset-y-0 left-0 z-40 flex w-[270px] flex-col border-r border-border bg-background p-3 transition-transform md:relative md:shrink-0 md:translate-x-0 md:transition-[width,padding] ${collapsed ? 'md:w-0 md:overflow-hidden md:border-0 md:p-0' : ''} ${open ? 'translate-x-0' : '-translate-x-full'}`}>
+      <div className="flex items-center justify-between px-2 pb-3 pt-1"><span className="text-sm font-semibold text-foreground">Strategic Minds AI</span><button type="button" aria-label="Collapse sidebar" title="Collapse sidebar" onClick={() => onCollapse(true)} className="ml-auto hidden rounded p-2 text-foreground hover:bg-muted md:block"><PanelLeftClose size={19}/></button><button type="button" aria-label="Close sidebar" onClick={() => setOpen(false)} className="rounded p-2 md:hidden"><X size={18}/></button></div>
       <button type="button" onClick={() => choose(onNew)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><SquarePen size={18}/> New chat</button>
       <button type="button" onClick={() => setSearching(!searching)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Search size={18}/> Search chats</button>
       {searching && <input autoFocus aria-label="Search chats" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search chats" className="my-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"/>}

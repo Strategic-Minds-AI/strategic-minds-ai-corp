@@ -1,0 +1,4 @@
+const accounts = [['vercel', 'Vercel'], ['supabase', 'Supabase'], ['railway', 'Railway'], ['github', 'GitHub']];
+export default function AdminAccountBar({ active, onSelect }) {
+  return <nav aria-label="Infrastructure accounts" className="flex min-w-0 flex-wrap items-center gap-1.5">{accounts.map(([id, label]) => <button key={id} type="button" onClick={() => onSelect(id)} aria-current={active === id ? 'page' : undefined} className={`rounded-lg border px-3 py-1.5 text-xs font-medium hover:border-primary hover:text-primary ${active === id ? 'border-primary bg-muted text-foreground' : 'border-border text-muted-foreground'}`}>{label}</button>)}</nav>;
+}
