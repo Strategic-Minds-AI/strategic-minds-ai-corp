@@ -43,9 +43,7 @@ const Header = () => {
             <DarkModeSwitch />
             <MobileNav mainNavItems={mainNav} />
 
-            <div className="ml-3 hidden md:inline-block lg:ml-auto">
-              <Link to="/contact" className="inline-flex items-center rounded bg-primary px-5 py-3 text-xs font-semibold text-primary-foreground">Book a Consultation →</Link>
-            </div>
+
           </div>
         </div>
       </header>
