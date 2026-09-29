@@ -24,8 +24,18 @@ export default async function(req) {
     const base44 = createClientFromRequest(req);
     const user = await base44.auth.me();
     if (!user) return Response.json({ error: 'Sign in required' }, { status: 401 });
-    if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
     const body = await req.json();
+    if (body.action === 'listMine') {
+      const [workspaces, databases] = await Promise.all([
+        base44.asServiceRole.entities.ClientInfrastructure.filter({ client_id: user.id }, '-created_date', 100),
+        base44.asServiceRole.entities.CustomerSite.filter({ client_id: user.id }, '-created_date', 100),
+      ]);
+      return Response.json({
+        workspaces: workspaces.map(item => ({ id: item.id, name: item.name, code_requested: !item.capabilities || item.capabilities.includes('code'), data_requested: item.capabilities?.includes('data') || !!item.supabase_ref, code_prepared: !!item.github_repo, data_prepared: !!item.supabase_ref })),
+        databases: databases.filter(site => !workspaces.some(item => item.supabase_ref === site.supabase_ref)).map(site => ({ id: site.id, name: site.name })),
+      });
+    }
+    if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
     if (body.action === 'list') return Response.json({ items: await base44.entities.ClientInfrastructure.list('-created_date', 100) });
     if (body.action === 'create') {
       const name = typeof body.name === 'string' ? body.name.trim() : '';
