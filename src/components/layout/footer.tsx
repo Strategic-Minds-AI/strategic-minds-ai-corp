@@ -1,88 +1,12 @@
 import { Link } from "react-router-dom"
 import SiteLogo from "./site-logo";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFacebook,
-  faXTwitter,
-  faYoutube,
-} from "@fortawesome/free-brands-svg-icons";
-
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
-
 import { footerNav } from "@/config/site";
 
-const Footer = () => {
-  return (
-    <footer>
-      <div className="container">
-        <div className="pb-16 pt-28">
-          <div className="gap-10 space-y-10 md:grid md:grid-cols-12 md:space-y-0">
-            <div className="col-span-12 xl:col-span-3">
-              <Link to="/" className="inline-flex shrink-0">
-                <SiteLogo
-                  width={123}
-                  height={39}
-                  lightClasses="dark:hidden"
-                  darkClasses="hidden dark:block"
-                />
-              </Link>
-              <p className="mb-8 mt-6">
-                Tools to Effectively Build Your Brand and Grow Your Business.
-              </p>
-
-            </div>
-
-            {footerNav &&
-              footerNav.map((item, index) => (
-                <div
-                  key={item.title}
-                  className={`${
-                    index === 0 ? "xl:col-start-7" : ""
-                  } col-span-3 xl:col-span-2`}
-                >
-                  <h2 className="mb-4 text-sm">{item.title}</h2>
-                  <NavigationMenu orientation="vertical">
-                    <NavigationMenuList className="flex-col items-start space-y-2">
-                      {item.items.map((link) => (
-                        <NavigationMenuItem
-                          key={link.title}
-                          className="text-sm"
-                        >
-                          <Link
-                            to={link.href}
-                            target={link?.external ? "_blank" : undefined}
-                            rel={link?.external ? "noreferrer" : undefined}
-                            className="block hover:text-primary"
-                          >
-                            {link.title}
-                          </Link>
-                        </NavigationMenuItem>
-                      ))}
-                    </NavigationMenuList>
-                  </NavigationMenu>
-                </div>
-              ))}
-            <div className="col-span-3 xl:col-span-2">
-              <h2 className="mb-4 text-sm">Company</h2>
-              <p className="mb-5 text-sm leading-relaxed">Start a conversation about your next stage of growth.</p>
-              <Link to="/contact" className="text-sm font-medium text-primary">Contact our team →</Link>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="border-t py-12">
-        <div className="container text-center">
-          <span className="text-xs">
-            © {new Date().getFullYear()} Strategic Minds AI. All rights reserved.
-          </span>
-        </div>
-      </div>
-    </footer>
-  );
-};
-
+const Footer = () => <footer className="border-t border-border bg-muted/50">
+  <div className="agency-container grid gap-10 py-14 md:grid-cols-[1.3fr_1fr_1fr_1fr]">
+    <div><Link to="/"><SiteLogo width={123} height={39} /></Link><p className="mt-5 max-w-xs text-sm leading-relaxed">Strategy, intelligence, automation and growth — designed for measurable business impact.</p></div>
+    {footerNav.map(group => <div key={group.title}><h2 className="mb-4 text-sm font-semibold text-foreground">{group.title}</h2><ul className="space-y-2">{group.items.map(item => <li key={item.title}><Link to={item.href} className="text-sm hover:text-primary">{item.title}</Link></li>)}</ul></div>)}
+  </div>
+  <div className="border-t border-border"><div className="agency-container flex flex-wrap justify-between gap-2 py-6 text-xs"><span>© {new Date().getFullYear()} Strategic Minds AI. All rights reserved.</span><Link to="/contact" className="text-primary">Let’s talk →</Link></div></div>
+</footer>;
 export default Footer;

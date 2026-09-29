@@ -4,7 +4,7 @@ import SectionTitle from "./section-title";
 
 const SectionLatestNews = () => {
   return (
-    <section className="bg-muted py-16 dark:bg-slate-900 lg:py-24">
+    <section className="bg-background py-16 lg:py-24">
       <div className="container">
         <motion.div
           initial={{ opacity: 0, y: 60 }}
@@ -20,7 +20,7 @@ const SectionLatestNews = () => {
             titleClasses="mb-3 text-center"
             subtitleClasses="text-md font-medium"
           >
-            Latest News
+            Insights for what's next
           </SectionTitle>
           <PostList limit={3} showPagination={false} />
         </motion.div>

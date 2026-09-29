@@ -27,8 +27,8 @@ const Header = () => {
 
   return (
     <>
-      <header className="fixed top-0 z-20 w-full border-b border-border bg-background">
-        <div className={cn("mx-auto flex max-w-[1440px] items-center px-6 py-5 transition-all lg:py-6 xl:px-10", stickyClass)}>
+      <header className="fixed top-0 z-20 w-full border-b border-border bg-background/95 shadow-sm backdrop-blur-sm">
+        <div className={cn("mx-auto flex max-w-[1440px] items-center px-6 py-4 transition-all lg:py-5 xl:px-10", stickyClass)}>
           <Link to="/" className="mr-12 shrink-0">
             <SiteLogo
               width={123}
@@ -43,8 +43,8 @@ const Header = () => {
             <DarkModeSwitch />
             <MobileNav mainNavItems={mainNav} />
 
-            <div className="hidden lg:ml-auto lg:inline-block">
-              <Link to="/contact" className="inline-flex items-center rounded bg-primary px-5 py-3 text-xs font-medium text-primary-foreground">Book a Consultation →</Link>
+            <div className="ml-3 hidden md:inline-block lg:ml-auto">
+              <Link to="/contact" className="inline-flex items-center rounded bg-primary px-5 py-3 text-xs font-semibold text-primary-foreground">Book a Consultation →</Link>
             </div>
           </div>
         </div>

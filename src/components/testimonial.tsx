@@ -8,7 +8,7 @@ const Testimonial = ({
   testimonial: { name, company, comment, image_url, rating },
 }: TestimonialProps) => {
   return (
-    <div className="h-full rounded-md bg-white px-10 py-12 dark:bg-slate-900">
+    <div className="h-full rounded-md border border-border bg-card px-10 py-12">
       {(image_url || name || company) && (
         <div className="mb-7 flex items-center">
           {image_url && (

@@ -14,15 +14,15 @@ const SectionTestimonialsSlider = () => {
   });
 
   return (
-    <section className="bg-secondary py-24">
+    <section className="border-y border-border bg-muted py-16 lg:py-24">
       <div className="container max-w-6xl">
         <SectionTitle
-          subtitle="Those who already tried it."
+          subtitle="Thoughtful partnerships grounded in meaningful progress."
           sectionClasses="mb-12"
-          titleClasses="mb-3 text-white"
-          subtitleClasses="text-md font-medium text-white"
+          titleClasses="mb-3"
+          subtitleClasses="text-md font-medium"
         >
-          Satisfied Customers
+          Client stories
         </SectionTitle>
         <TestimonialsSlider
           testimonials={testimonials}

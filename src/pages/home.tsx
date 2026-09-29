@@ -2,10 +2,10 @@ import useFramerTransition from "@/hooks/use-transition";
 import SectionHero from "@/components/sections/section-hero";
 import ServiceSpotlight from "@/components/services/ServiceSpotlight";
 import SectionLatestNews from "@/components/sections/section-latest-news";
-import SectionPartners from "@/components/sections/section-partners";
-import SectionPromo from "@/components/sections/section-promo";
+import HomeProcess from "@/components/agency/HomeProcess";
+import HomeTrust from "@/components/agency/HomeTrust";
+import SiteCallout from "@/components/agency/SiteCallout";
 import SectionTestimonialsSlider from "@/components/sections/section-testimonials-slider";
-import SectionCTA from "@/components/sections/section-cta";
 import {Helmet} from "react-helmet"
 
 const Home = useFramerTransition(
@@ -16,11 +16,11 @@ const Home = useFramerTransition(
 		<main className="relative">
 			<SectionHero />
 			<ServiceSpotlight />
-			<SectionPromo />
+			<HomeProcess />
+			<HomeTrust />
       <SectionTestimonialsSlider />
 			<SectionLatestNews />
-			<SectionPartners />
-			<SectionCTA />
+			<SiteCallout />
 		</main>
 	</>
 )

@@ -65,9 +65,9 @@ const SingleProjectContent = () => {
           project.metric_3_label) && (
           <div className="relative z-[1] -m-20 mx-auto mb-5 flex max-w-[50rem] flex-wrap items-center space-y-5 lg:flex-nowrap lg:space-x-10 lg:space-y-0">
             {project.metric_1_value || project.metric_1_label ? (
-              <div className="w-full rounded bg-white p-12 shadow-sm dark:bg-slate-800 dark:shadow-slate-950/20 lg:flex-1">
+              <div className="w-full rounded border border-border bg-card p-12 shadow-sm lg:flex-1">
                 {project.metric_1_value && (
-                  <span className="mb-4 block text-2xl font-bold text-green lg:text-[2.25rem]">
+                  <span className="mb-4 block text-2xl font-bold text-primary lg:text-[2.25rem]">
                     {project.metric_1_value}
                   </span>
                 )}
@@ -80,9 +80,9 @@ const SingleProjectContent = () => {
             ) : null}
 
             {project.metric_2_value || project.metric_2_label ? (
-              <div className="w-full rounded bg-white p-12 shadow-sm dark:bg-slate-800 dark:shadow-slate-950/20 lg:flex-1">
+              <div className="w-full rounded border border-border bg-card p-12 shadow-sm lg:flex-1">
                 {project.metric_2_value && (
-                  <span className="mb-4 block text-2xl font-bold text-green lg:text-[2.25rem]">
+                  <span className="mb-4 block text-2xl font-bold text-primary lg:text-[2.25rem]">
                     {project.metric_2_value}
                   </span>
                 )}
@@ -95,9 +95,9 @@ const SingleProjectContent = () => {
             ) : null}
 
             {project.metric_3_value || project.metric_3_label ? (
-              <div className="w-full rounded bg-white p-12 shadow-sm dark:bg-slate-800 dark:shadow-slate-950/20 lg:flex-1">
+              <div className="w-full rounded border border-border bg-card p-12 shadow-sm lg:flex-1">
                 {project.metric_3_value && (
-                  <span className="mb-4 block text-2xl font-bold text-green lg:text-[2.25rem]">
+                  <span className="mb-4 block text-2xl font-bold text-primary lg:text-[2.25rem]">
                     {project.metric_3_value}
                   </span>
                 )}

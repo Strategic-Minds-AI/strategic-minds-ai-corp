@@ -42,13 +42,13 @@ const TestimonialsSlider = ({
             className="swiper-prev-arrow transition-transform will-change-transform hover:scale-125"
             onClick={handlePrev}
           >
-            <ChevronLeftIcon width={32} height={32} className="fill-white" />
+            <ChevronLeftIcon width={32} height={32} className="fill-primary" />
           </button>
           <button
             className="swiper-next-arrow transition-transform will-change-transform hover:scale-125"
             onClick={handleNext}
           >
-            <ChevronRightIcon width={32} height={32} className="fill-white" />
+            <ChevronRightIcon width={32} height={32} className="fill-primary" />
           </button>
         </div>
       )}

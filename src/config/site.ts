@@ -17,19 +17,13 @@ export type NavItem = {
 };
 
 export const mainNav: NavItem[] = [
-  {
-    title: "Home",
-    items: [
-      { title: "Marketing", href: "/" },
-      { title: "SEO Agency", href: "/seo-agency" },
-      { title: "Consulting", href: "/consulting" },
-      { title: "Portal", href: "/portal" },
-    ],
-  },
+  { title: "Home", href: "/" },
   { title: "Services", href: "/services" },
   { title: "Projects", href: "/projects" },
+  { title: "About", href: "/about" },
   { title: "Blog", href: "/blog" },
   { title: "Pricing", href: "/pricing" },
+  { title: "Portal", href: "/portal" },
   { title: "Contact", href: "/contact" },
 ];
 
@@ -54,11 +48,12 @@ export const footerNav: NavItem[] = [
     ],
   },
   {
-    title: "Resources",
+    title: "Explore",
     items: [
+      { title: "Services", href: "/services" },
+      { title: "Pricing", href: "/pricing" },
       { title: "Contact", href: "/contact" },
-      { title: "Privacy Policy", href: "/", external: true },
-      { title: "Terms of Service", href: "/", external: true },
+      { title: "Client Portal", href: "/portal" },
     ],
   },
 ];

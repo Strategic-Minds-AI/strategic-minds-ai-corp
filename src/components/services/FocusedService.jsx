@@ -1,0 +1,6 @@
+import { Link } from 'react-router-dom';
+import { categories } from './serviceCatalog';
+export default function FocusedService({ id }) {
+  const group = categories.find(item => item.id === id);
+  return <section className="agency-container py-16 lg:py-24"><p className="agency-eyebrow mb-4">SOLUTIONS / STRATEGIC MINDS AI</p><h2 className="agency-heading mb-4">Designed around your goals.</h2><p className="mb-10 max-w-xl text-sm leading-relaxed">Explore the ways we can help. Every engagement is tailored to the complexity of your business.</p><div className="grid gap-8 rounded border border-border bg-card p-7 md:grid-cols-[1fr_1.2fr] md:p-10"><div><h3 className="mb-4 text-2xl">{group.title}</h3><p className="mb-7 text-sm leading-relaxed">{group.description}</p><Link to="/contact" className="agency-button">Talk with an AI Strategist →</Link></div><ul className="divide-y divide-border">{group.offers.map(([name, price]) => <li key={name} className="flex flex-wrap justify-between gap-3 py-3 text-sm"><span className="text-foreground">{name}</span><span className="font-semibold text-primary">{price}</span></li>)}</ul></div><Link to="/services" className="mt-8 inline-block text-sm font-medium text-primary underline">View all services →</Link></section>;
+}

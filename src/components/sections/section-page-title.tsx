@@ -14,13 +14,12 @@ const SectionPageTitle = ({
   subtitleClasses,
 }: SectionPageTitleProps) => {
   return (
-    <section className="bg-muted pb-32 pt-48 dark:bg-slate-900">
-      <div className="container">
-        <div className="mx-auto max-w-3xl text-center">
-          <h1 className={cn("mb-6", titleClasses)}>{children}</h1>
-          {subtitle && (
-            <p className={cn("text-lg", subtitleClasses)}>{subtitle}</p>
-          )}
+    <section className="border-b border-border bg-gradient-to-br from-background via-muted to-background pb-16 pt-36 lg:pb-20 lg:pt-44">
+      <div className="agency-container">
+        <div className="max-w-3xl">
+          <p className="agency-eyebrow mb-5">STRATEGIC MINDS AI / REAL BUSINESS IMPACT</p>
+          <h1 className={cn("mb-5 font-heading text-4xl font-bold leading-tight tracking-tight md:text-5xl", titleClasses)}>{children}</h1>
+          {subtitle && <p className={cn("max-w-2xl text-base leading-relaxed", subtitleClasses)}>{subtitle}</p>}
         </div>
       </div>
     </section>

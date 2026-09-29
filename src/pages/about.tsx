@@ -1,9 +1,8 @@
 import useFramerTransition from "@/hooks/use-transition";
 import SectionPageTitle from "@/components/sections/section-page-title";
-import SectionChecklist from "@/components/sections/section-checklist";
-import SectionStats from "@/components/sections/section-stats";
-import SectionTeam from "@/components/sections/section-team";
-import SectionCTALayout4 from "@/components/sections/section-cta-layout-4";
+import HomeProcess from "@/components/agency/HomeProcess";
+import HomeTrust from "@/components/agency/HomeTrust";
+import SiteCallout from "@/components/agency/SiteCallout";
 import {Helmet} from "react-helmet"
 
 const About = useFramerTransition(
@@ -12,18 +11,12 @@ const About = useFramerTransition(
 			<title>About</title>
 		</Helmet>
 		<main className="relative">
-			<SectionPageTitle
-				subtitle="Focus on engaging, reusable content that decrease the cost per leads
-					while helps you to increase profits margin. Margin strives to
-					deliver the tools and support that helps companies grow with
-					unparalleled success."
-			>
-				About
+			<SectionPageTitle subtitle="Strategy, intelligence, automation and growth — grounded in responsible delivery and measurable business outcomes.">
+				About Strategic Minds AI
 			</SectionPageTitle>
-			<SectionChecklist />
-			<SectionStats />
-			<SectionTeam />
-			<SectionCTALayout4 />
+			<HomeProcess />
+			<HomeTrust />
+			<SiteCallout />
 		</main>
 	</>
 )
