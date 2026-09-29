@@ -20,7 +20,7 @@ export default async function(req) {
       url = 'https://people.googleapis.com/v1/people:createContact';
       options = { method: 'POST', headers: { ...options.headers, 'Content-Type': 'application/json' }, body: JSON.stringify({ names: [{ givenName: contact.name }], emailAddresses: [{ value: contact.email }], ...(contact.phone ? { phoneNumbers: [{ value: contact.phone }] } : {}) }) };
     } else if (body.action === 'listCalendar') {
-      url = `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${encodeURIComponent(new Date().toISOString())}&maxResults=10&singleEvents=true&orderBy=startTime`;
+      url = `https://www.googleapis.com/calendar/v3/calendars/primary/events?timeMin=${encodeURIComponent(new Date().toISOString())}&maxResults=100&singleEvents=true&orderBy=startTime`;
     } else {
       const contact = await base44.entities.CrmContact.get(String(body.contactId || ''));
       const start = new Date(body.start);

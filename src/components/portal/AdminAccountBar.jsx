@@ -6,6 +6,7 @@ const accounts = [
   ['supabase', 'Supabase'],
   ['railway', 'Railway'],
   ['github', 'GitHub'],
+  ['google-workspace', 'Agency Calendar & Drive'],
   ['ingestion', 'Drive files'],
   ['crm', 'Google contacts & CRM'],
   ['phone', 'Phone & WhatsApp'],
