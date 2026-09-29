@@ -1,10 +1,24 @@
-import { useState } from 'react';
-import { Plus } from 'lucide-react';
-const accounts = [['vercel', 'Vercel'], ['supabase', 'Supabase'], ['railway', 'Railway'], ['github', 'GitHub']];
-const extras = [['ingestion', 'Drive files'], ['crm', 'Google contacts & CRM']];
+import { ChevronDown } from 'lucide-react';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
+
+const accounts = [
+  ['vercel', 'Vercel'],
+  ['supabase', 'Supabase'],
+  ['railway', 'Railway'],
+  ['github', 'GitHub'],
+  ['ingestion', 'Drive files'],
+  ['crm', 'Google contacts & CRM'],
+];
+
 export default function AdminAccountBar({ active, onSelect }) {
-  const [shortcuts, setShortcuts] = useState(() => { try { const value = JSON.parse(localStorage.getItem('agency-account-shortcuts')); return Array.isArray(value) ? value.filter(v => extras.some(([id]) => id === v)) : []; } catch { return []; } });
-  const [open, setOpen] = useState(false);
-  const toggle = id => { const next = shortcuts.includes(id) ? shortcuts.filter(v => v !== id) : [...shortcuts, id]; setShortcuts(next); localStorage.setItem('agency-account-shortcuts', JSON.stringify(next)); };
-  return <nav aria-label="Infrastructure accounts" className="flex min-w-0 flex-wrap items-center gap-1.5">{[...accounts, ...extras.filter(([id]) => shortcuts.includes(id))].map(([id, label]) => <button key={id} type="button" onClick={() => onSelect(id)} aria-current={active === id ? 'page' : undefined} className={`rounded-lg border px-3 py-1.5 text-xs font-medium hover:border-primary hover:text-primary ${active === id ? 'border-primary bg-muted text-foreground' : 'border-border text-muted-foreground'}`}>{label}</button>)}<div className="relative"><button type="button" aria-expanded={open} aria-label="Add account shortcut" title="Add account shortcut" onClick={() => setOpen(v => !v)} className="rounded-lg border border-border p-1.5 text-foreground hover:border-primary"><Plus size={16}/></button>{open && <div className="absolute right-0 top-full z-30 mt-2 w-52 rounded-lg border border-border bg-popover p-2 shadow-lg"><p className="px-2 py-1 text-xs font-medium text-muted-foreground">Workspace shortcuts</p>{extras.map(([id, label]) => <button key={id} type="button" onClick={() => toggle(id)} className="block w-full rounded px-2 py-2 text-left text-sm text-foreground hover:bg-muted">{shortcuts.includes(id) ? '✓ ' : '+ '}{label}</button>)}<button type="button" onClick={() => setOpen(false)} className="w-full px-2 py-1 text-right text-xs text-muted-foreground">Done</button></div>}</div></nav>;
+  return <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <button type="button" className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground hover:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+        Accounts <ChevronDown size={15} aria-hidden="true" />
+      </button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent align="start" className="w-56">
+      {accounts.map(([id, label]) => <DropdownMenuItem key={id} onSelect={() => onSelect(id)} aria-current={active === id ? 'page' : undefined} className={active === id ? 'bg-muted font-medium text-foreground' : 'text-foreground'}>{label}</DropdownMenuItem>)}
+    </DropdownMenuContent>
+  </DropdownMenu>;
 }
