@@ -11,14 +11,8 @@ const sortProjects = (projects: Project[]) =>
 export const fetchProjects = async () => {
   const projects = ((await base44.entities.Project.list("created_date", 5000)) as Project[]).filter(isValidProject);
 
-  if (projects.length > 0) {
-    return sortProjects(projects);
-  }
-
-  await base44.functions.invoke("seed-projects", {});
-  return sortProjects(
-    ((await base44.entities.Project.list("created_date", 5000)) as Project[]).filter(isValidProject),
-  );
+  // Public reads never trigger privileged sample-data creation.
+  return sortProjects(projects);
 };
 
 export const fetchProjectBySlug = async (slug: string) => {

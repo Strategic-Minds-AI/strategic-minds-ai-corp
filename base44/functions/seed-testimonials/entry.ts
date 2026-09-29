@@ -1,13 +1,18 @@
-import { createClientFromRequest } from "npm:@base44/sdk";
+import { createClientFromRequest } from "npm:@base44/sdk@0.8.52";
+import { requireAgencyAdmin } from '../../shared/agencyAdminAccess.ts';
 import sampleTestimonials from "./sample-testimonials.json" with { type: "json" };
 
-Deno.serve(async (req) => {
+export default async function(req) {
   if (req.method !== "POST") {
     return Response.json({ error: "Method not allowed" }, { status: 405 });
   }
 
   try {
     const base44 = createClientFromRequest(req);
+    const access = await requireAgencyAdmin(base44);
+    if (access.response) return access.response;
+    const body = await req.json();
+    if (body?.approved !== true) return Response.json({ error: 'Explicit approval is required before creating sample content.' }, { status: 403 });
     const existingTestimonials = await base44.asServiceRole.entities.Testimonial.list("created_date", 5000);
     const existingFlatTestimonials = existingTestimonials.filter((testimonial) =>
       typeof testimonial.name === "string" &&
@@ -28,4 +33,4 @@ Deno.serve(async (req) => {
       { status: 500 },
     );
   }
-});
+}

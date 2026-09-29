@@ -8,7 +8,7 @@ export default function useBenchmark(enabled) {
     catch (failure) { setError(failure.response?.data?.error || failure.message || 'Could not load the benchmark.'); }
     finally { setLoading(false); }
   }, [enabled]);
-  useEffect(() => { refresh(); if (!enabled) return; const subscriptions = [base44.entities.BenchmarkRun.subscribe(refresh), base44.entities.EnhancementJob.subscribe(refresh)]; return () => subscriptions.forEach(unsubscribe => unsubscribe()); }, [refresh, enabled]);
+  useEffect(() => { refresh(); if (!enabled) return; const subscriptions = [base44.entities.BenchmarkRun.subscribe(refresh), base44.entities.EnhancementJob.subscribe(refresh), base44.entities.BenchmarkCheckpoint.subscribe(refresh)]; return () => subscriptions.forEach(unsubscribe => unsubscribe()); }, [refresh, enabled]);
   useEffect(() => {
     if (!data?.report.evidence_fresh) return;
     const delay = Math.max(1000, Date.parse(data.report.observed_at) + 15 * 60 * 1000 - Date.now() + 100);

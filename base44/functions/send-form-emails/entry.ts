@@ -1,20 +1,29 @@
-import { createClientFromRequest } from "npm:@base44/sdk";
+import { createClientFromRequest } from "npm:@base44/sdk@0.8.52";
+import { requireAgencyAdmin } from '../../shared/agencyAdminAccess.ts';
 
 // ── Site config ──────────────────────────────────────────────────────────────
 // Keep in sync with src/config/site.ts
-const SITE_OWNER_EMAIL = "base44-templates@certifiedcode.io";
-const SITE_NAME = "Margin";
+const SITE_NAME = "Strategic Minds AI";
 // ─────────────────────────────────────────────────────────────────────────────
 
-Deno.serve(async (req) => {
+export default async function(req) {
   if (req.method !== "POST") {
     return Response.json({ error: "Method not allowed" }, { status: 405 });
   }
 
   try {
     const base44 = createClientFromRequest(req);
-    const body = await req.json();
-    const t = body.form_type || "contact";
+    const access = await requireAgencyAdmin(base44);
+    if (access.response) return access.response;
+    const raw = await req.text();
+    if (raw.length > 10000) return Response.json({ error: 'Notification input too large.' }, { status: 413 });
+    const body = JSON.parse(raw);
+    if (!body || Array.isArray(body) || body.approved !== true) return Response.json({ error: 'Explicit approval is required before sending an agency notification.' }, { status: 403 });
+    const fields = ['form_type','name','email','phone','website','service','message','query','plan_title'];
+    if (Object.keys(body).some(key => key !== 'approved' && !fields.includes(key)) || fields.some(key => body[key] !== undefined && (typeof body[key] !== 'string' || body[key].length > (key === 'message' ? 5000 : 500)))) return Response.json({ error: 'Invalid notification input.' }, { status: 400 });
+    const t = body.form_type || 'contact';
+    if (!['contact','quotation','newsletter','newsletter_v2','search','pricing'].includes(t)) return Response.json({ error: 'Unsupported notification type.' }, { status: 400 });
+    if (typeof access.user.email !== 'string' || !access.user.email) return Response.json({ error: 'No registered operator recipient is available.' }, { status: 503 });
 
     const lead = {
       form_type: t,
@@ -35,9 +44,9 @@ Deno.serve(async (req) => {
     let ownerError = "";
     try {
       await base44.asServiceRole.integrations.Core.SendEmail({
-        to: SITE_OWNER_EMAIL,
+        to: access.user.email,
         subject,
-        body: ownerBody,
+        text: ownerBody,
         from_name: SITE_NAME,
       });
       ownerSent = true;
@@ -46,18 +55,18 @@ Deno.serve(async (req) => {
     }
 
     return Response.json({
-      ok: true,
+      ok: ownerSent,
       form_type: t,
       owner_notified: ownerSent,
       owner_error: ownerError || undefined,
-    });
+    }, { status: ownerSent ? 200 : 502 });
   } catch (error) {
     return Response.json(
       { error: error instanceof Error ? error.message : "Failed to send form emails" },
       { status: 500 }
     );
   }
-});
+}
 
 function buildContent(t: string, d: Record<string, string>) {
   const ownerLine = (extra = "") => `New ${t} submission on ${SITE_NAME}.${extra}`;
@@ -74,7 +83,7 @@ function buildContent(t: string, d: Record<string, string>) {
         "Message:",
         d.message || "-",
         "",
-        "— Sent from your Margin site contact form",
+        "— Sent from the Strategic Minds AI website", 
       ].join("\n"),
     };
   }

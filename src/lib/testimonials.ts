@@ -11,14 +11,8 @@ const sortTestimonials = (testimonials: Testimonial[]) =>
 export const fetchTestimonials = async () => {
   const testimonials = ((await base44.entities.Testimonial.list("created_date", 5000)) as Testimonial[]).filter(isValidTestimonial);
 
-  if (testimonials.length > 0) {
-    return sortTestimonials(testimonials);
-  }
-
-  await base44.functions.invoke("seed-testimonials", {});
-  return sortTestimonials(
-    ((await base44.entities.Testimonial.list("created_date", 5000)) as Testimonial[]).filter(isValidTestimonial),
-  );
+  // Public reads never trigger privileged sample-data creation.
+  return sortTestimonials(testimonials);
 };
 
 export const fetchTestimonialsByVariant = async (variant: Testimonial["variant"]) => {

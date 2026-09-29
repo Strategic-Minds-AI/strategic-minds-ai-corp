@@ -11,14 +11,8 @@ const sortPosts = (posts: Post[]) =>
 export const fetchPosts = async () => {
   const posts = ((await base44.entities.Post.list("created_date", 5000)) as Post[]).filter(isValidPost);
 
-  if (posts.length > 0) {
-    return sortPosts(posts);
-  }
-
-  await base44.functions.invoke("seed-posts", {});
-  return sortPosts(
-    ((await base44.entities.Post.list("created_date", 5000)) as Post[]).filter(isValidPost),
-  );
+  // Public reads never trigger privileged sample-data creation.
+  return sortPosts(posts);
 };
 
 export const fetchPostBySlug = async (slug: string) => {

@@ -5,6 +5,7 @@ import { findings, sourceBaseline } from '../../shared/benchmarkAudit.ts';
 import { readBenchmarkState } from '../../shared/benchmarkStore.ts';
 import { prepareEnhancement, generateEnhancementPlan } from '../../shared/benchmarkEnhancements.ts';
 import { implementationPrompt, workerContract } from '../../shared/benchmarkPrompts.ts';
+import { readContinuation, saveContinuation } from '../../shared/benchmarkContinuation.ts';
 
 export default async function(req: Request): Promise<Response> {
   try {
@@ -14,13 +15,22 @@ export default async function(req: Request): Promise<Response> {
     try { user = await base44.auth.me(); } catch { return Response.json({ error: 'Admin sign-in required.' }, { status: 403 }); }
     if (!user || user.role !== 'admin') return Response.json({ error: 'Admin access required.' }, { status: 403 });
     const raw = await req.text();
-    if (raw.length > 4000) return Response.json({ error: 'Request too large.' }, { status: 413 });
+    if (raw.length > 24000) return Response.json({ error: 'Request too large.' }, { status: 413 });
     const body = JSON.parse(raw);
-    const fields = { info: [], catalog: [], roadmap: [], prepare: ['criterionId','route','requestId'], plan: ['jobId'], jobs: ['skip'], saveDrive: ['projectId','approved'] };
+    if (raw.length > 4000 && body?.action !== 'saveCheckpoint') return Response.json({ error: 'Request too large.' }, { status: 413 });
+    const fields = { info: [], catalog: [], roadmap: [], checkpoint: [], saveCheckpoint: ['requestId','summary','implemented','verification','blockers','nextBatch','workItems'], prepare: ['criterionId','route','requestId'], plan: ['jobId'], jobs: ['skip'], saveDrive: ['projectId','approved'] };
     if (!body || Array.isArray(body) || !Object.prototype.hasOwnProperty.call(fields, body.action) || Object.keys(body).some(key => key !== 'action' && !fields[body.action].includes(key))) return Response.json({ error: 'Invalid benchmark request.' }, { status: 400 });
     let result;
     if (body.action === 'info') result = { revision: BENCHMARK_VERSION, criteria: criteria.length, acceptance_checks: criteria.length * 4, findings: findings.length, competitors: competitors.map(item => ({ product: item.product, rank: item.rank })), scope: 'Audit, research, implementation briefs, draft planning and signed read-only evidence. No external coding worker, full Google reconciliation or autonomous swarm has been deployed.' };
-    if (body.action === 'catalog') result = { revision: BENCHMARK_VERSION, criteria, sources, competitors, selection_policy: selectionPolicy, findings, source_baseline: sourceBaseline, ...await readBenchmarkState(base44, user.id) };
+    if (body.action === 'catalog') {
+      const [state, continuation] = await Promise.all([readBenchmarkState(base44, user.id), readContinuation(base44, user.id)]);
+      result = { revision: BENCHMARK_VERSION, criteria, sources, competitors, selection_policy: selectionPolicy, findings, source_baseline: sourceBaseline, ...state, ...continuation };
+    }
+    if (body.action === 'checkpoint') result = await readContinuation(base44, user.id);
+    if (body.action === 'saveCheckpoint') {
+      result = await saveContinuation(base44, user.id, body);
+      if (result.error) return Response.json({ error: result.error }, { status: result.status });
+    }
     if (body.action === 'roadmap') result = { revision: BENCHMARK_VERSION, selection_policy: selectionPolicy, sources, enhancements: criteria.map(criterion => ({ ...criterion, prompt: implementationPrompt(criterion), worker_contract: workerContract(criterion, null) })) };
     if (body.action === 'prepare') result = await prepareEnhancement(base44, user.id, body);
     if (body.action === 'plan') result = await generateEnhancementPlan(base44, user.id, body.jobId);

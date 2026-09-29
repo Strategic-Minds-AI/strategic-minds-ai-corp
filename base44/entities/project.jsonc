@@ -1,5 +1,5 @@
 {
-  "name": "Project",
+  "name": "project",
   "type": "object",
   "properties": {
     "display_order": {
@@ -65,11 +65,26 @@
       "description": "Third metric label"
     }
   },
-  "required": ["display_order", "title", "slug", "publish_date", "excerpt", "content_markdown"],
+  "required": [
+    "display_order",
+    "title",
+    "slug",
+    "publish_date",
+    "excerpt",
+    "content_markdown"
+  ],
   "rls": {
-    "create": false,
     "read": true,
-    "update": false,
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "delete": false
   }
 }

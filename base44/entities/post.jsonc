@@ -1,5 +1,5 @@
 {
-  "name": "Post",
+  "name": "post",
   "type": "object",
   "properties": {
     "display_order": {
@@ -25,7 +25,6 @@
     },
     "content_markdown": {
       "type": "string",
-      "format": "richtext",
       "description": "Post content"
     },
     "image_url": {
@@ -49,11 +48,26 @@
       "description": "Comma-separated categories"
     }
   },
-  "required": ["display_order", "title", "slug", "publish_date", "excerpt", "content_markdown"],
+  "required": [
+    "display_order",
+    "title",
+    "slug",
+    "publish_date",
+    "excerpt",
+    "content_markdown"
+  ],
   "rls": {
-    "create": false,
     "read": true,
-    "update": false,
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
     "delete": false
   }
 }

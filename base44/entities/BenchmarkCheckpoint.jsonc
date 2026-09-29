@@ -1,0 +1,160 @@
+{
+  "name": "BenchmarkCheckpoint",
+  "type": "object",
+  "properties": {
+    "owner_id": {
+      "type": "string"
+    },
+    "request_id": {
+      "type": "string"
+    },
+    "revision": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 1500
+    },
+    "implemented": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 1000
+      }
+    },
+    "verification": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 1000
+      }
+    },
+    "blockers": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "maxLength": 1000
+      }
+    },
+    "next_batch": {
+      "type": "string",
+      "maxLength": 1500
+    },
+    "work_items": {
+      "type": "array",
+      "maxItems": 59,
+      "items": {
+        "type": "object",
+        "properties": {
+          "criterion_id": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "not_started",
+              "in_progress",
+              "implementation_ready",
+              "blocked"
+            ]
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 500
+          }
+        },
+        "required": [
+          "criterion_id",
+          "state",
+          "note"
+        ]
+      }
+    },
+    "score_snapshot": {
+      "type": "object",
+      "properties": {
+        "feature_parity": {
+          "type": "number"
+        },
+        "check_coverage": {
+          "type": "number"
+        },
+        "passed": {
+          "type": "number"
+        },
+        "failed": {
+          "type": "number"
+        },
+        "not_tested": {
+          "type": "number"
+        },
+        "release_approved": {
+          "type": "boolean"
+        },
+        "evidence_fresh": {
+          "type": "boolean"
+        },
+        "run_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "required": [
+    "owner_id",
+    "request_id",
+    "revision",
+    "summary",
+    "implemented",
+    "verification",
+    "blockers",
+    "next_batch",
+    "work_items",
+    "score_snapshot"
+  ],
+  "rls": {
+    "read": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.owner_id": "{{user.id}}"
+        }
+      ]
+    },
+    "create": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.owner_id": "{{user.id}}"
+        }
+      ]
+    },
+    "update": {
+      "$and": [
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        },
+        {
+          "data.owner_id": "{{user.id}}"
+        }
+      ]
+    },
+    "delete": false
+  }
+}
