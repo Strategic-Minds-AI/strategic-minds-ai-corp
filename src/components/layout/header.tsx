@@ -29,7 +29,7 @@ const Header = () => {
     <>
       <header className="fixed top-0 z-20 w-full border-b border-border bg-background/95 shadow-sm backdrop-blur-sm">
         <div className={cn("mx-auto flex w-full items-center px-6 py-4 transition-all lg:py-5 md:px-10 xl:px-16", stickyClass)}>
-          <Link to="/" className="mr-12 shrink-0">
+          <Link to="/" aria-label="Strategic Minds AI home" className="mr-12 shrink-0">
             <SiteLogo
               width={123}
               height={39}
