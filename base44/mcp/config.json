@@ -1,1 +1,141 @@
-{"auth":"oauth","tools":{"functions":[{"name":"vault_directory","title":"Read Vault Account Directory","description":"Read the signed-in admin's saved account references, never credentials or access keys. Supports pages of 50 records; pass the returned next_offset to read another page. Connection type indicates a slot or reference, not verified live status.","handler":"vaultDirectory","input_schema":{"type":"object","properties":{"offset":{"type":"integer","description":"Starting offset from 0 to 10000; defaults to 0."}}},"annotations":{"read_only_hint":true,"destructive_hint":false,"idempotent_hint":true}}]}}
+{
+  "auth": "oauth",
+  "tools": {
+    "functions": [
+      {
+        "name": "vault_directory",
+        "title": "Read Vault Account Directory",
+        "description": "Read the signed-in admin's saved account references, never credentials or access keys. Supports pages of 50 records; pass the returned next_offset to read another page. Connection type indicates a slot or reference, not verified live status.",
+        "handler": "vaultDirectory",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "offset": {
+              "type": "integer",
+              "description": "Starting offset from 0 to 10000; defaults to 0."
+            }
+          }
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "apex_discovery",
+        "title": "Read APEX Capability Discovery",
+        "description": "Run the existing admin-only read probes for connected Strategic Minds provider capabilities. Returns evidence-backed connectivity observations only; it does not authorize writes or production actions.",
+        "handler": "apexDiscovery",
+        "input_schema": {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "infrastructure_inventory",
+        "title": "Read Infrastructure Inventory",
+        "description": "Read the existing admin account overview for one connected infrastructure provider. Supported providers are GitHub, Vercel, Supabase, and Railway.",
+        "handler": "adminAccountOverview",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "enum": ["github", "vercel", "supabase", "railway"]
+            }
+          },
+          "required": ["provider"],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "benchmark_read",
+        "title": "Read Benchmark Control Plane",
+        "description": "Read the existing benchmark catalog, roadmap, checkpoint, job list, or benchmark metadata from the admin portal without changing the frontend or claiming release certification.",
+        "handler": "benchmarkHub",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["info", "catalog", "checkpoint", "roadmap", "jobs"]
+            },
+            "skip": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": ["action"],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "benchmark_validator",
+        "title": "Run Benchmark Validator",
+        "description": "Invoke the existing independent benchmark validator. Self-check and plan review are non-destructive. A run records signed benchmark evidence but never accepts caller-supplied scores or evidence.",
+        "handler": "benchmarkValidator",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["selfcheck", "reviewPlan", "run"]
+            },
+            "jobId": {
+              "type": "string"
+            }
+          },
+          "required": ["action"],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "benchmark_coding_control",
+        "title": "Control Benchmark Coding Agent",
+        "description": "Control the existing benchmark coding-agent automation. Status is read-only. Install, enable, pause, and run require the existing function's explicit approved=true gate. Live-release authorization is intentionally not exposed through MCP.",
+        "handler": "benchmarkCoding",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["status", "install", "enable", "pause", "run"]
+            },
+            "approved": {
+              "type": "boolean"
+            }
+          },
+          "required": ["action"],
+          "additionalProperties": false
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      }
+    ]
+  }
+}
