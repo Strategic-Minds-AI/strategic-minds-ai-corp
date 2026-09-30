@@ -32,3 +32,12 @@ npx skills add base44/skills
 - Prefer the existing Base44 CLI workflow over adding new npm scripts for Base44-specific tasks.
 - Reuse the existing SDK client and Vite plugin patterns before adding new Base44 integration paths.
 - Run the relevant checks from `package.json` before finishing code changes.
+
+## Mandatory Independent Validation Gate
+
+- Treat one bounded source mutation as one autonomous coding move.
+- After every successful autonomous coding move, an independent validator must run against the exact resulting revision before another autonomous mutation begins.
+- A failed, missing, cancelled, stale, or unverifiable validator result blocks the next autonomous coding move. Fail closed.
+- The implementer/coding agent never certifies its own work. Validation must come from the separate validator job or an independently re-fetched validator receipt.
+- Production merge, deployment, DNS, secrets, payments, customer communications, or other protected actions still require explicit operator approval even when validation passes.
+- Preserve immutable revision IDs and validation receipts so every change can be traced and rolled back.

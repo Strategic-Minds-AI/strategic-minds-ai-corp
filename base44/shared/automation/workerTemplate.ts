@@ -51,7 +51,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { requireReview } from './review-policy.mjs';
 const repository = process.env.GITHUB_REPOSITORY;
-if (repository !== 'Strategic-Minds-AI/strategic-minds-corp-site') throw new Error('Repository boundary failed.');
+if (repository !== 'Strategic-Minds-AI/strategic-minds-ai-corp') throw new Error('Repository boundary failed.');
 const token = process.env.GH_TOKEN;
 async function request(route, method = 'GET', body) {
   const response = await fetch('https://api.github.com/repos/' + repository + route, { method, headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2026-03-10', ...(body ? { 'Content-Type': 'application/json' } : {}) }, ...(body ? { body: JSON.stringify(body) } : {}) });
