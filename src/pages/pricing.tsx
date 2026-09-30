@@ -4,6 +4,7 @@ import CommerceCatalog from "@/components/commerce/CommerceCatalog";
 import EngagementPaths from "@/components/services/EngagementPaths";
 import PricingOverview from "@/components/services/PricingOverview";
 import MarketContext from "@/components/services/MarketContext";
+import PricingFAQ from "@/components/services/PricingFAQ";
 import {Helmet} from "react-helmet"
 
 const Pricing = useFramerTransition(
@@ -19,6 +20,7 @@ const Pricing = useFramerTransition(
 			<PricingOverview />
 			<MarketContext />
 			<CommerceCatalog />
+			<PricingFAQ />
 		</main>
 	</>
 )

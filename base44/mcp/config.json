@@ -1,1 +1,113 @@
-{"auth":"oauth","tools":{"functions":[{"name":"vault_directory","title":"Read Vault Account Directory","description":"Read the signed-in admin's saved account references, never credentials or access keys. Supports pages of 50 records; pass the returned next_offset to read another page. Connection type indicates a slot or reference, not verified live status.","handler":"vaultDirectory","input_schema":{"type":"object","properties":{"offset":{"type":"integer","description":"Starting offset from 0 to 10000; defaults to 0."}}},"annotations":{"read_only_hint":true,"destructive_hint":false,"idempotent_hint":true}}]}}
+{
+  "auth": "oauth",
+  "tools": {
+    "functions": [
+      {
+        "name": "vault_directory",
+        "title": "Read Vault Account Directory",
+        "description": "Read the signed-in admin's saved account references, never credentials or access keys. Supports pages of 50 records; pass the returned next_offset to read another page. Connection type indicates a slot or reference, not verified live status.",
+        "handler": "vaultDirectory",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "offset": {
+              "type": "integer",
+              "description": "Starting offset from 0 to 10000; defaults to 0."
+            }
+          }
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "submit_lead",
+        "title": "Submit Lead",
+        "description": "Submit a new lead or newsletter signup to Strategic Minds AI. Use when someone wants to contact the agency or join the newsletter. Creates a CRM contact for contact-form submissions and schedules a follow-up. Returns ok on success.",
+        "handler": "captureAgencyLead",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "UUID for this submission"
+            },
+            "form_type": {
+              "type": "string",
+              "enum": ["newsletter", "contact"],
+              "description": "newsletter for newsletter signups, contact for contact form submissions"
+            },
+            "name": {
+              "type": "string",
+              "description": "Full name, 2 to 120 characters"
+            },
+            "email": {
+              "type": "string",
+              "description": "Valid email address"
+            },
+            "message": {
+              "type": "string",
+              "description": "Message body. Required for contact form (min 6 chars), optional for newsletter. Max 5000 chars."
+            }
+          },
+          "required": ["id", "form_type", "name", "email"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "request_quote",
+        "title": "Request Quote",
+        "description": "Request a custom quote for a catalog item priced as 'quote'. Use when a prospect wants a tailored proposal for an enterprise or custom service. Returns ok on success.",
+        "handler": "commerceQuote",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "itemId": {
+              "type": "string",
+              "description": "The catalog item ID to request a quote for"
+            },
+            "name": {
+              "type": "string",
+              "description": "Full name, 2 to 120 characters"
+            },
+            "email": {
+              "type": "string",
+              "description": "Valid email address"
+            },
+            "message": {
+              "type": "string",
+              "description": "Project details, 10 to 3000 characters"
+            }
+          },
+          "required": ["itemId", "name", "email", "message"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "discover_capabilities",
+        "title": "Discover Connected Capabilities",
+        "description": "Run a read-only discovery probe across all connected integrations (Google, GitHub, Supabase, Vercel, Railway, Stripe, AI Gateway). Admin only. Returns which services are connected and verified for read access. Use when checking the health of the agency's integrations.",
+        "handler": "apexDiscovery",
+        "input_schema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      }
+    ]
+  }
+}
