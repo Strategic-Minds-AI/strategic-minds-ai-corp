@@ -31,6 +31,14 @@ export async function findCandidateBranch(get) {
   }
   throw new Error('Candidate-branch pagination exceeded its safety bound.');
 }
+export async function findPendingDraft(get) {
+  const runs = await optional(get, `/repos/${REPOSITORY}/actions/workflows/benchmark-coding.yml/runs?status=success&per_page=10`);
+  for (const run of runs?.workflow_runs || []) {
+    const result = await get(`/repos/${REPOSITORY}/actions/runs/${run.id}/artifacts?per_page=100`);
+    if (result.artifacts.some(item => item.name === 'coding-candidate' && !item.expired)) return { run_id: run.id, url: run.html_url, publish_url: `https://github.com/${REPOSITORY}/actions/workflows/benchmark-publish.yml` };
+  }
+  return null;
+}
 export async function setVariable(get, name, value) {
   const root = `/repos/${REPOSITORY}/actions/variables`;
   const current = await optional(get, `${root}/${name}`);

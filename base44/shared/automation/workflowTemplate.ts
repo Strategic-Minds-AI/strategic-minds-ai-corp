@@ -11,6 +11,8 @@ on:
     - cron: '*/5 * * * *'
 permissions:
   contents: read
+  actions: read
+  pull-requests: read
 concurrency:
   group: benchmark-coding-cycle
   cancel-in-progress: false
@@ -49,6 +51,13 @@ jobs:
             if (branches.length < 100) break;
             if (page === 20) throw new Error('Branch scan exceeded its safety bound.');
           }
+          const completed = await fetch('https://api.github.com/repos/' + repo + '/actions/workflows/benchmark-coding.yml/runs?status=success&per_page=10', { headers });
+          if (!completed.ok) throw new Error('Cannot verify draft review queue.');
+          for (const run of (await completed.json()).workflow_runs) {
+            const response = await fetch('https://api.github.com/repos/' + repo + '/actions/runs/' + run.id + '/artifacts', { headers });
+            if (!response.ok) throw new Error('Cannot verify draft artifacts.');
+            if ((await response.json()).artifacts.some(item => item.name === 'coding-candidate' && !item.expired)) throw new Error('A draft awaits exact-content security review. Publish the reviewed draft or delete its artifact before another attempt.');
+          }
           const day = new Date().toISOString().slice(0, 10);
           const runs = await fetch('https://api.github.com/repos/' + repo + '/actions/workflows/benchmark-coding.yml/runs?created=' + encodeURIComponent(day + '..' + day) + '&per_page=100', { headers });
           if (!runs.ok || (await runs.json()).total_count > 6) throw new Error('Daily six-cycle ceiling reached or history unavailable. Pause and refresh tomorrow.');
@@ -79,30 +88,6 @@ jobs:
             base44/functions
           retention-days: 1
           if-no-files-found: error
-  publish-review:
-    needs: propose
-    runs-on: ubuntu-24.04
-    timeout-minutes: 3
-    permissions:
-      contents: write
-      pull-requests: read
-      actions: write
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
-        with:
-          ref: \${{ needs.propose.outputs.source_sha }}
-          persist-credentials: false
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
-        with:
-          node-version: '22.18.0'
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
-        with:
-          name: coding-candidate
-          path: candidate
-      - name: Publish isolated review branch and dispatch separate validator
-        env:
-          GH_TOKEN: \${{ github.token }}
-        run: node automation/publish.mjs
 `;
 export const validatorWorkflow = `name: Independent benchmark CI
 on:
@@ -148,29 +133,33 @@ jobs:
           node-version: '22.18.0'
       - name: Verify immutable revisions and trusted ancestor
         id: identity
+        env:
+          EVENT_NAME: \${{ github.event_name }}
         run: |
-          test "$(git -C trusted rev-parse HEAD)" = "$BASELINE_SHA"
-          test "$(git -C candidate rev-parse HEAD)" = "$CANDIDATE_SHA"
-          git -C candidate merge-base --is-ancestor "$BASELINE_SHA" "$CANDIDATE_SHA"
-          if [ "$BASELINE_SHA" != "$CANDIDATE_SHA" ]; then
-            git -C candidate diff --exit-code "$BASELINE_SHA" "$CANDIDATE_SHA" -- automation .github base44/shared/benchmarkCriteria.ts base44/shared/benchmarkPolicy.ts base44/shared/benchmarkProof.ts base44/shared/benchmarkSelfChecks.ts
+          node trusted/automation/review-policy.mjs --verify-diff
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            test "$GITHUB_REF" = 'refs/heads/main'
+            git -C candidate merge-base --is-ancestor "$BASELINE_SHA" origin/main
           fi
-      - name: Install frozen frontend dependencies without lifecycle scripts
+      - name: Install trusted frozen dependencies without lifecycle scripts
         id: dependencies
-        if: always()
-        working-directory: candidate
+        working-directory: trusted
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Execute trusted backend and regression assertions
+      - name: Prepare pinned isolated runtime
+        id: isolation
+        run: |
+          docker pull node:22.18.0-bookworm-slim@sha256:752ea8a2f758c34002a0461bd9f1cee4f9a3c36d48494586f60ffce1fc708e0e
+          node trusted/automation/sandbox.mjs --isolation-check
+      - name: Execute host-owned assertions against isolated candidate probes
         id: assertions
         run: node --experimental-strip-types --loader ./trusted/automation/runtime-loader.mjs trusted/automation/validator.mjs
-      - name: Compile candidate frontend
+      - name: Compile candidate frontend without network or host write access
         id: compile
-        if: always()
-        working-directory: candidate
-        run: npm run build
+        run: node trusted/automation/sandbox.mjs --compile
       - name: Finalize honest CI report including compilation failures
         if: always()
         env:
+          ISOLATION_RESULT: \${{ steps.isolation.outcome }}
           IDENTITY_RESULT: \${{ steps.identity.outcome }}
           ASSERTIONS_RESULT: \${{ steps.assertions.outcome }}
           DEPENDENCIES_RESULT: \${{ steps.dependencies.outcome }}
