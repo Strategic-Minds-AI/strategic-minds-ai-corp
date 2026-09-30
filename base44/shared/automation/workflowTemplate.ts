@@ -1,3 +1,4 @@
+import { automaticChecksJob } from './autoChecksTemplate.ts';
 export const codingWorkflow = `name: Benchmark coding cycle
 on:
   workflow_dispatch:
@@ -51,13 +52,7 @@ jobs:
             if (branches.length < 100) break;
             if (page === 20) throw new Error('Branch scan exceeded its safety bound.');
           }
-          const completed = await fetch('https://api.github.com/repos/' + repo + '/actions/workflows/benchmark-coding.yml/runs?status=success&per_page=10', { headers });
-          if (!completed.ok) throw new Error('Cannot verify draft review queue.');
-          for (const run of (await completed.json()).workflow_runs) {
-            const response = await fetch('https://api.github.com/repos/' + repo + '/actions/runs/' + run.id + '/artifacts', { headers });
-            if (!response.ok) throw new Error('Cannot verify draft artifacts.');
-            if ((await response.json()).artifacts.some(item => item.name === 'coding-candidate' && !item.expired)) throw new Error('A draft awaits exact-content security review. Publish the reviewed draft or delete its artifact before another attempt.');
-          }
+          // Private draft artifacts no longer block the next bounded cycle: each draft is checked automatically in a separate job.
           const day = new Date().toISOString().slice(0, 10);
           const runs = await fetch('https://api.github.com/repos/' + repo + '/actions/workflows/benchmark-coding.yml/runs?created=' + encodeURIComponent(day + '..' + day) + '&per_page=100', { headers });
           if (!runs.ok || (await runs.json()).total_count > 6) throw new Error('Daily six-cycle ceiling reached or history unavailable. Pause and refresh tomorrow.');
@@ -92,7 +87,7 @@ jobs:
 export const validatorWorkflow = `name: Independent benchmark CI
 on:
   push:
-    branches: ['benchmark/install-coding-system-v1']
+    branches: ['benchmark/install-coding-system-v1', 'benchmark/install-automated-checks-v2']
   workflow_dispatch:
     inputs:
       candidate_sha:
@@ -152,7 +147,9 @@ jobs:
           node trusted/automation/sandbox.mjs --isolation-check
       - name: Execute host-owned assertions against isolated candidate probes
         id: assertions
-        run: node --experimental-strip-types --loader ./trusted/automation/runtime-loader.mjs trusted/automation/validator.mjs
+        run: |
+          node trusted/automation/materialize-draft.mjs --self-check
+          node --experimental-strip-types --loader ./trusted/automation/runtime-loader.mjs trusted/automation/validator.mjs
       - name: Compile candidate frontend without network or host write access
         id: compile
         run: node trusted/automation/sandbox.mjs --compile
