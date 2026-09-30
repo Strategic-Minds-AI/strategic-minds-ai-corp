@@ -1,6 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { createRemoteJWKSet, jwtVerify } from 'npm:jose@6.1.0';
-import { githubClient, REPOSITORY, optional, verifyZeroCost, setVariable } from '../../shared/automation/github.ts';
+import { githubClient, REPOSITORY, REPOSITORY_ID, REPOSITORY_OWNER_ID, optional, verifyZeroCost, setVariable } from '../../shared/automation/github.ts';
 export default async function(req) {
   const headers = { 'Cache-Control': 'no-store' };
   try {
@@ -15,7 +15,7 @@ export default async function(req) {
       const result = await jwtVerify(body.token, keys, { issuer: 'https://token.actions.githubusercontent.com', audience: 'https://strategic-ai-consulting.base44.app/functions/benchmarkCostRenewal', algorithms: ['RS256'], requiredClaims: ['exp', 'iat', 'nbf', 'sub'], maxTokenAge: '5m' });
       claims = result.payload;
     } catch { return Response.json({ error: 'Invalid or expired workflow identity.' }, { status: 403, headers }); }
-    if (claims.repository !== REPOSITORY || claims.repository_id !== '1393973789' || claims.repository_owner_id !== '332008865' || claims.repository_visibility !== 'private' || claims.ref !== 'refs/heads/main' || !['repo:' + REPOSITORY + ':ref:refs/heads/main', 'repo:Strategic-Minds-AI@332008865/strategic-minds-corp-site@1393973789:ref:refs/heads/main'].includes(claims.sub) || claims.workflow_ref !== REPOSITORY + '/.github/workflows/benchmark-coding.yml@refs/heads/main' || claims.runner_environment !== 'github-hosted' || !['schedule', 'workflow_dispatch'].includes(claims.event_name) || !/^[0-9]+$/.test(String(claims.run_id)) || !/^[0-9]+$/.test(String(claims.run_attempt)) || !/^[a-f0-9]{40}$/.test(String(claims.workflow_sha))) return Response.json({ error: 'Workflow identity outside approved scope.' }, { status: 403, headers });
+    if (claims.repository !== REPOSITORY || String(claims.repository_id) !== REPOSITORY_ID || String(claims.repository_owner_id) !== REPOSITORY_OWNER_ID || claims.repository_visibility !== 'private' || claims.ref !== 'refs/heads/main' || !['repo:' + REPOSITORY + ':ref:refs/heads/main', 'repo:Strategic-Minds-AI@' + REPOSITORY_OWNER_ID + '/strategic-minds-ai-corp@' + REPOSITORY_ID + ':ref:refs/heads/main'].includes(claims.sub) || claims.workflow_ref !== REPOSITORY + '/.github/workflows/benchmark-coding.yml@refs/heads/main' || claims.runner_environment !== 'github-hosted' || !['schedule', 'workflow_dispatch'].includes(claims.event_name) || !/^[0-9]+$/.test(String(claims.run_id)) || !/^[0-9]+$/.test(String(claims.run_attempt)) || !/^[a-f0-9]{40}$/.test(String(claims.workflow_sha))) return Response.json({ error: 'Workflow identity outside approved scope.' }, { status: 403, headers });
     // This machine-only webhook authenticates GitHub's signed workload, not an app-user session.
     const get = await githubClient(createClientFromRequest(req)); const root = '/repos/' + REPOSITORY;
     const [run, main, flag] = await Promise.all([get(root + '/actions/runs/' + claims.run_id), get(root + '/git/ref/heads/main'), optional(get, root + '/actions/variables/BENCHMARK_AUTOMATION_ENABLED')]);
