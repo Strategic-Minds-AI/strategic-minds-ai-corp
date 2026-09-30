@@ -62,6 +62,7 @@ export async function controlAutomation(get, action) {
   if (action === 'pause') { await setVariable(get, 'BENCHMARK_AUTOMATION_ENABLED', 'false'); return automationStatus(get); }
   const state = await automationStatus(get);
   if (!state.installed) { const error = new Error('Review and merge the installation first; no direct mutation of main is permitted.'); error.status = 409; throw error; }
+  if (state.review_url) { const error = new Error('An automation update is awaiting review and merge; coding stays paused.'); error.status = 409; throw error; }
   if (!state.zero_cost.verified) throw new Error(state.zero_cost.note);
   if (action === 'enable') {
     await setVariable(get, 'BENCHMARK_ZERO_COST_BUDGET_ID', state.zero_cost.budget_id);
