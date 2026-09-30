@@ -1,4 +1,4 @@
-export const REPOSITORY = 'Strategic-Minds-AI/strategic-minds-corp-site';
+export const REPOSITORY = 'Strategic-Minds-AI/strategic-minds-ai-corp';
 export const INSTALL_BRANCH = 'benchmark/install-rollback-rehearsal-v4';
 export async function githubClient(base44) {
   const { accessToken } = await base44.asServiceRole.connectors.getConnection('github');
