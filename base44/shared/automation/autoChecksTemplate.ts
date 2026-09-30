@@ -49,6 +49,9 @@ export const automaticChecksJob = `  validate_draft:
       - name: Compile isolated candidate without network or host write access
         id: compile
         run: node trusted/automation/sandbox.mjs --compile
+      - name: Rehearse exact source rollback and compile restored baseline in isolation
+        id: rollback
+        run: node trusted/automation/rollback.mjs
       - name: Record actual checks; never authorize a production release
         if: always()
         env:
@@ -59,12 +62,15 @@ export const automaticChecksJob = `  validate_draft:
           ASSERTIONS_RESULT: \${{ steps.assertions.outcome }}
           DEPENDENCIES_RESULT: \${{ steps.dependencies.outcome }}
           COMPILE_RESULT: \${{ steps.compile.outcome }}
+          ROLLBACK_RESULT: \${{ steps.rollback.outcome }}
         run: node trusted/automation/finalize.mjs
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
         with:
           name: automatic-draft-checks-\${{ github.run_id }}
-          path: benchmark-ci-report.json
+          path: |
+            benchmark-ci-report.json
+            benchmark-rollback-report.json
           retention-days: 1
           if-no-files-found: error
 `;
