@@ -58,7 +58,19 @@ ${costRenewalStep}      - name: Stop on expired verification, existing review or
             if (branches.length < 100) break;
             if (page === 20) throw new Error('Branch scan exceeded its safety bound.');
           }
-          // Private draft artifacts no longer block the next bounded cycle: each draft is checked automatically in a separate job.
+          // STRICT VALIDATOR GATE: a successful autonomous proposal must have a successful independent validator before another coding move.
+          const historyResponse = await fetch('https://api.github.com/repos/' + repo + '/actions/workflows/benchmark-coding.yml/runs?per_page=20', { headers });
+          if (!historyResponse.ok) throw new Error('Cannot verify prior validator history; fail closed.');
+          const history = await historyResponse.json();
+          const priorCompleted = (history.workflow_runs || []).find(run => String(run.id) !== String(process.env.GITHUB_RUN_ID) && run.status === 'completed');
+          if (priorCompleted) {
+            const jobsResponse = await fetch('https://api.github.com/repos/' + repo + '/actions/runs/' + priorCompleted.id + '/jobs?per_page=100', { headers });
+            if (!jobsResponse.ok) throw new Error('Cannot inspect the prior validator receipt; fail closed.');
+            const jobs = (await jobsResponse.json()).jobs || [];
+            const proposalJob = jobs.find(job => job.name === 'propose');
+            const validatorJob = jobs.find(job => job.name === 'Independent automatic draft checks');
+            if (proposalJob?.conclusion === 'success' && validatorJob?.conclusion !== 'success') throw new Error('Previous autonomous change did not receive a passing independent validator. No new change is permitted.');
+          }
           const day = new Date().toISOString().slice(0, 10);
           const runs = await fetch('https://api.github.com/repos/' + repo + '/actions/workflows/benchmark-coding.yml/runs?created=' + encodeURIComponent(day + '..' + day) + '&per_page=100', { headers });
           if (!runs.ok || (await runs.json()).total_count > 6) throw new Error('Daily six-cycle ceiling reached or history unavailable. Pause and refresh tomorrow.');
