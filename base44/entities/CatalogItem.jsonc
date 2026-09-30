@@ -14,10 +14,12 @@
         "one_time",
         "subscription",
         "quote"
-      ]
+      ],
+      "description": "Purchase type: one-time payment, recurring subscription, or custom quote"
     },
     "price_cents": {
-      "type": "number"
+      "type": "number",
+      "description": "Price in the currency's smallest unit (e.g. cents for USD)"
     },
     "currency": {
       "type": "string",
@@ -28,7 +30,26 @@
       "enum": [
         "month",
         "year"
-      ]
+      ],
+      "description": "Billing interval for subscriptions"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "strategy",
+        "automation",
+        "knowledge",
+        "data",
+        "marketing",
+        "search",
+        "crm",
+        "websites",
+        "software",
+        "training",
+        "governance",
+        "managed"
+      ],
+      "description": "Service category for filtering and grouping on the pricing page"
     },
     "active": {
       "type": "boolean",
