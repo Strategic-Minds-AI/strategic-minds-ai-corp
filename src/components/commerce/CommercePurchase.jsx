@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { useAuth } from '@/lib/AuthContext';
 
 export default function CommercePurchase({ item, onClose }) {
+  const { user } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
@@ -22,7 +24,7 @@ export default function CommercePurchase({ item, onClose }) {
     if (isFramed && !checkoutTab) { setError('Allow popups to continue to checkout.'); setPending(false); return; }
     if (checkoutTab) checkoutTab.opener = null;
     try {
-      const { data } = await base44.functions.invoke('commerceCheckout', { itemId: item.id, name, email, returnUrl: window.location.origin });
+      const { data } = await base44.functions.invoke('commerceCheckout', { itemId: item.id, name, email, returnUrl: window.location.origin, ...(user?.id ? { clientId: user.id } : {}) });
       if (!data.url) throw new Error('Checkout could not open.');
       if (checkoutTab) checkoutTab.location.replace(data.url); else window.location.assign(data.url);
     } catch (e) { checkoutTab?.close(); setError(e.response?.data?.error || e.message || 'Checkout could not open.'); setPending(false); }
