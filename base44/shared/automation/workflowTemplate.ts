@@ -1,4 +1,5 @@
 import { automaticChecksJob } from './autoChecksTemplate.ts';
+import { costRenewalStep } from './costRenewalTemplate.ts';
 export const codingWorkflow = `name: Benchmark coding cycle
 on:
   workflow_dispatch:
@@ -9,7 +10,7 @@ on:
         required: true
         type: string
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '0 */4 * * *'
 permissions:
   contents: read
   actions: read
@@ -22,6 +23,11 @@ jobs:
     if: vars.BENCHMARK_AUTOMATION_ENABLED == 'true' && vars.BENCHMARK_ZERO_COST_BUDGET_ID != ''
     runs-on: ubuntu-24.04
     timeout-minutes: 15
+    permissions:
+      contents: read
+      actions: read
+      pull-requests: read
+      id-token: write
     outputs:
       source_sha: \${{ steps.base.outputs.sha }}
     steps:
@@ -32,10 +38,10 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22.18.0'
-      - name: Stop on expired approval, existing review or daily cap
+${costRenewalStep}      - name: Stop on expired verification, existing review or daily cap
         env:
           GH_TOKEN: \${{ github.token }}
-          ZERO_COST_EXPIRES_AT: \${{ vars.BENCHMARK_ZERO_COST_EXPIRES_AT }}
+          ZERO_COST_EXPIRES_AT: \${{ steps.cost.outputs.expires_at }}
         run: |
           node --input-type=module <<'JS'
           if (Date.now() >= Date.parse(process.env.ZERO_COST_EXPIRES_AT) || !Number.isFinite(Date.parse(process.env.ZERO_COST_EXPIRES_AT))) throw new Error('Zero-cost verification expired. Refresh it through the admin benchmark panel.');
@@ -87,7 +93,7 @@ jobs:
 export const validatorWorkflow = `name: Independent benchmark CI
 on:
   push:
-    branches: ['benchmark/install-coding-system-v1', 'benchmark/install-automated-checks-v2']
+    branches: ['benchmark/install-coding-system-v1', 'benchmark/install-automated-checks-v2', 'benchmark/install-cost-renewal-v3']
   workflow_dispatch:
     inputs:
       candidate_sha:
