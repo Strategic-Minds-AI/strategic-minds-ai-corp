@@ -83,7 +83,7 @@ jobs:
             base44/functions
           retention-days: 1
           if-no-files-found: error
-`;
+` + automaticChecksJob;
 export const validatorWorkflow = `name: Independent benchmark CI
 on:
   push:
