@@ -1,15 +1,15 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "1.1.0",
   "generated": "2026-10-01",
   "mode": "reconcile-not-blind-copy",
   "chatgpt": {"role":"operator_orchestrator","persistence":"external_receipts_and_control_plane"},
   "local": {"root":"C:\\_Strategic_Minds_AI_OS","role":"working_mirror"},
-  "github": {"org":"Strategic-Minds-AI","code_authority":"Strategic-Minds-AI/strategic-minds-ai-corp"},
-  "drive": {"shared_drive_id":"0AEEBle9IEp8gUk9PVA","name":"_STRATEGIC_MINDS_AI_OS","role":"human_source_truth"},
+  "github": {"org":"Strategic-Minds-AI","code_authority":"Strategic-Minds-AI/strategic-minds-ai-corp","safe_branch":"convergence/unified-sync-fabric-20261001"},
+  "drive": {"shared_drive_id":"0AEEBle9IEp8gUk9PVA","name":"_STRATEGIC_MINDS_AI_OS","role":"human_source_truth","control_doc_id":"1wpvs73fd_PxixBHH9PZStLHHeAzvmPjdthG_11jLTMI"},
   "supabase": {"organization":"ywfbsrcedfxevyxpfejl","role":"runtime_state_queues_receipts"},
   "vercel": {"team_id":"team_aFdds8lsbHMwe2ip4aQdbQ3d","team":"strategic-minds-advisory","role":"deployments_workflows"},
-  "railway": {"workspace":"Strategic Minds AI","project_id":"15f90272-e2f6-4739-8286-91447f545d71","environment_id":"24636941-7db3-4218-bfbf-e8388b41f41b","environment":"production","sandbox_mode":"isolated_ephemeral"},
-  "base44": {"role":"governed_builder_not_source_truth","primary_account":"j.xpsxpress@gmail.com"},
+  "railway": {"workspace":"Strategic Minds AI","project_id":"15f90272-e2f6-4739-8286-91447f545d71","environment_id":"24636941-7db3-4218-bfbf-e8388b41f41b","environment":"production","sandbox_mode":"isolated_ephemeral","cli_auth":"BLOCKED_USER_AUTH_REQUIRED"},
+  "base44": {"registry_authority_app":"AUTO BUILDER ORCHESTRATOR","registry_authority_app_id":"6a4ae522852a5e08bfa42450","github_connector":"CONNECTED_xps-admin","drive_connector":"CONNECTED_XPS_IDENTITY_NOT_STRATEGIC_MINDS","supabase_connector":"DISCONNECTED","role":"governed_builder_registry_and_handoff"},
   "sync_rules": ["ids_hashes_shas_timestamps","no_silent_overwrite","no_secret_replication","independent_validation","receipts_required"],
   "railway_cost_policy": {"idle_timeout_minutes":5,"checkpoint_then_fork":true,"destroy_when_idle":true,"free_guarantee":false}
 }
