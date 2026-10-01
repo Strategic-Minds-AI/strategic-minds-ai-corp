@@ -1,0 +1,23 @@
+{
+  "source_sha": "b3af1e44fb28222d6c83e959cea5001d9acc2724",
+  "files": [
+    ".github/workflows/benchmark-coding.yml",
+    ".github/workflows/benchmark-validator.yml",
+    ".github/workflows/benchmark-publish.yml",
+    "automation/review-policy.mjs",
+    "automation/sandbox.mjs",
+    "automation/probe.mjs",
+    "automation/manifest.json",
+    "automation/worker.mjs",
+    "automation/line-validator.mjs",
+    "automation/line-validator-selftest.mjs",
+    "automation/line-validator-contract.test.mjs",
+    "automation/publish.mjs",
+    "automation/validator.mjs",
+    "automation/runtime-loader.mjs",
+    "automation/finalize.mjs",
+    "automation/materialize-draft.mjs",
+    "automation/rollback.mjs",
+    "automation/README.md"
+  ]
+}
