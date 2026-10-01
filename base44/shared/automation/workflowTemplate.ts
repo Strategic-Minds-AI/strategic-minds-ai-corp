@@ -133,6 +133,12 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22.18.0'
+      - name: Verify independent line-gate contract
+        id: line_gate_contract
+        run: |
+          node trusted/automation/line-validator.mjs --self-check
+          node trusted/automation/line-validator-selftest.mjs
+          node trusted/automation/line-validator-contract.test.mjs
       - name: Verify immutable revisions and trusted ancestor
         id: identity
         env:
