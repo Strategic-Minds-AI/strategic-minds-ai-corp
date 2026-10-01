@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { callAIGateway } from '../../shared/aiGateway.ts';
 
 export default async function(req: Request): Promise<Response> {
   try {
@@ -66,31 +67,28 @@ export default async function(req: Request): Promise<Response> {
       trace.push({ stage: 'runGrowthMission', skipped: true });
     }
 
-    // Stage: webSearch — attempt LLM with web context (graceful degradation if credits exhausted)
+    // Stage: webSearch — LLM insight via Vercel AI Gateway
     let webSearchResult = null;
     try {
-      const llmRes = await base44.integrations.Core.InvokeLLM({
-        prompt: `As a strategic AI architect, analyze this goal and provide a concise mission brief (3-5 bullet points):\n\nGoal: ${goal}\n\nCurrent state: ${domains.length} domains registered, ${tasks.length} pending tasks. ${growthResult ? `Latest growth audit health score: ${growthResult.result.health_score}/100.` : ''}`,
-        add_context_from_internet: true,
-        response_json_schema: {
-          type: 'object',
-          properties: {
-            brief: { type: 'array', items: { type: 'string' } },
-            next_steps: { type: 'array', items: { type: 'string' } }
-          }
-        }
+      const aiResult = await callAIGateway({
+        model: 'anthropic/claude-sonnet-4-5',
+        system: 'You are a strategic AI architect for Strategic Minds AI. Analyze the given goal and system state, then produce a concise mission brief as JSON with two arrays: "brief" (3-5 bullet points of analysis) and "next_steps" (3-5 actionable next steps).',
+        prompt: `Goal: ${goal}\n\nCurrent state: ${domains.length} domains registered, ${tasks.length} pending tasks. ${growthResult ? `Latest growth audit health score: ${growthResult.result.health_score}/100.` : 'No growth audit data yet.'}\n\nProduce a JSON object with "brief" and "next_steps" arrays.`,
+        jsonSchema: { type: 'object', properties: { brief: { type: 'array', items: { type: 'string' } }, next_steps: { type: 'array', items: { type: 'string' } } } },
+        temperature: 0.6,
+        maxTokens: 1500
       });
-      webSearchResult = llmRes;
-      stages.webSearch = { completed: true };
-      trace.push({ stage: 'webSearch', completed: true });
+      webSearchResult = aiResult.json || { brief: [aiResult.content], next_steps: [] };
+      stages.webSearch = { completed: true, model: aiResult.model, gateway: 'vercel' };
+      trace.push({ stage: 'webSearch', completed: true, gateway: 'vercel_ai_gateway' });
     } catch (e) {
-      // Graceful degradation — credits exhausted or LLM error
+      // Graceful degradation — AI Gateway error
       webSearchResult = {
         brief: [
           `Goal analyzed: ${goal.substring(0, 100)}`,
           `${domains.length} domains under management, ${tasks.length} tasks pending`,
           growthResult ? `Latest domain health score: ${growthResult.result.health_score}/100` : 'No growth audit data yet',
-          'LLM insight generation unavailable (integration credits exhausted until Oct 12) — using deterministic brief',
+          `AI Gateway error: ${e.message}`,
           'Run the agent loop to execute pending autonomous tasks'
         ],
         next_steps: [
@@ -100,8 +98,8 @@ export default async function(req: Request): Promise<Response> {
           'Monitor the Analytics dashboard for live operations data'
         ]
       };
-      stages.webSearch = { degraded: true, reason: 'credits exhausted or LLM error' };
-      trace.push({ stage: 'webSearch', degraded: true });
+      stages.webSearch = { degraded: true, reason: e.message };
+      trace.push({ stage: 'webSearch', degraded: true, error: e.message });
     }
 
     // Stage: finalize — submit mission brief

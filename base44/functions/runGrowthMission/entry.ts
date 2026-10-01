@@ -1,4 +1,5 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { callAIGateway } from '../../shared/aiGateway.ts';
 
 export default async function(req: Request): Promise<Response> {
   try {
@@ -78,11 +79,29 @@ export default async function(req: Request): Promise<Response> {
     if (domainRecord.ga4_property_id) healthScore += 15;
     addTrace('compute_health', { score: healthScore });
 
+    // Stage 5b: LLM insight via Vercel AI Gateway
+    let insight = null;
+    try {
+      const aiResult = await callAIGateway({
+        model: 'anthropic/claude-sonnet-4-5',
+        system: 'You are an SEO growth analyst. Given domain health data, produce a concise JSON insight with "summary" (1-2 sentences), "priority_actions" (array of 2-3 strings), and "estimated_impact" (low/medium/high).',
+        prompt: `Domain: ${domainName}\nRobots.txt: ${robotsTxt ? 'found' : 'missing'}\nSitemap: ${sitemapOk ? `${urlCount} URLs` : 'missing'}\nHealth score: ${healthScore}/100\nGSC: ${domainRecord.gsc_property ? 'connected' : 'not connected'}\nGA4: ${domainRecord.ga4_property_id ? 'connected' : 'not connected'}`,
+        jsonSchema: { type: 'object', properties: { summary: { type: 'string' }, priority_actions: { type: 'array', items: { type: 'string' } }, estimated_impact: { type: 'string' } } },
+        temperature: 0.5,
+        maxTokens: 800
+      });
+      insight = aiResult.json;
+      addTrace('llm_insight', { generated: true, gateway: 'vercel' });
+    } catch (e) {
+      addTrace('llm_insight', { skipped: true, reason: e.message });
+    }
+
     // Stage 6: Update domain record
+    const nextAction = insight?.priority_actions?.[0] || (healthScore < 50 ? 'Submit sitemap to Google Search Console and verify ownership' : 'Monitor index coverage and competitor gaps');
     await base44.entities.Domain.update(domainRecord.id, {
       sitemap_url: sitemapUrl,
       last_analyzed_at: new Date().toISOString(),
-      next_action: healthScore < 50 ? 'Submit sitemap to Google Search Console and verify ownership' : 'Monitor index coverage and competitor gaps'
+      next_action: nextAction
     });
     addTrace('update_domain', { updated: true });
 
@@ -110,6 +129,7 @@ export default async function(req: Request): Promise<Response> {
         sitemap_ok: sitemapOk,
         sitemap_url: sitemapUrl,
         url_count: urlCount,
+        insight,
         tasks_created: tasksCreated
       },
       trace
