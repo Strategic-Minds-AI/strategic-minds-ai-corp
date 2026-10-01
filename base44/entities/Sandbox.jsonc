@@ -1,0 +1,81 @@
+{
+  "name": "Sandbox",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Sandbox name"
+    },
+    "environment": {
+      "type": "string",
+      "enum": [
+        "local",
+        "railway"
+      ],
+      "default": "local",
+      "description": "Where the sandbox runs"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "creating",
+        "active",
+        "paused",
+        "error",
+        "deleted"
+      ],
+      "default": "creating"
+    },
+    "railway_environment_id": {
+      "type": "string",
+      "description": "Railway environment ID"
+    },
+    "railway_project_id": {
+      "type": "string",
+      "description": "Railway project ID"
+    },
+    "config": {
+      "type": "string",
+      "description": "JSON configuration for the sandbox"
+    },
+    "url": {
+      "type": "string",
+      "description": "Sandbox URL if deployed"
+    },
+    "agent_name": {
+      "type": "string",
+      "description": "Which agent this sandbox is for"
+    },
+    "description": {
+      "type": "string",
+      "description": "Sandbox purpose"
+    }
+  },
+  "required": [
+    "name",
+    "environment",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,6 +1,30 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, SquarePen, Search, X, PanelLeftClose, PanelLeftOpen, ChevronDown, Cpu, ArrowLeft } from 'lucide-react';
+import { Menu, SquarePen, Search, X, PanelLeftClose, PanelLeftOpen, ChevronDown, Cpu, ArrowLeft, Check, Users, Layers } from 'lucide-react';
+import { useLongPress } from './useLongPress';
+
+function AgentListItem({ name, meta, selected, multiSelectMode, hasConversation, onToggleAgent }) {
+  const longPress = useLongPress(() => onToggleAgent(name, true));
+  return (
+    <button
+      key={name}
+      type="button"
+      onClick={() => onToggleAgent(name)}
+      onTouchStart={longPress.onTouchStart}
+      onTouchEnd={longPress.onTouchEnd}
+      onTouchMove={longPress.onTouchMove}
+      onContextMenu={longPress.onContextMenu}
+      onMouseDown={longPress.onMouseDown}
+      onMouseUp={longPress.onMouseUp}
+      onMouseLeave={longPress.onMouseLeave}
+      className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground ${selected ? 'bg-primary/10 font-medium' : ''}`}
+    >
+      {multiSelectMode && <span className={`flex h-4 w-4 items-center justify-center rounded border ${selected ? 'border-primary bg-primary text-primary-foreground' : 'border-border'}`}><Check size={12} /></span>}
+      <span className="truncate">{meta.label}</span>
+      {hasConversation(name) && !multiSelectMode && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary"/>}
+    </button>
+  );
+}
 
 const AGENT_GROUPS = [
   { label: 'Apex', agents: ['orchestrator', 'replicator', 'swarm'] },
@@ -18,31 +42,42 @@ const TOOLS = [
   ['mission-control', 'Mission Control'],
   ['mission', 'Growth Mission'],
   ['domains', 'Domain Registry'],
+  ['sandboxes', 'Sandbox System'],
   ['analytics', 'Live Analytics'],
 ];
 
 export const AGENT_META = {
-  orchestrator: { label: 'The Orchestrator', icon: '🧠' },
-  growth_operator: { label: 'Growth Operator', icon: '🛡️' },
-  code_architect: { label: 'Code Architect', icon: '⚙️' },
-  social_strategist: { label: 'Social Strategist', icon: '📣' },
-  sales_engine: { label: 'Sales Engine', icon: '🚀' },
-  brand_guardian: { label: 'Brand Guardian', icon: '✦' },
-  replicator: { label: 'The Replicator', icon: '🧬' },
-  swarm: { label: 'The Swarm', icon: '🐝' },
+  orchestrator: { label: 'The Orchestrator', icon: 'brain' },
+  growth_operator: { label: 'Growth Operator', icon: 'shield' },
+  code_architect: { label: 'Code Architect', icon: 'code' },
+  social_strategist: { label: 'Social Strategist', icon: 'megaphone' },
+  sales_engine: { label: 'Sales Engine', icon: 'rocket' },
+  brand_guardian: { label: 'Brand Guardian', icon: 'sparkles' },
+  replicator: { label: 'The Replicator', icon: 'gitfork' },
+  swarm: { label: 'The Swarm', icon: 'users' },
 };
 
-export default function AgentSidebar({ selectedAgent, onSelect, onNew, collapsed, onCollapse, hasConversation }) {
+export const ALL_AGENT_NAMES = Object.keys(AGENT_META);
+
+export default function AgentSidebar({ selectedAgents, onToggleAgent, onClearSelection, onSwarmMode, multiSelectMode, onExitMultiSelect, collapsed, onCollapse, hasConversation }) {
   const [open, setOpen] = useState(false);
   const [searching, setSearching] = useState(false);
   const [query, setQuery] = useState('');
   const [toolsOpen, setToolsOpen] = useState(false);
   const choose = (fn) => { fn(); setOpen(false); };
 
+  const longPress = useLongPress(() => {
+    // Long press enters multi-select mode (handled by parent via onToggleAgent)
+  });
+
   const matches = (name) => {
     if (!query) return true;
     const meta = AGENT_META[name];
     return meta.label.toLowerCase().includes(query.toLowerCase()) || name.includes(query.toLowerCase());
+  };
+
+  const handleAgentClick = (name) => {
+    onToggleAgent(name);
   };
 
   return <>
@@ -57,24 +92,33 @@ export default function AgentSidebar({ selectedAgent, onSelect, onNew, collapsed
         <button type="button" aria-label="Collapse sidebar" title="Collapse sidebar" onClick={() => onCollapse(true)} className="ml-auto hidden rounded p-2 text-foreground hover:bg-muted md:block"><PanelLeftClose size={19}/></button>
         <button type="button" aria-label="Close sidebar" onClick={() => setOpen(false)} className="rounded p-2 md:hidden"><X size={18}/></button>
       </div>
-      <button type="button" onClick={() => choose(onNew)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><SquarePen size={18}/> New chat</button>
+      <button type="button" onClick={() => choose(onClearSelection)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><SquarePen size={18}/> New chat</button>
+      <button type="button" onClick={() => choose(onSwarmMode)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Users size={18}/> Swarm Mode</button>
       <button type="button" onClick={() => setSearching(!searching)} className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Search size={18}/> Search agents</button>
       {searching && <input autoFocus aria-label="Search agents" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search agents" className="my-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground"/>}
-      <div className="mt-5 min-h-0 flex-1 overflow-y-auto">
+      {multiSelectMode && (
+        <div className="mt-2 flex items-center justify-between rounded-lg bg-primary/10 px-3 py-2">
+          <span className="text-xs font-semibold text-primary">{selectedAgents.size} selected</span>
+          <button type="button" onClick={() => choose(onExitMultiSelect)} className="text-xs text-muted-foreground hover:text-foreground">Done</button>
+        </div>
+      )}
+      <div className="mt-3 min-h-0 flex-1 overflow-y-auto">
         {AGENT_GROUPS.map(group => {
           const visible = group.agents.filter(matches);
           if (visible.length === 0) return null;
           return <div key={group.label}>
             <p className="px-3 pb-1 pt-3 text-xs font-semibold text-muted-foreground">{group.label}</p>
-            {visible.map(name => {
-              const meta = AGENT_META[name];
-              const active = selectedAgent === name;
-              return <button key={name} type="button" onClick={() => choose(() => onSelect(name))} className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground ${active ? 'bg-muted font-medium' : ''}`}>
-                <span className="text-base">{meta.icon}</span>
-                <span className="truncate">{meta.label}</span>
-                {hasConversation(name) && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary"/>}
-              </button>;
-            })}
+            {visible.map(name => (
+              <AgentListItem
+                key={name}
+                name={name}
+                meta={AGENT_META[name]}
+                selected={selectedAgents.has(name)}
+                multiSelectMode={multiSelectMode}
+                hasConversation={hasConversation}
+                onToggleAgent={onToggleAgent}
+              />
+            ))}
           </div>;
         })}
       </div>

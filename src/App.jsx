@@ -40,6 +40,7 @@ const SystemFactory = lazy(() => import('@/pages/SystemFactory'));
 const BatchOperations = lazy(() => import('@/pages/BatchOperations'));
 const WebsiteFactory = lazy(() => import('@/pages/WebsiteFactory'));
 const Analytics = lazy(() => import('@/pages/Analytics'));
+const SandboxManager = lazy(() => import('@/pages/SandboxManager'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -96,6 +97,7 @@ const AuthenticatedApp = () => {
           <Route path="/factory" element={<SystemFactory />} />
           <Route path="/batch" element={<BatchOperations />} />
           <Route path="/website-factory" element={<WebsiteFactory />} />
+          <Route path="/sandboxes" element={<SandboxManager />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>
