@@ -16,6 +16,14 @@ async function sha256(text: string): Promise<string> {
   return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+function computeHealth(lastHeartbeat: string | undefined): string {
+  if (!lastHeartbeat) return 'unknown';
+  const age = Date.now() - new Date(lastHeartbeat).getTime();
+  if (age < 3 * 60 * 1000) return 'healthy';
+  if (age < 10 * 60 * 1000) return 'degraded';
+  return 'offline';
+}
+
 async function railwayQuery(query, variables = {}) {
   const token = process.env.RAILWAY_API_TOKEN;
   if (!token) throw new Error('RAILWAY_API_TOKEN secret not set');
@@ -140,6 +148,39 @@ export default async function(req: Request): Promise<Response> {
 
       await base44.entities.Sandbox.update(sandboxId, { status: 'deleted' });
       return Response.json({ deleted: true, sandbox_id: sandboxId });
+    }
+
+    // Health check: update all sandbox health statuses based on heartbeat staleness
+    if (action === 'health_check') {
+      const HEALTHY_MS = 3 * 60 * 1000;
+      const DEGRADED_MS = 10 * 60 * 1000;
+      const sbRes = await base44.entities.Sandbox.filter({ status: { $ne: 'deleted' } }, { limit: 100 });
+      const allSandboxes = sbRes.items || [];
+      const updates = [];
+      for (const sb of allSandboxes) {
+        let newStatus = 'unknown';
+        if (sb.last_heartbeat_at) {
+          const age = Date.now() - new Date(sb.last_heartbeat_at).getTime();
+          if (age < HEALTHY_MS) newStatus = 'healthy';
+          else if (age < DEGRADED_MS) newStatus = 'degraded';
+          else newStatus = 'offline';
+        }
+        if ((sb.health_status || 'unknown') !== newStatus) {
+          await base44.entities.Sandbox.update(sb.id, { health_status: newStatus });
+          updates.push({ id: sb.id, name: sb.name, old: sb.health_status || 'unknown', new: newStatus });
+        }
+      }
+      return Response.json({
+        ok: true,
+        summary: {
+          total: allSandboxes.length,
+          healthy: allSandboxes.filter(s => computeHealth(s.last_heartbeat_at) === 'healthy').length,
+          degraded: allSandboxes.filter(s => computeHealth(s.last_heartbeat_at) === 'degraded').length,
+          offline: allSandboxes.filter(s => computeHealth(s.last_heartbeat_at) === 'offline').length,
+          unknown: allSandboxes.filter(s => !s.last_heartbeat_at || computeHealth(s.last_heartbeat_at) === 'unknown').length,
+        },
+        updates,
+      });
     }
 
     // Get Railway environments only

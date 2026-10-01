@@ -64,6 +64,16 @@
       "type": "string",
       "format": "date-time",
       "description": "When the task claim lease expires. Expired leases can be re-claimed by other sandboxes."
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the sandbox started executing this task"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the sandbox finished executing this task"
     }
   },
   "required": [

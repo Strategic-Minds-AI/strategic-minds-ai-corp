@@ -57,6 +57,35 @@
     "key_prefix": {
       "type": "string",
       "description": "First 10 chars of the raw key for display identification only"
+    },
+    "last_heartbeat_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Last time the sandbox worker checked in via heartbeat"
+    },
+    "health_status": {
+      "type": "string",
+      "enum": [
+        "healthy",
+        "degraded",
+        "offline",
+        "unknown"
+      ],
+      "default": "unknown",
+      "description": "Health status derived from heartbeat staleness"
+    },
+    "current_task_id": {
+      "type": "string",
+      "description": "ID of the task currently being executed by this sandbox"
+    },
+    "cycles_completed": {
+      "type": "number",
+      "default": 0,
+      "description": "Total number of task cycles this sandbox has completed"
+    },
+    "last_error": {
+      "type": "string",
+      "description": "Last error message from the sandbox worker"
     }
   },
   "required": [
