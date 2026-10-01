@@ -1,0 +1,57 @@
+name: Line validator governance CI
+on:
+  push:
+    branches:
+      - governance/line-validator-agent-v1-20261001
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: line-validator-governance-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '22.18.0'
+          cache: npm
+      - name: Validate trusted line gate
+        run: |
+          node --check automation/line-validator.mjs
+          node --check automation/line-validator-selftest.mjs
+          node --check automation/line-validator-contract.test.mjs
+          node automation/line-validator.mjs --self-check
+          node automation/line-validator-selftest.mjs
+          node automation/line-validator-contract.test.mjs
+      - name: Verify canonical bindings and fail-closed policy
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const github = fs.readFileSync('base44/shared/automation/github.ts','utf8');
+          const renewal = fs.readFileSync('base44/functions/benchmarkCostRenewal/entry.ts','utf8');
+          const install = fs.readFileSync('base44/shared/automation/install.ts','utf8');
+          const worker = fs.readFileSync('base44/shared/automation/workerTemplate.ts','utf8');
+          const agents = fs.readFileSync('AGENTS.md','utf8');
+          const must = (ok,msg) => { if (!ok) throw new Error(msg); };
+          must(github.includes("Strategic-Minds-AI/strategic-minds-ai-corp"), 'canonical repo binding missing');
+          must(renewal.includes("1396772471"), 'canonical immutable repo id missing');
+          must(install.includes("line_level_validation_required: true"), 'line validation manifest policy missing');
+          must(install.includes("worker_self_certification_allowed: false"), 'self-certification prohibition missing');
+          must(worker.includes("validateLineIndependently"), 'separate line validator process missing');
+          must(worker.includes("next_line_requires_previous_pass: true"), 'next-line gate evidence missing');
+          must(agents.includes("INDEPENDENT_LINE_GATE_V1"), 'repo agent rule missing');
+          must(!worker.includes("automatic_merge: true"), 'automatic merge unexpectedly enabled');
+          console.log(JSON.stringify({passed:true,contract:'INDEPENDENT_LINE_GATE_V1',canonical_repository:'Strategic-Minds-AI/strategic-minds-ai-corp'}));
+          JS
+      - name: Install frozen dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Production build
+        run: npm run build
