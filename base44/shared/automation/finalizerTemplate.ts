@@ -6,10 +6,12 @@ try { report = JSON.parse(await readFile('benchmark-ci-report.json', 'utf8')); }
 const outcomes = { sandbox_isolation: process.env.ISOLATION_RESULT, immutable_revision_identity: process.env.IDENTITY_RESULT, offline_assertions: process.env.ASSERTIONS_RESULT, frozen_dependency_install: process.env.DEPENDENCIES_RESULT, frontend_compile: process.env.COMPILE_RESULT, offline_source_rollback: process.env.ROLLBACK_RESULT };
 if (process.env.AUTOMATED_DRAFT === 'true') {
   outcomes.draft_artifact = process.env.ARTIFACT_RESULT;
+  outcomes.independent_line_gate = process.env.LINE_GATE_RESULT;
   outcomes.draft_materialization = process.env.MATERIALIZE_RESULT;
   report.automated_draft_checks = true;
   report.proposal_sha256 = process.env.PROPOSAL_SHA256 || null;
   report.source_published = false;
+  report.line_gate_contract = 'INDEPENDENT_LINE_GATE_V1';
 }
 let rollback;
 try { rollback = JSON.parse(await readFile('benchmark-rollback-report.json', 'utf8')); } catch (error) { if (error.code !== 'ENOENT') throw error; }

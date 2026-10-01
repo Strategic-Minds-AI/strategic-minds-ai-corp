@@ -26,6 +26,11 @@ export const automaticChecksJob = `  validate_draft:
         with:
           name: coding-candidate
           path: draft
+      - name: Independently replay every materialized line receipt
+        id: line_gate
+        run: |
+          node trusted/automation/line-validator.mjs --self-check
+          node trusted/automation/line-validator.mjs --verify-receipts draft draft/automation-line-receipts.json
       - name: Exercise negative controls and materialize an unpublished local candidate
         id: materialize
         run: |
@@ -56,6 +61,7 @@ export const automaticChecksJob = `  validate_draft:
         if: always()
         env:
           ARTIFACT_RESULT: \${{ steps.artifact.outcome }}
+          LINE_GATE_RESULT: \${{ steps.line_gate.outcome }}
           MATERIALIZE_RESULT: \${{ steps.materialize.outcome }}
           ISOLATION_RESULT: \${{ steps.isolation.outcome }}
           IDENTITY_RESULT: \${{ steps.identity.outcome }}

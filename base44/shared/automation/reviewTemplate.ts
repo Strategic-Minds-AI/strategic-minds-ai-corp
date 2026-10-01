@@ -5,7 +5,7 @@ export function allowed(file) { return typeof file === 'string' && /^(src\/(comp
 export function requireReview(raw, expected, acknowledged) {
   if (acknowledged !== 'true' || !/^[a-f0-9]{64}$/.test(expected || '') || sha256(raw) !== expected) throw new Error('Exact-content security review approval required; no publication permitted.');
   const proposal = JSON.parse(raw);
-  if (!/^[a-f0-9]{40}$/.test(proposal.source_sha) || proposal.status !== 'PROPOSED_NOT_VALIDATED' || proposal.parity_awarded !== 0 || !Array.isArray(proposal.changes) || !proposal.changes.length || proposal.changes.length > 3) throw new Error('Invalid reviewed proposal.');
+  if (!/^[a-f0-9]{40}$/.test(proposal.source_sha) || proposal.status !== 'PROPOSED_NOT_VALIDATED' || proposal.parity_awarded !== 0 || proposal.line_gate_contract !== 'INDEPENDENT_LINE_GATE_V1' || !Number.isInteger(proposal.validated_materialized_lines) || proposal.validated_materialized_lines < 1 || proposal.validated_materialized_lines > 120 || !Array.isArray(proposal.changes) || !proposal.changes.length || proposal.changes.length > 3) throw new Error('Invalid reviewed proposal or missing line-level validation contract.');
   const paths = new Set();
   for (const change of proposal.changes) { if (!allowed(change.path) || paths.has(change.path) || !/^[a-f0-9]{64}$/.test(change.sha256 || '')) throw new Error('Protected, duplicate or invalid change.'); paths.add(change.path); }
   return proposal;
@@ -36,7 +36,7 @@ on:
         required: true
         type: string
       security_reviewed:
-        description: I reviewed every changed file, including authorization and side effects
+        description: I reviewed every changed file and its line-gate evidence, including authorization and side effects
         required: true
         default: false
         type: boolean

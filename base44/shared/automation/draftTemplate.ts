@@ -8,7 +8,7 @@ const sha = text => createHash('sha256').update(text).digest('hex');
 export function validateProposal(raw, baseline, criteria) {
   if (Buffer.byteLength(raw) > 30000) throw new Error('Oversized proposal.');
   const proposal = JSON.parse(raw);
-  if (!/^[a-f0-9]{40}$/.test(baseline || '') || proposal.source_sha !== baseline || proposal.status !== 'PROPOSED_NOT_VALIDATED' || proposal.parity_awarded !== 0 || !criteria.some(item => item.id === proposal.criterion_id) || !Array.isArray(proposal.changes) || !proposal.changes.length || proposal.changes.length > 3) throw new Error('Untrusted proposal identity or scope.');
+  if (!/^[a-f0-9]{40}$/.test(baseline || '') || proposal.source_sha !== baseline || proposal.status !== 'PROPOSED_NOT_VALIDATED' || proposal.parity_awarded !== 0 || proposal.line_gate_contract !== 'INDEPENDENT_LINE_GATE_V1' || !Number.isInteger(proposal.validated_materialized_lines) || proposal.validated_materialized_lines < 1 || proposal.validated_materialized_lines > 120 || !criteria.some(item => item.id === proposal.criterion_id) || !Array.isArray(proposal.changes) || !proposal.changes.length || proposal.changes.length > 3) throw new Error('Untrusted proposal identity or scope.');
   const paths = new Set();
   for (const change of proposal.changes) {
     if (!allowed(change.path) || paths.has(change.path) || !/^[a-f0-9]{64}$/.test(change.sha256 || '')) throw new Error('Protected, duplicate or invalid patch.');
@@ -52,10 +52,10 @@ async function materialize() {
 }
 if (process.argv.includes('--self-check')) {
   const baseline = 'a'.repeat(40); const criteria = [{ id: 'agents.context' }];
-  const proposal = { source_sha: baseline, status: 'PROPOSED_NOT_VALIDATED', criterion_id: 'agents.context', parity_awarded: 0, changes: [{ path: 'src/components/example.jsx', sha256: 'b'.repeat(64) }] };
+  const proposal = { source_sha: baseline, status: 'PROPOSED_NOT_VALIDATED', line_gate_contract: 'INDEPENDENT_LINE_GATE_V1', validated_materialized_lines: 1, criterion_id: 'agents.context', parity_awarded: 0, changes: [{ path: 'src/components/example.jsx', sha256: 'b'.repeat(64) }] };
   const validate = value => validateProposal(JSON.stringify(value), baseline, criteria);
   assert.equal(validate(proposal).changes.length, 1);
-  for (const change of [{ source_sha: 'c'.repeat(40) }, { status: 'PASSED' }, { parity_awarded: 100 }, { criterion_id: 'invented' }, { changes: [] }, { changes: [...proposal.changes, ...proposal.changes] }, { changes: [{ path: 'src/components/../api/client.js', sha256: 'b'.repeat(64) }] }, { changes: [{ path: 'base44/shared/benchmarkProof.ts', sha256: 'b'.repeat(64) }] }, { changes: [{ path: 'src/components/example.jsx', sha256: 'invalid' }] }]) assert.throws(() => validate({ ...proposal, ...change }));
+  for (const change of [{ source_sha: 'c'.repeat(40) }, { status: 'PASSED' }, { line_gate_contract: 'MISSING' }, { validated_materialized_lines: 0 }, { parity_awarded: 100 }, { criterion_id: 'invented' }, { changes: [] }, { changes: [...proposal.changes, ...proposal.changes] }, { changes: [{ path: 'src/components/../api/client.js', sha256: 'b'.repeat(64) }] }, { changes: [{ path: 'base44/shared/benchmarkProof.ts', sha256: 'b'.repeat(64) }] }, { changes: [{ path: 'src/components/example.jsx', sha256: 'invalid' }] }]) assert.throws(() => validate({ ...proposal, ...change }));
   assert.throws(() => validateProposal(' '.repeat(30001), baseline, criteria));
   console.log('Automatic draft identity, scope, digest and negative controls passed; no release approval.');
 }
