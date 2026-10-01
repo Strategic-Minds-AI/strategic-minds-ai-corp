@@ -28,6 +28,8 @@ const SinglePost = lazy(() => import('@/pages/single-post'));
 const About = lazy(() => import('@/pages/about'));
 const Services = lazy(() => import('@/pages/services'));
 const Pricing = lazy(() => import('@/pages/pricing'));
+const Resources = lazy(() => import('@/pages/Resources'));
+const InsiderApp = lazy(() => import('@/pages/InsiderApp'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
