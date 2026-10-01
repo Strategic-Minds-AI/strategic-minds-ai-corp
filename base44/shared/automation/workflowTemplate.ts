@@ -83,6 +83,7 @@ ${costRenewalStep}      - name: Stop on expired verification, existing review or
           name: coding-candidate
           path: |
             automation-proposal.json
+            automation-line-receipts.json
             src/components
             src/pages
             base44/shared
@@ -93,7 +94,7 @@ ${costRenewalStep}      - name: Stop on expired verification, existing review or
 export const validatorWorkflow = `name: Independent benchmark CI
 on:
   push:
-    branches: ['benchmark/install-coding-system-v1', 'benchmark/install-automated-checks-v2', 'benchmark/install-cost-renewal-v3', 'benchmark/install-rollback-rehearsal-v4']
+    branches: ['benchmark/install-coding-system-v1', 'benchmark/install-automated-checks-v2', 'benchmark/install-cost-renewal-v3', 'benchmark/install-rollback-rehearsal-v4', 'benchmark/install-line-validator-v5']
   workflow_dispatch:
     inputs:
       candidate_sha:
