@@ -1,0 +1,40 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "lead_to_crm_sync",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "sync_crm": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "syncLeadToCrm",
+            "args": {
+              "lead_id": "${ .trigger.entity_id }"
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Sync lead to CRM",
+            "description": "Create CRM contact from form submission"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Creates a CRM contact from every form submission (quotation, pricing, search, contact, newsletter).",
+  "name": "Lead to CRM Sync",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create"
+      ],
+      "entity_name": "Lead"
+    }
+  }
+}

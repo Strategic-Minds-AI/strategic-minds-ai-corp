@@ -1,0 +1,38 @@
+{
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "sitemap_on_project",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "generate_sitemap": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "generateSitemap"
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Regenerate sitemap",
+            "description": "Rebuild and submit sitemap to Google"
+          }
+        }
+      }
+    ]
+  },
+  "description": "Regenerates and submits the sitemap when a project case study is created or updated.",
+  "name": "Sitemap on Project Publish",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "entity",
+      "events": [
+        "create",
+        "update"
+      ],
+      "entity_name": "Project"
+    }
+  }
+}

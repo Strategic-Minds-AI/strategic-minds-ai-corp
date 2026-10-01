@@ -9,7 +9,10 @@ const sortPosts = (posts: Post[]) =>
   [...posts].sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
 
 export const fetchPosts = async () => {
-  const posts = ((await base44.entities.Post.list("created_date", 5000)) as Post[]).filter(isValidPost);
+  const now = new Date();
+  const posts = ((await base44.entities.Post.list("created_date", 5000)) as Post[])
+    .filter(isValidPost)
+    .filter((post) => !post.publish_date || new Date(post.publish_date) <= now);
 
   // Public reads never trigger privileged sample-data creation.
   return sortPosts(posts);
