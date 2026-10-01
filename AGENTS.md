@@ -48,3 +48,17 @@ This repository uses fail-closed line-level validation for autonomous coding age
 - No later build, test, merge, deploy, or release step may override a failed/missing line receipt.
 - Protected paths, credentials, auth/security controls, automation policy, workflows, secrets, production data, DNS, billing, permissions, destructive actions, and production release remain outside autonomous writer scope unless separately approved.
 - This rule applies to all autonomous coding agents operating on Strategic Minds AI code, regardless of model or provider.
+
+
+## Independent Line Validation Contract
+
+This repository uses a fail-closed line-level rule for autonomous coding.
+
+- An autonomous implementer may propose code in memory, but it MUST NOT materialize line N+1 to a candidate file until an independent validator has PASSed materialized line N.
+- The implementer MUST NOT self-certify. The validator must execute as a separate trusted process or independently trusted agent with a different responsibility boundary.
+- Every accepted line must produce a deterministic receipt bound to path, 1-based line number, line digest, previous receipt-chain digest, and resulting chain digest.
+- A failed, missing, malformed, sensitive, or unverifiable line blocks the rest of that autonomous cycle.
+- Automation, validator, approval, credential, workflow, auth, benchmark, vault, package, lockfile, and environment surfaces remain outside the bounded worker's writable scope.
+- Later lint, build, unit, integration, security, browser, staging, or release checks are additive and MUST NOT be used to bypass a failed line-level gate.
+- Production merge, deployment, DNS, database migrations, secret changes, spend, customer messaging, and destructive operations still require their normal protected-action approval gates.
+- The canonical machine contract is `INDEPENDENT_LINE_GATE_V1`. The worker writes `automation-line-receipts.json`; independent CI and publication must replay those receipts against the exact final bytes.
