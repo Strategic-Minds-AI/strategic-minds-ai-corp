@@ -1,0 +1,13 @@
+{
+  "name": "@strategic-minds/railway-ephemeral-runner",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "dependencies": {
+    "railway": "^3.0.0"
+  },
+  "scripts": {
+    "smoke": "node sandbox-smoke.mjs"
+  }
+}
