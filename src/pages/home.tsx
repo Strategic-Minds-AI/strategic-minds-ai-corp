@@ -5,6 +5,7 @@ import SectionLatestNews from "@/components/sections/section-latest-news";
 import HomeProcess from "@/components/agency/HomeProcess";
 import HomeTrust from "@/components/agency/HomeTrust";
 import SiteCallout from "@/components/agency/SiteCallout";
+import ResourcesTeaser from "@/components/agency/ResourcesTeaser";
 import SectionTestimonialsSlider from "@/components/sections/section-testimonials-slider";
 import {Helmet} from "react-helmet"
 
@@ -19,8 +20,9 @@ const Home = useFramerTransition(
 			<HomeProcess />
 			<HomeTrust />
       <SectionTestimonialsSlider />
-			<SectionLatestNews />
-			<SiteCallout />
+      <ResourcesTeaser />
+      <SectionLatestNews />
+      <SiteCallout />
 		</main>
 	</>
 )

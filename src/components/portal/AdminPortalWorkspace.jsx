@@ -13,12 +13,14 @@ import AdminPhoneLink from '@/components/portal/phone/AdminPhoneLink';
 import DomainOperations from './DomainOperations';
 import PerformanceDashboard from './PerformanceDashboard';
 import BlogEditorialCalendar from './BlogEditorialCalendar';
+import InsiderContentManager from './InsiderContentManager';
 
 export default function AdminPortalWorkspace({ projects, requests, clients, selectedId, onSelectProject, onRefresh, active }) {
   const selected = projects.find(p => p.id === selectedId);
   return <div className="min-w-0">
       {active === 'dashboard' && <PerformanceDashboard />}
       {active === 'blog' && <BlogEditorialCalendar />}
+      {active === 'insider' && <InsiderContentManager />}
       {active === 'domains' && <DomainOperations />}
       {active === 'chatgpt' && <ChatGPTConnection />}
       {active === 'phone' && <AdminPhoneLink />}
