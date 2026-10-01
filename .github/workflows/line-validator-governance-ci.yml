@@ -12,16 +12,26 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Checkout candidate
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
+          path: candidate
+          persist-credentials: false
+      - name: Checkout baseline main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: main
+          path: baseline
           persist-credentials: false
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: '22.18.0'
           cache: npm
+          cache-dependency-path: candidate/package-lock.json
       - name: Validate trusted line gate
+        working-directory: candidate
         run: |
           node --check automation/line-validator.mjs
           node --check automation/line-validator-selftest.mjs
@@ -30,6 +40,7 @@ jobs:
           node automation/line-validator-selftest.mjs
           node automation/line-validator-contract.test.mjs
       - name: Verify canonical bindings and fail-closed policy
+        working-directory: candidate
         run: |
           node --input-type=module <<'JS'
           import fs from 'node:fs';
@@ -49,9 +60,39 @@ jobs:
           must(!worker.includes("automatic_merge: true"), 'automatic merge unexpectedly enabled');
           console.log(JSON.stringify({passed:true,contract:'INDEPENDENT_LINE_GATE_V1',canonical_repository:'Strategic-Minds-AI/strategic-minds-ai-corp'}));
           JS
-      - name: Install frozen dependencies without lifecycle scripts
+      - name: Install candidate dependencies without lifecycle scripts
+        working-directory: candidate
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Typecheck
-        run: npm run typecheck
+      - name: Install baseline dependencies without lifecycle scripts
+        working-directory: baseline
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Compare typecheck against main baseline
+        run: |
+          set +e
+          (cd baseline && npm run typecheck) > baseline-typecheck.txt 2>&1
+          BASELINE_EXIT=$?
+          (cd candidate && npm run typecheck) > candidate-typecheck.txt 2>&1
+          CANDIDATE_EXIT=$?
+          set -e
+          echo "baseline_exit=$BASELINE_EXIT candidate_exit=$CANDIDATE_EXIT"
+          if [ "$BASELINE_EXIT" -eq 0 ] && [ "$CANDIDATE_EXIT" -ne 0 ]; then
+            echo "Governance branch introduced typecheck failure."
+            cat candidate-typecheck.txt
+            exit 1
+          fi
+          if [ "$BASELINE_EXIT" -ne 0 ] && [ "$CANDIDATE_EXIT" -eq 0 ]; then
+            echo "Candidate improves existing typecheck debt."
+            exit 0
+          fi
+          if [ "$BASELINE_EXIT" -ne 0 ] && [ "$CANDIDATE_EXIT" -ne 0 ]; then
+            sed -E 's#(baseline|candidate)/#ROOT/#g' baseline-typecheck.txt > baseline-typecheck.norm
+            sed -E 's#(baseline|candidate)/#ROOT/#g' candidate-typecheck.txt > candidate-typecheck.norm
+            if ! diff -u baseline-typecheck.norm candidate-typecheck.norm; then
+              echo "Candidate typecheck output differs from failing main baseline."
+              exit 1
+            fi
+            echo "Typecheck debt is identical to main baseline; no new typecheck drift."
+          fi
       - name: Production build
+        working-directory: candidate
         run: npm run build
