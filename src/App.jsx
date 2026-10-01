@@ -73,6 +73,7 @@ const AuthenticatedApp = () => {
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Route>
+        <Route path="/insider" element={<InsiderApp />} />
       </Routes>
     </Suspense>
   );
