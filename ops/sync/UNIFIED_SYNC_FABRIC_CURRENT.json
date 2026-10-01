@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.1.0",
+  "schema_version": "1.2.0",
   "generated": "2026-10-01",
   "mode": "reconcile-not-blind-copy",
   "chatgpt": {"role":"operator_orchestrator","persistence":"external_receipts_and_control_plane"},
@@ -8,8 +8,17 @@
   "drive": {"shared_drive_id":"0AEEBle9IEp8gUk9PVA","name":"_STRATEGIC_MINDS_AI_OS","role":"human_source_truth","control_doc_id":"1wpvs73fd_PxixBHH9PZStLHHeAzvmPjdthG_11jLTMI"},
   "supabase": {"organization":"ywfbsrcedfxevyxpfejl","role":"runtime_state_queues_receipts"},
   "vercel": {"team_id":"team_aFdds8lsbHMwe2ip4aQdbQ3d","team":"strategic-minds-advisory","role":"deployments_workflows"},
-  "railway": {"workspace":"Strategic Minds AI","project_id":"15f90272-e2f6-4739-8286-91447f545d71","environment_id":"24636941-7db3-4218-bfbf-e8388b41f41b","environment":"production","sandbox_mode":"isolated_ephemeral","cli_auth":"BLOCKED_USER_AUTH_REQUIRED"},
-  "base44": {"registry_authority_app":"AUTO BUILDER ORCHESTRATOR","registry_authority_app_id":"6a4ae522852a5e08bfa42450","github_connector":"CONNECTED_xps-admin","drive_connector":"CONNECTED_XPS_IDENTITY_NOT_STRATEGIC_MINDS","supabase_connector":"DISCONNECTED","role":"governed_builder_registry_and_handoff"},
+  "railway": {
+    "workspace":"Strategic Minds AI",
+    "project_id":"15f90272-e2f6-4739-8286-91447f545d71",
+    "project_name":"Strategic Sandbox System",
+    "production_environment_id":"24636941-7db3-4218-bfbf-e8388b41f41b",
+    "staging_environment_id":"d829fb35-5cdf-47a2-bd4f-134a1cf336d4",
+    "agent_build_target":"staging",
+    "runtime_model":"persistent_agent_environments_plus_ephemeral_sandbox_vms",
+    "cli_auth":"INTERACTIVE_JARVIS_AUTHENTICATED_BACKGROUND_SYSTEM_NOT_AUTHENTICATED"
+  },
+  "base44": {"registry_authority_app":"AUTO BUILDER ORCHESTRATOR","registry_authority_app_id":"6a4ae522852a5e08bfa42450","sandbox_control_app":"Strategic Minds AI","sandbox_control_app_id":"6abae414a929d6dc5a55b9cc","github_connector":"CONNECTED_xps-admin","drive_connector":"CONNECTED_XPS_IDENTITY_NOT_STRATEGIC_MINDS","supabase_connector":"DISCONNECTED","role":"governed_builder_registry_and_handoff"},
   "sync_rules": ["ids_hashes_shas_timestamps","no_silent_overwrite","no_secret_replication","independent_validation","receipts_required"],
-  "railway_cost_policy": {"idle_timeout_minutes":5,"checkpoint_then_fork":true,"destroy_when_idle":true,"free_guarantee":false}
+  "railway_cost_policy": {"ephemeral_idle_timeout_minutes":5,"checkpoint_required":false,"destroy_ephemeral_when_idle":true,"persistent_agent_rollout_requires_cost_gate":true,"free_guarantee":false}
 }
