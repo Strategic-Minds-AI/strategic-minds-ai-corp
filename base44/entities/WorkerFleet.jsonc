@@ -1,0 +1,75 @@
+{
+  "name": "WorkerFleet",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Worker name"
+    },
+    "poll_interval": {
+      "type": "number",
+      "default": 60000,
+      "description": "Poll interval in milliseconds"
+    },
+    "max_cycles": {
+      "type": "number",
+      "default": 5,
+      "description": "Max cycles per poll"
+    },
+    "focus_area": {
+      "type": "string",
+      "enum": [
+        "all",
+        "growth",
+        "builds",
+        "social",
+        "sales",
+        "brand"
+      ],
+      "default": "all"
+    },
+    "deploy_target": {
+      "type": "string",
+      "enum": [
+        "local",
+        "railway",
+        "both"
+      ],
+      "default": "local"
+    },
+    "report_email": {
+      "type": "string",
+      "description": "Optional report email"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "active"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

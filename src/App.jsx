@@ -30,6 +30,16 @@ const Services = lazy(() => import('@/pages/services'));
 const Pricing = lazy(() => import('@/pages/pricing'));
 const Resources = lazy(() => import('@/pages/Resources'));
 const InsiderApp = lazy(() => import('@/pages/InsiderApp'));
+const AgentCommandCenter = lazy(() => import('@/pages/AgentCommandCenter'));
+const AgentChatPage = lazy(() => import('@/pages/AgentChatPage'));
+const DomainRegistry = lazy(() => import('@/pages/DomainRegistry'));
+const AutonomousMission = lazy(() => import('@/pages/AutonomousMission'));
+const MetaArchitect = lazy(() => import('@/pages/MetaArchitect'));
+const MissionControl = lazy(() => import('@/pages/MissionControl'));
+const SystemFactory = lazy(() => import('@/pages/SystemFactory'));
+const BatchOperations = lazy(() => import('@/pages/BatchOperations'));
+const WebsiteFactory = lazy(() => import('@/pages/WebsiteFactory'));
+const Analytics = lazy(() => import('@/pages/Analytics'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -76,6 +86,18 @@ const AuthenticatedApp = () => {
           <Route path="*" element={<PageNotFound />} />
         </Route>
         <Route path="/insider" element={<InsiderApp />} />
+        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fagents" replace />} />}>
+          <Route path="/agents" element={<AgentCommandCenter />} />
+          <Route path="/agents/:agentName" element={<AgentChatPage />} />
+          <Route path="/domains" element={<DomainRegistry />} />
+          <Route path="/mission" element={<AutonomousMission />} />
+          <Route path="/architect" element={<MetaArchitect />} />
+          <Route path="/mission-control" element={<MissionControl />} />
+          <Route path="/factory" element={<SystemFactory />} />
+          <Route path="/batch" element={<BatchOperations />} />
+          <Route path="/website-factory" element={<WebsiteFactory />} />
+          <Route path="/analytics" element={<Analytics />} />
+        </Route>
       </Routes>
     </Suspense>
   );

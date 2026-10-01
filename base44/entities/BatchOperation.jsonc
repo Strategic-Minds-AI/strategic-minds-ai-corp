@@ -1,0 +1,91 @@
+{
+  "name": "BatchOperation",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Batch name"
+    },
+    "batch_size": {
+      "type": "number",
+      "default": 10,
+      "description": "Number of sites in batch"
+    },
+    "template": {
+      "type": "object",
+      "description": "Template spec with variables"
+    },
+    "variables": {
+      "type": "string",
+      "description": "JSON array of variable sets"
+    },
+    "deploy_targets": {
+      "type": "string",
+      "description": "Comma-separated deploy targets (railway, github)"
+    },
+    "google_connect": {
+      "type": "boolean",
+      "default": true
+    },
+    "social_connect": {
+      "type": "boolean",
+      "default": true
+    },
+    "video_generate": {
+      "type": "boolean",
+      "default": false
+    },
+    "content_optimize": {
+      "type": "boolean",
+      "default": true
+    },
+    "free_mode": {
+      "type": "boolean",
+      "default": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "complete",
+        "failed"
+      ],
+      "default": "queued"
+    },
+    "sites": {
+      "type": "number",
+      "default": 0
+    },
+    "tasks_dispatched": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

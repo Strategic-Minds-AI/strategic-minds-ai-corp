@@ -1,0 +1,58 @@
+{
+  "name": "DomainInventory",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Domain name"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "discovered",
+        "available",
+        "bought",
+        "unavailable"
+      ],
+      "default": "discovered"
+    },
+    "tld": {
+      "type": "string",
+      "description": "Top-level domain extension"
+    },
+    "price": {
+      "type": "number",
+      "default": 0,
+      "description": "Purchase price in cents"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "domain",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

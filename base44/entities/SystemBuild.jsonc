@@ -1,0 +1,99 @@
+{
+  "name": "SystemBuild",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "System name"
+    },
+    "build_type": {
+      "type": "string",
+      "enum": [
+        "website",
+        "web_app",
+        "landing_page",
+        "api",
+        "automation",
+        "dashboard",
+        "tool",
+        "system"
+      ],
+      "default": "website"
+    },
+    "what_to_build": {
+      "type": "string",
+      "description": "What to build spec"
+    },
+    "how_it_looks": {
+      "type": "string",
+      "description": "Visual design spec"
+    },
+    "how_it_functions": {
+      "type": "string",
+      "description": "Functional spec"
+    },
+    "what_it_connects_to": {
+      "type": "string",
+      "description": "Integration spec"
+    },
+    "what_it_says": {
+      "type": "string",
+      "description": "Copy/messaging spec"
+    },
+    "how_it_operates": {
+      "type": "string",
+      "description": "Operations spec"
+    },
+    "deliver_to": {
+      "type": "string",
+      "description": "Delivery target spec"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "spec_submitted",
+        "planning",
+        "building",
+        "deploying",
+        "delivered",
+        "failed"
+      ],
+      "default": "spec_submitted"
+    },
+    "task_id": {
+      "type": "string",
+      "description": "Associated AgentTask ID"
+    },
+    "result": {
+      "type": "string",
+      "description": "Delivered URL or result"
+    }
+  },
+  "required": [
+    "title",
+    "build_type",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

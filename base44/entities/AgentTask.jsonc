@@ -1,0 +1,83 @@
+{
+  "name": "AgentTask",
+  "type": "object",
+  "properties": {
+    "agent_name": {
+      "type": "string",
+      "description": "Which agent owns this task"
+    },
+    "task_type": {
+      "type": "string",
+      "description": "Task category (e.g. google_connect, social_connect, build_system, growth_audit)"
+    },
+    "title": {
+      "type": "string",
+      "description": "Human-readable task title"
+    },
+    "description": {
+      "type": "string",
+      "description": "Task details or JSON payload"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "urgent",
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium"
+    },
+    "autonomous": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the autonomous worker can execute this without human approval"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "needs_approval",
+        "completed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Associated domain if applicable"
+    },
+    "result": {
+      "type": "string",
+      "description": "Execution result or output"
+    }
+  },
+  "required": [
+    "agent_name",
+    "title",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

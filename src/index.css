@@ -255,3 +255,47 @@
   height: 100vh;
   transform-origin: top;
 }
+
+/* ── Super Agents (Xtreme AI) design system ── */
+.xa-btn-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: 0; border-radius: 12px; padding: 12px 16px;
+  background: linear-gradient(135deg, #FFF7B3, #FFEA00 20%, #E6D400 45%, #FFEE33 65%, #FFEA00 80%, #CCBB00);
+  color: #000; font-weight: 700; font-size: 14px; line-height: 20px; white-space: nowrap;
+  box-shadow: inset 0 1px #fff6, inset 0 -1px #8c6e0040, 0 1px 3px #00000026;
+  transition: all .15s cubic-bezier(.4,0,.2,1); cursor: pointer;
+}
+.xa-btn-primary:hover { filter: brightness(1.06); }
+.xa-btn-primary:disabled { opacity: .5; cursor: default; }
+
+.xa-btn-outline {
+  display: inline-flex; align-items: center; gap: 6px;
+  border: 1px solid #0003; border-radius: 12px; padding: 12px 16px;
+  background: transparent; color: #000; font-weight: 700; font-size: 14px; line-height: 20px; white-space: nowrap;
+  transition: border-color .15s, box-shadow .15s, background .15s, color .15s; cursor: pointer;
+}
+.xa-btn-outline:hover { background: #000; color: #fff; border-color: #FFEA00; box-shadow: 0 0 0 1px #ffea004d, 0 0 14px -3px #ffea0073; }
+
+.xa-pill-badge {
+  display: inline-flex; align-items: center; justify-content: center; padding: 4px 12px;
+  border-radius: 9999px; background-color: #FFFBCC;
+  background-image: radial-gradient(rgba(255,234,0,.28) 1px, transparent 1px); background-size: 5px 5px;
+  color: #8A7300; font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; white-space: nowrap;
+}
+
+.xa-card {
+  border: 1px solid rgba(0,0,0,.1); border-radius: 16px; background: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.xa-input {
+  box-sizing: border-box; width: 100%; height: 42px; border: 1px solid #E5E7EB;
+  border-radius: 8px; background: #fff; color: #000;
+  padding: 8px 14px; font-size: 14px; line-height: 20px; outline: none; transition: border-color .15s, box-shadow .15s;
+}
+.xa-input:focus { border-color: #FFEA00; box-shadow: 0 0 0 3px rgba(255,234,0,.25); }
+
+.xa-scroll::-webkit-scrollbar { width: 8px; }
+.xa-scroll::-webkit-scrollbar-track { background: transparent; }
+.xa-scroll::-webkit-scrollbar-thumb { background: #E5E7EB; border-radius: 9999px; }
+.xa-scroll::-webkit-scrollbar-thumb:hover { background: #CCBB00; }
