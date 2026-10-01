@@ -49,6 +49,10 @@
     "description": {
       "type": "string",
       "description": "Sandbox purpose"
+    },
+    "api_key": {
+      "type": "string",
+      "description": "Unique API key for sandbox worker authentication"
     }
   },
   "required": [

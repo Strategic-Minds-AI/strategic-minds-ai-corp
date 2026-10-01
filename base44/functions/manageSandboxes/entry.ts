@@ -3,6 +3,12 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 const RAILWAY_GRAPHQL = 'https://backboard.railway.app/graphql';
 const RAILWAY_PROJECT_ID = '15f90272-e2f6-4739-8286-91447f545d71';
 
+function generateApiKey(): string {
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return 'sk_sbx_' + Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 async function railwayQuery(query, variables = {}) {
   const token = process.env.RAILWAY_API_TOKEN;
   if (!token) throw new Error('RAILWAY_API_TOKEN secret not set');
@@ -64,7 +70,8 @@ export default async function(req: Request): Promise<Response> {
       const envId = envResult.railwayEnvironmentCreate?.id;
       if (!envId) throw new Error('Failed to create Railway environment');
 
-      // Create Sandbox record
+      // Create Sandbox record with API key
+      const apiKey = generateApiKey();
       const sandbox = await base44.entities.Sandbox.create({
         name,
         environment: 'railway',
@@ -73,10 +80,11 @@ export default async function(req: Request): Promise<Response> {
         railway_project_id: RAILWAY_PROJECT_ID,
         agent_name: agentName,
         description,
+        api_key: apiKey,
         config: JSON.stringify({ created_via: 'manageSandboxes', railway_environment: envId })
       });
 
-      return Response.json({ sandbox, railway_environment: envResult.railwayEnvironmentCreate });
+      return Response.json({ sandbox, api_key: apiKey, railway_environment: envResult.railwayEnvironmentCreate });
     }
 
     // Create a local sandbox
@@ -86,16 +94,18 @@ export default async function(req: Request): Promise<Response> {
       const agentName = body.agent_name || '';
       const config = body.config || '{}';
 
+      const apiKey = generateApiKey();
       const sandbox = await base44.entities.Sandbox.create({
         name,
         environment: 'local',
         status: 'active',
         agent_name: agentName,
         description,
+        api_key: apiKey,
         config
       });
 
-      return Response.json({ sandbox });
+      return Response.json({ sandbox, api_key: apiKey });
     }
 
     // Delete a sandbox

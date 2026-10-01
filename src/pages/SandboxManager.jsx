@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Plus, Trash2, Server, Cloud, Loader2, AlertCircle, ArrowLeft, RefreshCw, Cpu } from 'lucide-react';
+import { Plus, Trash2, Server, Cloud, Loader2, AlertCircle, ArrowLeft, RefreshCw, Cpu, Key, Copy, Check, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function SandboxManager() {
@@ -11,6 +11,8 @@ export default function SandboxManager() {
   const [showCreate, setShowCreate] = useState(false);
   const [creating, setCreating] = useState(false);
   const [form, setForm] = useState({ name: '', environment: 'local', agent_name: '', description: '' });
+  const [newApiKey, setNewApiKey] = useState(null);
+  const [copiedId, setCopiedId] = useState(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -34,7 +36,8 @@ export default function SandboxManager() {
     setError(null);
     try {
       const action = form.environment === 'railway' ? 'create_railway' : 'create_local';
-      await base44.functions.invoke('manageSandboxes', { action, ...form });
+      const res = await base44.functions.invoke('manageSandboxes', { action, ...form });
+      setNewApiKey(res.data?.api_key || null);
       setForm({ name: '', environment: 'local', agent_name: '', description: '' });
       setShowCreate(false);
       await load();
@@ -64,6 +67,23 @@ export default function SandboxManager() {
       </header>
 
       <div className="mx-auto max-w-4xl px-6 py-8">
+        {newApiKey && (
+          <div className="mb-4 rounded-xl border border-primary/30 bg-primary/5 p-4">
+            <div className="flex items-center gap-2 mb-2">
+              <Key size={16} className="text-primary" />
+              <span className="text-sm font-semibold text-foreground">Sandbox API Key — copy this to your Railway environment variables as SANDBOX_API_KEY</span>
+              <button onClick={() => setNewApiKey(null)} className="ml-auto text-muted-foreground hover:text-foreground"><X size={16}/></button>
+            </div>
+            <div className="flex items-center gap-2">
+              <code className="flex-1 truncate rounded-lg border border-border bg-background px-3 py-2 text-xs text-foreground">{newApiKey}</code>
+              <button onClick={() => { navigator.clipboard.writeText(newApiKey); setCopiedId('new'); setTimeout(() => setCopiedId(null), 2000); }} className="rounded-lg border border-border px-3 py-2 text-sm text-foreground hover:bg-muted">
+                {copiedId === 'new' ? <Check size={14} className="text-primary"/> : <Copy size={14}/>}
+              </button>
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">This key authenticates your sandbox worker with the backend. Endpoint: <code className="text-foreground">https://strategic-ai-consulting.base44.app/functions/sandboxAuth</code></p>
+          </div>
+        )}
+
         {error && <div className="mb-4 flex items-center gap-2 rounded-lg border border-destructive/30 bg-destructive/5 px-4 py-3 text-sm text-destructive"><AlertCircle size={16}/> {error}</div>}
 
         {showCreate && (
@@ -107,6 +127,15 @@ export default function SandboxManager() {
                       </div>
                       <div className="text-xs text-muted-foreground">{sb.environment} {sb.agent_name ? `· ${sb.agent_name}` : ''} {sb.description ? `· ${sb.description}` : ''}</div>
                       {sb.url && <a href={sb.url} target="_blank" rel="noreferrer" className="text-xs text-primary hover:underline">{sb.url}</a>}
+                      {sb.api_key && (
+                        <div className="mt-1 flex items-center gap-1">
+                          <Key size={10} className="text-muted-foreground" />
+                          <code className="text-[10px] text-muted-foreground">{sb.api_key.slice(0, 12)}...</code>
+                          <button onClick={() => { navigator.clipboard.writeText(sb.api_key); setCopiedId(sb.id); setTimeout(() => setCopiedId(null), 2000); }} className="text-muted-foreground hover:text-primary" title="Copy API key">
+                            {copiedId === sb.id ? <Check size={10} className="text-primary"/> : <Copy size={10}/>}
+                          </button>
+                        </div>
+                      )}
                     </div>
                     {sb.status !== 'deleted' && <button onClick={() => remove(sb.id)} className="rounded-lg p-2 text-muted-foreground hover:bg-destructive/10 hover:text-destructive" title="Delete"><Trash2 size={16}/></button>}
                   </div>
