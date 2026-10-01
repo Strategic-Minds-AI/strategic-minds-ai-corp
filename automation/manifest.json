@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "catalog_revision": "2026-09-29.1:eba09c25c2d94954b6baada57e0102a8ec0c4a820f97689bd96a3fa5adfc522d",
-  "source_sha": "171f922317d11b6494c306d0656bd592673db0d1",
+  "source_sha": "8f959ec8f40fdd6d18d298e218baab8e33543709",
   "criteria": [
     {
       "id": "intelligence.discovery",

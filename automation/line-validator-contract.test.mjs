@@ -12,11 +12,11 @@ try {
   const rel = 'src/components/example.jsx';
   const file = path.join(root, rel);
   await mkdir(path.dirname(file), { recursive: true });
-  const content = 'export const a = 1;\\nexport const b = 2;\\n';
+  const content = 'export const a = 1;\nexport const b = 2;\n';
   await writeFile(file, content, 'utf8');
 
   let chain = genesis;
-  const lines = content.trimEnd().split('\\n').map((line, i) => {
+  const lines = content.trimEnd().split('\n').map((line, i) => {
     const receipt = validateLine({ path: rel, line_number: i + 1, line, previous_chain: chain });
     assert.equal(receipt.passed, true);
     chain = receipt.chain_sha256;
@@ -32,7 +32,7 @@ try {
   assert.equal(verified.passed, true);
   assert.equal(verified.lines, 2);
 
-  await writeFile(file, 'export const a = 9;\\nexport const b = 2;\\n', 'utf8');
+  await writeFile(file, 'export const a = 9;\nexport const b = 2;\n', 'utf8');
   await assert.rejects(() => verifyReceiptBundle(root, receiptPath));
 
   await writeFile(file, content, 'utf8');
