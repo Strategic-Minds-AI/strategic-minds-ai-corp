@@ -32,6 +32,7 @@ export function validateLine(input) {
   if (!Number.isInteger(lineNumber) || lineNumber < 1) return { ...result, code: 'INVALID_LINE_NUMBER' };
   if (typeof line !== 'string') return { ...result, code: 'LINE_NOT_TEXT' };
   if (!/^[a-f0-9]{64}$/.test(previousChain)) return { ...result, code: 'INVALID_PREVIOUS_CHAIN' };
+  if (lineNumber === 1 && previousChain !== GENESIS) return { ...result, code: 'FIRST_LINE_REQUIRES_GENESIS' };
   if (Buffer.byteLength(line, 'utf8') > 4096) return { ...result, code: 'LINE_TOO_LARGE' };
   if (/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/.test(line)) return { ...result, code: 'CONTROL_CHARACTER' };
   if (credentialPattern.test(line)) return { ...result, code: 'CREDENTIAL_LIKE_CONTENT' };
