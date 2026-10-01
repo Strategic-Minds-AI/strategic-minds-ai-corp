@@ -1,0 +1,83 @@
+{
+  "name": "Domain",
+  "type": "object",
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Root domain, e.g. benearme.com"
+    },
+    "canonical_url": {
+      "type": "string",
+      "description": "Canonical production URL, e.g. https://benearme.com"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "error"
+      ],
+      "default": "active"
+    },
+    "gsc_property": {
+      "type": "string",
+      "description": "Search Console property identifier, e.g. sc-domain:benearme.com or https://benearme.com/"
+    },
+    "ga4_property_id": {
+      "type": "string",
+      "description": "GA4 property numeric ID, e.g. 123456789"
+    },
+    "sitemap_url": {
+      "type": "string",
+      "description": "Known sitemap URL, e.g. https://benearme.com/sitemap.xml"
+    },
+    "competitors": {
+      "type": "string",
+      "description": "Comma-separated competitor domains"
+    },
+    "target_keywords": {
+      "type": "string",
+      "description": "Comma-separated target keywords"
+    },
+    "target_geography": {
+      "type": "string",
+      "description": "Target country code, e.g. US"
+    },
+    "last_analyzed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "next_action": {
+      "type": "string",
+      "description": "Next recommended action from the latest analysis"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "domain"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

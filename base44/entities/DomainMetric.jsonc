@@ -1,0 +1,92 @@
+{
+  "name": "DomainMetric",
+  "type": "object",
+  "properties": {
+    "domain_id": {
+      "type": "string",
+      "description": "Reference to Domain record"
+    },
+    "snapshot_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "gsc_clicks": {
+      "type": "number",
+      "default": 0
+    },
+    "gsc_impressions": {
+      "type": "number",
+      "default": 0
+    },
+    "gsc_ctr": {
+      "type": "number",
+      "default": 0
+    },
+    "gsc_position": {
+      "type": "number",
+      "default": 0
+    },
+    "gsc_top_queries": {
+      "type": "string",
+      "description": "JSON array of top search queries with metrics"
+    },
+    "ga4_users": {
+      "type": "number",
+      "default": 0
+    },
+    "ga4_sessions": {
+      "type": "number",
+      "default": 0
+    },
+    "ga4_pageviews": {
+      "type": "number",
+      "default": 0
+    },
+    "ga4_conversions": {
+      "type": "number",
+      "default": 0
+    },
+    "sitemap_url_count": {
+      "type": "number",
+      "default": 0
+    },
+    "sitemap_errors": {
+      "type": "string",
+      "description": "JSON array of sitemap issues found"
+    },
+    "competitor_summary": {
+      "type": "string",
+      "description": "JSON of competitor intelligence gathered"
+    },
+    "insight": {
+      "type": "string",
+      "description": "LLM-generated strategic insight (JSON)"
+    }
+  },
+  "required": [
+    "domain_id",
+    "snapshot_date"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
