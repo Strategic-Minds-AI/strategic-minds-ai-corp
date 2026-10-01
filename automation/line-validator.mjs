@@ -1,6 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import assert from 'node:assert/strict';
 
 const sha256 = value => createHash('sha256').update(value).digest('hex');
@@ -93,4 +94,4 @@ async function cli() {
   throw new Error('Choose --validate-line, --verify-receipts or --self-check.');
 }
 
-if (import.meta.url === new URL(process.argv[1], 'file:').href) cli().catch(error => { console.error(error.message); process.exitCode = 1; });
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) cli().catch(error => { console.error(error.message); process.exitCode = 1; });
