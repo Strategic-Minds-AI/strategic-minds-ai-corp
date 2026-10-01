@@ -9,6 +9,13 @@ function generateApiKey(): string {
   return 'sk_sbx_' + Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
+async function sha256(text: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
 async function railwayQuery(query, variables = {}) {
   const token = process.env.RAILWAY_API_TOKEN;
   if (!token) throw new Error('RAILWAY_API_TOKEN secret not set');
@@ -70,8 +77,11 @@ export default async function(req: Request): Promise<Response> {
       const envId = envResult.railwayEnvironmentCreate?.id;
       if (!envId) throw new Error('Failed to create Railway environment');
 
-      // Create Sandbox record with API key
-      const apiKey = generateApiKey();
+      // Generate raw key, hash it, store only the hash
+      const rawApiKey = generateApiKey();
+      const keyHash = await sha256(rawApiKey);
+      const keyPrefix = rawApiKey.slice(0, 10);
+
       const sandbox = await base44.entities.Sandbox.create({
         name,
         environment: 'railway',
@@ -80,11 +90,13 @@ export default async function(req: Request): Promise<Response> {
         railway_project_id: RAILWAY_PROJECT_ID,
         agent_name: agentName,
         description,
-        api_key: apiKey,
+        api_key_hash: keyHash,
+        key_prefix: keyPrefix,
         config: JSON.stringify({ created_via: 'manageSandboxes', railway_environment: envId })
       });
 
-      return Response.json({ sandbox, api_key: apiKey, railway_environment: envResult.railwayEnvironmentCreate });
+      // Return raw key ONCE — never stored, never retrievable again
+      return Response.json({ sandbox, api_key: rawApiKey, railway_environment: envResult.railwayEnvironmentCreate });
     }
 
     // Create a local sandbox
@@ -94,18 +106,23 @@ export default async function(req: Request): Promise<Response> {
       const agentName = body.agent_name || '';
       const config = body.config || '{}';
 
-      const apiKey = generateApiKey();
+      const rawApiKey = generateApiKey();
+      const keyHash = await sha256(rawApiKey);
+      const keyPrefix = rawApiKey.slice(0, 10);
+
       const sandbox = await base44.entities.Sandbox.create({
         name,
         environment: 'local',
         status: 'active',
         agent_name: agentName,
         description,
-        api_key: apiKey,
+        api_key_hash: keyHash,
+        key_prefix: keyPrefix,
         config
       });
 
-      return Response.json({ sandbox, api_key: apiKey });
+      // Return raw key ONCE
+      return Response.json({ sandbox, api_key: rawApiKey });
     }
 
     // Delete a sandbox

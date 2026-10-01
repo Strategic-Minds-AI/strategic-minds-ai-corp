@@ -51,6 +51,19 @@
     "result": {
       "type": "string",
       "description": "Execution result or output"
+    },
+    "claim_token": {
+      "type": "string",
+      "description": "One-time token assigned when a sandbox claims this task. Required to report results."
+    },
+    "claimed_by_sandbox_id": {
+      "type": "string",
+      "description": "ID of the sandbox that claimed this task"
+    },
+    "lease_expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the task claim lease expires. Expired leases can be re-claimed by other sandboxes."
     }
   },
   "required": [

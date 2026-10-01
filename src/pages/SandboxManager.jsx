@@ -80,7 +80,7 @@ export default function SandboxManager() {
                 {copiedId === 'new' ? <Check size={14} className="text-primary"/> : <Copy size={14}/>}
               </button>
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">This key authenticates your sandbox worker with the backend. Endpoint: <code className="text-foreground">https://strategic-ai-consulting.base44.app/functions/sandboxAuth</code></p>
+            <p className="mt-2 text-xs text-muted-foreground">This key is shown <strong className="text-foreground">once</strong> — only a SHA-256 hash is stored. Copy it to your Railway environment variables as <code className="text-foreground">SANDBOX_API_KEY</code>. Endpoint: <code className="text-foreground">https://strategic-ai-consulting.base44.app/functions/sandboxAuth</code></p>
           </div>
         )}
 
@@ -127,13 +127,11 @@ export default function SandboxManager() {
                       </div>
                       <div className="text-xs text-muted-foreground">{sb.environment} {sb.agent_name ? `· ${sb.agent_name}` : ''} {sb.description ? `· ${sb.description}` : ''}</div>
                       {sb.url && <a href={sb.url} target="_blank" rel="noreferrer" className="text-xs text-primary hover:underline">{sb.url}</a>}
-                      {sb.api_key && (
+                      {sb.key_prefix && (
                         <div className="mt-1 flex items-center gap-1">
                           <Key size={10} className="text-muted-foreground" />
-                          <code className="text-[10px] text-muted-foreground">{sb.api_key.slice(0, 12)}...</code>
-                          <button onClick={() => { navigator.clipboard.writeText(sb.api_key); setCopiedId(sb.id); setTimeout(() => setCopiedId(null), 2000); }} className="text-muted-foreground hover:text-primary" title="Copy API key">
-                            {copiedId === sb.id ? <Check size={10} className="text-primary"/> : <Copy size={10}/>}
-                          </button>
+                          <code className="text-[10px] text-muted-foreground">{sb.key_prefix}...</code>
+                          <span className="text-[10px] text-muted-foreground italic">hashed</span>
                         </div>
                       )}
                     </div>

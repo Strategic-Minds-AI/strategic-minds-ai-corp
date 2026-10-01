@@ -50,9 +50,13 @@
       "type": "string",
       "description": "Sandbox purpose"
     },
-    "api_key": {
+    "api_key_hash": {
       "type": "string",
-      "description": "Unique API key for sandbox worker authentication"
+      "description": "SHA-256 hash of the sandbox API key. Raw key is never stored."
+    },
+    "key_prefix": {
+      "type": "string",
+      "description": "First 10 chars of the raw key for display identification only"
     }
   },
   "required": [
