@@ -1,0 +1,149 @@
+{
+  "name": "GeneratorRun",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Deterministic run ID"
+    },
+    "generator_id": {
+      "type": "string",
+      "description": "Reference to GeneratorDefinition"
+    },
+    "generator_key": {
+      "type": "string",
+      "description": "Generator key for quick lookup"
+    },
+    "generator_version": {
+      "type": "string",
+      "description": "Version of the generator used"
+    },
+    "project_id": {
+      "type": "string",
+      "description": "Reference to FactoryProject if part of a project"
+    },
+    "parent_run_id": {
+      "type": "string",
+      "description": "Parent run ID if this is a child run from composition"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "DRAFT",
+        "VALIDATING_INPUT",
+        "PLANNING",
+        "WAITING_APPROVAL",
+        "QUEUED",
+        "RUNNING",
+        "VALIDATING",
+        "REPAIRING",
+        "PASSED",
+        "FAILED",
+        "BLOCKED",
+        "CANCELLED",
+        "EXPORTED"
+      ],
+      "default": "DRAFT"
+    },
+    "input": {
+      "type": "string",
+      "maxLength": 50000,
+      "description": "JSON string of the run input"
+    },
+    "input_hash": {
+      "type": "string",
+      "description": "SHA-256 hash of normalized input"
+    },
+    "seed": {
+      "type": "string",
+      "description": "Deterministic seed for reproducibility"
+    },
+    "run_manifest": {
+      "type": "string",
+      "maxLength": 50000,
+      "description": "JSON manifest with definition hash, template versions, adapter versions, model policy"
+    },
+    "total_steps": {
+      "type": "number",
+      "default": 0
+    },
+    "completed_steps": {
+      "type": "number",
+      "default": 0
+    },
+    "failed_steps": {
+      "type": "number",
+      "default": 0
+    },
+    "artifact_count": {
+      "type": "number",
+      "default": 0
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "passed",
+        "failed",
+        "blocked"
+      ],
+      "default": "pending"
+    },
+    "error": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_ms": {
+      "type": "number",
+      "default": 0
+    },
+    "is_child_run": {
+      "type": "boolean",
+      "default": false
+    },
+    "child_run_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "run_id",
+    "generator_key",
+    "generator_version",
+    "status",
+    "input_hash"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

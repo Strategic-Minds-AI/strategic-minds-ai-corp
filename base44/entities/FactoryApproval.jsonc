@@ -1,0 +1,99 @@
+{
+  "name": "FactoryApproval",
+  "type": "object",
+  "properties": {
+    "approval_id": {
+      "type": "string",
+      "description": "Deterministic approval ID"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Reference to GeneratorRun"
+    },
+    "step_key": {
+      "type": "string",
+      "description": "Step that requires approval"
+    },
+    "action_key": {
+      "type": "string",
+      "description": "Specific action requiring approval (e.g. adapter_write, provisioning, export)"
+    },
+    "risk_class": {
+      "type": "string",
+      "enum": [
+        "READ",
+        "DRAFT",
+        "BRANCH_WRITE",
+        "PROTECTED"
+      ],
+      "description": "Risk classification of the action"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "rejected",
+        "expired",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "request": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON request details"
+    },
+    "reason": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Why approval is needed"
+    },
+    "resolved_by": {
+      "type": "string",
+      "description": "User ID who resolved the approval"
+    },
+    "resolved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "resolution_note": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When this approval request expires"
+    }
+  },
+  "required": [
+    "approval_id",
+    "run_id",
+    "action_key",
+    "risk_class",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

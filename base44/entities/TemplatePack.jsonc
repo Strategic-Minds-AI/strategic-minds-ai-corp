@@ -1,0 +1,111 @@
+{
+  "name": "TemplatePack",
+  "type": "object",
+  "properties": {
+    "template_key": {
+      "type": "string",
+      "description": "Unique template identifier"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable template name"
+    },
+    "version": {
+      "type": "string",
+      "description": "Semver version"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "text",
+        "file_tree",
+        "code",
+        "prompt",
+        "document",
+        "config",
+        "sql",
+        "ui_recipe",
+        "workflow_recipe",
+        "provisioning_recipe",
+        "compound"
+      ],
+      "description": "Template mode"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "variables_schema": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON Schema for template variables"
+    },
+    "files_json": {
+      "type": "string",
+      "maxLength": 50000,
+      "description": "JSON array of file templates"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Other template keys this depends on"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "deprecated",
+        "frozen"
+      ],
+      "default": "draft"
+    },
+    "sha256": {
+      "type": "string",
+      "description": "SHA-256 hash of the template manifest"
+    },
+    "category": {
+      "type": "string",
+      "description": "Template category for grouping"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "template_key",
+    "name",
+    "version",
+    "mode",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

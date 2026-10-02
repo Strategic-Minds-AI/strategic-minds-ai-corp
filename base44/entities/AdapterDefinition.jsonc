@@ -1,0 +1,106 @@
+{
+  "name": "AdapterDefinition",
+  "type": "object",
+  "properties": {
+    "adapter_key": {
+      "type": "string",
+      "description": "Unique adapter identifier (e.g. github, supabase, vercel, ai_gateway, sandbox)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable adapter name"
+    },
+    "version": {
+      "type": "string",
+      "description": "Semver version"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "List of capabilities this adapter provides"
+    },
+    "config_schema": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "JSON Schema for adapter configuration"
+    },
+    "actions_json": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "JSON array of action definitions with risk_class, idempotency, approval"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this adapter is enabled"
+    },
+    "health_status": {
+      "type": "string",
+      "enum": [
+        "healthy",
+        "degraded",
+        "offline",
+        "not_configured",
+        "unknown"
+      ],
+      "default": "not_configured",
+      "description": "Current health status"
+    },
+    "health_checked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "health_detail": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Health check details or NOT_CONFIGURED reason"
+    },
+    "secret_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Secret names required for this adapter"
+    },
+    "supports_rollback": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "adapter_key",
+    "name",
+    "version",
+    "enabled"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProvisioningPlan",
+  "type": "object",
+  "required": ["plan_id", "desired_state", "actions", "risk_summary", "rollback"],
+  "properties": {
+    "plan_id": { "type": "string" },
+    "desired_state": { "type": "object" },
+    "current_state": { "type": "object" },
+    "actions": { "type": "array", "items": { "type": "object" } },
+    "risk_summary": { "type": "object" },
+    "credential_requirements": { "type": "array", "items": { "type": "object" } },
+    "rollback": { "type": "object" }
+  }
+}

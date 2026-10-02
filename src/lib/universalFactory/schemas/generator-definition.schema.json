@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://strategicmindsai.com/schemas/generator-definition.schema.json",
+  "title": "GeneratorDefinition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "version", "input_schema", "output_contract", "workflow_dag", "validation_policy", "security_policy"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]+$" },
+    "name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "description": { "type": "string" },
+    "input_schema": { "type": "object" },
+    "output_contract": { "type": "object" },
+    "capabilities": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "workflow_dag": { "$ref": "#/$defs/dag" },
+    "templates": { "type": "array", "items": { "type": "object" } },
+    "adapters": { "type": "array", "items": { "type": "object" } },
+    "model_policy": { "type": "object" },
+    "validation_policy": { "type": "object" },
+    "repair_policy": { "type": "object" },
+    "security_policy": { "type": "object" },
+    "approval_policy": { "type": "object" },
+    "limits": { "type": "object" },
+    "observability": { "type": "object" },
+    "export_policy": { "type": "object" }
+  },
+  "$defs": {
+    "dag": {
+      "type": "object",
+      "required": ["nodes", "edges"],
+      "properties": {
+        "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+        "edges": { "type": "array", "items": { "type": "object", "required": ["from", "to"], "properties": { "from": { "type": "string" }, "to": { "type": "string" } } } }
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "type"],
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "enum": ["transform", "template", "ai_generate", "ai_evaluate", "code_execute", "test", "validate_schema", "validate_content", "validate_security", "validate_visual", "adapter_read", "adapter_write", "approval", "branch", "fanout", "reduce", "package", "checksum", "export"] },
+        "config": { "type": "object" }
+      }
+    }
+  }
+}

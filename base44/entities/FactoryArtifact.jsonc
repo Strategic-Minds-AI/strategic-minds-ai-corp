@@ -1,0 +1,107 @@
+{
+  "name": "FactoryArtifact",
+  "type": "object",
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "description": "Deterministic artifact ID"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Reference to GeneratorRun that produced this artifact"
+    },
+    "generator_id": {
+      "type": "string",
+      "description": "Reference to GeneratorDefinition"
+    },
+    "generator_version": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string",
+      "description": "Artifact filename or name"
+    },
+    "media_type": {
+      "type": "string",
+      "description": "MIME type (text/plain, application/json, text/markdown, application/zip, etc.)"
+    },
+    "storage_ref": {
+      "type": "string",
+      "description": "Private file URI if stored in Base44 storage, or external reference"
+    },
+    "sha256": {
+      "type": "string",
+      "description": "SHA-256 content hash for integrity verification"
+    },
+    "size_bytes": {
+      "type": "number",
+      "default": 0
+    },
+    "content": {
+      "type": "string",
+      "maxLength": 50000,
+      "description": "Inline content for small text artifacts"
+    },
+    "source_step_key": {
+      "type": "string",
+      "description": "Step key that produced this artifact"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Artifact IDs this artifact depends on"
+    },
+    "validation_state": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "validated",
+        "failed",
+        "blocked"
+      ],
+      "default": "pending"
+    },
+    "is_compound": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this is a compound artifact package (ZIP)"
+    },
+    "metadata": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "JSON metadata string"
+    }
+  },
+  "required": [
+    "artifact_id",
+    "run_id",
+    "name",
+    "media_type",
+    "sha256"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

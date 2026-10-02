@@ -1,0 +1,109 @@
+{
+  "name": "ProvisioningPlan",
+  "type": "object",
+  "properties": {
+    "plan_id": {
+      "type": "string",
+      "description": "Deterministic plan ID"
+    },
+    "project_id": {
+      "type": "string",
+      "description": "Reference to FactoryProject"
+    },
+    "template_id": {
+      "type": "string",
+      "description": "Provisioning template key from registry"
+    },
+    "name": {
+      "type": "string",
+      "description": "Plan name"
+    },
+    "desired_state": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "JSON desired state"
+    },
+    "current_state": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "JSON current known state"
+    },
+    "diff": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "JSON diff between current and desired"
+    },
+    "actions": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "JSON array of provisioning actions"
+    },
+    "risk_summary": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "JSON risk classification summary"
+    },
+    "credential_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Secret references required (names only, never values)"
+    },
+    "rollback": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON rollback plan"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "awaiting_approval",
+        "approved",
+        "executing",
+        "completed",
+        "failed",
+        "rolled_back"
+      ],
+      "default": "draft"
+    },
+    "approval_id": {
+      "type": "string",
+      "description": "Reference to FactoryApproval"
+    },
+    "execution_receipt": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON receipt of execution results"
+    }
+  },
+  "required": [
+    "plan_id",
+    "name",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

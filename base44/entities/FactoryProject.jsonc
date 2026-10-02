@@ -1,0 +1,95 @@
+{
+  "name": "FactoryProject",
+  "type": "object",
+  "properties": {
+    "project_key": {
+      "type": "string",
+      "description": "URL-safe project key"
+    },
+    "name": {
+      "type": "string",
+      "description": "Project name"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "objective": {
+      "type": "string",
+      "description": "Project objective"
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry category"
+    },
+    "product": {
+      "type": "string",
+      "description": "Product type"
+    },
+    "requirements": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON requirements spec"
+    },
+    "generator_keys": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Selected generator keys for this project"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "intake",
+        "planning",
+        "building",
+        "validating",
+        "delivered",
+        "failed",
+        "cancelled"
+      ],
+      "default": "intake"
+    },
+    "run_count": {
+      "type": "number",
+      "default": 0
+    },
+    "artifact_count": {
+      "type": "number",
+      "default": 0
+    },
+    "client_id": {
+      "type": "string",
+      "description": "Reference to client if this is a client project"
+    }
+  },
+  "required": [
+    "project_key",
+    "name",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

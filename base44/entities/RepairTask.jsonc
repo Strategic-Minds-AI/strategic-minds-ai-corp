@@ -1,0 +1,131 @@
+{
+  "name": "RepairTask",
+  "type": "object",
+  "properties": {
+    "repair_id": {
+      "type": "string",
+      "description": "Deterministic repair task ID"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Reference to GeneratorRun"
+    },
+    "validation_receipt_id": {
+      "type": "string",
+      "description": "Receipt that triggered this repair"
+    },
+    "target_step_key": {
+      "type": "string",
+      "description": "Step key that needs repair"
+    },
+    "failing_validator": {
+      "type": "string",
+      "description": "Validator that failed"
+    },
+    "failure_layer": {
+      "type": "string",
+      "enum": [
+        "schema",
+        "completeness",
+        "lint",
+        "typecheck",
+        "compile",
+        "unit_tests",
+        "integration_tests",
+        "e2e",
+        "visual_regression",
+        "accessibility",
+        "security_scan",
+        "dependency_scan",
+        "secret_scan",
+        "data_integrity",
+        "rls",
+        "backend_parity",
+        "artifact_integrity",
+        "acceptance_criteria"
+      ],
+      "description": "Root layer classification of the failure"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "in_progress",
+        "completed",
+        "failed",
+        "cancelled"
+      ],
+      "default": "open"
+    },
+    "repair_spec": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON spec of what needs to be repaired"
+    },
+    "patch_applied": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "The actual patch that was applied"
+    },
+    "rerun_result": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "passed",
+        "failed",
+        "blocked"
+      ],
+      "default": "pending"
+    },
+    "regression_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "passed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "repair_round": {
+      "type": "number",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 5
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "repair_id",
+    "run_id",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

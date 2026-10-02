@@ -1,0 +1,132 @@
+{
+  "name": "RunStep",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Reference to GeneratorRun"
+    },
+    "step_key": {
+      "type": "string",
+      "description": "Unique step key within the run"
+    },
+    "step_type": {
+      "type": "string",
+      "enum": [
+        "transform",
+        "template",
+        "ai_generate",
+        "ai_evaluate",
+        "code_execute",
+        "test",
+        "validate_schema",
+        "validate_content",
+        "validate_security",
+        "validate_visual",
+        "adapter_read",
+        "adapter_write",
+        "approval",
+        "branch",
+        "fanout",
+        "reduce",
+        "package",
+        "checksum",
+        "export"
+      ],
+      "description": "DAG node type"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "completed",
+        "failed",
+        "skipped",
+        "cancelled",
+        "waiting_approval",
+        "dead_letter"
+      ],
+      "default": "pending"
+    },
+    "attempt_count": {
+      "type": "number",
+      "default": 0
+    },
+    "max_attempts": {
+      "type": "number",
+      "default": 3
+    },
+    "input": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "JSON string of step input"
+    },
+    "output": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "JSON string of step output"
+    },
+    "error": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "idempotency_key": {
+      "type": "string",
+      "description": "Unique key for idempotent side effects"
+    },
+    "node_config": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "JSON string of the DAG node config"
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Step keys this step depends on"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_ms": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "run_id",
+    "step_key",
+    "step_type",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TemplatePack",
+  "type": "object",
+  "required": ["id", "version", "mode", "files"],
+  "properties": {
+    "id": { "type": "string" },
+    "version": { "type": "string" },
+    "mode": { "enum": ["text", "file_tree", "code", "prompt", "document", "config", "sql", "ui_recipe", "workflow_recipe", "provisioning_recipe", "compound"] },
+    "variables_schema": { "type": "object" },
+    "files": { "type": "array", "items": { "type": "object" } },
+    "dependencies": { "type": "array", "items": { "type": "string" } }
+  }
+}

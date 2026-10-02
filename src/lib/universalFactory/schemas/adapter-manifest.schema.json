@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AdapterManifest",
+  "type": "object",
+  "required": ["adapter_id", "version", "capabilities", "actions"],
+  "properties": {
+    "adapter_id": { "type": "string" },
+    "version": { "type": "string" },
+    "capabilities": { "type": "array", "items": { "type": "string" } },
+    "config_schema": { "type": "object" },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "risk_class"],
+        "properties": {
+          "name": { "type": "string" },
+          "risk_class": { "enum": ["READ", "DRAFT", "BRANCH_WRITE", "PROTECTED"] },
+          "idempotent": { "type": "boolean" },
+          "requires_approval": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

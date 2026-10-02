@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "OutputManifest",
+  "type": "object",
+  "required": ["run_id", "artifacts"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["artifact_id", "sha256", "media_type"],
+        "properties": {
+          "artifact_id": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "media_type": { "type": "string" },
+          "path": { "type": "string" }
+        }
+      }
+    }
+  }
+}

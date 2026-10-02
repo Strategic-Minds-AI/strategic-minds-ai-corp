@@ -1,0 +1,138 @@
+{
+  "name": "GeneratorDefinition",
+  "type": "object",
+  "properties": {
+    "generator_key": {
+      "type": "string",
+      "description": "Unique generator identifier (e.g. code.web-app, consulting.ai-readiness)"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable generator name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "code",
+        "ai",
+        "business",
+        "consulting",
+        "marketing",
+        "data",
+        "infra",
+        "design"
+      ],
+      "description": "Generator category from the registry"
+    },
+    "generator_type": {
+      "type": "string",
+      "description": "Specific type within the category"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000
+    },
+    "current_version": {
+      "type": "string",
+      "description": "Latest approved version (semver)"
+    },
+    "definition_json": {
+      "type": "string",
+      "maxLength": 50000,
+      "description": "Full GeneratorDefinition DSL as JSON string"
+    },
+    "definition_sha256": {
+      "type": "string",
+      "description": "SHA-256 hash of the definition JSON for immutability verification"
+    },
+    "input_schema": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON Schema for generator inputs"
+    },
+    "output_contract": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON Schema for generator outputs"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "validated",
+        "approved",
+        "frozen",
+        "deprecated",
+        "failed"
+      ],
+      "default": "draft",
+      "description": "Definition lifecycle status"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "List of capabilities this generator provides"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "can_compose": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this generator can be called as a child by other generators"
+    },
+    "max_recursion_depth": {
+      "type": "number",
+      "default": 3,
+      "description": "Maximum child recursion depth when composed"
+    },
+    "version_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Total number of versions created"
+    },
+    "run_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Total number of runs executed"
+    },
+    "last_run_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "generator_key",
+    "name",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

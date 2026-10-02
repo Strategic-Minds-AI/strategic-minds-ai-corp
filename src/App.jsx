@@ -43,6 +43,8 @@ const Analytics = lazy(() => import('@/pages/Analytics'));
 const SandboxManager = lazy(() => import('@/pages/SandboxManager'));
 const DigitalDominance = lazy(() => import('@/pages/DigitalDominance'));
 const FrontendFactory = lazy(() => import('@/pages/FrontendFactory'));
+const FactoryOS = lazy(() => import('@/pages/FactoryOS'));
+const GeneratorStudio = lazy(() => import('@/pages/GeneratorStudio'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -102,6 +104,8 @@ const AuthenticatedApp = () => {
           <Route path="/sandboxes" element={<SandboxManager />} />
           <Route path="/dominance" element={<DigitalDominance />} />
           <Route path="/frontend-factory" element={<FrontendFactory />} />
+          <Route path="/factory" element={<FactoryOS />} />
+          <Route path="/factory/studio" element={<GeneratorStudio />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>

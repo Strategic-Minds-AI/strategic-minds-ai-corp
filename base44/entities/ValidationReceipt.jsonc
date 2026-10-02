@@ -1,0 +1,115 @@
+{
+  "name": "ValidationReceipt",
+  "type": "object",
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "description": "Deterministic receipt ID"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Reference to GeneratorRun"
+    },
+    "validator_id": {
+      "type": "string",
+      "description": "Which validator produced this receipt",
+      "enum": [
+        "schema",
+        "completeness",
+        "lint",
+        "typecheck",
+        "compile",
+        "unit_tests",
+        "integration_tests",
+        "e2e",
+        "visual_regression",
+        "accessibility",
+        "security_scan",
+        "dependency_scan",
+        "secret_scan",
+        "data_integrity",
+        "rls",
+        "backend_parity",
+        "artifact_integrity",
+        "acceptance_criteria"
+      ]
+    },
+    "subject_hash": {
+      "type": "string",
+      "description": "SHA-256 hash of the validated subject"
+    },
+    "subject_type": {
+      "type": "string",
+      "enum": [
+        "run",
+        "step",
+        "artifact",
+        "definition",
+        "template",
+        "adapter"
+      ],
+      "description": "What was validated"
+    },
+    "subject_ref": {
+      "type": "string",
+      "description": "ID of the validated subject"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "BLOCKED"
+      ],
+      "default": "PASS"
+    },
+    "evidence": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON array of evidence objects"
+    },
+    "failures": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "JSON array of failure objects (empty on PASS)"
+    },
+    "is_mandatory": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this validator is mandatory for release"
+    },
+    "repair_task_id": {
+      "type": "string",
+      "description": "Reference to RepairTask if FAIL and repair was created"
+    }
+  },
+  "required": [
+    "receipt_id",
+    "run_id",
+    "validator_id",
+    "status",
+    "subject_hash"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

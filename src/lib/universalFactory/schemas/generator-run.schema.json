@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "GeneratorRun",
+  "type": "object",
+  "required": ["run_id", "generator_id", "generator_version", "status", "input_hash"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "generator_id": { "type": "string" },
+    "generator_version": { "type": "string" },
+    "status": { "enum": ["DRAFT", "VALIDATING_INPUT", "PLANNING", "WAITING_APPROVAL", "QUEUED", "RUNNING", "VALIDATING", "REPAIRING", "PASSED", "FAILED", "BLOCKED", "CANCELLED", "EXPORTED"] },
+    "input_hash": { "type": "string" },
+    "seed": { "type": ["string", "integer"] },
+    "started_at": { "type": "string", "format": "date-time" },
+    "completed_at": { "type": "string", "format": "date-time" }
+  }
+}

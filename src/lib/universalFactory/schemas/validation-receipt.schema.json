@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ValidationReceipt",
+  "type": "object",
+  "required": ["validator_id", "status", "evidence", "subject_hash"],
+  "properties": {
+    "validator_id": { "type": "string" },
+    "status": { "enum": ["PASS", "FAIL", "BLOCKED"] },
+    "subject_hash": { "type": "string" },
+    "evidence": { "type": "array", "items": { "type": "object" } },
+    "failures": { "type": "array", "items": { "type": "object" } }
+  }
+}
