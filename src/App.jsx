@@ -41,6 +41,7 @@ const BatchOperations = lazy(() => import('@/pages/BatchOperations'));
 const WebsiteFactory = lazy(() => import('@/pages/WebsiteFactory'));
 const Analytics = lazy(() => import('@/pages/Analytics'));
 const SandboxManager = lazy(() => import('@/pages/SandboxManager'));
+const DigitalDominance = lazy(() => import('@/pages/DigitalDominance'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -98,6 +99,7 @@ const AuthenticatedApp = () => {
           <Route path="/batch" element={<BatchOperations />} />
           <Route path="/website-factory" element={<WebsiteFactory />} />
           <Route path="/sandboxes" element={<SandboxManager />} />
+          <Route path="/dominance" element={<DigitalDominance />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>

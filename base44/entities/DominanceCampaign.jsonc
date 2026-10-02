@@ -1,0 +1,273 @@
+{
+  "name": "DominanceCampaign",
+  "type": "object",
+  "properties": {
+    "campaign_id": {
+      "type": "string",
+      "description": "Deterministic ID (hash of niche+city+state+keyword)"
+    },
+    "niche_id": {
+      "type": "string",
+      "description": "Universal niche ID from the registry"
+    },
+    "keyword": {
+      "type": "string",
+      "description": "Seed keyword for the campaign"
+    },
+    "city": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "business_name": {
+      "type": "string",
+      "description": "Auto-generated business name"
+    },
+    "domain": {
+      "type": "string",
+      "description": "Purchased/selected domain"
+    },
+    "domain_purchased": {
+      "type": "boolean",
+      "default": false
+    },
+    "vercel_project_id": {
+      "type": "string"
+    },
+    "vercel_deployment_url": {
+      "type": "string"
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "intelligence",
+        "brand_domain",
+        "infrastructure",
+        "content_flood",
+        "persona_fame",
+        "technical_seo",
+        "ai_search",
+        "continuous",
+        "completed",
+        "failed"
+      ],
+      "default": "intelligence"
+    },
+    "phase_status": {
+      "type": "object",
+      "description": "Status of each phase: pending, running, completed, failed",
+      "properties": {
+        "intelligence": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "default": "pending"
+        },
+        "brand_domain": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "default": "pending"
+        },
+        "infrastructure": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "default": "pending"
+        },
+        "content_flood": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "default": "pending"
+        },
+        "persona_fame": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "default": "pending"
+        },
+        "technical_seo": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "default": "pending"
+        },
+        "ai_search": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "default": "pending"
+        },
+        "continuous": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "running",
+            "completed",
+            "failed"
+          ],
+          "default": "pending"
+        }
+      }
+    },
+    "intelligence_data": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "Serialized search intelligence results"
+    },
+    "pages_generated": {
+      "type": "integer",
+      "default": 0,
+      "description": "Total pages generated in content flood"
+    },
+    "page_types": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Types of pages generated (home, service, location, blog, faq, etc.)"
+    },
+    "platforms_joined": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Platforms the persona joined"
+    },
+    "fame_score": {
+      "type": "number",
+      "default": 0,
+      "description": "0-100 score of digital fame achieved"
+    },
+    "fame_breakdown": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "Serialized fame score breakdown"
+    },
+    "swarm_tasks_spawned": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "SwarmTask IDs spawned for continuous dominance"
+    },
+    "backlink_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "indexed_pages": {
+      "type": "integer",
+      "default": 0
+    },
+    "estimated_monthly_traffic": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "running",
+        "completed",
+        "failed",
+        "paused"
+      ],
+      "default": "running"
+    },
+    "auto_purchase_domain": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether to auto-purchase the domain via GoDaddy"
+    },
+    "auto_deploy_vercel": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to auto-deploy to Vercel"
+    },
+    "error": {
+      "type": "string"
+    },
+    "current_step_description": {
+      "type": "string",
+      "description": "Human-readable description of current step"
+    },
+    "progress_percent": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 100
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_ms": {
+      "type": "integer",
+      "default": 0
+    }
+  },
+  "required": [
+    "campaign_id",
+    "keyword",
+    "phase",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

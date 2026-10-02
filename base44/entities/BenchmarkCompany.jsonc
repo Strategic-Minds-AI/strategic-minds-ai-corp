@@ -1,0 +1,107 @@
+{
+  "name": "BenchmarkCompany",
+  "type": "object",
+  "properties": {
+    "company_id": {
+      "type": "string",
+      "description": "Deterministic company ID"
+    },
+    "company_name": {
+      "type": "string"
+    },
+    "url": {
+      "type": "string"
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry category"
+    },
+    "category": {
+      "type": "string",
+      "description": "Sub-category (marketing_agency, web_design, saas, etc.)"
+    },
+    "marketing_intelligence": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "Extracted marketing strategies, positioning, value prop"
+    },
+    "design_intelligence": {
+      "type": "string",
+      "maxLength": 20000,
+      "description": "Design patterns, color theory, typography, layout"
+    },
+    "funnel_analysis": {
+      "type": "string",
+      "maxLength": 15000,
+      "description": "Conversion funnel structure, CTAs, lead capture"
+    },
+    "social_media_strategy": {
+      "type": "string",
+      "maxLength": 10000
+    },
+    "revenue_model": {
+      "type": "string",
+      "description": "How they make money, pricing approach"
+    },
+    "growth_tactics": {
+      "type": "string",
+      "maxLength": 10000
+    },
+    "content_strategy": {
+      "type": "string",
+      "maxLength": 10000
+    },
+    "benchmark_score": {
+      "type": "integer",
+      "default": 0,
+      "description": "0-100 overall benchmark score"
+    },
+    "ingested_content": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "Raw page content scraped from the site"
+    },
+    "is_top_20": {
+      "type": "boolean",
+      "default": false
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "spending_pattern": {
+      "type": "string",
+      "description": "Identified spending/ad patterns from the company"
+    }
+  },
+  "required": [
+    "company_id",
+    "company_name",
+    "url"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
