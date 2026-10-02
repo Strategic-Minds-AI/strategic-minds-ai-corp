@@ -2,7 +2,7 @@
 export function safeReturnTo() {
   const urlParams = new URLSearchParams(window.location.search);
   const value = urlParams.get('returnTo');
-  if (!value || !value.startsWith('/') || value.startsWith('//') || /[\\\x00-\x1f\x7f]/.test(value)) return '/';
+  if (!value || !value.startsWith('/') || value.startsWith('//') || /[\\\x00-\x1f\x7f]/.test(value)) return '/portal';
   try {
     const destination = new URL(value, window.location.origin);
     if (destination.origin !== window.location.origin || destination.pathname.startsWith('//')) return '/';

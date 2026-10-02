@@ -132,9 +132,9 @@ function resolveOAuthRedirect(redirectTo) {
   // Extract the returnTo path from the current URL so we preserve the
   // post-login destination, but anchor it to the published app origin.
   const urlParams = new URLSearchParams(window.location.search);
-  const returnTo = urlParams.get('returnTo') || '/';
+  const returnTo = urlParams.get('returnTo') || '/portal';
   // Sanitize: must be a relative path
-  const safePath = returnTo.startsWith('/') && !returnTo.startsWith('//') ? returnTo : '/';
+  const safePath = returnTo.startsWith('/') && !returnTo.startsWith('//') ? returnTo : '/portal';
   return PUBLISHED_APP_URL + safePath;
 }
 
