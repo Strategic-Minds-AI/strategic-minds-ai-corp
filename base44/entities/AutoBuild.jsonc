@@ -1,0 +1,560 @@
+{
+  "name": "AutoBuild",
+  "type": "object",
+  "description": "Admin-driven Auto Builder queue \u2014 supports multiple product types (marketing site, web app, e-commerce, platform). Each product type has its own dedicated pipeline of steps. The admin creates a build, picks a product type, then walks through the exact same client portal experience (timeline, StepCoach, generators) against that build. All client portal hooks transparently read/write the AutoBuild record via AutoBuildContext.",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Optional description (up to 1000 characters)",
+      "maxLength": 1000
+    },
+    "business_name": {
+      "type": "string",
+      "description": "Business name or product name for this build"
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry / niche (e.g. epoxy, hvac, roofing, fintech, healthcare)"
+    },
+    "sub_industry": {
+      "type": "string"
+    },
+    "product_type": {
+      "type": "string",
+      "enum": [
+        "marketing_site",
+        "web_app",
+        "ecommerce",
+        "platform"
+      ],
+      "default": "marketing_site",
+      "description": "What kind of digital product this build produces. Each type has its own pipeline (see buildProductTypes.js). marketing_site = premium marketing website; web_app = SaaS/app with auth + database; ecommerce = online store; platform = multi-sided marketplace."
+    },
+    "profile": {
+      "type": "object",
+      "description": "Business/product profile data \u2014 the input that feeds all downstream generators",
+      "properties": {
+        "phone": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "website": {
+          "type": "string"
+        },
+        "primary_location": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "zip": {
+          "type": "string"
+        },
+        "radius": {
+          "type": "string"
+        },
+        "years_in_business": {
+          "type": "string"
+        },
+        "services": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tagline": {
+          "type": "string"
+        },
+        "business_stage": {
+          "type": "string"
+        },
+        "product_description": {
+          "type": "string",
+          "description": "For non-marketing builds: what the app/platform/store does"
+        },
+        "target_audience": {
+          "type": "string"
+        },
+        "key_features": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "vision": {
+      "type": "object",
+      "description": "Generated vision document \u2014 the mandatory foundation before building. Defines what we're building, why, for whom, and what success looks like. Produced by generateVisionDoc.",
+      "properties": {
+        "mission": {
+          "type": "string"
+        },
+        "problem": {
+          "type": "string"
+        },
+        "target_audience": {
+          "type": "string"
+        },
+        "long_term_vision": {
+          "type": "string"
+        },
+        "success_metrics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "core_values": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "value_proposition": {
+          "type": "string"
+        },
+        "market_opportunity": {
+          "type": "string"
+        },
+        "approved": {
+          "type": "boolean",
+          "default": false
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "strategy": {
+      "type": "object",
+      "description": "Generated strategy document \u2014 the mandatory plan before building. Defines how we win: positioning, GTM, revenue, pricing, channels, roadmap, risks. Produced by generateStrategyDoc from the approved vision.",
+      "properties": {
+        "competitive_positioning": {
+          "type": "string"
+        },
+        "go_to_market": {
+          "type": "string"
+        },
+        "revenue_model": {
+          "type": "string"
+        },
+        "pricing_strategy": {
+          "type": "string"
+        },
+        "acquisition_channels": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "roadmap": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "resources": {
+          "type": "string"
+        },
+        "differentiation": {
+          "type": "string"
+        },
+        "partnerships": {
+          "type": "string"
+        },
+        "approved": {
+          "type": "boolean",
+          "default": false
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "current_step": {
+      "type": "string",
+      "enum": [
+        "profile",
+        "vision",
+        "strategy",
+        "names",
+        "content",
+        "logo",
+        "brand",
+        "website",
+        "social",
+        "video",
+        "review",
+        "architecture",
+        "data_model",
+        "ui_system",
+        "codegen",
+        "deploy",
+        "system_review",
+        "complete"
+      ],
+      "default": "profile",
+      "description": "Which pipeline step this build is on. Marketing builds use profile\u2192vision\u2192strategy\u2192names\u2192content\u2192...\u2192review. System builds use profile\u2192vision\u2192strategy\u2192architecture\u2192data_model\u2192ui_system\u2192codegen\u2192deploy\u2192system_review."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "paused",
+        "complete",
+        "failed"
+      ],
+      "default": "queued",
+      "description": "Queue status \u2014 queued = waiting, running = step in progress, paused = admin halted, complete = finished, failed = errored"
+    },
+    "auto_advance": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, the queue processor automatically advances to the next step after each step completes \u2014 the autonomy toggle"
+    },
+    "governance_tier": {
+      "type": "string",
+      "enum": [
+        "green",
+        "yellow",
+        "red"
+      ],
+      "default": "green",
+      "description": "Autonomy tier: green = fully automatic, yellow = auto-generate but pause before deploy for approval, red = pause at every step for operator approval"
+    },
+    "step_started_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the current step started executing \u2014 used for accurate stuck detection (not updated_date which changes on every write)"
+    },
+    "actions_today": {
+      "type": "number",
+      "default": 0,
+      "description": "Blast radius cap \u2014 how many autonomous actions taken on this build today (resets daily)"
+    },
+    "last_action_date": {
+      "type": "string",
+      "description": "Date of last action (YYYY-MM-DD) \u2014 used to reset actions_today daily"
+    },
+    "compile_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the code manifest passed the deterministic compile gate (compileAndVerify). Cannot be packaged until this is true."
+    },
+    "architecture": {
+      "type": "object",
+      "description": "Generated system architecture spec (for web_app/ecommerce/platform builds) \u2014 the full blueprint: tech stack, pages, data models, features, integrations, user flows. Produced by generateSystemArchitecture.",
+      "properties": {
+        "concept": {
+          "type": "string"
+        },
+        "summary": {
+          "type": "string"
+        },
+        "tech_stack": {
+          "type": "object"
+        },
+        "pages": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "data_models": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "integrations": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "user_flows": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tech_decisions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "estimated_effort": {
+          "type": "string"
+        }
+      }
+    },
+    "data_model": {
+      "type": "object",
+      "description": "Generated detailed data model spec (for web_app/ecommerce/platform builds) \u2014 refined entity schemas with field-level validation, indexes, relationships, seed data, and API endpoints. Produced by generateDataModel from the architecture spec.",
+      "properties": {
+        "entities": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "relationships": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "seed_data": {
+          "type": "object"
+        },
+        "api_endpoints": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "ui_system": {
+      "type": "object",
+      "description": "Generated UI design system spec (for web_app/ecommerce/platform builds) \u2014 color palette, typography scale, spacing system, component library, layout patterns, responsive breakpoints, and theme tokens. Produced by generateUiSystem from the architecture spec.",
+      "properties": {
+        "color_palette": {
+          "type": "object"
+        },
+        "typography": {
+          "type": "object"
+        },
+        "spacing": {
+          "type": "object"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "layout_patterns": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "responsive": {
+          "type": "object"
+        },
+        "theme_tokens": {
+          "type": "object"
+        },
+        "design_principles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "code_manifest": {
+      "type": "object",
+      "description": "Generated codebase manifest (future codegen step) \u2014 the list of files, their paths, and content references that make up the deployable codebase.",
+      "properties": {
+        "repo_url": {
+          "type": "string"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "framework": {
+          "type": "string"
+        },
+        "generated_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "deployment": {
+      "type": "object",
+      "description": "Deployment record (future deploy step) \u2014 where the codebase is hosted, the live URL, and deployment status.",
+      "properties": {
+        "platform": {
+          "type": "string"
+        },
+        "live_url": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "deployed_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "content_templates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Generated content tone templates (10 variations) \u2014 marketing builds"
+    },
+    "chosen_content_template": {
+      "type": "string"
+    },
+    "logo_options": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Generated logo concepts with URLs \u2014 marketing builds"
+    },
+    "chosen_logo_url": {
+      "type": "string"
+    },
+    "brand_packs": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Generated brand mockup images \u2014 marketing builds"
+    },
+    "chosen_brand_images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "website_content": {
+      "type": "object",
+      "description": "Generated website copy (hero, about, services, faq) \u2014 marketing builds"
+    },
+    "website_images": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "Generated website project imagery \u2014 marketing builds"
+    },
+    "chosen_website_layout": {
+      "type": "string"
+    },
+    "chosen_palette": {
+      "type": "string"
+    },
+    "social_media_pack": {
+      "type": "object",
+      "description": "Generated social templates + 30-day content calendar \u2014 marketing builds"
+    },
+    "video_pack": {
+      "type": "object",
+      "description": "Generated video concepts \u2014 marketing builds"
+    },
+    "name_options": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      },
+      "description": "AI-generated business name ideas with domain suggestions \u2014 marketing builds"
+    },
+    "visited_steps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "Steps that have been completed (server-persisted step paths)"
+    },
+    "source_vision_cortex_idea_id": {
+      "type": "string",
+      "description": "If this build was created from an idea submitted by the external Vision Cortex app via the receiveVisionCortexIdea webhook, this is Vision Cortex's idea ID. Used for dedup \u2014 if the same idea is submitted twice, the webhook returns the existing build instead of creating a duplicate."
+    },
+    "vision_cortex_scores": {
+      "type": "object",
+      "description": "Scores from the external Vision Cortex app (overall, profitability, scalability, niche_strength, usability, competition, trend_momentum, technical_feasibility) \u2014 preserved so the builder can see why Vision Cortex approved this idea.",
+      "properties": {
+        "overall": {
+          "type": "number"
+        },
+        "profitability": {
+          "type": "number"
+        },
+        "scalability": {
+          "type": "number"
+        },
+        "niche_strength": {
+          "type": "number"
+        },
+        "usability": {
+          "type": "number"
+        },
+        "competition": {
+          "type": "number"
+        },
+        "trend_momentum": {
+          "type": "number"
+        },
+        "technical_feasibility": {
+          "type": "number"
+        }
+      }
+    },
+    "error": {
+      "type": "string"
+    },
+    "logs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Execution log entries for debugging and auditability"
+    }
+  },
+  "required": [
+    "business_name"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

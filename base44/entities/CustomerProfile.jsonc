@@ -1,0 +1,56 @@
+{
+  "name": "CustomerProfile",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Optional description (up to 1000 characters)",
+      "maxLength": 1000
+    },
+    "business_id": {
+      "type": "string"
+    },
+    "primary_customer": {
+      "type": "string"
+    },
+    "secondary_customer": {
+      "type": "string"
+    },
+    "problems": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "triggers": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "objections": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "journey": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "conversion_event": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "business_id"
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "name": "PromoCode",
+  "type": "object",
+  "description": "Fully customizable promo codes for weekly deals, free usages, 1-day passes, discounts, or anything the admin wants to create. Each code can stack multiple capabilities. Managed by admins only.",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Optional description (up to 1000 characters)",
+      "maxLength": 1000
+    },
+    "code": {
+      "type": "string",
+      "description": "The promo code string (stored uppercase, matched case-insensitively)"
+    },
+    "label": {
+      "type": "string",
+      "description": "Display name for this pass (e.g. 'Weekly Deal', 'Free 1-Day Pass', 'Weekend Special')"
+    },
+    "passType": {
+      "type": "string",
+      "enum": [
+        "discount",
+        "access_pass",
+        "free_usage",
+        "day_pass",
+        "weekly_deal",
+        "custom"
+      ],
+      "default": "discount",
+      "description": "What kind of pass this is \u2014 fully customizable, not tied to any external system"
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Stackable access capabilities bundled into this code (free-form, admin-defined \u2014 e.g. 'full_access', 'lead_engine', '1_week', 'free_audit')"
+    },
+    "discountType": {
+      "type": "string",
+      "enum": [
+        "percentage",
+        "fixed"
+      ],
+      "default": "percentage",
+      "description": "percentage = % off, fixed = $ off"
+    },
+    "discountValue": {
+      "type": "number",
+      "description": "Percentage (0-100) or fixed amount in USD"
+    },
+    "durationDays": {
+      "type": "number",
+      "default": 0,
+      "description": "How many days this pass grants access (0 = no time limit). Used for 1-day passes, weekly deals, etc."
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "maxUses": {
+      "type": "number",
+      "default": 0,
+      "description": "0 = unlimited"
+    },
+    "usedCount": {
+      "type": "number",
+      "default": 0
+    },
+    "validFrom": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "validUntil": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "applicableProductIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Empty = all products"
+    },
+    "minOrderAmount": {
+      "type": "number",
+      "default": 0,
+      "description": "Minimum order total required to use this code"
+    }
+  },
+  "required": [
+    "code",
+    "discountType",
+    "discountValue"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

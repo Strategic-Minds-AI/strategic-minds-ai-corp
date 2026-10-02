@@ -1,0 +1,45 @@
+{
+  "name": "ProposalPackage",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Optional description (up to 1000 characters)",
+      "maxLength": 1000
+    },
+    "business_id": {
+      "type": "string"
+    },
+    "build_id": {
+      "type": "string"
+    },
+    "audit_summary": {
+      "type": "string"
+    },
+    "opportunity_summary": {
+      "type": "string"
+    },
+    "preview_ref": {
+      "type": "string"
+    },
+    "offer_options": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "sent",
+        "accepted",
+        "rejected"
+      ],
+      "default": "draft"
+    }
+  },
+  "required": [
+    "business_id"
+  ]
+}

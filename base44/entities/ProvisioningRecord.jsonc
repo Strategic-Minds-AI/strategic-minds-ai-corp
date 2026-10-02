@@ -1,0 +1,63 @@
+{
+  "name": "ProvisioningRecord",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Optional description (up to 1000 characters)",
+      "maxLength": 1000
+    },
+    "market_id": {
+      "type": "string"
+    },
+    "github_repo": {
+      "type": "string"
+    },
+    "github_repo_url": {
+      "type": "string"
+    },
+    "drive_folder_id": {
+      "type": "string"
+    },
+    "drive_folder_url": {
+      "type": "string"
+    },
+    "supabase_project_id": {
+      "type": "string"
+    },
+    "supabase_project_url": {
+      "type": "string"
+    },
+    "vercel_project_id": {
+      "type": "string"
+    },
+    "vercel_url": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "running",
+        "provisioned",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "step": {
+      "type": "string"
+    },
+    "error": {
+      "type": "string"
+    },
+    "logs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "market_id"
+  ]
+}

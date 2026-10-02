@@ -1,0 +1,149 @@
+{
+  "name": "RankPage",
+  "type": "object",
+  "properties": {
+    "description": {
+      "type": "string",
+      "description": "Optional description (up to 1000 characters)",
+      "maxLength": 1000
+    },
+    "engine_id": {
+      "type": "string"
+    },
+    "page_type": {
+      "type": "string",
+      "enum": [
+        "city_service",
+        "service",
+        "city",
+        "blog",
+        "faq"
+      ],
+      "default": "city_service"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "meta_description": {
+      "type": "string"
+    },
+    "headline": {
+      "type": "string"
+    },
+    "body_content": {
+      "type": "string",
+      "description": "Full indexable page body (HTML or markdown)"
+    },
+    "city": {
+      "type": "string"
+    },
+    "service": {
+      "type": "string"
+    },
+    "keyword": {
+      "type": "string"
+    },
+    "json_ld": {
+      "type": "object"
+    },
+    "faq": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "word_count": {
+      "type": "number",
+      "default": 0
+    },
+    "seo_score": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "generated",
+        "deployed",
+        "indexed",
+        "refreshing"
+      ],
+      "default": "draft"
+    },
+    "deployed_url": {
+      "type": "string"
+    },
+    "last_refreshed": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "audit_issues": {
+      "type": "array",
+      "description": "Technical SEO audit findings for this page",
+      "items": {
+        "type": "object",
+        "properties": {
+          "check": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "critical",
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "detail": {
+            "type": "string"
+          },
+          "fix": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "last_audited": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "competitor_gap": {
+      "type": "object",
+      "description": "Gap analysis vs top-ranking competitors for this keyword",
+      "properties": {
+        "competitor_avg_word_count": {
+          "type": "number"
+        },
+        "our_word_count": {
+          "type": "number"
+        },
+        "missing_topics": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "recommendations": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "engine_id",
+    "title"
+  ]
+}
