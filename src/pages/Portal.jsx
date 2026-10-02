@@ -17,12 +17,14 @@ export default function Portal() {
   const [error, setError] = useState('');
   const refresh = useCallback(async () => {
     try {
-      const [p, r, u] = await Promise.all([
+      const [p, r, clientRes] = await Promise.all([
         base44.entities.ClientProject.list('-created_date', 100),
         base44.entities.ProjectRequest.list('-created_date', 500),
-        admin ? base44.entities.User.list() : Promise.resolve([]),
+        admin ? base44.functions.invoke('listPortalClients', {}) : Promise.resolve({ data: { clients: [] } }),
       ]);
-      setProjects(p); setRequests(r); setClients(u.filter(x => x.role === 'user')); setError('');
+      setProjects(p); setRequests(r);
+      setClients(clientRes?.data?.clients || []);
+      if (admin && clientRes?.data?.error) setError(clientRes.data.error);
     } catch (e) { setError(e.message || 'Could not load your portal.'); }
     finally { setLoading(false); }
   }, [admin]);
