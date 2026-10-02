@@ -30,7 +30,7 @@ export default function Login() {
   };
 
   const handleGoogle = () => {
-    signInWithGoogle(window.location.origin + safeReturnTo());
+    signInWithGoogle();
   };
 
   return (

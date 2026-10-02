@@ -114,11 +114,35 @@ export async function getAccessToken() {
   return data.session?.access_token || null;
 }
 
+// Published app URL — the only origin registered in the Supabase Google
+// OAuth provider's authorized redirect URIs. The builder preview runs on
+// localhost / preview-sandbox hosts which are NOT registered, so Google
+// rejects the code exchange. Always redirect back to the published app.
+const PUBLISHED_APP_URL = 'https://strategic-ai-consulting.base44.app';
+
+function resolveOAuthRedirect(redirectTo) {
+  // If an explicit redirect is provided and points to the published app or
+  // a real production origin, use it as-is.
+  if (redirectTo) {
+    try {
+      const u = new URL(redirectTo, window.location.origin);
+      if (u.origin === PUBLISHED_APP_URL) return redirectTo;
+    } catch { /* fall through */ }
+  }
+  // Extract the returnTo path from the current URL so we preserve the
+  // post-login destination, but anchor it to the published app origin.
+  const urlParams = new URLSearchParams(window.location.search);
+  const returnTo = urlParams.get('returnTo') || '/';
+  // Sanitize: must be a relative path
+  const safePath = returnTo.startsWith('/') && !returnTo.startsWith('//') ? returnTo : '/';
+  return PUBLISHED_APP_URL + safePath;
+}
+
 export async function signInWithGoogle(redirectTo) {
   const supabaseAuth = await initAuth();
   return supabaseAuth.auth.signInWithOAuth({
     provider: 'google',
-    options: { redirectTo: redirectTo || window.location.origin },
+    options: { redirectTo: resolveOAuthRedirect(redirectTo) },
   });
 }
 

@@ -42,7 +42,7 @@ export default function Register() {
   };
 
   const handleGoogle = () => {
-    signInWithGoogle(window.location.origin + safeReturnTo());
+    signInWithGoogle();
   };
 
   if (emailSent) {
