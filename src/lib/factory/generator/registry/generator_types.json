@@ -1,0 +1,425 @@
+{
+  "count": 60,
+  "generator_types": [
+    {
+      "id": "code.web-app",
+      "category": "code",
+      "type": "web-app",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.pwa",
+      "category": "code",
+      "type": "pwa",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.api-service",
+      "category": "code",
+      "type": "api-service",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.cli",
+      "category": "code",
+      "type": "cli",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.library",
+      "category": "code",
+      "type": "library",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.component-library",
+      "category": "code",
+      "type": "component-library",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.database-schema",
+      "category": "code",
+      "type": "database-schema",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.sql-migration",
+      "category": "code",
+      "type": "sql-migration",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.test-suite",
+      "category": "code",
+      "type": "test-suite",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "code.github-actions",
+      "category": "code",
+      "type": "github-actions",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ai.ai-agent",
+      "category": "ai",
+      "type": "ai-agent",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ai.multi-agent-system",
+      "category": "ai",
+      "type": "multi-agent-system",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ai.rag-system",
+      "category": "ai",
+      "type": "rag-system",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ai.prompt-pack",
+      "category": "ai",
+      "type": "prompt-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ai.eval-suite",
+      "category": "ai",
+      "type": "eval-suite",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ai.tool-schema",
+      "category": "ai",
+      "type": "tool-schema",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ai.model-policy",
+      "category": "ai",
+      "type": "model-policy",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "ai.agent-runbook",
+      "category": "ai",
+      "type": "agent-runbook",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.business-plan",
+      "category": "business",
+      "type": "business-plan",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.operating-system",
+      "category": "business",
+      "type": "operating-system",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.sop-pack",
+      "category": "business",
+      "type": "sop-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.client-onboarding",
+      "category": "business",
+      "type": "client-onboarding",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.client-delivery",
+      "category": "business",
+      "type": "client-delivery",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.proposal",
+      "category": "business",
+      "type": "proposal",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.sow",
+      "category": "business",
+      "type": "sow",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.qbr",
+      "category": "business",
+      "type": "qbr",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.executive-brief",
+      "category": "business",
+      "type": "executive-brief",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "business.implementation-roadmap",
+      "category": "business",
+      "type": "implementation-roadmap",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "consulting.ai-readiness",
+      "category": "consulting",
+      "type": "ai-readiness",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "consulting.workflow-audit",
+      "category": "consulting",
+      "type": "workflow-audit",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "consulting.automation-opportunity",
+      "category": "consulting",
+      "type": "automation-opportunity",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "consulting.agent-opportunity",
+      "category": "consulting",
+      "type": "agent-opportunity",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "consulting.data-readiness",
+      "category": "consulting",
+      "type": "data-readiness",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "consulting.ai-governance",
+      "category": "consulting",
+      "type": "ai-governance",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "consulting.ai-strategy",
+      "category": "consulting",
+      "type": "ai-strategy",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "consulting.fractional-caio-plan",
+      "category": "consulting",
+      "type": "fractional-caio-plan",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "marketing.seo-pack",
+      "category": "marketing",
+      "type": "seo-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "marketing.aeo-geo-pack",
+      "category": "marketing",
+      "type": "aeo-geo-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "marketing.content-calendar",
+      "category": "marketing",
+      "type": "content-calendar",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "marketing.landing-page-pack",
+      "category": "marketing",
+      "type": "landing-page-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "marketing.email-campaign-pack",
+      "category": "marketing",
+      "type": "email-campaign-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "marketing.social-content-pack",
+      "category": "marketing",
+      "type": "social-content-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "data.report",
+      "category": "data",
+      "type": "report",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "data.dashboard-spec",
+      "category": "data",
+      "type": "dashboard-spec",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "data.data-dictionary",
+      "category": "data",
+      "type": "data-dictionary",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "data.etl-spec",
+      "category": "data",
+      "type": "etl-spec",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "data.synthetic-fixture-pack",
+      "category": "data",
+      "type": "synthetic-fixture-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "data.analytics-event-spec",
+      "category": "data",
+      "type": "analytics-event-spec",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "infra.provisioning-plan",
+      "category": "infra",
+      "type": "provisioning-plan",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "infra.vercel-plan",
+      "category": "infra",
+      "type": "vercel-plan",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "infra.supabase-plan",
+      "category": "infra",
+      "type": "supabase-plan",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "infra.railway-plan",
+      "category": "infra",
+      "type": "railway-plan",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "infra.github-plan",
+      "category": "infra",
+      "type": "github-plan",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "infra.workspace-plan",
+      "category": "infra",
+      "type": "workspace-plan",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.brand-system",
+      "category": "design",
+      "type": "brand-system",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.design-system",
+      "category": "design",
+      "type": "design-system",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.ui-screen-pack",
+      "category": "design",
+      "type": "ui-screen-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.website-section-pack",
+      "category": "design",
+      "type": "website-section-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.logo-brief",
+      "category": "design",
+      "type": "logo-brief",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    },
+    {
+      "id": "design.image-prompt-pack",
+      "category": "design",
+      "type": "image-prompt-pack",
+      "status": "canonical-seed",
+      "version": "1.0.0"
+    }
+  ]
+}
