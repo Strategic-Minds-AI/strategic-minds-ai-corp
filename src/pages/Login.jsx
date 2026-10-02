@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { signIn, signInWithGoogle } from "@/lib/supabaseAuthClient";
+import { signIn } from "@/lib/supabaseAuthClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
-import GoogleIcon from "@/components/GoogleIcon";
+import GoogleSignInButton from "@/components/GoogleSignInButton";
 import { safeReturnTo } from "@/lib/authReturnTo";
 
 export default function Login() {
@@ -29,10 +29,6 @@ export default function Login() {
     }
   };
 
-  const handleGoogle = () => {
-    signInWithGoogle();
-  };
-
   return (
     <AuthLayout
       icon={LogIn}
@@ -47,14 +43,7 @@ export default function Login() {
         </>
       }
     >
-      <Button
-        variant="outline"
-        className="w-full h-12 text-sm font-medium mb-6"
-        onClick={handleGoogle}
-      >
-        <GoogleIcon className="w-5 h-5 mr-2" />
-        Continue with Google
-      </Button>
+      <GoogleSignInButton disabled={loading} onError={setError} />
 
       <div className="relative mb-6">
         <div className="absolute inset-0 flex items-center">
@@ -66,7 +55,7 @@ export default function Login() {
       </div>
 
       {error && (
-        <div className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
+        <div role="alert" className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
           {error}
         </div>
       )}

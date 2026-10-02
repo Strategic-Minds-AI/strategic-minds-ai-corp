@@ -38,17 +38,21 @@ export const AuthProvider = ({ children }) => {
       }
 
       // Subscribe to Supabase auth state changes
-      const { data } = await onAuthStateChange(async (event, session) => {
+      const { data } = await onAuthStateChange((event, session) => {
         if (!session || event === 'SIGNED_OUT') {
           setUser(null);
           setIsAuthenticated(false);
         } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-          const u = await getUser();
-          setUser(u);
-          setIsAuthenticated(true);
+          // Supabase holds an auth lock during this callback. Defer SDK calls
+          // until it returns so restoring a Google session cannot deadlock.
+          setTimeout(async () => {
+            const u = await getUser();
+            setUser(u);
+            setIsAuthenticated(Boolean(u));
+          }, 0);
         }
       });
-      unsubscribe = data?.unsubscribe;
+      unsubscribe = () => data?.subscription?.unsubscribe();
     })();
 
     return () => {
