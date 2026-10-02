@@ -66,6 +66,7 @@ const SystemMapPage = lazy(() => import('@/pages/SystemMapPage'));
 const RevenueLeaksPage = lazy(() => import('@/pages/RevenueLeaksPage'));
 const EvidenceConsole = lazy(() => import('@/pages/EvidenceConsole'));
 const CloneStudio = lazy(() => import('@/pages/CloneStudio'));
+const SystemProvisioner = lazy(() => import('@/pages/SystemProvisioner'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -151,6 +152,7 @@ const AuthenticatedApp = () => {
           <Route path="/diagnostic/leaks" element={<RevenueLeaksPage />} />
           <Route path="/diagnostic/evidence" element={<EvidenceConsole />} />
           <Route path="/diagnostic/clone" element={<CloneStudio />} />
+          <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>

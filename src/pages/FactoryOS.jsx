@@ -44,6 +44,7 @@ export default function FactoryOS() {
     { path: '/factory/adapters', label: 'Adapter Library', icon: Boxes, desc: 'Extensible adapter system' },
     { path: '/factory/projects', label: 'Projects', icon: FolderKanban, desc: 'Factory project intake' },
     { path: '/factory/scanner', label: 'No-Stub Scanner', icon: ShieldCheck, desc: 'Completeness audit & stub detection' },
+    { path: '/provisioner', label: 'System Provisioner', icon: Cloud, desc: 'Provision GitHub + Vercel + Railway + Supabase + domains' },
     { path: '/diagnostic', label: 'Business Diagnostic', icon: FileSearch, desc: 'Audit companies, find revenue leaks, repair plans' },
     { path: '/frontend-factory', label: 'Frontend Factory', icon: Layers, desc: 'UFF v2 — 740 patterns' },
   ];
