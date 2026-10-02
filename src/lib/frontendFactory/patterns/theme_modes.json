@@ -1,0 +1,52 @@
+[
+  {
+    "id": "TM01",
+    "name": "Light",
+    "required": true,
+    "rules": [
+      "light canvas",
+      "dark readable foreground",
+      "semantic role mapping"
+    ]
+  },
+  {
+    "id": "TM02",
+    "name": "Dark",
+    "required": true,
+    "rules": [
+      "dark canvas",
+      "light readable foreground",
+      "avoid naive color inversion"
+    ]
+  },
+  {
+    "id": "TM03",
+    "name": "High Contrast Light",
+    "required": true,
+    "rules": [
+      "stronger boundaries",
+      "enhanced focus",
+      "minimum ambiguity"
+    ]
+  },
+  {
+    "id": "TM04",
+    "name": "High Contrast Dark",
+    "required": true,
+    "rules": [
+      "stronger boundaries",
+      "enhanced focus",
+      "minimum ambiguity"
+    ]
+  },
+  {
+    "id": "TM05",
+    "name": "Brand Campaign",
+    "required": false,
+    "rules": [
+      "limited scope only",
+      "must preserve semantic contrast",
+      "never replace system status meanings"
+    ]
+  }
+]

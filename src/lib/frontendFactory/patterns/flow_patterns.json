@@ -1,0 +1,752 @@
+[
+  {
+    "id": "F01",
+    "name": "First launch onboarding",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F02",
+    "name": "Sign up",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F03",
+    "name": "Sign in",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F04",
+    "name": "Password recovery",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F05",
+    "name": "Social login handoff",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F06",
+    "name": "Permission request",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F07",
+    "name": "Profile setup",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F08",
+    "name": "Account edit",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F09",
+    "name": "Search",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F10",
+    "name": "Filter and sort",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F11",
+    "name": "Saved/favorites",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F12",
+    "name": "Create item",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F13",
+    "name": "Edit item",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F14",
+    "name": "Delete/archive confirmation",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F15",
+    "name": "Upload media",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F16",
+    "name": "Camera capture",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F17",
+    "name": "Share",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F18",
+    "name": "Comments/replies",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F19",
+    "name": "Direct message",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F20",
+    "name": "Notifications center",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F21",
+    "name": "Notification preferences",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F22",
+    "name": "Checkout",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F23",
+    "name": "Add payment method",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F24",
+    "name": "Subscription upgrade",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F25",
+    "name": "Subscription cancel",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F26",
+    "name": "Cart",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F27",
+    "name": "Product comparison",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F28",
+    "name": "Book appointment",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F29",
+    "name": "Reschedule booking",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F30",
+    "name": "Cancel booking",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F31",
+    "name": "Location selection",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F32",
+    "name": "Map discovery",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F33",
+    "name": "Contact/lead capture",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F34",
+    "name": "Multi-step estimator",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F35",
+    "name": "Quote review",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F36",
+    "name": "File/document review",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F37",
+    "name": "Approve/reject",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F38",
+    "name": "Task assignment",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F39",
+    "name": "Task completion",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F40",
+    "name": "Invite collaborator",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F41",
+    "name": "Role/permission management",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F42",
+    "name": "Export/download",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F43",
+    "name": "Import data",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F44",
+    "name": "Data table drilldown",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F45",
+    "name": "Dashboard filter state",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F46",
+    "name": "AI prompt-to-result",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F47",
+    "name": "AI tool approval",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F48",
+    "name": "AI artifact revision",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F49",
+    "name": "Offline/retry recovery",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  },
+  {
+    "id": "F50",
+    "name": "Support/help escalation",
+    "contract": [
+      "entry condition",
+      "happy path",
+      "back/cancel path",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "analytics event map",
+      "accessibility notes"
+    ]
+  }
+]

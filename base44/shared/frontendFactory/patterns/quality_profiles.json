@@ -1,0 +1,62 @@
+[
+  {
+    "id": "Q01",
+    "name": "Enterprise Precision",
+    "intent": "calm, structured, dense enough for work",
+    "rules": "restrained color; strong alignment; low decorative noise"
+  },
+  {
+    "id": "Q02",
+    "name": "Luxury Minimal",
+    "intent": "premium, editorial, spacious",
+    "rules": "high whitespace; art-directed imagery; subtle motion"
+  },
+  {
+    "id": "Q03",
+    "name": "Consumer Utility",
+    "intent": "friendly, immediate, discoverable",
+    "rules": "clear actions; medium density; soft but disciplined surfaces"
+  },
+  {
+    "id": "Q04",
+    "name": "Creator Energy",
+    "intent": "media-forward, expressive, fast",
+    "rules": "bold content stage; minimal chrome; controlled accent"
+  },
+  {
+    "id": "Q05",
+    "name": "Commerce Confidence",
+    "intent": "product-led, trustworthy, conversion-oriented",
+    "rules": "strong hierarchy; proof; persistent purchase path"
+  },
+  {
+    "id": "Q06",
+    "name": "Local Service Conversion",
+    "intent": "trust-first, proof-heavy, mobile conversion",
+    "rules": "phone/quote CTA; reviews; project imagery; short forms"
+  },
+  {
+    "id": "Q07",
+    "name": "Data Dense Operations",
+    "intent": "high information throughput",
+    "rules": "compact density; tables; filters; stable alignment"
+  },
+  {
+    "id": "Q08",
+    "name": "AI Copilot Workspace",
+    "intent": "conversation + artifacts + actions",
+    "rules": "clear agent state; tool receipts; source visibility"
+  },
+  {
+    "id": "Q09",
+    "name": "Editorial Content",
+    "intent": "reading-first, typographic",
+    "rules": "strong measure; restrained chrome; content navigation"
+  },
+  {
+    "id": "Q10",
+    "name": "Marketplace Discovery",
+    "intent": "search/filter/browse confidence",
+    "rules": "strong query state; cards; comparison; saved items"
+  }
+]

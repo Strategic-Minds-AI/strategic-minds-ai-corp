@@ -1,0 +1,82 @@
+[
+  {
+    "id": "CV01",
+    "name": "Hero CTA"
+  },
+  {
+    "id": "CV02",
+    "name": "Sticky mobile CTA"
+  },
+  {
+    "id": "CV03",
+    "name": "Floating contact action"
+  },
+  {
+    "id": "CV04",
+    "name": "Inline form CTA"
+  },
+  {
+    "id": "CV05",
+    "name": "Proof-before-CTA"
+  },
+  {
+    "id": "CV06",
+    "name": "Pricing CTA"
+  },
+  {
+    "id": "CV07",
+    "name": "Demo/request CTA"
+  },
+  {
+    "id": "CV08",
+    "name": "Add-to-cart"
+  },
+  {
+    "id": "CV09",
+    "name": "Buy-now"
+  },
+  {
+    "id": "CV10",
+    "name": "Lead magnet"
+  },
+  {
+    "id": "CV11",
+    "name": "Trial/signup"
+  },
+  {
+    "id": "CV12",
+    "name": "Book appointment"
+  },
+  {
+    "id": "CV13",
+    "name": "Quote/estimate"
+  },
+  {
+    "id": "CV14",
+    "name": "Compare plans"
+  },
+  {
+    "id": "CV15",
+    "name": "Chat/support CTA"
+  },
+  {
+    "id": "CV16",
+    "name": "Exit-intent alternative"
+  },
+  {
+    "id": "CV17",
+    "name": "Recommendation next-step"
+  },
+  {
+    "id": "CV18",
+    "name": "Progress completion"
+  },
+  {
+    "id": "CV19",
+    "name": "Upsell/cross-sell"
+  },
+  {
+    "id": "CV20",
+    "name": "Referral/share"
+  }
+]

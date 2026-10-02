@@ -1,0 +1,62 @@
+[
+  {
+    "id": "G01",
+    "name": "4-column mobile",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G02",
+    "name": "6-column large mobile",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G03",
+    "name": "8-column tablet",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G04",
+    "name": "12-column desktop",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G05",
+    "name": "16-column dense desktop",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G06",
+    "name": "Centered max-width editorial",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G07",
+    "name": "Full-bleed marketing",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G08",
+    "name": "Split 5/7 hero",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G09",
+    "name": "Golden-ratio editorial",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G10",
+    "name": "Masonry media grid",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G11",
+    "name": "Bento grid",
+    "base_spacing": "8px default with 4px half-step"
+  },
+  {
+    "id": "G12",
+    "name": "Master-detail split",
+    "base_spacing": "8px default with 4px half-step"
+  }
+]

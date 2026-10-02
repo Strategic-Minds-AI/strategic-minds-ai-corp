@@ -1,0 +1,268 @@
+[
+  {
+    "id": "SCR01",
+    "role": "background/canvas",
+    "purpose": "Primary app/page canvas",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR02",
+    "role": "background/subtle",
+    "purpose": "Low-emphasis background",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR03",
+    "role": "surface/base",
+    "purpose": "Default component surface",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR04",
+    "role": "surface/raised",
+    "purpose": "Elevated surface",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR05",
+    "role": "surface/sunken",
+    "purpose": "Inset/recessed surface",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR06",
+    "role": "surface/overlay",
+    "purpose": "Menus/dialogs/popovers",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR07",
+    "role": "text/primary",
+    "purpose": "Primary text",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR08",
+    "role": "text/secondary",
+    "purpose": "Secondary text",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR09",
+    "role": "text/tertiary",
+    "purpose": "Muted/supporting text",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR10",
+    "role": "text/inverse",
+    "purpose": "Text on inverse surfaces",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR11",
+    "role": "border/subtle",
+    "purpose": "Low-emphasis divider",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR12",
+    "role": "border/default",
+    "purpose": "Standard boundary",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR13",
+    "role": "border/strong",
+    "purpose": "High-emphasis boundary",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR14",
+    "role": "focus/ring",
+    "purpose": "Keyboard focus indication",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR15",
+    "role": "action/primary",
+    "purpose": "Primary action fill",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR16",
+    "role": "action/primary-hover",
+    "purpose": "Primary action hover",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR17",
+    "role": "action/primary-pressed",
+    "purpose": "Primary action pressed",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR18",
+    "role": "action/on-primary",
+    "purpose": "Content on primary action",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR19",
+    "role": "action/secondary",
+    "purpose": "Secondary action",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR20",
+    "role": "action/tertiary",
+    "purpose": "Tertiary/link action",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR21",
+    "role": "selection/background",
+    "purpose": "Selected item surface",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR22",
+    "role": "selection/foreground",
+    "purpose": "Selected item content",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR23",
+    "role": "status/success",
+    "purpose": "Success semantic",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR24",
+    "role": "status/on-success",
+    "purpose": "Content on success",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR25",
+    "role": "status/warning",
+    "purpose": "Warning semantic",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR26",
+    "role": "status/on-warning",
+    "purpose": "Content on warning",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR27",
+    "role": "status/danger",
+    "purpose": "Danger semantic",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR28",
+    "role": "status/on-danger",
+    "purpose": "Content on danger",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR29",
+    "role": "status/info",
+    "purpose": "Informational semantic",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR30",
+    "role": "status/on-info",
+    "purpose": "Content on info",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR31",
+    "role": "data/series-1",
+    "purpose": "Data visualization series 1",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR32",
+    "role": "data/series-2",
+    "purpose": "Data visualization series 2",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR33",
+    "role": "data/series-3",
+    "purpose": "Data visualization series 3",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR34",
+    "role": "data/series-4",
+    "purpose": "Data visualization series 4",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR35",
+    "role": "data/series-5",
+    "purpose": "Data visualization series 5",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR36",
+    "role": "scrim/default",
+    "purpose": "Backdrop scrim",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR37",
+    "role": "link/default",
+    "purpose": "Inline link",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  },
+  {
+    "id": "SCR38",
+    "role": "link/visited",
+    "purpose": "Visited link",
+    "must_be_semantic": true,
+    "theme_variant_required": true
+  }
+]

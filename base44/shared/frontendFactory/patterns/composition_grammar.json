@@ -1,0 +1,146 @@
+[
+  {
+    "id": "CG01",
+    "rule": "One dominant task per viewport",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG02",
+    "rule": "Primary CTA visually dominates secondary actions",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG03",
+    "rule": "Use proximity to show relationships before decoration",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG04",
+    "rule": "Keep repeated card anatomy identical within a collection",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG05",
+    "rule": "Prefer alignment over ornamental separators",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG06",
+    "rule": "Limit simultaneous focal colors",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG07",
+    "rule": "Use whitespace as hierarchy, not unused space",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG08",
+    "rule": "Keep text measure readable for long-form content",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG09",
+    "rule": "Never place equal visual weight on every section",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG10",
+    "rule": "Hero content must state purpose before supporting detail",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG11",
+    "rule": "Proof should sit near claims it substantiates",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG12",
+    "rule": "Filters belong adjacent to the collection they modify",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG13",
+    "rule": "Persistent navigation must remain stable across sibling screens",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG14",
+    "rule": "Destructive actions require separation from primary flow",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG15",
+    "rule": "Use progressive disclosure for advanced controls",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG16",
+    "rule": "Dense tables require sticky context where useful",
+    "enforcement": "lint or validator",
+    "severity": "error"
+  },
+  {
+    "id": "CG17",
+    "rule": "Mobile primary actions should remain reachable in thumb zones when appropriate",
+    "enforcement": "lint or validator",
+    "severity": "warning"
+  },
+  {
+    "id": "CG18",
+    "rule": "Overlay actions must not obscure critical content",
+    "enforcement": "lint or validator",
+    "severity": "warning"
+  },
+  {
+    "id": "CG19",
+    "rule": "Empty states must teach the next action",
+    "enforcement": "lint or validator",
+    "severity": "warning"
+  },
+  {
+    "id": "CG20",
+    "rule": "Error states must preserve user input where possible",
+    "enforcement": "lint or validator",
+    "severity": "warning"
+  },
+  {
+    "id": "CG21",
+    "rule": "Loading states should match final geometry to reduce layout shift",
+    "enforcement": "lint or validator",
+    "severity": "warning"
+  },
+  {
+    "id": "CG22",
+    "rule": "Motion may reveal causality but not become the hierarchy",
+    "enforcement": "lint or validator",
+    "severity": "warning"
+  },
+  {
+    "id": "CG23",
+    "rule": "Icons require labels when meaning is not universally obvious",
+    "enforcement": "lint or validator",
+    "severity": "warning"
+  },
+  {
+    "id": "CG24",
+    "rule": "Use one image treatment per content family",
+    "enforcement": "lint or validator",
+    "severity": "warning"
+  }
+]

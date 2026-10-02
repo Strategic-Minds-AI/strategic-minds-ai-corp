@@ -1,0 +1,110 @@
+{
+  "name": "Universal Frontend Factory",
+  "version": "2.0.0",
+  "default_mode": "guided",
+  "modes": [
+    "quickstart",
+    "guided",
+    "brand-mode",
+    "reference-lock",
+    "vertical-clone",
+    "component-lab",
+    "auto-compose",
+    "benchmark-assisted",
+    "design-audit"
+  ],
+  "brand_mode_contract": {
+    "brand_packs": 3,
+    "website_content_designs": 3,
+    "workflow_options": 3,
+    "stop_for_operator_choice": true
+  },
+  "determinism": {
+    "seed_required": true,
+    "selection_order": [
+      "platform",
+      "domain_pack",
+      "product_archetype",
+      "primary_goal",
+      "task_model",
+      "information_density",
+      "experience_recipe",
+      "navigation",
+      "layout",
+      "semantic_color_seed",
+      "typography",
+      "logo",
+      "components",
+      "surface_system",
+      "elevation_system",
+      "motion",
+      "responsive_transform",
+      "quality_profile"
+    ],
+    "tie_break": "stable sort by pattern id, then seeded index",
+    "version_pin": "Every generated BuildSpec stores registry version and exact selected pattern IDs.",
+    "generation_pipeline": [
+      "intent_contract",
+      "information_architecture",
+      "flow_graph",
+      "layout_skeleton",
+      "token_synthesis",
+      "component_composition",
+      "content_hierarchy",
+      "responsive_transform",
+      "state_completion",
+      "visual_polish",
+      "independent_validation",
+      "targeted_repair",
+      "freeze_and_export"
+    ]
+  },
+  "data_safety": {
+    "default": "placeholder-only",
+    "forbid": [
+      "invented testimonials",
+      "invented customer names",
+      "invented revenue/usage claims",
+      "invented certifications",
+      "invented addresses"
+    ],
+    "placeholder_format": "[TOKEN_NAME]"
+  },
+  "release_gate": "No production deploy, domain/DNS, payments, secrets, live messaging, or destructive action without explicit operator approval.",
+  "quality_profile_default": "ceiling",
+  "selection_order": [
+    "platform",
+    "product_archetype",
+    "primary_goal",
+    "information_density",
+    "navigation",
+    "layout",
+    "palette",
+    "typography",
+    "logo",
+    "components",
+    "motion"
+  ],
+  "quality_gates": {
+    "token_purity": "PASS required",
+    "responsive_overflow": "PASS required",
+    "accessibility": "PASS required",
+    "state_coverage": "PASS required",
+    "visual_coherence_min_score": 9.0,
+    "no_visual_category_below": 8.0,
+    "reference_lock_similarity_target": ">=95% layout similarity when a visual reference is authoritative",
+    "validator_independence": true,
+    "max_automatic_repair_rounds": 5
+  },
+  "token_standard": {
+    "format": "DTCG 2025.10 compatible JSON",
+    "semantic_aliasing_required": true,
+    "raw_values_allowed_only_in": "primitive/source token layer",
+    "themes": [
+      "light",
+      "dark",
+      "high-contrast-light",
+      "high-contrast-dark"
+    ]
+  }
+}

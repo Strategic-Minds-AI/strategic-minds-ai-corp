@@ -1,0 +1,110 @@
+[
+  {
+    "id": "IC01",
+    "name": "Outline Neutral",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC02",
+    "name": "Rounded Outline",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC03",
+    "name": "Sharp Outline",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC04",
+    "name": "Filled Utility",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC05",
+    "name": "Duotone Accent",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC06",
+    "name": "Monochrome Glyph",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC07",
+    "name": "Platform Native",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC08",
+    "name": "Commerce Line",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC09",
+    "name": "Data Dense Micro",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC10",
+    "name": "Creator Bold",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC11",
+    "name": "Local Service Pictogram",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  },
+  {
+    "id": "IC12",
+    "name": "Brand Custom Minimal",
+    "rules": [
+      "one family per primary interface",
+      "consistent stroke/optical weight",
+      "semantic label when ambiguous"
+    ]
+  }
+]

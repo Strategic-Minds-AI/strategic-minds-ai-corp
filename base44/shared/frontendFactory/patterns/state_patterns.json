@@ -1,0 +1,66 @@
+[
+  {
+    "id": "S01",
+    "name": "Initial/first-run"
+  },
+  {
+    "id": "S02",
+    "name": "Loading spinner"
+  },
+  {
+    "id": "S03",
+    "name": "Skeleton loading"
+  },
+  {
+    "id": "S04",
+    "name": "Empty state"
+  },
+  {
+    "id": "S05",
+    "name": "No results"
+  },
+  {
+    "id": "S06",
+    "name": "Error recoverable"
+  },
+  {
+    "id": "S07",
+    "name": "Error blocking"
+  },
+  {
+    "id": "S08",
+    "name": "Offline"
+  },
+  {
+    "id": "S09",
+    "name": "Slow network"
+  },
+  {
+    "id": "S10",
+    "name": "Permission request"
+  },
+  {
+    "id": "S11",
+    "name": "Success/confirmation"
+  },
+  {
+    "id": "S12",
+    "name": "Maintenance/read-only"
+  },
+  {
+    "id": "S13",
+    "name": "Locked/paywall"
+  },
+  {
+    "id": "S14",
+    "name": "Archived/deleted"
+  },
+  {
+    "id": "S15",
+    "name": "Partial data"
+  },
+  {
+    "id": "S16",
+    "name": "Syncing/background task"
+  }
+]

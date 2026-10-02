@@ -1,0 +1,852 @@
+[
+  {
+    "id": "L01",
+    "name": "Pure Wordmark",
+    "kind": "wordmark",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L02",
+    "name": "Geometric Wordmark",
+    "kind": "wordmark",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L03",
+    "name": "Humanist Wordmark",
+    "kind": "wordmark",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L04",
+    "name": "Condensed Wordmark",
+    "kind": "wordmark",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L05",
+    "name": "Rounded Wordmark",
+    "kind": "wordmark",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L06",
+    "name": "Serif Wordmark",
+    "kind": "wordmark",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L07",
+    "name": "Monogram",
+    "kind": "monogram",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L08",
+    "name": "Circular Monogram",
+    "kind": "monogram",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L09",
+    "name": "Square Monogram",
+    "kind": "monogram",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L10",
+    "name": "Interlocking Initials",
+    "kind": "monogram",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L11",
+    "name": "Mirrored Initials",
+    "kind": "monogram",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L12",
+    "name": "Split-Letter Monogram",
+    "kind": "monogram",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L13",
+    "name": "Ligature Mark",
+    "kind": "monogram",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L14",
+    "name": "Initial + Wordmark",
+    "kind": "combination",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L15",
+    "name": "Icon + Wordmark",
+    "kind": "combination",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L16",
+    "name": "Stacked Icon + Wordmark",
+    "kind": "combination",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L17",
+    "name": "Negative-Space Symbol",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L18",
+    "name": "Rounded-Square App Mark",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L19",
+    "name": "Circle Badge",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L20",
+    "name": "Shield Badge",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L21",
+    "name": "Seal / Emblem",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L22",
+    "name": "Crest",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L23",
+    "name": "Location Pin",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L24",
+    "name": "Abstract Ribbon",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L25",
+    "name": "Orbit / Ring",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L26",
+    "name": "Spark / Star",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L27",
+    "name": "Forward Arrow",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L28",
+    "name": "Infinity / Loop",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L29",
+    "name": "Cube / 3D Box",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L30",
+    "name": "Hexagon Tech",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L31",
+    "name": "Network Nodes",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L32",
+    "name": "Stacked Bars",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L33",
+    "name": "Wave / Signal",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L34",
+    "name": "Pulse / Heartbeat",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L35",
+    "name": "Mountain / Peak",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L36",
+    "name": "Crown / Premium",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L37",
+    "name": "Bolt / Energy",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L38",
+    "name": "Flame",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L39",
+    "name": "Droplet",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L40",
+    "name": "Leaf / Eco",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L41",
+    "name": "Chat Bubble",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L42",
+    "name": "Camera / Lens",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L43",
+    "name": "Play / Media",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L44",
+    "name": "Book / Page",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L45",
+    "name": "Storefront / House",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L46",
+    "name": "Keyhole / Security",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L47",
+    "name": "Checkmark / Trust",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L48",
+    "name": "Compass / Navigation",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L49",
+    "name": "Globe / Global",
+    "kind": "symbol/emblem",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  },
+  {
+    "id": "L50",
+    "name": "Adaptive Responsive Logo System",
+    "kind": "responsive-system",
+    "construction_rule": "Build on a simple geometric grid; preserve silhouette at favicon size; avoid detail that collapses below 24px.",
+    "required_variants": [
+      "primary",
+      "horizontal",
+      "stacked",
+      "icon-only",
+      "one-color",
+      "reversed",
+      "favicon/app-icon"
+    ],
+    "selection_rule": "Choose by brand name length, recognition need, industry signal, small-size use, and trademark distinctiveness.",
+    "guardrail": "Do not imitate a known trademark; use original geometry and typography."
+  }
+]

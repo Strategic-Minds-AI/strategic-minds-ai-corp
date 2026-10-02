@@ -1,0 +1,102 @@
+[
+  {
+    "id": "A01",
+    "name": "WCAG AA color contrast for body text and controls",
+    "required": true
+  },
+  {
+    "id": "A02",
+    "name": "Visible keyboard focus",
+    "required": true
+  },
+  {
+    "id": "A03",
+    "name": "Logical heading hierarchy",
+    "required": true
+  },
+  {
+    "id": "A04",
+    "name": "Semantic landmarks",
+    "required": true
+  },
+  {
+    "id": "A05",
+    "name": "Accessible labels for every form control",
+    "required": true
+  },
+  {
+    "id": "A06",
+    "name": "Tap/click targets sized and spaced appropriately",
+    "required": true
+  },
+  {
+    "id": "A07",
+    "name": "No interaction requires hover only",
+    "required": true
+  },
+  {
+    "id": "A08",
+    "name": "No interaction requires gesture only",
+    "required": true
+  },
+  {
+    "id": "A09",
+    "name": "Reduced-motion support",
+    "required": true
+  },
+  {
+    "id": "A10",
+    "name": "Screen-reader names for icon buttons",
+    "required": true
+  },
+  {
+    "id": "A11",
+    "name": "Status changes announced where needed",
+    "required": true
+  },
+  {
+    "id": "A12",
+    "name": "Errors tied to fields and summarized when multi-field",
+    "required": true
+  },
+  {
+    "id": "A13",
+    "name": "Color is never the sole state indicator",
+    "required": true
+  },
+  {
+    "id": "A14",
+    "name": "Zoom/reflow remains usable",
+    "required": true
+  },
+  {
+    "id": "A15",
+    "name": "Text remains legible at user scaling",
+    "required": true
+  },
+  {
+    "id": "A16",
+    "name": "Alt text policy for meaningful images",
+    "required": true
+  },
+  {
+    "id": "A17",
+    "name": "Decorative images hidden from assistive tech",
+    "required": true
+  },
+  {
+    "id": "A18",
+    "name": "Keyboard-operable dialogs, menus, tabs, and drawers",
+    "required": true
+  },
+  {
+    "id": "A19",
+    "name": "Focus trapped/restored correctly in modals",
+    "required": true
+  },
+  {
+    "id": "A20",
+    "name": "Timeout/session warnings are explicit",
+    "required": true
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "id": "PA01",
+    "name": "Responsive Web",
+    "behavior": "browser semantics + pointer/keyboard + touch",
+    "rule": "Preserve platform conventions; do not mix interaction languages without an explicit reason."
+  },
+  {
+    "id": "PA02",
+    "name": "PWA",
+    "behavior": "installable shell + offline/retry + safe-area",
+    "rule": "Preserve platform conventions; do not mix interaction languages without an explicit reason."
+  },
+  {
+    "id": "PA03",
+    "name": "iOS-like",
+    "behavior": "platform-familiar tab/nav/sheet behavior",
+    "rule": "Preserve platform conventions; do not mix interaction languages without an explicit reason."
+  },
+  {
+    "id": "PA04",
+    "name": "Android-like",
+    "behavior": "Material-familiar navigation/component behavior",
+    "rule": "Preserve platform conventions; do not mix interaction languages without an explicit reason."
+  },
+  {
+    "id": "PA05",
+    "name": "Tablet",
+    "behavior": "multi-pane + adaptive rail/sidebar",
+    "rule": "Preserve platform conventions; do not mix interaction languages without an explicit reason."
+  },
+  {
+    "id": "PA06",
+    "name": "Desktop App",
+    "behavior": "keyboard/pointer density + resizable panes",
+    "rule": "Preserve platform conventions; do not mix interaction languages without an explicit reason."
+  },
+  {
+    "id": "PA07",
+    "name": "Kiosk",
+    "behavior": "large targets + constrained navigation + timeout/recovery",
+    "rule": "Preserve platform conventions; do not mix interaction languages without an explicit reason."
+  },
+  {
+    "id": "PA08",
+    "name": "Embedded / Portal",
+    "behavior": "host-aware shell + constrained viewport",
+    "rule": "Preserve platform conventions; do not mix interaction languages without an explicit reason."
+  }
+]

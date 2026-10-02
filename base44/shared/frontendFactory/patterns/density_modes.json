@@ -1,0 +1,56 @@
+[
+  {
+    "id": "DN01",
+    "name": "Airy",
+    "base_control_height": 48,
+    "base_gap": 16,
+    "use_for": [
+      "luxury",
+      "marketing",
+      "consumer onboarding"
+    ]
+  },
+  {
+    "id": "DN02",
+    "name": "Comfortable",
+    "base_control_height": 44,
+    "base_gap": 12,
+    "use_for": [
+      "general apps",
+      "commerce",
+      "portals"
+    ]
+  },
+  {
+    "id": "DN03",
+    "name": "Productive",
+    "base_control_height": 40,
+    "base_gap": 10,
+    "use_for": [
+      "SaaS",
+      "CRM",
+      "AI workspaces"
+    ]
+  },
+  {
+    "id": "DN04",
+    "name": "Compact",
+    "base_control_height": 36,
+    "base_gap": 8,
+    "use_for": [
+      "dense admin",
+      "data tools"
+    ]
+  },
+  {
+    "id": "DN05",
+    "name": "Touch Priority",
+    "base_control_height": 48,
+    "base_gap": 12,
+    "use_for": [
+      "mobile field use",
+      "kiosk",
+      "accessibility-first"
+    ]
+  }
+]

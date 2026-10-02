@@ -1,0 +1,74 @@
+[
+  {
+    "id": "DV01",
+    "name": "Small Phone",
+    "width_px": 360,
+    "validation_required": false
+  },
+  {
+    "id": "DV02",
+    "name": "Standard Phone",
+    "width_px": 390,
+    "validation_required": true
+  },
+  {
+    "id": "DV03",
+    "name": "Large Phone",
+    "width_px": 430,
+    "validation_required": false
+  },
+  {
+    "id": "DV04",
+    "name": "Small Tablet",
+    "width_px": 768,
+    "validation_required": true
+  },
+  {
+    "id": "DV05",
+    "name": "Large Tablet",
+    "width_px": 1024,
+    "validation_required": false
+  },
+  {
+    "id": "DV06",
+    "name": "Laptop",
+    "width_px": 1280,
+    "validation_required": true
+  },
+  {
+    "id": "DV07",
+    "name": "Desktop",
+    "width_px": 1440,
+    "validation_required": true
+  },
+  {
+    "id": "DV08",
+    "name": "Wide Desktop",
+    "width_px": 1920,
+    "validation_required": true
+  },
+  {
+    "id": "DV09",
+    "name": "Ultra Wide",
+    "width_px": 2560,
+    "validation_required": false
+  },
+  {
+    "id": "DV10",
+    "name": "Short Landscape",
+    "width_px": 844,
+    "validation_required": false
+  },
+  {
+    "id": "DV11",
+    "name": "Narrow Split View",
+    "width_px": 600,
+    "validation_required": false
+  },
+  {
+    "id": "DV12",
+    "name": "Large Touch/Kiosk",
+    "width_px": 1366,
+    "validation_required": false
+  }
+]

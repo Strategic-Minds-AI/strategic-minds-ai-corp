@@ -1,0 +1,62 @@
+[
+  {
+    "id": "SF01",
+    "name": "Flat Editorial",
+    "rule": "minimal borders; no routine shadows"
+  },
+  {
+    "id": "SF02",
+    "name": "Bordered Utility",
+    "rule": "1px semantic boundaries; flat surfaces"
+  },
+  {
+    "id": "SF03",
+    "name": "Soft Elevation",
+    "rule": "subtle tiered elevation on overlays only"
+  },
+  {
+    "id": "SF04",
+    "name": "Layered SaaS",
+    "rule": "canvas + surface + raised card hierarchy"
+  },
+  {
+    "id": "SF05",
+    "name": "Dark Layered",
+    "rule": "tonal dark surfaces, not pure-black stacking"
+  },
+  {
+    "id": "SF06",
+    "name": "Glass Accent",
+    "rule": "glass limited to navigation/overlay, never everywhere"
+  },
+  {
+    "id": "SF07",
+    "name": "High Contrast",
+    "rule": "explicit borders and focus; accessibility-forward"
+  },
+  {
+    "id": "SF08",
+    "name": "Commerce Cards",
+    "rule": "product media dominant; controlled card shells"
+  },
+  {
+    "id": "SF09",
+    "name": "Media Immersive",
+    "rule": "edge-to-edge media; translucent chrome"
+  },
+  {
+    "id": "SF10",
+    "name": "Dense Data",
+    "rule": "flat high-density surfaces; row/column separators"
+  },
+  {
+    "id": "SF11",
+    "name": "Luxury Canvas",
+    "rule": "large clean surfaces; low UI chrome"
+  },
+  {
+    "id": "SF12",
+    "name": "Playful Soft",
+    "rule": "soft surfaces with restrained rounded shapes"
+  }
+]

@@ -1,0 +1,242 @@
+[
+  {
+    "id": "DP01",
+    "name": "SaaS",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP02",
+    "name": "AI / Agent Platform",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP03",
+    "name": "Local Service",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP04",
+    "name": "Ecommerce",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP05",
+    "name": "Marketplace",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP06",
+    "name": "Social / Community",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP07",
+    "name": "Creator / Media",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP08",
+    "name": "CRM / Sales",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP09",
+    "name": "Analytics / BI",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP10",
+    "name": "Operations / Admin",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP11",
+    "name": "Directory / Discovery",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP12",
+    "name": "Booking / Scheduling",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP13",
+    "name": "Education",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP14",
+    "name": "Real Estate",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP15",
+    "name": "Finance",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP16",
+    "name": "Construction / Field Service",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP17",
+    "name": "Corporate / Consulting",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP18",
+    "name": "Publisher / Editorial",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP19",
+    "name": "Events / Membership",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  },
+  {
+    "id": "DP20",
+    "name": "Lead Generation / Conversion",
+    "locks": [
+      "recommended recipe family",
+      "density profile",
+      "navigation family",
+      "proof/conversion modules",
+      "content hierarchy rules"
+    ],
+    "purpose": "Constrain generation to domain-appropriate UX before visual styling."
+  }
+]

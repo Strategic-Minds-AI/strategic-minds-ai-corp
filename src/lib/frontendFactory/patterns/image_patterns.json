@@ -1,0 +1,82 @@
+[
+  {
+    "id": "I01",
+    "name": "Full-bleed cinematic",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I02",
+    "name": "Product cutout on neutral",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I03",
+    "name": "Editorial photography",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I04",
+    "name": "UGC/authentic",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I05",
+    "name": "Before-and-after",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I06",
+    "name": "Macro detail",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I07",
+    "name": "Diagram/technical",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I08",
+    "name": "Illustration geometric",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I09",
+    "name": "3D render",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I10",
+    "name": "Gradient mesh",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I11",
+    "name": "Texture/material",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I12",
+    "name": "Map/location",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I13",
+    "name": "Data screenshot",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I14",
+    "name": "Avatar/identity",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I15",
+    "name": "Icon-led no-photo",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  },
+  {
+    "id": "I16",
+    "name": "Video-first poster",
+    "rule": "Use original/licensed assets and define aspect ratio, crop behavior, alt policy, and mobile treatment."
+  }
+]

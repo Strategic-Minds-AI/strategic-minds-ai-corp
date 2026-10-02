@@ -1,0 +1,362 @@
+[
+  {
+    "id": "QR01",
+    "name": "NoRawColorOutsidePrimitives",
+    "description": "Raw hex/rgb/color values outside primitive/source tokens",
+    "severity": "error"
+  },
+  {
+    "id": "QR02",
+    "name": "NoArbitrarySpacing",
+    "description": "Spacing must resolve to spacing tokens except documented exceptions",
+    "severity": "error"
+  },
+  {
+    "id": "QR03",
+    "name": "NoArbitraryRadius",
+    "description": "Corner radius must resolve to shape tokens",
+    "severity": "error"
+  },
+  {
+    "id": "QR04",
+    "name": "NoArbitraryShadow",
+    "description": "Shadow/elevation must resolve to elevation tokens",
+    "severity": "error"
+  },
+  {
+    "id": "QR05",
+    "name": "SingleIconFamily",
+    "description": "Do not mix unrelated icon families in one shell",
+    "severity": "error"
+  },
+  {
+    "id": "QR06",
+    "name": "StableNavigation",
+    "description": "Sibling screens preserve navigation anatomy and ordering",
+    "severity": "error"
+  },
+  {
+    "id": "QR07",
+    "name": "CTAHierarchy",
+    "description": "Primary/secondary/tertiary actions have distinct hierarchy",
+    "severity": "error"
+  },
+  {
+    "id": "QR08",
+    "name": "StateCompleteness",
+    "description": "Interactive components include applicable loading/empty/error/disabled/success states",
+    "severity": "error"
+  },
+  {
+    "id": "QR09",
+    "name": "FocusVisible",
+    "description": "Keyboard focus is visible and not obscured",
+    "severity": "error"
+  },
+  {
+    "id": "QR10",
+    "name": "TargetSize",
+    "description": "Pointer/touch target size/spacing meets configured accessibility profile",
+    "severity": "error"
+  },
+  {
+    "id": "QR11",
+    "name": "NoFakeData",
+    "description": "No fake testimonials, customers, metrics, addresses or certifications presented as real",
+    "severity": "error"
+  },
+  {
+    "id": "QR12",
+    "name": "NoHorizontalOverflow",
+    "description": "No unintended horizontal overflow at validation widths",
+    "severity": "error"
+  },
+  {
+    "id": "QR13",
+    "name": "ResponsiveIntent",
+    "description": "Layout transformation is specified, not just scaled",
+    "severity": "error"
+  },
+  {
+    "id": "QR14",
+    "name": "ReferenceLock",
+    "description": "Locked visual/reference values cannot drift without variance receipt",
+    "severity": "error"
+  },
+  {
+    "id": "QR15",
+    "name": "MotionReduced",
+    "description": "Reduced-motion equivalent exists for nonessential motion",
+    "severity": "error"
+  },
+  {
+    "id": "QR16",
+    "name": "ContrastSemantic",
+    "description": "Text/control/status pairs meet configured contrast gate",
+    "severity": "error"
+  },
+  {
+    "id": "QR17",
+    "name": "NoColorOnlyState",
+    "description": "State meaning is not encoded by color alone",
+    "severity": "error"
+  },
+  {
+    "id": "QR18",
+    "name": "NoGiantGenericHero",
+    "description": "Marketing hero must communicate product/service and next action quickly",
+    "severity": "warning"
+  },
+  {
+    "id": "QR19",
+    "name": "LimitGradientText",
+    "description": "Gradient text limited to one focal phrase unless reference lock requires more",
+    "severity": "warning"
+  },
+  {
+    "id": "QR20",
+    "name": "LimitGlass",
+    "description": "Glassmorphism restricted to justified overlays/navigation",
+    "severity": "warning"
+  },
+  {
+    "id": "QR21",
+    "name": "LimitPills",
+    "description": "Pill shapes used semantically, not as default container for everything",
+    "severity": "warning"
+  },
+  {
+    "id": "QR22",
+    "name": "CardPurpose",
+    "description": "Cards require meaningful grouping; avoid cardifying every region",
+    "severity": "warning"
+  },
+  {
+    "id": "QR23",
+    "name": "ContentMeasure",
+    "description": "Long-form line length is constrained for readability",
+    "severity": "warning"
+  },
+  {
+    "id": "QR24",
+    "name": "ImageConsistency",
+    "description": "Image family uses consistent crop/aspect/treatment",
+    "severity": "warning"
+  },
+  {
+    "id": "QR25",
+    "name": "SkeletonGeometry",
+    "description": "Skeletons approximate final component geometry",
+    "severity": "warning"
+  },
+  {
+    "id": "QR26",
+    "name": "ErrorRecovery",
+    "description": "Error states provide a recovery path",
+    "severity": "error"
+  },
+  {
+    "id": "QR27",
+    "name": "PreserveInput",
+    "description": "Recoverable form errors preserve user input",
+    "severity": "error"
+  },
+  {
+    "id": "QR28",
+    "name": "DestructiveSeparation",
+    "description": "Destructive actions are visually/structurally separated",
+    "severity": "error"
+  },
+  {
+    "id": "QR29",
+    "name": "LoadingShift",
+    "description": "Loading strategy avoids avoidable layout shifts",
+    "severity": "warning"
+  },
+  {
+    "id": "QR30",
+    "name": "DensityLock",
+    "description": "Each surface region declares a density mode",
+    "severity": "warning"
+  },
+  {
+    "id": "QR31",
+    "name": "ConsistencyRule31",
+    "description": "Use semantic typography roles instead of one-off sizes",
+    "severity": "warning"
+  },
+  {
+    "id": "QR32",
+    "name": "ConsistencyRule32",
+    "description": "Use semantic border roles instead of one-off divider colors",
+    "severity": "warning"
+  },
+  {
+    "id": "QR33",
+    "name": "ConsistencyRule33",
+    "description": "Component variants must share anatomy",
+    "severity": "warning"
+  },
+  {
+    "id": "QR34",
+    "name": "ConsistencyRule34",
+    "description": "Avoid duplicate components with cosmetic-only differences",
+    "severity": "warning"
+  },
+  {
+    "id": "QR35",
+    "name": "ConsistencyRule35",
+    "description": "Persist selected state across responsive transformations",
+    "severity": "warning"
+  },
+  {
+    "id": "QR36",
+    "name": "ConsistencyRule36",
+    "description": "Every overlay defines dismissal and focus return",
+    "severity": "warning"
+  },
+  {
+    "id": "QR37",
+    "name": "ConsistencyRule37",
+    "description": "Every async action defines pending and retry behavior",
+    "severity": "error"
+  },
+  {
+    "id": "QR38",
+    "name": "ConsistencyRule38",
+    "description": "Tables define narrow-screen transformation",
+    "severity": "warning"
+  },
+  {
+    "id": "QR39",
+    "name": "ConsistencyRule39",
+    "description": "Charts provide non-color distinctions and textual alternatives",
+    "severity": "error"
+  },
+  {
+    "id": "QR40",
+    "name": "ConsistencyRule40",
+    "description": "Form validation maps messages to fields and summary where needed",
+    "severity": "warning"
+  },
+  {
+    "id": "QR41",
+    "name": "ConsistencyRule41",
+    "description": "Copy hierarchy follows content role tokens",
+    "severity": "warning"
+  },
+  {
+    "id": "QR42",
+    "name": "ConsistencyRule42",
+    "description": "Navigation labels use stable terminology",
+    "severity": "warning"
+  },
+  {
+    "id": "QR43",
+    "name": "ConsistencyRule43",
+    "description": "Buttons use verbs that match resulting action",
+    "severity": "warning"
+  },
+  {
+    "id": "QR44",
+    "name": "ConsistencyRule44",
+    "description": "Empty states distinguish zero-data from zero-results",
+    "severity": "warning"
+  },
+  {
+    "id": "QR45",
+    "name": "ConsistencyRule45",
+    "description": "Permissions states explain why access is needed",
+    "severity": "warning"
+  },
+  {
+    "id": "QR46",
+    "name": "ConsistencyRule46",
+    "description": "Offline state distinguishes unavailable from failed",
+    "severity": "error"
+  },
+  {
+    "id": "QR47",
+    "name": "ConsistencyRule47",
+    "description": "Icon-only controls require accessible names",
+    "severity": "warning"
+  },
+  {
+    "id": "QR48",
+    "name": "ConsistencyRule48",
+    "description": "Sticky UI cannot obscure focused content",
+    "severity": "error"
+  },
+  {
+    "id": "QR49",
+    "name": "ConsistencyRule49",
+    "description": "Safe-area insets are respected on edge-to-edge mobile layouts",
+    "severity": "error"
+  },
+  {
+    "id": "QR50",
+    "name": "ConsistencyRule50",
+    "description": "Images declare responsive source/crop behavior",
+    "severity": "error"
+  },
+  {
+    "id": "QR51",
+    "name": "ConsistencyRule51",
+    "description": "Long actions expose progress when meaningful",
+    "severity": "error"
+  },
+  {
+    "id": "QR52",
+    "name": "ConsistencyRule52",
+    "description": "Success feedback is proportional to action importance",
+    "severity": "warning"
+  },
+  {
+    "id": "QR53",
+    "name": "ConsistencyRule53",
+    "description": "Modals are not used for routine multi-step tasks",
+    "severity": "warning"
+  },
+  {
+    "id": "QR54",
+    "name": "ConsistencyRule54",
+    "description": "Nested scrolling is avoided unless essential",
+    "severity": "warning"
+  },
+  {
+    "id": "QR55",
+    "name": "ConsistencyRule55",
+    "description": "Selection patterns are consistent across collections",
+    "severity": "warning"
+  },
+  {
+    "id": "QR56",
+    "name": "ConsistencyRule56",
+    "description": "Search keeps query visible when results change",
+    "severity": "warning"
+  },
+  {
+    "id": "QR57",
+    "name": "ConsistencyRule57",
+    "description": "Filter state remains inspectable and resettable",
+    "severity": "warning"
+  },
+  {
+    "id": "QR58",
+    "name": "ConsistencyRule58",
+    "description": "Responsive navigation preserves information architecture",
+    "severity": "error"
+  },
+  {
+    "id": "QR59",
+    "name": "ConsistencyRule59",
+    "description": "Platform adapter owns system chrome conventions",
+    "severity": "error"
+  },
+  {
+    "id": "QR60",
+    "name": "ConsistencyRule60",
+    "description": "Telemetry event names are stable across visual variants",
+    "severity": "error"
+  }
+]

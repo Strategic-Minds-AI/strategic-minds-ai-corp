@@ -1,0 +1,102 @@
+[
+  {
+    "id": "MO01",
+    "name": "Fade/translate reveal",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO02",
+    "name": "Shared-element transition",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO03",
+    "name": "Sheet slide",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO04",
+    "name": "Drawer slide",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO05",
+    "name": "Accordion expand",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO06",
+    "name": "Tab indicator",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO07",
+    "name": "Card hover lift",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO08",
+    "name": "Button press feedback",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO09",
+    "name": "Skeleton shimmer",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO10",
+    "name": "Progress morph",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO11",
+    "name": "Success confirmation",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO12",
+    "name": "Error shake/subtle attention",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO13",
+    "name": "Drag/reorder",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO14",
+    "name": "Swipe-dismiss",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO15",
+    "name": "Parallax restrained",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO16",
+    "name": "Scroll-linked section reveal",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO17",
+    "name": "Number/KPI count transition",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO18",
+    "name": "Chart draw",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO19",
+    "name": "Image crossfade",
+    "reduced_motion_required": true
+  },
+  {
+    "id": "MO20",
+    "name": "Reduced-motion static fallback",
+    "reduced_motion_required": true
+  }
+]

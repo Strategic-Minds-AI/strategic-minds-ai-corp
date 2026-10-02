@@ -1,0 +1,77 @@
+[
+  {
+    "id": "DV01",
+    "name": "KPI tile",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV02",
+    "name": "Line chart",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV03",
+    "name": "Area chart",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV04",
+    "name": "Bar chart",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV05",
+    "name": "Stacked bar",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV06",
+    "name": "Donut",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV07",
+    "name": "Progress/gauge",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV08",
+    "name": "Heatmap",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV09",
+    "name": "Scatterplot",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV10",
+    "name": "Funnel",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV11",
+    "name": "Cohort table",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV12",
+    "name": "Sankey/flow",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV13",
+    "name": "Timeline",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV14",
+    "name": "Geo map",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  },
+  {
+    "id": "DV15",
+    "name": "Treemap",
+    "rule": "Use chart only when it improves comprehension; provide labels/summary and accessible data alternative."
+  }
+]

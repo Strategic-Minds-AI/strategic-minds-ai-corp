@@ -1,0 +1,62 @@
+[
+  {
+    "id": "AI01",
+    "name": "Chat assistant",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI02",
+    "name": "Inline copilot",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI03",
+    "name": "Command palette assistant",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI04",
+    "name": "Generate/rewrite action",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI05",
+    "name": "Suggested next actions",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI06",
+    "name": "AI result card with sources",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI07",
+    "name": "Human approval queue",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI08",
+    "name": "Agent activity timeline",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI09",
+    "name": "Tool-call receipt",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI10",
+    "name": "Prompt template library",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI11",
+    "name": "AI comparison panel",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  },
+  {
+    "id": "AI12",
+    "name": "Confidence/uncertainty disclosure",
+    "rule": "Distinguish user input, model output, tool output, and approval state."
+  }
+]

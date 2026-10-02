@@ -1,0 +1,1474 @@
+[
+  {
+    "id": "CP001",
+    "category": "navigation",
+    "name": "app bar",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP002",
+    "category": "navigation",
+    "name": "global header",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP003",
+    "category": "navigation",
+    "name": "bottom tabs",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP004",
+    "category": "navigation",
+    "name": "sidebar",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP005",
+    "category": "navigation",
+    "name": "nav rail",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP006",
+    "category": "navigation",
+    "name": "breadcrumbs",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP007",
+    "category": "navigation",
+    "name": "tabs",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP008",
+    "category": "navigation",
+    "name": "segmented control",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP009",
+    "category": "navigation",
+    "name": "pagination",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP010",
+    "category": "navigation",
+    "name": "command palette",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP011",
+    "category": "actions",
+    "name": "primary button",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP012",
+    "category": "actions",
+    "name": "secondary button",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP013",
+    "category": "actions",
+    "name": "tertiary/text button",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP014",
+    "category": "actions",
+    "name": "icon button",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP015",
+    "category": "actions",
+    "name": "FAB",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP016",
+    "category": "actions",
+    "name": "split button",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP017",
+    "category": "actions",
+    "name": "button group",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP018",
+    "category": "actions",
+    "name": "overflow menu",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP019",
+    "category": "inputs",
+    "name": "text input",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP020",
+    "category": "inputs",
+    "name": "textarea",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP021",
+    "category": "inputs",
+    "name": "select",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP022",
+    "category": "inputs",
+    "name": "combobox",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP023",
+    "category": "inputs",
+    "name": "checkbox",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP024",
+    "category": "inputs",
+    "name": "radio",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP025",
+    "category": "inputs",
+    "name": "switch",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP026",
+    "category": "inputs",
+    "name": "slider",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP027",
+    "category": "inputs",
+    "name": "date picker",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP028",
+    "category": "inputs",
+    "name": "time picker",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP029",
+    "category": "inputs",
+    "name": "file upload",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP030",
+    "category": "inputs",
+    "name": "search input",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP031",
+    "category": "inputs",
+    "name": "OTP/passcode",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP032",
+    "category": "content",
+    "name": "card",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP033",
+    "category": "content",
+    "name": "list row",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP034",
+    "category": "content",
+    "name": "media tile",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP035",
+    "category": "content",
+    "name": "stat tile",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP036",
+    "category": "content",
+    "name": "badge",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP037",
+    "category": "content",
+    "name": "chip",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP038",
+    "category": "content",
+    "name": "avatar",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP039",
+    "category": "content",
+    "name": "accordion",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP040",
+    "category": "content",
+    "name": "timeline item",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP041",
+    "category": "content",
+    "name": "comment",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP042",
+    "category": "content",
+    "name": "quote/testimonial",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP043",
+    "category": "content",
+    "name": "empty state",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP044",
+    "category": "feedback",
+    "name": "toast",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP045",
+    "category": "feedback",
+    "name": "banner",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP046",
+    "category": "feedback",
+    "name": "inline alert",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP047",
+    "category": "feedback",
+    "name": "modal",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP048",
+    "category": "feedback",
+    "name": "dialog",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP049",
+    "category": "feedback",
+    "name": "drawer",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP050",
+    "category": "feedback",
+    "name": "bottom sheet",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP051",
+    "category": "feedback",
+    "name": "tooltip",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP052",
+    "category": "feedback",
+    "name": "progress bar",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP053",
+    "category": "feedback",
+    "name": "spinner",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP054",
+    "category": "feedback",
+    "name": "skeleton",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP055",
+    "category": "data",
+    "name": "table",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP056",
+    "category": "data",
+    "name": "data grid",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP057",
+    "category": "data",
+    "name": "kanban card",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP058",
+    "category": "data",
+    "name": "chart container",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP059",
+    "category": "data",
+    "name": "filter bar",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP060",
+    "category": "data",
+    "name": "sort control",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP061",
+    "category": "data",
+    "name": "bulk action bar",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP062",
+    "category": "data",
+    "name": "metric card",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP063",
+    "category": "commerce",
+    "name": "product card",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP064",
+    "category": "commerce",
+    "name": "price block",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP065",
+    "category": "commerce",
+    "name": "variant picker",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP066",
+    "category": "commerce",
+    "name": "quantity selector",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP067",
+    "category": "commerce",
+    "name": "cart row",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP068",
+    "category": "commerce",
+    "name": "order summary",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP069",
+    "category": "commerce",
+    "name": "promo code",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP070",
+    "category": "commerce",
+    "name": "checkout stepper",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP071",
+    "category": "commerce",
+    "name": "review stars",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP072",
+    "category": "commerce",
+    "name": "availability",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP073",
+    "category": "media",
+    "name": "gallery",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP074",
+    "category": "media",
+    "name": "carousel",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP075",
+    "category": "media",
+    "name": "lightbox",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP076",
+    "category": "media",
+    "name": "video player",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP077",
+    "category": "media",
+    "name": "audio mini-player",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP078",
+    "category": "media",
+    "name": "image compare slider",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP079",
+    "category": "media",
+    "name": "upload preview",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP080",
+    "category": "identity",
+    "name": "profile header",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP081",
+    "category": "identity",
+    "name": "account menu",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP082",
+    "category": "identity",
+    "name": "organization switcher",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP083",
+    "category": "identity",
+    "name": "role badge",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP084",
+    "category": "identity",
+    "name": "security status",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP085",
+    "category": "ai",
+    "name": "chat message",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP086",
+    "category": "ai",
+    "name": "prompt composer",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP087",
+    "category": "ai",
+    "name": "suggestion chip",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP088",
+    "category": "ai",
+    "name": "tool result card",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP089",
+    "category": "ai",
+    "name": "source citation card",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP090",
+    "category": "ai",
+    "name": "approval card",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP091",
+    "category": "ai",
+    "name": "agent status card",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  },
+  {
+    "id": "CP092",
+    "category": "ai",
+    "name": "generation progress",
+    "states": [
+      "default",
+      "hover/focus where applicable",
+      "active/selected where applicable",
+      "disabled where applicable",
+      "loading where applicable",
+      "error where applicable"
+    ],
+    "tokenized": true,
+    "responsive": true,
+    "accessible": true
+  }
+]

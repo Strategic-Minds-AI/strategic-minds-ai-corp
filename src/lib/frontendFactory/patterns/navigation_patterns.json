@@ -1,0 +1,82 @@
+[
+  {
+    "id": "N01",
+    "name": "Bottom tab bar"
+  },
+  {
+    "id": "N02",
+    "name": "Top tab/segmented control"
+  },
+  {
+    "id": "N03",
+    "name": "Navigation rail"
+  },
+  {
+    "id": "N04",
+    "name": "Collapsible sidebar"
+  },
+  {
+    "id": "N05",
+    "name": "Permanent sidebar"
+  },
+  {
+    "id": "N06",
+    "name": "Hamburger drawer"
+  },
+  {
+    "id": "N07",
+    "name": "Mega menu"
+  },
+  {
+    "id": "N08",
+    "name": "Breadcrumb hierarchy"
+  },
+  {
+    "id": "N09",
+    "name": "Command palette"
+  },
+  {
+    "id": "N10",
+    "name": "Search-first navigation"
+  },
+  {
+    "id": "N11",
+    "name": "Floating action navigation"
+  },
+  {
+    "id": "N12",
+    "name": "Context toolbar"
+  },
+  {
+    "id": "N13",
+    "name": "Step navigation"
+  },
+  {
+    "id": "N14",
+    "name": "Pagination"
+  },
+  {
+    "id": "N15",
+    "name": "Infinite scroll with anchors"
+  },
+  {
+    "id": "N16",
+    "name": "Tree navigation"
+  },
+  {
+    "id": "N17",
+    "name": "Dock / launcher"
+  },
+  {
+    "id": "N18",
+    "name": "Split-view navigation"
+  },
+  {
+    "id": "N19",
+    "name": "Sticky section index"
+  },
+  {
+    "id": "N20",
+    "name": "Swipe/page navigation"
+  }
+]

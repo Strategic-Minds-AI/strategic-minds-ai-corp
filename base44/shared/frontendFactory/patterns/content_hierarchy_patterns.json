@@ -1,0 +1,102 @@
+[
+  {
+    "id": "CH01",
+    "name": "Action-first dashboard",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH02",
+    "name": "Status-first dashboard",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH03",
+    "name": "Task queue first",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH04",
+    "name": "Search-first discovery",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH05",
+    "name": "Media-first discovery",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH06",
+    "name": "Map-first discovery",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH07",
+    "name": "Product-first commerce",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH08",
+    "name": "Proof-first service landing",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH09",
+    "name": "Offer-first lead funnel",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH10",
+    "name": "Editorial reading hierarchy",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH11",
+    "name": "Conversation-first AI workspace",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH12",
+    "name": "Artifact-first AI workspace",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH13",
+    "name": "Pipeline-first CRM",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH14",
+    "name": "Calendar-first booking",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH15",
+    "name": "Table-first admin",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH16",
+    "name": "KPI-first analytics",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH17",
+    "name": "Progress-first learning",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH18",
+    "name": "Profile-first community",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH19",
+    "name": "Document-first workspace",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  },
+  {
+    "id": "CH20",
+    "name": "Alert-first operations",
+    "lock": "Determines above-the-fold priority and section ordering before styling."
+  }
+]

@@ -1,0 +1,197 @@
+[
+  {
+    "id": "TS01",
+    "name": "System Sans Utility",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS02",
+    "name": "Neo-grotesk SaaS",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS03",
+    "name": "Humanist Sans",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS04",
+    "name": "Geometric Sans",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS05",
+    "name": "Editorial Serif + Sans",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS06",
+    "name": "Luxury High-Contrast Serif",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS07",
+    "name": "Condensed Display + Sans",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS08",
+    "name": "Rounded Consumer Sans",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS09",
+    "name": "Monospace Technical Accent",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS10",
+    "name": "Data Dense UI Sans",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS11",
+    "name": "Creator Bold Display",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS12",
+    "name": "Local Service Strong Sans",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS13",
+    "name": "Commerce Neutral Sans",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS14",
+    "name": "Corporate Serif Accent",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  },
+  {
+    "id": "TS15",
+    "name": "Multilingual System-First",
+    "contract": [
+      "semantic type roles",
+      "fluid/clamped scale",
+      "line-height roles",
+      "maximum text measure",
+      "fallback stack",
+      "weight limits",
+      "responsive scaling"
+    ]
+  }
+]

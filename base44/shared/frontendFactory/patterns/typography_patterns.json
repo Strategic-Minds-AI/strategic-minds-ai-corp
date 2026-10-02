@@ -1,0 +1,82 @@
+[
+  {
+    "id": "T01",
+    "name": "Neo-grotesk SaaS",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T02",
+    "name": "Geometric Sans",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T03",
+    "name": "Humanist Sans",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T04",
+    "name": "Editorial Serif + Sans",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T05",
+    "name": "Luxury High-Contrast Serif",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T06",
+    "name": "Condensed Utility",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T07",
+    "name": "Rounded Friendly Sans",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T08",
+    "name": "Technical Mono Accent",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T09",
+    "name": "Display Sans + Neutral Body",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T10",
+    "name": "System Native",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T11",
+    "name": "Variable Sans",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T12",
+    "name": "Soft Serif",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T13",
+    "name": "Brutalist Grotesk",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T14",
+    "name": "Financial Conservative",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T15",
+    "name": "Creator Expressive",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  },
+  {
+    "id": "T16",
+    "name": "Enterprise Dense",
+    "rule": "Use a disciplined type scale; body legibility outranks display novelty."
+  }
+]

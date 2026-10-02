@@ -1,0 +1,82 @@
+[
+  {
+    "id": "F01",
+    "name": "Single-field action"
+  },
+  {
+    "id": "F02",
+    "name": "Standard stacked form"
+  },
+  {
+    "id": "F03",
+    "name": "Inline compact form"
+  },
+  {
+    "id": "F04",
+    "name": "Multi-step wizard"
+  },
+  {
+    "id": "F05",
+    "name": "Progressive disclosure form"
+  },
+  {
+    "id": "F06",
+    "name": "Conditional logic form"
+  },
+  {
+    "id": "F07",
+    "name": "Quote/estimator form"
+  },
+  {
+    "id": "F08",
+    "name": "Checkout form"
+  },
+  {
+    "id": "F09",
+    "name": "Account creation"
+  },
+  {
+    "id": "F10",
+    "name": "Sign-in/passkey"
+  },
+  {
+    "id": "F11",
+    "name": "Search + facets"
+  },
+  {
+    "id": "F12",
+    "name": "Filter drawer"
+  },
+  {
+    "id": "F13",
+    "name": "Upload + metadata"
+  },
+  {
+    "id": "F14",
+    "name": "Date/time booking"
+  },
+  {
+    "id": "F15",
+    "name": "Address/location"
+  },
+  {
+    "id": "F16",
+    "name": "Payment method"
+  },
+  {
+    "id": "F17",
+    "name": "Settings preferences"
+  },
+  {
+    "id": "F18",
+    "name": "Bulk edit"
+  },
+  {
+    "id": "F19",
+    "name": "Review + confirmation"
+  },
+  {
+    "id": "F20",
+    "name": "Save/resume intake"
+  }
+]

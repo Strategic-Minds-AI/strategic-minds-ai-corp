@@ -1,0 +1,62 @@
+[
+  {
+    "id": "EV01",
+    "name": "None",
+    "best_for": "flat interfaces",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV02",
+    "name": "Hairline",
+    "best_for": "border-led separation",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV03",
+    "name": "Low",
+    "best_for": "hover/selected cards",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV04",
+    "name": "Medium",
+    "best_for": "menus/popovers",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV05",
+    "name": "High",
+    "best_for": "dialogs/drawers",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV06",
+    "name": "Ambient",
+    "best_for": "premium large surfaces",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV07",
+    "name": "Dark Ambient",
+    "best_for": "dark theme elevation via tone + shadow",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV08",
+    "name": "Inset",
+    "best_for": "input/well/sunken regions",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV09",
+    "name": "Floating Action",
+    "best_for": "FAB / primary floating controls",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  },
+  {
+    "id": "EV10",
+    "name": "Media Overlay",
+    "best_for": "overlay chrome over imagery",
+    "rule": "Use semantic elevation tier; never invent one-off shadow values."
+  }
+]

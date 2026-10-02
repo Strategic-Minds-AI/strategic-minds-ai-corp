@@ -1,0 +1,82 @@
+[
+  {
+    "id": "R01",
+    "name": "Bottom tabs -> navigation rail"
+  },
+  {
+    "id": "R02",
+    "name": "Sidebar -> drawer"
+  },
+  {
+    "id": "R03",
+    "name": "Two columns -> stacked"
+  },
+  {
+    "id": "R04",
+    "name": "Three panes -> one pane + drill-in"
+  },
+  {
+    "id": "R05",
+    "name": "Table -> cards"
+  },
+  {
+    "id": "R06",
+    "name": "Table -> horizontal scroll with frozen key column"
+  },
+  {
+    "id": "R07",
+    "name": "Mega menu -> accordion drawer"
+  },
+  {
+    "id": "R08",
+    "name": "Toolbar -> overflow menu"
+  },
+  {
+    "id": "R09",
+    "name": "Filters sidebar -> bottom sheet"
+  },
+  {
+    "id": "R10",
+    "name": "Hero split -> stacked"
+  },
+  {
+    "id": "R11",
+    "name": "Grid -> carousel"
+  },
+  {
+    "id": "R12",
+    "name": "Grid 4 -> 2 -> 1"
+  },
+  {
+    "id": "R13",
+    "name": "Sticky desktop panel -> inline mobile section"
+  },
+  {
+    "id": "R14",
+    "name": "Modal -> full-screen sheet"
+  },
+  {
+    "id": "R15",
+    "name": "Hover affordance -> explicit tap action"
+  },
+  {
+    "id": "R16",
+    "name": "Context menu -> action sheet"
+  },
+  {
+    "id": "R17",
+    "name": "Dense chart -> simplified summary + drilldown"
+  },
+  {
+    "id": "R18",
+    "name": "Persistent inspector -> slide-in drawer"
+  },
+  {
+    "id": "R19",
+    "name": "Top tabs -> scrollable tabs"
+  },
+  {
+    "id": "R20",
+    "name": "Multi-field row -> stacked fields"
+  }
+]
