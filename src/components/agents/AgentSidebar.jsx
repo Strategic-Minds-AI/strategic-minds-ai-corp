@@ -45,6 +45,7 @@ const TOOLS = [
   ['domains', 'Domain Registry'],
   ['sandboxes', 'Sandbox System'],
   ['analytics', 'Live Analytics'],
+  ['comms', 'SMS & Voice Inbox'],
 ];
 
 export const AGENT_META = {

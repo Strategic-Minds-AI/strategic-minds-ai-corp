@@ -78,6 +78,55 @@ const TOOLS = [
       description: 'List CRM contacts for pipeline management.',
       parameters: { type: 'object', properties: { limit: { type: 'number' } } }
     }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'send_sms',
+      description: 'Send an SMS message to a phone number via Twilio. The message is logged to CommsEvent and Conversation.',
+      parameters: {
+        type: 'object',
+        properties: {
+          to_number: { type: 'string', description: 'Recipient phone number in E.164 format (e.g. +17721234567)' },
+          body: { type: 'string', description: 'Message body (max 1600 chars, no emojis)' },
+          persona_id: { type: 'string', description: 'Optional AgentPersona ID to send as' }
+        },
+        required: ['to_number', 'body']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_conversations',
+      description: 'List active SMS/text conversations from the Comms Inbox, with last message preview.',
+      parameters: { type: 'object', properties: { limit: { type: 'number' } } }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_campaigns',
+      description: 'List SMS/MMS/Voice outreach campaigns and their status.',
+      parameters: { type: 'object', properties: { limit: { type: 'number' } } }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'create_campaign',
+      description: 'Create a new SMS outreach campaign with a message template. Recipients are added separately.',
+      parameters: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'Campaign name' },
+          channel: { type: 'string', enum: ['sms', 'mms', 'voice', 'whatsapp'] },
+          message_template: { type: 'string', description: 'Message body template (no emojis)' },
+          persona_id: { type: 'string', description: 'Optional AgentPersona to send as' }
+        },
+        required: ['name', 'channel', 'message_template']
+      }
+    }
   }
 ];
 
@@ -125,6 +174,35 @@ async function executeTool(base44: any, name: string, args: any): Promise<string
       case 'list_crm_contacts': {
         const res = await base44.entities.CrmContact.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['name', 'email', 'status', 'phone'] });
         return JSON.stringify({ count: res.items.length, contacts: res.items });
+      }
+      case 'send_sms': {
+        const fnRes = await base44.functions.invoke('executeAutonomousAction', {
+          action: 'send_sms',
+          to_number: args.to_number,
+          body: args.body,
+          persona_id: args.persona_id || undefined
+        });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, message_sid: d.message_sid, conversation_id: d.conversation_id, message: `SMS sent to ${args.to_number}` });
+      }
+      case 'list_conversations': {
+        const res = await base44.entities.Conversation.filter({ status: { $in: ['active', 'idle'] } }, { sort: '-last_message_at', limit: args.limit || 20, fields: ['participant_identity', 'contact_name', 'last_message_preview', 'last_message_at', 'status', 'unread_count'] });
+        return JSON.stringify({ count: res.items.length, conversations: res.items });
+      }
+      case 'list_campaigns': {
+        const res = await base44.entities.Campaign.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['name', 'channel', 'status', 'sent_count', 'delivered_count', 'failed_count'] });
+        return JSON.stringify({ count: res.items.length, campaigns: res.items });
+      }
+      case 'create_campaign': {
+        const camp = await base44.entities.Campaign.create({
+          name: args.name,
+          channel: args.channel,
+          message_template: args.message_template,
+          persona_id: args.persona_id || '',
+          status: 'draft'
+        });
+        return JSON.stringify({ success: true, campaign_id: camp.id, message: `Campaign created: ${args.name}` });
       }
       default:
         return JSON.stringify({ error: `Unknown tool: ${name}` });

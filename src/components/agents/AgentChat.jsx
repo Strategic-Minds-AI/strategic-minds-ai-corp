@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import ReactMarkdown from 'react-markdown';
 import { ArrowUp, Loader2, AlertCircle, RefreshCw, Zap, Users } from 'lucide-react';
 import { AGENT_META } from './AgentSidebar';
+import SmsQuickAction from './SmsQuickAction';
 
 const STORAGE_KEY = (agent) => `agent-chat-${agent}`;
 const SWARM_KEY = (agents) => `agent-chat-swarm-${[...agents].sort().join('-')}`;
@@ -111,6 +112,9 @@ export default function AgentChat({ agentNames, onNewChat }) {
         {isSwarm ? <Users size={18} className="text-primary" /> : <Zap size={16} className="text-primary" />}
         <span>{headerLabel}</span>
         <span className="flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-primary"><Zap size={10}/> AI Gateway</span>
+        <div className="ml-auto">
+          <SmsQuickAction agentLabel={headerLabel} />
+        </div>
       </header>
       <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto px-5 py-8">
         {messages.length === 0 ? (
@@ -165,7 +169,7 @@ export default function AgentChat({ agentNames, onNewChat }) {
             <button type="submit" disabled={(!input.trim()) || sending} aria-label="Send message" className="rounded-full bg-consoleAccent p-2 text-primary-foreground disabled:opacity-40"><ArrowUp size={17}/></button>
           </div>
         </form>
-        <p className="mt-2 text-center text-xs text-muted-foreground">{isSwarm ? 'All selected agents respond in parallel via Vercel AI Gateway.' : 'Super-agents can create tasks, read domains, and manage builds.'}</p>
+        <p className="mt-2 text-center text-xs text-muted-foreground">{isSwarm ? 'All selected agents respond in parallel via Vercel AI Gateway.' : 'Super-agents can create tasks, send SMS, manage campaigns, and build systems.'}</p>
       </div>
     </div>
   );
