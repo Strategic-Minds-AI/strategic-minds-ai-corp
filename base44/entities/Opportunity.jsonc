@@ -1,0 +1,86 @@
+{
+  "name": "Opportunity",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Opportunity name"
+    },
+    "account_id": {
+      "type": "string",
+      "description": "Reference to Account"
+    },
+    "contact_id": {
+      "type": "string",
+      "description": "Reference to primary contact"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Deal value"
+    },
+    "currency": {
+      "type": "string",
+      "default": "USD"
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "prospecting",
+        "qualification",
+        "needs_analysis",
+        "proposal",
+        "negotiation",
+        "closed_won",
+        "closed_lost"
+      ],
+      "default": "prospecting"
+    },
+    "probability": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 100
+    },
+    "expected_close_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "source": {
+      "type": "string",
+      "description": "Lead source"
+    },
+    "owner_id": {
+      "type": "string",
+      "description": "Assigned user"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 5000
+    }
+  },
+  "required": [
+    "name",
+    "stage"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": {
+      "created_by": "{{user.email}}"
+    },
+    "delete": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

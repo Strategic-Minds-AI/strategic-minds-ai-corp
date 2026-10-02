@@ -73,6 +73,22 @@ const TABLE_MAP = {
   Conversation: 'conversations',
   CommunicationTemplate: 'communication_templates',
   AgentPersona: 'agent_personas',
+  AccountTier: 'account_tiers',
+  Activity: 'activities',
+  ActivityType: 'activity_types',
+  AnalyticsSnapshot: 'analytics_snapshots',
+  Budget: 'budgets',
+  Opportunity: 'opportunities',
+  Pipeline: 'pipelines',
+  Stage: 'stages',
+  Tag: 'tags',
+  Note: 'notes',
+  Task: 'tasks',
+  Sequence: 'sequences',
+  SequenceStep: 'sequence_steps',
+  SequenceEnrollment: 'sequence_enrollments',
+  Goal: 'goals',
+  Forecast: 'forecasts',
 };
 
 export function tableName(entityName) {

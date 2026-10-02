@@ -1,0 +1,64 @@
+{
+  "name": "SequenceEnrollment",
+  "type": "object",
+  "properties": {
+    "sequence_id": {
+      "type": "string",
+      "description": "Reference to Sequence"
+    },
+    "contact_id": {
+      "type": "string",
+      "description": "Reference to enrolled contact"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "completed",
+        "paused",
+        "bounced",
+        "unsubscribed"
+      ],
+      "default": "active"
+    },
+    "current_step": {
+      "type": "number",
+      "default": 0
+    },
+    "enrolled_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "sequence_id",
+    "contact_id",
+    "status"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

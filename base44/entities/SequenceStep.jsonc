@@ -1,0 +1,64 @@
+{
+  "name": "SequenceStep",
+  "type": "object",
+  "properties": {
+    "sequence_id": {
+      "type": "string",
+      "description": "Reference to Sequence"
+    },
+    "step_order": {
+      "type": "number",
+      "description": "Order in the sequence"
+    },
+    "day_offset": {
+      "type": "number",
+      "default": 0,
+      "description": "Days after enrollment to execute"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "email",
+        "sms",
+        "call",
+        "task"
+      ],
+      "default": "email"
+    },
+    "template_id": {
+      "type": "string",
+      "description": "Reference to CommunicationTemplate"
+    },
+    "task_title": {
+      "type": "string",
+      "description": "Task title if channel is task"
+    }
+  },
+  "required": [
+    "sequence_id",
+    "step_order",
+    "channel"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

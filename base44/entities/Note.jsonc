@@ -1,0 +1,44 @@
+{
+  "name": "Note",
+  "type": "object",
+  "properties": {
+    "body": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "Note content"
+    },
+    "related_to_type": {
+      "type": "string",
+      "enum": [
+        "Contact",
+        "Account",
+        "Opportunity",
+        "Lead"
+      ],
+      "description": "Type of entity this note belongs to"
+    },
+    "related_to_id": {
+      "type": "string",
+      "description": "ID of the related entity"
+    }
+  },
+  "required": [
+    "body",
+    "related_to_type",
+    "related_to_id"
+  ],
+  "rls": {
+    "create": {
+      "created_by": "{{user.email}}"
+    },
+    "read": {
+      "created_by": "{{user.email}}"
+    },
+    "update": {
+      "created_by": "{{user.email}}"
+    },
+    "delete": {
+      "created_by": "{{user.email}}"
+    }
+  }
+}

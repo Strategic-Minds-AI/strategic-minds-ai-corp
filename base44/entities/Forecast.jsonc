@@ -1,0 +1,65 @@
+{
+  "name": "Forecast",
+  "type": "object",
+  "properties": {
+    "period": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "quarterly",
+        "yearly"
+      ],
+      "default": "monthly"
+    },
+    "period_label": {
+      "type": "string",
+      "description": "e.g. 2026-Q4"
+    },
+    "committed_amount": {
+      "type": "number",
+      "description": "Committed forecast amount"
+    },
+    "best_case_amount": {
+      "type": "number",
+      "description": "Best case forecast amount"
+    },
+    "pipeline_amount": {
+      "type": "number",
+      "description": "Total pipeline amount"
+    },
+    "closed_amount": {
+      "type": "number",
+      "default": 0,
+      "description": "Amount closed so far"
+    },
+    "owner_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "period",
+    "period_label"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

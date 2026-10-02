@@ -1599,5 +1599,267 @@ CREATE TABLE IF NOT EXISTS testimonials (
 ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
 CREATE TRIGGER IF NOT EXISTS testimonials_updated_at BEFORE UPDATE ON testimonials FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
--- Enable realtime for all tables
-ALTER PUBLICATION supabase_realtime ADD TABLE adapter_definitions, admin_chat_turns, admin_conversations, agent_personas, agent_tasks, audit_findings, audit_receipts, batch_operations, benchmark_checkpoints, benchmark_companies, benchmark_runs, business_audits, call_logs, campaigns, campaign_recipients, catalog_items, catalog_quotes, client_infrastructure, client_projects, clone_queue, commerce_orders, comms_events, communication_templates, conversations, crm_contacts, customer_sites, domain_inventory, domain_metrics, dominance_campaigns, dominance_goals, enhancement_jobs, evidence, factory_approvals, factory_artifacts, factory_projects, generator_definitions, generator_runs, insider_content, leads, monitoring_events, monitoring_rules, outreach_drafts, posts, projects, project_requests, provisioned_sites, provisioning_plans, repair_action_items, repair_plans, repair_tasks, revenue_leaks, risk_register, run_steps, sandboxes, scan_snapshots, sms_conversations, sms_messages, system_builds, system_edges, system_nodes, template_assets, template_packs, testimonials, user, validation_receipts, vault_access_keys, vault_accounts, worker_fleets, posts, projects, testimonials;
+-- ──────────────────────────────────────────────────────────────
+-- Strategic Insights CRM entities
+-- ──────────────────────────────────────────────────────────────
+
+-- AccountTier
+CREATE TABLE IF NOT EXISTS account_tiers (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  name TEXT,
+  "order" DOUBLE PRECISION
+);
+ALTER TABLE account_tiers ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS account_tiers_updated_at BEFORE UPDATE ON account_tiers FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Activity
+CREATE TABLE IF NOT EXISTS activities (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  type TEXT,
+  description TEXT,
+  date TIMESTAMPTZ,
+  related_to_type TEXT,
+  related_to_id UUID,
+  related_to_name TEXT
+);
+ALTER TABLE activities ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "activities_owner_read" ON activities FOR SELECT USING (auth.uid() = created_by_id);
+CREATE POLICY "activities_owner_write" ON activities FOR ALL USING (auth.uid() = created_by_id);
+CREATE TRIGGER IF NOT EXISTS activities_updated_at BEFORE UPDATE ON activities FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- ActivityType
+CREATE TABLE IF NOT EXISTS activity_types (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  name TEXT,
+  "order" DOUBLE PRECISION
+);
+ALTER TABLE activity_types ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS activity_types_updated_at BEFORE UPDATE ON activity_types FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- AnalyticsSnapshot
+CREATE TABLE IF NOT EXISTS analytics_snapshots (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  business_id TEXT,
+  source TEXT,
+  metrics JSONB,
+  period_start DATE,
+  period_end DATE,
+  fetched_at TIMESTAMPTZ
+);
+ALTER TABLE analytics_snapshots ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS analytics_snapshots_updated_at BEFORE UPDATE ON analytics_snapshots FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Budget
+CREATE TABLE IF NOT EXISTS budgets (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  category TEXT,
+  amount DOUBLE PRECISION,
+  month TEXT,
+  spent DOUBLE PRECISION DEFAULT 0
+);
+ALTER TABLE budgets ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "budgets_owner_read" ON budgets FOR SELECT USING (auth.uid() = created_by_id);
+CREATE POLICY "budgets_owner_write" ON budgets FOR ALL USING (auth.uid() = created_by_id);
+CREATE TRIGGER IF NOT EXISTS budgets_updated_at BEFORE UPDATE ON budgets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Opportunity
+CREATE TABLE IF NOT EXISTS opportunities (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  name TEXT,
+  account_id UUID,
+  contact_id UUID,
+  amount DOUBLE PRECISION,
+  currency TEXT DEFAULT 'USD',
+  stage TEXT DEFAULT 'prospecting',
+  probability DOUBLE PRECISION DEFAULT 0,
+  expected_close_date DATE,
+  source TEXT,
+  owner_id UUID,
+  tags JSONB DEFAULT '[]',
+  notes TEXT
+);
+ALTER TABLE opportunities ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "opportunities_owner_read" ON opportunities FOR SELECT USING (auth.uid() = created_by_id);
+CREATE POLICY "opportunities_owner_write" ON opportunities FOR ALL USING (auth.uid() = created_by_id);
+CREATE TRIGGER IF NOT EXISTS opportunities_updated_at BEFORE UPDATE ON opportunities FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Pipeline
+CREATE TABLE IF NOT EXISTS pipelines (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  name TEXT,
+  stages JSONB DEFAULT '[]',
+  is_default BOOLEAN DEFAULT false
+);
+ALTER TABLE pipelines ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS pipelines_updated_at BEFORE UPDATE ON pipelines FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Stage
+CREATE TABLE IF NOT EXISTS stages (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  name TEXT,
+  pipeline_id UUID,
+  "order" DOUBLE PRECISION,
+  probability DOUBLE PRECISION DEFAULT 0
+);
+ALTER TABLE stages ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS stages_updated_at BEFORE UPDATE ON stages FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Tag
+CREATE TABLE IF NOT EXISTS tags (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  name TEXT,
+  color TEXT DEFAULT '#0066FF'
+);
+ALTER TABLE tags ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS tags_updated_at BEFORE UPDATE ON tags FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Note
+CREATE TABLE IF NOT EXISTS notes (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  body TEXT,
+  related_to_type TEXT,
+  related_to_id UUID
+);
+ALTER TABLE notes ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "notes_owner_read" ON notes FOR SELECT USING (auth.uid() = created_by_id);
+CREATE POLICY "notes_owner_write" ON notes FOR ALL USING (auth.uid() = created_by_id);
+CREATE TRIGGER IF NOT EXISTS notes_updated_at BEFORE UPDATE ON notes FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Task
+CREATE TABLE IF NOT EXISTS tasks (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  title TEXT,
+  description TEXT,
+  due_date TIMESTAMPTZ,
+  priority TEXT DEFAULT 'medium',
+  status TEXT DEFAULT 'not_started',
+  assigned_to UUID,
+  related_to_type TEXT DEFAULT 'None',
+  related_to_id UUID,
+  completed_at TIMESTAMPTZ
+);
+ALTER TABLE tasks ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "tasks_owner_read" ON tasks FOR SELECT USING (auth.uid() = created_by_id);
+CREATE POLICY "tasks_owner_write" ON tasks FOR ALL USING (auth.uid() = created_by_id);
+CREATE TRIGGER IF NOT EXISTS tasks_updated_at BEFORE UPDATE ON tasks FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Sequence
+CREATE TABLE IF NOT EXISTS sequences (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  name TEXT,
+  description TEXT,
+  channel TEXT DEFAULT 'email',
+  status TEXT DEFAULT 'draft',
+  step_count DOUBLE PRECISION DEFAULT 0,
+  enrolled_count DOUBLE PRECISION DEFAULT 0,
+  owner_id UUID
+);
+ALTER TABLE sequences ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS sequences_updated_at BEFORE UPDATE ON sequences FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- SequenceStep
+CREATE TABLE IF NOT EXISTS sequence_steps (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  sequence_id UUID,
+  step_order DOUBLE PRECISION,
+  day_offset DOUBLE PRECISION DEFAULT 0,
+  channel TEXT DEFAULT 'email',
+  template_id UUID,
+  task_title TEXT
+);
+ALTER TABLE sequence_steps ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS sequence_steps_updated_at BEFORE UPDATE ON sequence_steps FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- SequenceEnrollment
+CREATE TABLE IF NOT EXISTS sequence_enrollments (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  sequence_id UUID,
+  contact_id UUID,
+  status TEXT DEFAULT 'active',
+  current_step DOUBLE PRECISION DEFAULT 0,
+  enrolled_at TIMESTAMPTZ,
+  completed_at TIMESTAMPTZ
+);
+ALTER TABLE sequence_enrollments ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS sequence_enrollments_updated_at BEFORE UPDATE ON sequence_enrollments FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Goal
+CREATE TABLE IF NOT EXISTS goals (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  title TEXT,
+  type TEXT DEFAULT 'revenue',
+  target_value DOUBLE PRECISION,
+  current_value DOUBLE PRECISION DEFAULT 0,
+  period TEXT DEFAULT 'monthly',
+  period_start DATE,
+  period_end DATE,
+  owner_id UUID,
+  status TEXT DEFAULT 'on_track'
+);
+ALTER TABLE goals ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS goals_updated_at BEFORE UPDATE ON goals FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Forecast
+CREATE TABLE IF NOT EXISTS forecasts (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  created_date TIMESTAMPTZ DEFAULT now(),
+  updated_date TIMESTAMPTZ DEFAULT now(),
+  created_by_id UUID,
+  period TEXT DEFAULT 'monthly',
+  period_label TEXT,
+  committed_amount DOUBLE PRECISION,
+  best_case_amount DOUBLE PRECISION,
+  pipeline_amount DOUBLE PRECISION,
+  closed_amount DOUBLE PRECISION DEFAULT 0,
+  owner_id UUID
+);
+ALTER TABLE forecasts ENABLE ROW LEVEL SECURITY;
+CREATE TRIGGER IF NOT EXISTS forecasts_updated_at BEFORE UPDATE ON forecasts FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- Enable realtime for all tables (including new CRM tables)
+ALTER PUBLICATION supabase_realtime ADD TABLE adapter_definitions, admin_chat_turns, admin_conversations, agent_personas, agent_tasks, audit_findings, audit_receipts, batch_operations, benchmark_checkpoints, benchmark_companies, benchmark_runs, business_audits, call_logs, campaigns, campaign_recipients, catalog_items, catalog_quotes, client_infrastructure, client_projects, clone_queue, commerce_orders, comms_events, communication_templates, conversations, crm_contacts, customer_sites, domain_inventory, domain_metrics, dominance_campaigns, dominance_goals, enhancement_jobs, evidence, factory_approvals, factory_artifacts, factory_projects, generator_definitions, generator_runs, insider_content, leads, monitoring_events, monitoring_rules, outreach_drafts, posts, projects, project_requests, provisioned_sites, provisioning_plans, repair_action_items, repair_plans, repair_tasks, revenue_leaks, risk_register, run_steps, sandboxes, scan_snapshots, sms_conversations, sms_messages, system_builds, system_edges, system_nodes, template_assets, template_packs, testimonials, user, validation_receipts, vault_access_keys, vault_accounts, worker_fleets, account_tiers, activities, activity_types, analytics_snapshots, budgets, opportunities, pipelines, stages, tags, notes, tasks, sequences, sequence_steps, sequence_enrollments, goals, forecasts;

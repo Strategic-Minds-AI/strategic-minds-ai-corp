@@ -1,0 +1,90 @@
+{
+  "name": "Goal",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Goal title"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "revenue",
+        "deals_won",
+        "calls_made",
+        "meetings_booked",
+        "emails_sent",
+        "leads_generated"
+      ],
+      "default": "revenue"
+    },
+    "target_value": {
+      "type": "number",
+      "description": "Target value"
+    },
+    "current_value": {
+      "type": "number",
+      "default": 0
+    },
+    "period": {
+      "type": "string",
+      "enum": [
+        "daily",
+        "weekly",
+        "monthly",
+        "quarterly",
+        "yearly"
+      ],
+      "default": "monthly"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "on_track",
+        "at_risk",
+        "behind",
+        "achieved",
+        "missed"
+      ],
+      "default": "on_track"
+    }
+  },
+  "required": [
+    "title",
+    "type",
+    "target_value"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
