@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "system_id": "universal-template-system",
+  "canonical_name": "UNIVERSAL TEMPLATE SYSTEM",
+  "status": "DRAFT_BRANCH_CONVERGENCE",
+  "canonical_repo": "Strategic-Minds-AI/strategic-minds-ai-corp",
+  "components": [
+    {
+      "id": "universal-generator-kernel",
+      "path": "src/lib/universalFactory",
+      "role": "generation_execution_kernel",
+      "disposition": "PRESERVE"
+    },
+    {
+      "id": "universal-frontend-factory-v2",
+      "path": "src/lib/frontendFactory",
+      "role": "visual_compiler",
+      "disposition": "PRESERVE"
+    },
+    {
+      "id": "base44-adapter-surface",
+      "path": "base44",
+      "role": "adapter_migration_compatibility",
+      "disposition": "EXTRACT_OR_RETAIN_ONLY_WHERE_REFERENCED"
+    }
+  ],
+  "lineage": [
+    {"name": "Universal Template System", "disposition": "MERGE"},
+    {"name": "XTREME Universal Generator", "disposition": "MERGE"},
+    {"name": "X1 AI Hub Universal Autonomous Factory", "disposition": "MERGE"},
+    {"name": "Zero Template / Project Zero", "disposition": "EXTRACT_GOVERNANCE"},
+    {"name": "Universal Master Factory", "disposition": "CANONICAL_PACKET_INPUT"}
+  ],
+  "pipeline": [
+    "PLAN",
+    "DISCOVERY",
+    "SOURCE_TRUTH",
+    "CAPABILITY_RESOLUTION",
+    "TEMPLATE_GENERATOR_RESOLUTION",
+    "BUILD_PACKET",
+    "WORK_PACKETS",
+    "SANDBOX_BRANCH_EXECUTION",
+    "TEST",
+    "INDEPENDENT_VALIDATION",
+    "TARGETED_REPAIR",
+    "REVALIDATION",
+    "PREVIEW",
+    "APPROVAL",
+    "RELEASE",
+    "RECEIPT",
+    "RECONCILIATION"
+  ],
+  "protected_actions": [
+    "production_deploy",
+    "production_database_change",
+    "secret_change",
+    "dns_domain_change",
+    "payments_spend",
+    "permission_escalation",
+    "customer_message",
+    "public_publish",
+    "destructive_action",
+    "irreversible_migration"
+  ]
+}
