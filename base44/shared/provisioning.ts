@@ -3,6 +3,7 @@
 // Plain module: export helpers, no Deno.serve / no default export.
 // ═══════════════════════════════════════════════════════════════════
 import { secrets } from 'base44:runtime';
+import { viteAuthFiles, backendAuthFiles } from './provisioningAuth.ts';
 
 export function slugify(name: string): string {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 63);
@@ -145,25 +146,27 @@ export function generateViteFiles(projectName: string): Record<string, string> {
   const slug = slugify(projectName);
   return {
     'index.html': `<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8" />\n<meta name="viewport" content="width=device-width, initial-scale=1.0" />\n<title>${projectName}</title>\n</head>\n<body>\n<div id="root"></div>\n<script type="module" src="/src/main.jsx"></script>\n</body>\n</html>`,
-    'package.json': JSON.stringify({ name: slug, private: true, version: '0.0.1', type: 'module', scripts: { dev: 'vite', build: 'vite build', preview: 'vite preview' }, dependencies: { react: '^18.2.0', 'react-dom': '^18.2.0' }, devDependencies: { '@vitejs/plugin-react': '^4.2.0', vite: '^5.0.0', tailwindcss: '^3.4.0', postcss: '^8.4.0', autoprefixer: '^10.4.0' } }, null, 2),
+    'package.json': JSON.stringify({ name: slug, private: true, version: '0.0.1', type: 'module', scripts: { dev: 'vite', build: 'vite build', preview: 'vite preview' }, dependencies: { react: '^18.2.0', 'react-dom': '^18.2.0', 'react-router-dom': '^6.26.0', '@supabase/supabase-js': '^2.45.0' }, devDependencies: { '@vitejs/plugin-react': '^4.2.0', vite: '^5.0.0', tailwindcss: '^3.4.0', postcss: '^8.4.0', autoprefixer: '^10.4.0' } }, null, 2),
     'vite.config.js': `import { defineConfig } from 'vite'\nimport react from '@vitejs/plugin-react'\n\nexport default defineConfig({\n  plugins: [react()],\n})`,
     'tailwind.config.js': `/** @type {import('tailwindcss').Config} */\nexport default {\n  content: ['./index.html', './src/**/*.{js,jsx}'],\n  theme: { extend: { colors: { primary: '#0066ff' } } },\n  plugins: [],\n}`,
     'postcss.config.js': `export default {\n  plugins: { tailwindcss: {}, autoprefixer: {} },\n}`,
     'src/main.jsx': `import React from 'react'\nimport ReactDOM from 'react-dom/client'\nimport App from './App.jsx'\nimport './index.css'\n\nReactDOM.createRoot(document.getElementById('root')).render(\n  <React.StrictMode>\n    <App />\n  </React.StrictMode>,\n)`,
-    'src/App.jsx': `import React from 'react'\n\nexport default function App() {\n  return (\n    <div className="min-h-screen bg-gray-50 text-gray-900">\n      <header className="border-b border-gray-200 bg-white px-6 py-4">\n        <span className="text-lg font-bold text-primary">${projectName}</span>\n      </header>\n      <main className="mx-auto max-w-5xl px-6 py-16 text-center">\n        <h1 className="text-4xl font-bold">${projectName}</h1>\n        <p className="mt-4 text-lg text-gray-600">Provisioned by Strategic Minds AI</p>\n      </main>\n    </div>\n  )\n}`,
+    'src/App.jsx': `import React from 'react'\nimport { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'\nimport { AuthProvider } from './lib/AuthContext'\nimport ProtectedRoute from './components/ProtectedRoute'\nimport Login from './pages/Login'\n\nfunction Dashboard() {\n  return (\n    <div className="min-h-screen bg-gray-50 text-gray-900">\n      <header className="border-b border-gray-200 bg-white px-6 py-4">\n        <span className="text-lg font-bold text-blue-600">${projectName}</span>\n      </header>\n      <main className="mx-auto max-w-5xl px-6 py-16 text-center">\n        <h1 className="text-4xl font-bold">${projectName}</h1>\n        <p className="mt-4 text-lg text-gray-600">Provisioned by Strategic Minds AI — auth ready</p>\n      </main>\n    </div>\n  )\n}\n\nexport default function App() {\n  return (\n    <AuthProvider>\n      <Router>\n        <Routes>\n          <Route path="/login" element={<Login />} />\n          <Route element={<ProtectedRoute />}>\n            <Route path="/" element={<Dashboard />} />\n          </Route>\n          <Route path="*" element={<Navigate to="/" replace />} />\n        </Routes>\n      </Router>\n    </AuthProvider>\n  )\n}`,
     'src/index.css': `@tailwind base;\n@tailwind components;\n@tailwind utilities;\n`,
-    'README.md': `# ${projectName}\n\nProvisioned by Strategic Minds AI.\n`,
+    'README.md': `# ${projectName}\n\nProvisioned by Strategic Minds AI.\n\n## Auth\n\nThis app ships with Supabase auth wired in. Set these env vars in Vercel:\n\n- \`VITE_SUPABASE_URL\`\n- \`VITE_SUPABASE_ANON_KEY\`\n\nA \`profiles\` table with a \`role\` column (default 'user') is expected.\n`,
     '.gitignore': 'node_modules\ndist\n.env\n',
+    ...viteAuthFiles(),
   };
 }
 
 export function generateBackendFiles(projectName: string): Record<string, string> {
   const slug = slugify(projectName);
   return {
-    'package.json': JSON.stringify({ name: slug, private: true, version: '1.0.0', type: 'module', scripts: { start: 'node server.js', dev: 'node --watch server.js' }, dependencies: { express: '^4.19.0', cors: '^2.8.5' } }, null, 2),
-    'server.js': `import express from 'express';\nimport cors from 'cors';\n\nconst app = express();\napp.use(cors());\napp.use(express.json());\n\napp.get('/health', (req, res) => res.json({ ok: true, service: '${projectName}' }));\napp.get('/', (req, res) => res.json({ name: '${projectName}', status: 'running' }));\n\nconst port = process.env.PORT || 3000;\napp.listen(port, () => console.log(\`Server running on port \${port}\`));\n`,
-    'README.md': `# ${projectName} — Backend API\n\nProvisioned by Strategic Minds AI.\n\n## Deploy\nRailway auto-detects Node.js. The PORT env var is provided automatically.\n`,
+    'package.json': JSON.stringify({ name: slug, private: true, version: '1.0.0', type: 'module', scripts: { start: 'node server.js', dev: 'node --watch server.js' }, dependencies: { express: '^4.19.0', cors: '^2.8.5', '@supabase/supabase-js': '^2.45.0' } }, null, 2),
+    'server.js': `import express from 'express';\nimport cors from 'cors';\nimport { requireAuth, requireAdmin } from './src/lib/auth.js';\n\nconst app = express();\napp.use(cors());\napp.use(express.json());\n\n// Public routes\napp.get('/health', (req, res) => res.json({ ok: true, service: '${projectName}' }));\napp.get('/', (req, res) => res.json({ name: '${projectName}', status: 'running' }));\n\n// Protected routes — require a valid Supabase JWT\napp.get('/api/me', requireAuth, (req, res) => res.json({ user: req.user }));\napp.get('/api/admin', requireAdmin, (req, res) => res.json({ user: req.user, admin: true }));\n\nconst port = process.env.PORT || 3000;\napp.listen(port, () => console.log(\`Server running on port \${port}\`));\n`,
+    'README.md': `# ${projectName} — Backend API\n\nProvisioned by Strategic Minds AI.\n\n## Auth\n\nSupabase JWT verification middleware is included. Set these env vars in Railway:\n\n- \`SUPABASE_URL\`\n- \`SUPABASE_ANON_KEY\`\n\nRoutes:\n- \`GET /health\` — public\n- \`GET /api/me\` — requires valid Supabase JWT (Bearer token)\n- \`GET /api/admin\` — requires admin role in profiles table\n\n## Deploy\nRailway auto-detects Node.js. The PORT env var is provided automatically.\n`,
     '.gitignore': 'node_modules\n.env\n',
+    ...backendAuthFiles(),
   };
 }
 

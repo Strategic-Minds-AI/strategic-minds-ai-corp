@@ -1,11 +1,10 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
-import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import Home from '@/pages/home';
 import AgencyContact from '@/pages/AgencyContact';
@@ -70,21 +69,15 @@ const SystemProvisioner = lazy(() => import('@/pages/SystemProvisioner'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
-  const { isLoadingAuth, isLoadingPublicSettings, authError } = useAuth();
-  const location = useLocation();
-  const isAuthPage = ['/login', '/register', '/forgot-password', '/reset-password', '/oauth/consent'].includes(location.pathname.toLowerCase());
+  const { isLoadingAuth } = useAuth();
 
-  // Show loading spinner while checking app public settings or auth
-  if (isLoadingPublicSettings || isLoadingAuth) {
+  // Show nothing while the Supabase session is being restored
+  if (isLoadingAuth) {
     return null;
   }
 
-  // Keep the platform's access checks while allowing the authentication pages to render.
-  if (authError?.type === 'user_not_registered' && !isAuthPage) return <UserNotRegisteredError />;
-  if (authError?.type === 'auth_required' && !isAuthPage) return <Navigate to={`/login?returnTo=${encodeURIComponent(location.pathname + location.search)}`} replace />;
-  if (authError && !['auth_required', 'user_not_registered'].includes(authError.type)) return <p className="p-8 text-center" role="alert">Unable to load the site. Please refresh and try again.</p>;
-
-  // Render the main app
+  // Render the main app — public routes render for everyone,
+  // protected routes are gated by ProtectedRoute.
   return (
     <Suspense fallback={<div className="p-12 text-center" role="status">Loading…</div>}>
       <Routes>
