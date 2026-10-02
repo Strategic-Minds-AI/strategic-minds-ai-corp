@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PatternDefinition",
+  "type": "object",
+  "required": ["id", "name"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string" },
+    "family": { "type": "string" },
+    "tags": { "type": "array" },
+    "rules": { "type": "array" },
+    "guardrails": { "type": "array" }
+  }
+}

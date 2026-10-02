@@ -1,0 +1,30 @@
+{
+  "project_id": "example-desktop-saas",
+  "seed": "EXAMPLE-002",
+  "registry_version": "1.0.0",
+  "platforms": ["desktop-web", "pwa"],
+  "primary_goal": "manage operations",
+  "product_archetype": "saas workspace",
+  "selected_patterns": {
+    "desktop_layout": "D01",
+    "palette": "C19",
+    "logo": "L15",
+    "navigation": ["N04"],
+    "form": "F18",
+    "data_viz": ["DV01", "DV02"]
+  },
+  "tokens": {
+    "spacing_base": 8,
+    "grid": "12-column",
+    "content_mode": "placeholder-only"
+  },
+  "screens": [
+    { "name": "Overview", "content": ["[KPI_1]", "[RECENT_ACTIVITY]"] },
+    { "name": "Records", "content": ["[FILTERS]", "[DATA_TABLE]"] }
+  ],
+  "validation": {
+    "accessibility": "required",
+    "responsive": "required",
+    "state_coverage": "required"
+  }
+}

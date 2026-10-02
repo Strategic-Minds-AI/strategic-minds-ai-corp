@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UniversalFrontendBuildSpec",
+  "type": "object",
+  "required": [
+    "project_id",
+    "seed",
+    "platforms",
+    "selected_patterns",
+    "tokens",
+    "screens",
+    "validation"
+  ],
+  "properties": {
+    "project_id": { "type": "string" },
+    "seed": { "type": "string" },
+    "registry_version": { "type": "string" },
+    "platforms": {
+      "type": "array",
+      "items": { "enum": ["mobile-web", "ios-like", "android-like", "tablet", "desktop-web", "pwa"] }
+    },
+    "primary_goal": { "type": "string" },
+    "product_archetype": { "type": "string" },
+    "selected_patterns": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "array"] }
+    },
+    "tokens": { "type": "object" },
+    "screens": { "type": "array", "items": { "type": "object" } },
+    "content_policy": { "type": "string" },
+    "responsive_rules": { "type": "array" },
+    "motion_rules": { "type": "array" },
+    "backend_dependencies": { "type": "array" },
+    "analytics_events": { "type": "array" },
+    "validation": {
+      "type": "object",
+      "required": ["accessibility", "responsive", "state_coverage"]
+    },
+    "domain_pack": { "type": "string" },
+    "experience_recipe": { "type": "string" },
+    "platform_adapter": { "type": "string" },
+    "quality_profile": { "type": "string" },
+    "theme_modes": { "type": "array", "items": { "type": "string" } },
+    "token_standard": { "type": "string" },
+    "density_mode": { "type": "string" },
+    "surface_system": { "type": "string" },
+    "elevation_system": { "type": "string" },
+    "content_hierarchy": { "type": "string" },
+    "flow_graphs": { "type": "array" },
+    "frozen_baselines": { "type": "array" },
+    "registry_hash": { "type": "string" },
+    "build_spec_hash": { "type": "string" }
+  }
+}

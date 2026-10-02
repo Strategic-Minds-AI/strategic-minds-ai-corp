@@ -1,0 +1,31 @@
+{
+  "project_id": "example-mobile-local-discovery",
+  "seed": "EXAMPLE-001",
+  "registry_version": "1.0.0",
+  "platforms": ["mobile-web", "pwa"],
+  "primary_goal": "discover nearby services",
+  "product_archetype": "local discovery",
+  "selected_patterns": {
+    "mobile_layout": "M05",
+    "palette": "C01",
+    "logo": "L23",
+    "navigation": ["N01"],
+    "form": "F11",
+    "motion": ["MO04", "MO09"],
+    "responsive": ["R01", "R09"]
+  },
+  "tokens": {
+    "spacing_base": 8,
+    "radius": "soft",
+    "content_mode": "placeholder-only"
+  },
+  "screens": [
+    { "name": "Home / Map", "content": ["[BRAND_NAME]", "[SEARCH_PLACEHOLDER]", "[RESULT_CARD_1]"] },
+    { "name": "Result Detail", "content": ["[BUSINESS_TITLE]", "[PRIMARY_CTA]"] }
+  ],
+  "validation": {
+    "accessibility": "required",
+    "responsive": "required",
+    "state_coverage": "required"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UniversalFrontendQualityReceipt",
+  "type": "object",
+  "required": ["project_id", "registry_version", "build_spec_hash", "validator_id", "hard_gates", "scores", "result"],
+  "properties": {
+    "project_id": { "type": "string" },
+    "registry_version": { "type": "string" },
+    "build_spec_hash": { "type": "string" },
+    "validator_id": { "type": "string" },
+    "hard_gates": { "type": "object" },
+    "scores": { "type": "object" },
+    "deltas": { "type": "array", "items": { "type": "object" } },
+    "repair_round": { "type": "integer", "minimum": 0, "maximum": 5 },
+    "result": { "enum": ["PASS", "FAIL", "BLOCKED"] },
+    "evidence": { "type": "array" }
+  }
+}
