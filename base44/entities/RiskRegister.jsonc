@@ -1,0 +1,113 @@
+{
+  "name": "RiskRegister",
+  "type": "object",
+  "properties": {
+    "risk_id": {
+      "type": "string",
+      "description": "Deterministic risk ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "finding_id": {
+      "type": "string",
+      "description": "Reference to AuditFinding that identified this risk"
+    },
+    "title": {
+      "type": "string",
+      "description": "Risk title"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 3000,
+      "description": "Risk description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "security",
+        "financial",
+        "operational",
+        "compliance",
+        "reputation",
+        "technical",
+        "strategic"
+      ],
+      "description": "Risk category"
+    },
+    "likelihood": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "default": 3,
+      "description": "Likelihood score 1-5"
+    },
+    "impact": {
+      "type": "number",
+      "minimum": 1,
+      "maximum": 5,
+      "default": 3,
+      "description": "Impact score 1-5"
+    },
+    "risk_score": {
+      "type": "number",
+      "description": "likelihood \u00d7 impact"
+    },
+    "controls": {
+      "type": "string",
+      "maxLength": 3000,
+      "description": "JSON array of existing controls"
+    },
+    "mitigation_plan": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Plan to mitigate the risk"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "identified",
+        "assessed",
+        "mitigating",
+        "accepted",
+        "resolved"
+      ],
+      "default": "identified"
+    },
+    "owner_role": {
+      "type": "string",
+      "description": "Responsible role"
+    }
+  },
+  "required": [
+    "risk_id",
+    "title",
+    "category",
+    "likelihood",
+    "impact",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

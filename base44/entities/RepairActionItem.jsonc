@@ -1,0 +1,118 @@
+{
+  "name": "RepairActionItem",
+  "type": "object",
+  "properties": {
+    "action_id": {
+      "type": "string",
+      "description": "Deterministic action ID"
+    },
+    "plan_id": {
+      "type": "string",
+      "description": "Reference to RepairPlan"
+    },
+    "finding_id": {
+      "type": "string",
+      "description": "Reference to AuditFinding that triggered this action"
+    },
+    "title": {
+      "type": "string",
+      "description": "Action title"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 3000,
+      "description": "Detailed action description"
+    },
+    "phase": {
+      "type": "number",
+      "enum": [
+        30,
+        60,
+        90
+      ],
+      "default": 30,
+      "description": "Which phase this action belongs to"
+    },
+    "priority": {
+      "type": "number",
+      "default": 5,
+      "minimum": 1,
+      "maximum": 10,
+      "description": "Priority 1 (highest) to 10 (lowest)"
+    },
+    "owner_role": {
+      "type": "string",
+      "description": "Responsible role (e.g. IT Lead, Marketing Director)"
+    },
+    "effort_estimate": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "default": "medium"
+    },
+    "target_day": {
+      "type": "number",
+      "description": "Target completion day within the plan horizon"
+    },
+    "success_metric": {
+      "type": "string",
+      "description": "Measurable KPI with target value"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "blocked",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "validation_result": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Result of validating this action"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "action_id",
+    "plan_id",
+    "title",
+    "phase",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "name": "MonitoringEvent",
+  "type": "object",
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Deterministic event ID"
+    },
+    "rule_id": {
+      "type": "string",
+      "description": "Reference to MonitoringRule"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "alert",
+        "recovery",
+        "info",
+        "warning",
+        "critical"
+      ],
+      "description": "Event type"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "info",
+        "warning",
+        "critical"
+      ],
+      "default": "info"
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Event message"
+    },
+    "metric_value": {
+      "type": "string",
+      "description": "Observed metric value"
+    },
+    "threshold_value": {
+      "type": "string",
+      "description": "Threshold that was crossed"
+    },
+    "payload": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON event payload"
+    },
+    "acknowledged": {
+      "type": "boolean",
+      "default": false
+    },
+    "detected_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "event_id",
+    "rule_id",
+    "event_type"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

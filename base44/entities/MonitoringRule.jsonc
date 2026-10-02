@@ -1,0 +1,96 @@
+{
+  "name": "MonitoringRule",
+  "type": "object",
+  "properties": {
+    "rule_id": {
+      "type": "string",
+      "description": "Deterministic rule ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit being monitored"
+    },
+    "name": {
+      "type": "string",
+      "description": "Rule name"
+    },
+    "rule_type": {
+      "type": "string",
+      "enum": [
+        "uptime",
+        "ssl",
+        "seo_ranking",
+        "page_speed",
+        "security",
+        "revenue_metric",
+        "content_change",
+        "broken_link"
+      ],
+      "description": "Type of monitoring rule"
+    },
+    "configuration": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON rule configuration"
+    },
+    "check_url": {
+      "type": "string",
+      "description": "URL to monitor"
+    },
+    "threshold": {
+      "type": "string",
+      "description": "Alert threshold value"
+    },
+    "cadence_seconds": {
+      "type": "number",
+      "default": 300,
+      "description": "Check interval in seconds (default 5 min)"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "last_checked_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "last_status": {
+      "type": "string",
+      "enum": [
+        "pass",
+        "fail",
+        "warn",
+        "unknown"
+      ],
+      "default": "unknown"
+    }
+  },
+  "required": [
+    "rule_id",
+    "name",
+    "rule_type",
+    "active"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

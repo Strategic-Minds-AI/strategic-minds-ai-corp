@@ -1,0 +1,131 @@
+{
+  "name": "BusinessAudit",
+  "type": "object",
+  "properties": {
+    "audit_id": {
+      "type": "string",
+      "description": "Deterministic audit ID"
+    },
+    "company_name": {
+      "type": "string",
+      "description": "Company being audited"
+    },
+    "company_url": {
+      "type": "string",
+      "description": "Company website URL"
+    },
+    "audit_type": {
+      "type": "string",
+      "enum": [
+        "full",
+        "seo",
+        "security",
+        "revenue",
+        "technical",
+        "ux"
+      ],
+      "default": "full",
+      "description": "Type of audit performed"
+    },
+    "scope": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "JSON scope configuration"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "scoping",
+        "collecting",
+        "analyzing",
+        "reported",
+        "failed"
+      ],
+      "default": "scoping"
+    },
+    "health_score": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 100,
+      "description": "0-100 overall business health score"
+    },
+    "finding_count": {
+      "type": "number",
+      "default": 0
+    },
+    "critical_count": {
+      "type": "number",
+      "default": 0
+    },
+    "high_count": {
+      "type": "number",
+      "default": 0
+    },
+    "leak_count": {
+      "type": "number",
+      "default": 0
+    },
+    "annual_leak_min": {
+      "type": "number",
+      "default": 0,
+      "description": "Minimum estimated annual revenue leak in USD"
+    },
+    "annual_leak_max": {
+      "type": "number",
+      "default": 0,
+      "description": "Maximum estimated annual revenue leak in USD"
+    },
+    "evidence_summary": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "JSON summary of collected evidence"
+    },
+    "report_markdown": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "Generated audit report"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "duration_ms": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "audit_id",
+    "company_name",
+    "company_url",
+    "audit_type",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

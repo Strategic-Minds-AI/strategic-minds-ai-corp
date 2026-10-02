@@ -56,6 +56,12 @@ const FactoryTemplates = lazy(() => import('@/pages/FactoryTemplates'));
 const FactoryAdapters = lazy(() => import('@/pages/FactoryAdapters'));
 const FactoryProjects = lazy(() => import('@/pages/FactoryProjects'));
 const FactoryScanner = lazy(() => import('@/pages/FactoryScanner'));
+const DiagnosticConsole = lazy(() => import('@/pages/DiagnosticConsole'));
+const AuditDetail = lazy(() => import('@/pages/AuditDetail'));
+const RepairPlanConsole = lazy(() => import('@/pages/RepairPlanConsole'));
+const MonitoringConsole = lazy(() => import('@/pages/MonitoringConsole'));
+const RiskRegister = lazy(() => import('@/pages/RiskRegister'));
+const OutreachConsole = lazy(() => import('@/pages/OutreachConsole'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -128,6 +134,12 @@ const AuthenticatedApp = () => {
           <Route path="/factory/adapters" element={<FactoryAdapters />} />
           <Route path="/factory/projects" element={<FactoryProjects />} />
           <Route path="/factory/scanner" element={<FactoryScanner />} />
+          <Route path="/diagnostic" element={<DiagnosticConsole />} />
+          <Route path="/diagnostic/audit/:auditId" element={<AuditDetail />} />
+          <Route path="/diagnostic/repairs" element={<RepairPlanConsole />} />
+          <Route path="/diagnostic/monitoring" element={<MonitoringConsole />} />
+          <Route path="/diagnostic/risks" element={<RiskRegister />} />
+          <Route path="/diagnostic/outreach" element={<OutreachConsole />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>

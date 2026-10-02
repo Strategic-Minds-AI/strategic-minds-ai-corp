@@ -1,0 +1,111 @@
+{
+  "name": "OutreachDraft",
+  "type": "object",
+  "properties": {
+    "draft_id": {
+      "type": "string",
+      "description": "Deterministic draft ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "company_name": {
+      "type": "string",
+      "description": "Target company name"
+    },
+    "company_url": {
+      "type": "string",
+      "description": "Target company URL"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Contact name if known"
+    },
+    "contact_email": {
+      "type": "string",
+      "description": "Contact email if known"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Email subject line"
+    },
+    "body": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "Email body \u2014 value-first, draft-only"
+    },
+    "evidence_refs": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON array of finding/evidence IDs referenced"
+    },
+    "value_summary": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Summary of value proposition to the prospect"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "pending_review",
+        "approved",
+        "rejected"
+      ],
+      "default": "draft"
+    },
+    "send_status": {
+      "type": "string",
+      "enum": [
+        "draft_only",
+        "approved_for_send",
+        "sent",
+        "failed"
+      ],
+      "default": "draft_only"
+    },
+    "approved_by": {
+      "type": "string",
+      "description": "User ID who approved"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sent_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "draft_id",
+    "company_name",
+    "subject",
+    "body",
+    "approval_status",
+    "send_status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "name": "RepairPlan",
+  "type": "object",
+  "properties": {
+    "plan_id": {
+      "type": "string",
+      "description": "Deterministic plan ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "title": {
+      "type": "string",
+      "description": "Plan title"
+    },
+    "horizon_days": {
+      "type": "number",
+      "default": 90,
+      "description": "Plan horizon in days (30, 60, or 90)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "approved",
+        "in_progress",
+        "completed",
+        "failed"
+      ],
+      "default": "draft"
+    },
+    "total_actions": {
+      "type": "number",
+      "default": 0
+    },
+    "completed_actions": {
+      "type": "number",
+      "default": 0
+    },
+    "progress_percentage": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 100
+    },
+    "estimated_revenue_recovery": {
+      "type": "number",
+      "default": 0,
+      "description": "Estimated annual $ recovery if plan executed"
+    },
+    "phase_30": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON array of 30-day action IDs"
+    },
+    "phase_60": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON array of 60-day action IDs"
+    },
+    "phase_90": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON array of 90-day action IDs"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "approved_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "plan_id",
+    "audit_id",
+    "title",
+    "horizon_days",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

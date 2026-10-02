@@ -1,0 +1,137 @@
+{
+  "name": "AuditFinding",
+  "type": "object",
+  "properties": {
+    "finding_id": {
+      "type": "string",
+      "description": "Deterministic finding ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "title": {
+      "type": "string",
+      "description": "Finding title"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "Detailed description of the failure"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "seo",
+        "security",
+        "performance",
+        "revenue",
+        "technical",
+        "ux",
+        "content",
+        "infrastructure",
+        "compliance",
+        "conversion"
+      ],
+      "description": "Finding category"
+    },
+    "severity": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium"
+    },
+    "evidence_state": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "supported_inference",
+        "needs_review"
+      ],
+      "default": "verified"
+    },
+    "confidence": {
+      "type": "number",
+      "default": 80,
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Confidence score 0-100"
+    },
+    "business_impact": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Description of business impact"
+    },
+    "recommended_repair": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Recommended fix"
+    },
+    "evidence_ref": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON array of evidence references"
+    },
+    "approval_status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "disputed",
+        "rejected"
+      ],
+      "default": "pending"
+    },
+    "annual_impact_min": {
+      "type": "number",
+      "default": 0,
+      "description": "Minimum annual $ impact"
+    },
+    "annual_impact_max": {
+      "type": "number",
+      "default": 0,
+      "description": "Maximum annual $ impact"
+    },
+    "metric_value": {
+      "type": "string",
+      "description": "Current measured value"
+    },
+    "metric_target": {
+      "type": "string",
+      "description": "Target value for repair"
+    }
+  },
+  "required": [
+    "finding_id",
+    "audit_id",
+    "title",
+    "category",
+    "severity"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
