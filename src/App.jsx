@@ -45,6 +45,16 @@ const DigitalDominance = lazy(() => import('@/pages/DigitalDominance'));
 const FrontendFactory = lazy(() => import('@/pages/FrontendFactory'));
 const FactoryOS = lazy(() => import('@/pages/FactoryOS'));
 const GeneratorStudio = lazy(() => import('@/pages/GeneratorStudio'));
+const FactoryRunConsole = lazy(() => import('@/pages/FactoryRunConsole'));
+const FactoryArtifacts = lazy(() => import('@/pages/FactoryArtifacts'));
+const FactoryValidation = lazy(() => import('@/pages/FactoryValidation'));
+const FactoryRepairs = lazy(() => import('@/pages/FactoryRepairs'));
+const FactoryApprovals = lazy(() => import('@/pages/FactoryApprovals'));
+const FactoryProvisioning = lazy(() => import('@/pages/FactoryProvisioning'));
+const FactoryConsulting = lazy(() => import('@/pages/FactoryConsulting'));
+const FactoryTemplates = lazy(() => import('@/pages/FactoryTemplates'));
+const FactoryAdapters = lazy(() => import('@/pages/FactoryAdapters'));
+const FactoryProjects = lazy(() => import('@/pages/FactoryProjects'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -106,6 +116,16 @@ const AuthenticatedApp = () => {
           <Route path="/frontend-factory" element={<FrontendFactory />} />
           <Route path="/factory" element={<FactoryOS />} />
           <Route path="/factory/studio" element={<GeneratorStudio />} />
+          <Route path="/factory/runs" element={<FactoryRunConsole />} />
+          <Route path="/factory/artifacts" element={<FactoryArtifacts />} />
+          <Route path="/factory/validation" element={<FactoryValidation />} />
+          <Route path="/factory/repairs" element={<FactoryRepairs />} />
+          <Route path="/factory/approvals" element={<FactoryApprovals />} />
+          <Route path="/factory/provisioning" element={<FactoryProvisioning />} />
+          <Route path="/factory/consulting" element={<FactoryConsulting />} />
+          <Route path="/factory/templates" element={<FactoryTemplates />} />
+          <Route path="/factory/adapters" element={<FactoryAdapters />} />
+          <Route path="/factory/projects" element={<FactoryProjects />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>
