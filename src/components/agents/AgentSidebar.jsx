@@ -82,9 +82,9 @@ export default function AgentSidebar({ selectedAgents, onToggleAgent, onClearSel
 
   return <>
     {collapsed && <button type="button" aria-label="Expand sidebar" title="Expand sidebar" onClick={() => onCollapse(false)} className="absolute left-4 top-4 z-20 hidden rounded-lg p-2 text-foreground hover:bg-muted md:block"><PanelLeftOpen size={20}/></button>}
-    <button aria-label="Open sidebar" type="button" onClick={() => setOpen(true)} className="absolute left-4 top-4 z-10 rounded-lg p-2 text-foreground hover:bg-consoleAccent hover:text-primary-foreground md:hidden"><Menu size={22}/></button>
-    {open && <button type="button" aria-label="Close sidebar" onClick={() => setOpen(false)} className="fixed inset-0 z-30 bg-foreground/30 md:hidden"/>}
-    <aside aria-label="Super Agents" className={`absolute inset-y-0 left-0 z-40 flex w-[270px] flex-col border-r border-border bg-background p-3 transition-transform md:relative md:shrink-0 md:translate-x-0 md:transition-[width,padding] ${collapsed ? 'md:w-0 md:overflow-hidden md:border-0 md:p-0' : ''} ${open ? 'translate-x-0' : '-translate-x-full'}`}>
+    <button aria-label={open ? "Close sidebar" : "Open sidebar"} type="button" onClick={() => setOpen(value => !value)} className="absolute left-4 top-4 z-50 rounded-lg p-2 text-foreground hover:bg-consoleAccent hover:text-primary-foreground md:hidden">{open ? <X size={22}/> : <Menu size={22}/>}</button>
+    {open && <button type="button" aria-label="Close sidebar" onClick={() => setOpen(false)} className="fixed inset-0 top-14 z-30 bg-foreground/30 md:hidden"/>}
+    <aside aria-label="Super Agents" className={`absolute top-14 left-0 z-40 flex max-h-[calc(100%-3.5rem)] w-full flex-col overflow-y-auto border-b border-border bg-background p-3 shadow-lg transition-transform duration-300 ease-out md:inset-y-0 md:top-0 md:max-h-none md:w-[270px] md:overflow-visible md:border-0 md:border-r md:border-border md:shadow-none md:transition-[width,padding] md:relative md:shrink-0 md:translate-y-0 ${collapsed ? 'md:w-0 md:overflow-hidden md:border-0 md:p-0' : ''} ${open ? 'translate-y-0' : '-translate-y-[calc(100%+3.5rem)] md:translate-y-0'}`}>
       <div className="flex items-center justify-between px-2 pb-3 pt-1">
         <Link to="/" className="flex items-center gap-2 text-sm font-semibold text-foreground hover:text-primary">
           <ArrowLeft size={16} /> Strategic Minds AI
