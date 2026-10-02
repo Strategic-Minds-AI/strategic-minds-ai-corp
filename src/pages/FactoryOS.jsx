@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
-import { ArrowLeft, Boxes, Cpu, FileCode, CheckCircle, XCircle, Loader2, Plus, Layers, Workflow, Package, Shield, Wrench, Cloud, FolderKanban, Settings, Activity } from 'lucide-react';
+import { ArrowLeft, Boxes, Cpu, FileCode, CheckCircle, XCircle, Loader2, Plus, Layers, Workflow, Package, Shield, Wrench, Cloud, FolderKanban, Settings, Activity, ShieldCheck } from 'lucide-react';
 import { REGISTRY_VERSION, ALL_GENERATOR_TYPES, GENERATOR_CATEGORIES, countGeneratorTypes, countProvisioningTemplates, countAIConsultingTemplates } from '@/lib/universalFactory/registry';
 
 export default function FactoryOS() {
@@ -43,6 +43,7 @@ export default function FactoryOS() {
     { path: '/factory/templates', label: 'Template Library', icon: FileCode, desc: 'Versioned template packs' },
     { path: '/factory/adapters', label: 'Adapter Library', icon: Boxes, desc: 'Extensible adapter system' },
     { path: '/factory/projects', label: 'Projects', icon: FolderKanban, desc: 'Factory project intake' },
+    { path: '/factory/scanner', label: 'No-Stub Scanner', icon: ShieldCheck, desc: 'Completeness audit & stub detection' },
     { path: '/frontend-factory', label: 'Frontend Factory', icon: Layers, desc: 'UFF v2 — 740 patterns' },
   ];
 
