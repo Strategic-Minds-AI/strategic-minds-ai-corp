@@ -8,6 +8,10 @@ import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
 import GoogleIcon from "@/components/GoogleIcon";
 import { safeReturnTo } from "@/lib/authReturnTo";
+import {
+  isSupabaseAuthConfigured,
+  signInWithGoogle,
+} from "@/lib/supabaseAuthClient";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -29,8 +33,19 @@ export default function Login() {
     }
   };
 
-  const handleGoogle = () => {
-    base44.auth.loginWithProvider("google", safeReturnTo());
+  const handleGoogle = async () => {
+    setError("");
+    setLoading(true);
+    try {
+      if (isSupabaseAuthConfigured) {
+        await signInWithGoogle(safeReturnTo());
+        return;
+      }
+      base44.auth.loginWithProvider("google", safeReturnTo());
+    } catch (err) {
+      setError(err.message || "Google sign-in failed");
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,8 +66,13 @@ export default function Login() {
         variant="outline"
         className="w-full h-12 text-sm font-medium mb-6"
         onClick={handleGoogle}
+        disabled={loading}
       >
-        <GoogleIcon className="w-5 h-5 mr-2" />
+        {loading ? (
+          <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+        ) : (
+          <GoogleIcon className="w-5 h-5 mr-2" />
+        )}
         Continue with Google
       </Button>
 
