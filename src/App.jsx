@@ -55,6 +55,7 @@ const FactoryConsulting = lazy(() => import('@/pages/FactoryConsulting'));
 const FactoryTemplates = lazy(() => import('@/pages/FactoryTemplates'));
 const FactoryAdapters = lazy(() => import('@/pages/FactoryAdapters'));
 const FactoryProjects = lazy(() => import('@/pages/FactoryProjects'));
+const FactoryScanner = lazy(() => import('@/pages/FactoryScanner'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -126,6 +127,7 @@ const AuthenticatedApp = () => {
           <Route path="/factory/templates" element={<FactoryTemplates />} />
           <Route path="/factory/adapters" element={<FactoryAdapters />} />
           <Route path="/factory/projects" element={<FactoryProjects />} />
+          <Route path="/factory/scanner" element={<FactoryScanner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>
