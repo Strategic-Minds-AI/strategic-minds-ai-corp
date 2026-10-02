@@ -5,6 +5,7 @@
 
 import { getSupabaseUser } from "../../shared/supabaseAuth.ts";
 import { callAIGateway } from "../../shared/aiGateway.ts";
+import { deployToSandbox, provisionGeneratorOutput } from "../../shared/generatorDeployment.ts";
 
 // ─── Text rendering (Handlebars-like) ───
 function resolvePath(obj, path) {
@@ -220,6 +221,48 @@ async function executeNode(node, ctx) {
       }
     }
 
+    case "deploy_to_sandbox": {
+      try {
+        const base44 = (await import("npm:@base44/sdk@0.8.52")).createClientFromRequest(req);
+        const result = await deployToSandbox(base44, {
+          status: "passed",
+          generator_id: def.id,
+          run_id: run_id || null,
+          output,
+          artifacts,
+        }, {
+          sandbox_id: cfg.sandbox_id,
+          test_command: cfg.test_command,
+          description: cfg.description || `Generator ${generator_id} sandbox test`,
+        });
+        return { status: "passed", output: { sandbox_task_id: result.task_id, sandbox_status: result.status } };
+      } catch (e) {
+        return { status: "failed", error: { code: "SANDBOX_DEPLOY_ERROR", message: e.message } };
+      }
+    }
+
+    case "provision": {
+      try {
+        const base44 = (await import("npm:@base44/sdk@0.8.52")).createClientFromRequest(req);
+        const result = await provisionGeneratorOutput(base44, {
+          status: "passed",
+          generator_id: def.id,
+          run_id: run_id || null,
+          output,
+          artifacts,
+        }, {
+          project_name: cfg.project_name || output.project_name || `gen-${generator_id}`,
+          stack_type: cfg.stack_type || "vite_app",
+          domain: cfg.domain || output.domain,
+          env_vars: cfg.env_vars || output.env_vars,
+          client_id: cfg.client_id || output.client_id,
+        });
+        return { status: "passed", output: { provisioning_plan_id: result.plan_id, provisioning_status: result.status } };
+      } catch (e) {
+        return { status: "failed", error: { code: "PROVISION_ERROR", message: e.message } };
+      }
+    }
+
     default:
       return { status: "failed", error: { code: "UNKNOWN_NODE_TYPE", type: node.type } };
   }
@@ -238,6 +281,46 @@ export default async function(req: Request): Promise<Response> {
 
   const { generator_id, input = {}, run_id, action = "execute" } = body;
   if (!generator_id) return Response.json({ error: "generator_id is required" }, { status: 400 });
+
+  // ── Deploy action: deploy a completed run's artifacts to sandbox or production ──
+  if (action === "deploy_sandbox" || action === "deploy_production") {
+    if (!run_id) return Response.json({ error: "run_id is required for deploy actions" }, { status: 400 });
+    const runRes = await fetch(`${supabaseUrl}/rest/v1/generator_runs?id=eq.${encodeURIComponent(run_id)}&limit=1`, {
+      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
+    });
+    if (!runRes.ok) return Response.json({ error: "Failed to load run" }, { status: 502 });
+    const runs = await runRes.json();
+    const run = Array.isArray(runs) ? runs[0] : null;
+    if (!run) return Response.json({ error: "Run not found" }, { status: 404 });
+
+    const runArtifacts = (run.artifacts_json ? JSON.parse(run.artifacts_json) : []).map((a: any) => ({ ...a }));
+    const runOutput = run.output_json ? JSON.parse(run.output_json) : {};
+    const base44 = (await import("npm:@base44/sdk@0.8.52")).createClientFromRequest(req);
+
+    if (action === "deploy_sandbox") {
+      try {
+        const result = await deployToSandbox(base44, {
+          status: "passed", generator_id, run_id, output: runOutput, artifacts: runArtifacts,
+        }, { sandbox_id: body.sandbox_id, test_command: body.test_command });
+        return Response.json({ status: "deployed", ...result });
+      } catch (e) {
+        return Response.json({ error: e.message }, { status: 500 });
+      }
+    }
+
+    try {
+      const result = await provisionGeneratorOutput(base44, {
+        status: "passed", generator_id, run_id, output: runOutput, artifacts: runArtifacts,
+      }, {
+        project_name: body.project_name || `gen-${generator_id}`,
+        stack_type: body.stack_type || "vite_app",
+        domain: body.domain, env_vars: body.env_vars, client_id: body.client_id,
+      });
+      return Response.json({ status: "provisioned", ...result });
+    } catch (e) {
+      return Response.json({ error: e.message }, { status: 500 });
+    }
+  }
 
   // Load generator definition via Supabase REST API
   const supabaseUrl = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
