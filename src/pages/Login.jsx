@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { LogIn, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
-import GoogleSignInButton from "@/components/GoogleSignInButton";
+import GoogleAuthAlternative from '@/components/auth/GoogleAuthAlternative';
+import authErrorMessage from '@/components/auth/authErrorMessage';
 import { safeReturnTo } from "@/lib/authReturnTo";
 
 export default function Login() {
@@ -16,7 +17,7 @@ export default function Login() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { isAuthenticated, isLoadingAuth, authError } = useAuth();
-  const signInError = error || authError?.message;
+  const signInError = error || (authError ? authErrorMessage(authError) : '');
   useEffect(() => {
     if (isAuthenticated && !isLoadingAuth) window.location.replace(safeReturnTo());
   }, [isAuthenticated, isLoadingAuth]);
@@ -29,7 +30,7 @@ export default function Login() {
       await signIn(email, password);
       window.location.href = safeReturnTo();
     } catch (err) {
-      setError(err.message || "Invalid email or password");
+      setError(authErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -43,23 +44,12 @@ export default function Login() {
       footer={
         <>
           Don't have an account?{" "}
-          <Link to={`/register?returnTo=${encodeURIComponent(safeReturnTo())}`} className="text-primary font-medium hover:underline">
+          <a href={`/register?returnTo=${encodeURIComponent(safeReturnTo())}`} className="inline-flex min-h-11 items-center text-primary font-medium hover:underline">
             Create one
-          </Link>
+          </a>
         </>
       }
     >
-      <GoogleSignInButton disabled={loading} onError={setError} />
-
-      <div className="relative mb-6">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-3 text-muted-foreground">or</span>
-        </div>
-      </div>
-
       {signInError && (
         <div role="alert" className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
           {signInError}
@@ -116,6 +106,7 @@ export default function Login() {
           )}
         </Button>
       </form>
+      <GoogleAuthAlternative disabled={loading} onError={failure => setError(failure ? authErrorMessage(failure) : '')}/>
     </AuthLayout>
   );
 }

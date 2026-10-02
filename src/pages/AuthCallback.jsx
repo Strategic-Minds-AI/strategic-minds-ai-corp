@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import AuthRecoveryActions from '@/components/auth/AuthRecoveryActions';
+import authErrorMessage from '@/components/auth/authErrorMessage';
 import { Loader2, LogIn } from 'lucide-react';
 import AuthLayout from '@/components/AuthLayout';
 import { useAuth } from '@/lib/AuthContext';
@@ -19,10 +20,10 @@ export default function AuthCallback() {
         if (providerError) throw new Error(providerError);
         if (authError) throw new Error(authError.message);
         const session = await getSession();
-        if (!session) throw new Error('Google sign-in did not return a session. Please try signing in again.');
+        if (!session) throw new Error('No sign-in session was returned. Create an account or sign in with email and password.');
         if (active) window.location.replace(safeReturnTo());
       } catch (failure) {
-        if (active) setError(failure.message || 'Sign-in could not finish. Please try again.');
+        if (active) setError(authErrorMessage(failure));
       }
     })();
     return () => { active = false; };
@@ -30,9 +31,9 @@ export default function AuthCallback() {
   return <AuthLayout icon={LogIn} title={error ? 'Sign-in could not finish' : 'Completing sign-in'} subtitle={error ? 'Your portal has not been opened.' : 'Saving your session and opening your portal.'}>
     {error ? <>
       <p role="alert" className="text-sm text-destructive">{error}</p>
-      <Link className="agency-button mt-6 w-full" to={`/login?returnTo=${encodeURIComponent(safeReturnTo())}`}>Try signing in again</Link>
+      <AuthRecoveryActions/>
     </> : <div role="status" className="flex items-center justify-center gap-3 text-sm text-foreground">
-      <Loader2 className="h-5 w-5 animate-spin motion-reduce:animate-none" aria-hidden="true" /> Completing Google sign-in…
+      <Loader2 className="h-5 w-5 animate-spin motion-reduce:animate-none" aria-hidden="true" /> Completing sign-in…
     </div>}
   </AuthLayout>;
 }

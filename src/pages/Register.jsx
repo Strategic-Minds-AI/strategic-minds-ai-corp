@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { UserPlus, Mail, Lock, Loader2 } from "lucide-react";
 import AuthLayout from "@/components/AuthLayout";
-import GoogleSignInButton from "@/components/GoogleSignInButton";
+import GoogleAuthAlternative from '@/components/auth/GoogleAuthAlternative';
+import authErrorMessage from '@/components/auth/authErrorMessage';
 import { safeReturnTo } from "@/lib/authReturnTo";
 
 export default function Register() {
@@ -24,6 +25,10 @@ export default function Register() {
       setError("Passwords do not match");
       return;
     }
+    if (password.length < 6) {
+      setError('Use a password with at least 6 characters.');
+      return;
+    }
     setLoading(true);
     try {
       const data = await signUp(email, password);
@@ -35,7 +40,7 @@ export default function Register() {
         setEmailSent(true);
       }
     } catch (err) {
-      setError(err.message || "Registration failed");
+      setError(authErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -64,27 +69,16 @@ export default function Register() {
     <AuthLayout
       icon={UserPlus}
       title="Create your account"
-      subtitle="Sign up to get started"
+      subtitle="Create an account using your email and password. Google is optional."
       footer={
         <>
           Already have an account?{" "}
-          <Link to={`/login?returnTo=${encodeURIComponent(safeReturnTo())}`} className="text-primary font-medium hover:underline">
+          <a href={`/login?returnTo=${encodeURIComponent(safeReturnTo())}`} className="inline-flex min-h-11 items-center text-primary font-medium hover:underline">
             Log in
-          </Link>
+          </a>
         </>
       }
     >
-      <GoogleSignInButton disabled={loading} onError={setError} />
-
-      <div className="relative mb-6">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-card px-3 text-muted-foreground">or</span>
-        </div>
-      </div>
-
       {error && (
         <div role="alert" className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
           {error}
@@ -116,6 +110,8 @@ export default function Register() {
             <Input
               id="password"
               type="password"
+              minLength={6}
+              aria-describedby="signup-password-help"
               autoComplete="new-password"
               placeholder="••••••••"
               value={password}
@@ -125,6 +121,7 @@ export default function Register() {
             />
           </div>
         </div>
+        <p id="signup-password-help" className="mb-0 text-xs text-muted-foreground">Use at least 6 characters.</p>
         <div className="space-y-2">
           <Label htmlFor="confirm">Confirm Password</Label>
           <div className="relative">
@@ -152,6 +149,7 @@ export default function Register() {
           )}
         </Button>
       </form>
+      <GoogleAuthAlternative disabled={loading} onError={failure => setError(failure ? authErrorMessage(failure) : '')}/>
     </AuthLayout>
   );
 }

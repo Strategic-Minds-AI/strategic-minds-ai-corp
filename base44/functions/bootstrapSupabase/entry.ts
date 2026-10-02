@@ -1,10 +1,11 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { secrets } from 'base44:runtime';
+import { checkGoogleAuthCredentials } from '../../shared/googleAuthCheck.ts';
 
 // ──────────────────────────────────────────────────────────────
-// bootstrapSupabase — accepts a Supabase Personal Access Token
-// (PAT) from the admin and uses it to configure the entire auth
-// system end-to-end:
+// bootstrapSupabase — uses the authorized Supabase connection to repair auth.
+// A legacy admin-supplied PAT is optional. dryRun validates without writing.
+// Invalid Google credentials are never pushed into the project.
 //
 //   1. Resolve the project ref from the configured SUPABASE_URL.
 //   2. Push Google OAuth credentials (from app secrets) into the
@@ -15,8 +16,7 @@ import { secrets } from 'base44:runtime';
 //   4. Create the public.profiles table + auto-create trigger so
 //      every new Supabase Auth user gets a role row automatically.
 //
-// The PAT is provided by the admin in the request body — it is NOT
-// stored. Google OAuth credentials come from app secrets.
+// Connection tokens stay server-side. Google credentials come from app secrets.
 // ──────────────────────────────────────────────────────────────
 
 const PUBLISHED_ORIGINS = [
@@ -48,15 +48,22 @@ create trigger set_updated_at
   before update on public.profiles
   for each row execute function public.set_updated_at();
 
-create or replace function public.handle_new_user()
-returns trigger as $$
+-- Preserve an existing signup trigger function, including approved owner roles.
+do $bootstrap$
 begin
-  insert into public.profiles (id, email, full_name, role)
-  values (new.id, new.email, coalesce(new.raw_user_meta_data->>'full_name', ''), 'user')
-  on conflict (id) do nothing;
-  return new;
-end;
-$$ language plpgsql security definer;
+  if to_regprocedure('public.handle_new_user()') is null then
+    execute $definition$
+      create function public.handle_new_user() returns trigger
+      language plpgsql security definer set search_path = public, pg_temp as $function$
+      begin
+        insert into public.profiles (id, email, full_name, role)
+        values (new.id, new.email, coalesce(new.raw_user_meta_data->>'full_name', ''), 'user')
+        on conflict (id) do nothing;
+        return new;
+      end; $function$;
+    $definition$;
+  end if;
+end; $bootstrap$;
 
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
@@ -87,8 +94,8 @@ export default async function(req: Request): Promise<Response> {
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden — admin only' }, { status: 403 });
 
     const body = await req.json().catch(() => ({}));
-    const pat = (body.supabaseAccessToken || '').trim();
-    if (!pat) return Response.json({ error: 'Missing Supabase access token' }, { status: 400 });
+    const pat = typeof body.supabaseAccessToken === 'string' ? body.supabaseAccessToken.trim() : '';
+    const accessToken = pat || (await base44.asServiceRole.connectors.getConnection('supabase')).accessToken;
 
     const supabaseUrl = secrets.get('SUPABASE_URL');
     const googleClientId = secrets.get('GOOGLE_OAUTH_CLIENT_ID');
@@ -97,7 +104,7 @@ export default async function(req: Request): Promise<Response> {
     if (!supabaseUrl) return Response.json({ error: 'SUPABASE_URL is not set in app secrets' }, { status: 500 });
 
     const managementHeaders: Record<string, string> = {
-      Authorization: `Bearer ${pat}`,
+      Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json',
     };
 
@@ -118,7 +125,12 @@ export default async function(req: Request): Promise<Response> {
       return Response.json({ steps, error: 'Could not resolve the Supabase project' }, { status: 500 });
     }
 
-    // ── Step 2: Push Google OAuth credentials + redirect URLs ──
+    const googleCheck = await checkGoogleAuthCredentials(googleClientId, googleClientSecret, projectRef);
+    steps.push({ step: 'Verify Google accepts credentials', status: googleCheck.state === 'ready' ? 'success' : 'failed', detail: googleCheck.detail });
+    if (body.dryRun === true) return Response.json({ steps, complete: googleCheck.state === 'ready', google_ready: googleCheck.state === 'ready' });
+    if (googleCheck.state !== 'ready') return Response.json({ steps, code: 'NOT_CONFIGURED', error: googleCheck.detail }, { status: 400 });
+
+    // ── Step 2: Push verified Google OAuth credentials + redirect URLs ──
     try {
       const authConfigBody: Record<string, unknown> = {
         site_url: PUBLISHED_ORIGINS[0],
@@ -163,35 +175,6 @@ export default async function(req: Request): Promise<Response> {
       steps.push({ step: 'Create profiles table + auto-trigger', status: 'success', detail: 'profiles table and handle_new_user trigger ready' });
     } catch (e) {
       steps.push({ step: 'Create profiles table + auto-trigger', status: 'failed', detail: e.message });
-    }
-
-    // ── Step 4: Verify Google credentials are accepted by Google ──
-    if (googleClientId && googleClientSecret) {
-      try {
-        const googleRes = await fetch('https://oauth2.googleapis.com/token', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({
-            client_id: googleClientId.split(',')[0].trim(),
-            client_secret: googleClientSecret,
-            redirect_uri: `https://${projectRef}.supabase.co/auth/v1/callback`,
-            grant_type: 'authorization_code',
-            code: `diagnostic-invalid-code-${crypto.randomUUID()}`,
-          }),
-        });
-        const googleResult = await googleRes.json();
-        if (googleRes.status === 400 && googleResult.error === 'invalid_grant') {
-          steps.push({ step: 'Verify Google accepts credentials', status: 'success', detail: 'Google recognizes the client ID + secret' });
-        } else if (googleRes.status === 401 && googleResult.error === 'invalid_client') {
-          steps.push({ step: 'Verify Google accepts credentials', status: 'failed', detail: 'Google rejected the client ID or secret — check they match the Google Cloud Console' });
-        } else {
-          steps.push({ step: 'Verify Google accepts credentials', status: 'warning', detail: `Unexpected response: ${googleResult.error || googleRes.status}` });
-        }
-      } catch (e) {
-        steps.push({ step: 'Verify Google accepts credentials', status: 'warning', detail: e.message });
-      }
-    } else {
-      steps.push({ step: 'Verify Google accepts credentials', status: 'skipped', detail: 'GOOGLE_OAUTH_CLIENT_ID or GOOGLE_OAUTH_CLIENT_SECRET not set in app secrets' });
     }
 
     const allSuccess = steps.every((s) => s.status === 'success' || s.status === 'skipped');

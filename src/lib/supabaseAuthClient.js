@@ -38,7 +38,12 @@ async function initAuth() {
     return _client;
   })();
 
-  return _initPromise;
+  try {
+    return await _initPromise;
+  } catch (error) {
+    _initPromise = null;
+    throw error;
+  }
 }
 
 export async function getSupabaseAuth() {
@@ -48,7 +53,7 @@ export async function getSupabaseAuth() {
 export async function signUp(email, password, fullName) {
   const supabaseAuth = await initAuth();
   const { data, error } = await supabaseAuth.auth.signUp({
-    email,
+    email: email.trim(),
     password,
     options: { data: { full_name: fullName || '' }, emailRedirectTo: resolveOAuthRedirect() },
   });
@@ -60,7 +65,7 @@ export async function signUp(email, password, fullName) {
 
 export async function signIn(email, password) {
   const supabaseAuth = await initAuth();
-  const { data, error } = await supabaseAuth.auth.signInWithPassword({ email, password });
+  const { data, error } = await supabaseAuth.auth.signInWithPassword({ email: email.trim(), password });
   if (error) throw error;
   return data;
 }
