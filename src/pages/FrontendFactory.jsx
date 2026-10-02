@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { compileFrontend, scoreAllPatterns } from '@/lib/frontendFactory/compiler';
 import { registry, REGISTRY_VERSION, countPatterns, getCategoryNames } from '@/lib/frontendFactory/registry';
-import { ArrowLeft, Boxes, Cpu, Eye, Rocket, Save, Trash2, Loader2, CheckCircle, XCircle, Layers, Palette, Type, Layout, Smartphone, Monitor, Zap, Download } from 'lucide-react';
+import { ArrowLeft, Boxes, Cpu, Eye, Rocket, Save, Trash2, Loader2, CheckCircle, XCircle, Layers, Palette, Type, Layout, Smartphone, Monitor, Zap, Download, FileCode, Cloud } from 'lucide-react';
+import TemplateIngestion from '@/components/factory/TemplateIngestion';
+import ProvisioningPanel from '@/components/factory/ProvisioningPanel';
 
 const PLATFORMS = [
   { value: 'desktop-web', label: 'Desktop Web', icon: Monitor },
@@ -39,6 +41,7 @@ export default function FrontendFactory() {
   const [activeTab, setActiveTab] = useState('builder');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
+  const [selectedTemplateId, setSelectedTemplateId] = useState(null);
 
   const patternCount = useMemo(() => countPatterns(), []);
   const categories = useMemo(() => getCategoryNames(), []);
@@ -135,6 +138,8 @@ export default function FrontendFactory() {
         <div className="ml-auto flex gap-1">
           <button onClick={() => setActiveTab('builder')} className={`rounded-lg px-3 py-1.5 text-xs font-medium ${activeTab === 'builder' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted'}`}>Builder</button>
           <button onClick={() => setActiveTab('patterns')} className={`rounded-lg px-3 py-1.5 text-xs font-medium ${activeTab === 'patterns' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted'}`}>Patterns</button>
+          <button onClick={() => setActiveTab('templates')} className={`rounded-lg px-3 py-1.5 text-xs font-medium ${activeTab === 'templates' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted'}`}>Templates</button>
+          <button onClick={() => setActiveTab('provision')} className={`rounded-lg px-3 py-1.5 text-xs font-medium ${activeTab === 'provision' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted'}`}>Provision</button>
           <button onClick={() => setActiveTab('saved')} className={`rounded-lg px-3 py-1.5 text-xs font-medium ${activeTab === 'saved' ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted'}`}>Saved ({savedSpecs.length})</button>
         </div>
       </header>
@@ -340,6 +345,14 @@ export default function FrontendFactory() {
               ))
             )}
           </div>
+        )}
+
+        {activeTab === 'templates' && (
+          <TemplateIngestion />
+        )}
+
+        {activeTab === 'provision' && (
+          <ProvisioningPanel buildSpec={buildSpec} templateId={selectedTemplateId} />
         )}
       </div>
     </div>

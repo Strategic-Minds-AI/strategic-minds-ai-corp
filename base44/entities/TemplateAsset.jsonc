@@ -1,0 +1,111 @@
+{
+  "name": "TemplateAsset",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Template display name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-safe slug"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "html",
+        "url",
+        "jsx",
+        "text"
+      ],
+      "default": "html",
+      "description": "How the template was ingested"
+    },
+    "source_url": {
+      "type": "string",
+      "description": "Original URL if fetched from web"
+    },
+    "raw_content": {
+      "type": "string",
+      "maxLength": 50000,
+      "description": "Raw template HTML or JSX content"
+    },
+    "extracted_patterns": {
+      "type": "string",
+      "maxLength": 40000,
+      "description": "JSON of extracted UFF pattern entries"
+    },
+    "pattern_summary": {
+      "type": "string",
+      "description": "Human-readable summary of extracted patterns"
+    },
+    "pattern_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of UFF patterns extracted"
+    },
+    "color_palette": {
+      "type": "string",
+      "description": "JSON array of extracted hex colors"
+    },
+    "font_families": {
+      "type": "string",
+      "description": "JSON array of extracted font families"
+    },
+    "section_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of layout sections detected"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "extracted",
+        "active",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": [],
+      "description": "User-assigned tags for filtering"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "Optional preview image URL"
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "source_type",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

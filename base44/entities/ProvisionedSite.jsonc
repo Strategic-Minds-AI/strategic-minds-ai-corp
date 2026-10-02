@@ -1,0 +1,144 @@
+{
+  "name": "ProvisionedSite",
+  "type": "object",
+  "properties": {
+    "project_name": {
+      "type": "string",
+      "description": "Site project name"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL-safe slug used for repo and project names"
+    },
+    "template_id": {
+      "type": "string",
+      "description": "Reference to TemplateAsset if built from a template"
+    },
+    "build_spec_id": {
+      "type": "string",
+      "description": "Reference to SystemBuild if built from a UFF BuildSpec"
+    },
+    "site_type": {
+      "type": "string",
+      "enum": [
+        "static_html",
+        "vite_react",
+        "nextjs"
+      ],
+      "default": "static_html",
+      "description": "What kind of site was provisioned"
+    },
+    "github_repo": {
+      "type": "string",
+      "description": "Full repo name (owner/repo)"
+    },
+    "github_url": {
+      "type": "string",
+      "description": "GitHub repo URL"
+    },
+    "github_default_branch": {
+      "type": "string",
+      "default": "main",
+      "description": "Default branch name"
+    },
+    "vercel_project_id": {
+      "type": "string",
+      "description": "Vercel project ID"
+    },
+    "vercel_url": {
+      "type": "string",
+      "description": "Vercel dashboard URL"
+    },
+    "vercel_deployment_url": {
+      "type": "string",
+      "description": "Live deployment URL"
+    },
+    "needs_backend": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether a Supabase backend was provisioned"
+    },
+    "supabase_project_id": {
+      "type": "string",
+      "description": "Supabase project ref"
+    },
+    "supabase_url": {
+      "type": "string",
+      "description": "Supabase project URL"
+    },
+    "supabase_region": {
+      "type": "string",
+      "default": "us-east-1",
+      "description": "Supabase region"
+    },
+    "supabase_plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "pro"
+      ],
+      "default": "free",
+      "description": "Supabase plan tier"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "github_created",
+        "files_pushed",
+        "vercel_connected",
+        "supabase_created",
+        "deployed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "progress_step": {
+      "type": "string",
+      "description": "Human-readable current step"
+    },
+    "deployment_url": {
+      "type": "string",
+      "description": "Final live site URL"
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message if failed"
+    },
+    "provisioned_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "deployed_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "project_name",
+    "slug",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
