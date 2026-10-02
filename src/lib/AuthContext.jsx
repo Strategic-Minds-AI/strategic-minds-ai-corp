@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { supabaseAuth, getSession, getUser, signOut, onAuthStateChange } from '@/lib/supabaseAuthClient';
+import { getSession, getUser, signOut, onAuthStateChange } from '@/lib/supabaseAuthClient';
 
 // ──────────────────────────────────────────────────────────────
 // AuthContext — backed by Supabase Auth.
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       // Subscribe to Supabase auth state changes
-      const { data } = onAuthStateChange(async (event, session) => {
+      const { data } = await onAuthStateChange(async (event, session) => {
         if (!session || event === 'SIGNED_OUT') {
           setUser(null);
           setIsAuthenticated(false);

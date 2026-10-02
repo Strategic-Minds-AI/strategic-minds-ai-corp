@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { supabaseAuth, getSession, signOut } from "@/lib/supabaseAuthClient";
+import { getSession, signOut, updateUserPassword } from "@/lib/supabaseAuthClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,9 +35,7 @@ export default function ResetPassword() {
     }
     setLoading(true);
     try {
-      const { error: updateError } = await supabaseAuth.auth.updateUser({
-        password: newPassword,
-      });
+      const { error: updateError } = await updateUserPassword(newPassword);
       if (updateError) throw updateError;
       await signOut();
       window.location.href = "/login";

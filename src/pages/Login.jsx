@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { supabaseAuth, signIn } from "@/lib/supabaseAuthClient";
+import { signIn, signInWithGoogle } from "@/lib/supabaseAuthClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -30,10 +30,7 @@ export default function Login() {
   };
 
   const handleGoogle = () => {
-    supabaseAuth.auth.signInWithOAuth({
-      provider: "google",
-      options: { redirectTo: window.location.origin + safeReturnTo() },
-    });
+    signInWithGoogle(window.location.origin + safeReturnTo());
   };
 
   return (
