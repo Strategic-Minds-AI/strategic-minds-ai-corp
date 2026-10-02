@@ -28,6 +28,11 @@ export const AuthProvider = ({ children }) => {
       setIsLoadingAuth(true);
       try {
         if (initializationError) throw initializationError;
+        // Bridge the Supabase access token to the Base44 SDK so that
+        // base44.functions.invoke sends it in the Authorization header.
+        // Backend functions validate it via getSupabaseUser() instead of
+        // base44.auth.me(), which no longer recognizes Supabase sessions.
+        if (session?.access_token) base44.setToken(session.access_token);
         const u = session ? await getUser() : null;
         if (active && current === revision) {
           setUser(u);
@@ -52,6 +57,8 @@ export const AuthProvider = ({ children }) => {
         // Subscribe before restoration so the returned Google session is not missed.
         const { data } = await onAuthStateChange((event, session) => {
           if (event !== 'INITIAL_SESSION') {
+            // Keep the Base44 SDK token in sync with session refreshes.
+            if (session?.access_token) base44.setToken(session.access_token);
             setTimeout(() => { if (active) restore(session); }, 0);
           }
         });

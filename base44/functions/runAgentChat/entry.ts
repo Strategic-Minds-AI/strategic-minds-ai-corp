@@ -1,5 +1,6 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { callAIGateway } from '../../shared/aiGateway.ts';
+import { getSupabaseUser } from '../../shared/supabaseAuth.ts';
 import { buildSystemPrompt, AGENT_INSTRUCTIONS } from '../../shared/agentInstructions.ts';
 
 // Tool definitions (OpenAI format) — all agents get these tools
@@ -201,17 +202,17 @@ const TOOLS = [
   }
 ];
 
-async function executeTool(base44: any, name: string, args: any): Promise<string> {
+async function executeTool(db: any, name: string, args: any): Promise<string> {
   try {
     switch (name) {
       case 'list_tasks': {
         const query: any = {};
         if (args.status) query.status = args.status;
-        const res = await base44.entities.AgentTask.filter(query, { sort: '-created_date', limit: args.limit || 20, fields: ['agent_name', 'title', 'status', 'priority', 'task_type', 'domain'] });
+        const res = await db.entities.AgentTask.filter(query, { sort: '-created_date', limit: args.limit || 20, fields: ['agent_name', 'title', 'status', 'priority', 'task_type', 'domain'] });
         return JSON.stringify({ count: res.items.length, tasks: res.items });
       }
       case 'create_task': {
-        const task = await base44.entities.AgentTask.create({
+        const task = await db.entities.AgentTask.create({
           agent_name: args.agent_name,
           title: args.title,
           task_type: args.task_type,
@@ -224,15 +225,15 @@ async function executeTool(base44: any, name: string, args: any): Promise<string
         return JSON.stringify({ success: true, task_id: task.id, message: `Task created: ${args.title}` });
       }
       case 'list_domains': {
-        const res = await base44.entities.Domain.filter({}, { sort: '-created_date', limit: 50, fields: ['domain', 'status', 'health_score', 'sitemap_url', 'next_action'] });
+        const res = await db.entities.Domain.filter({}, { sort: '-created_date', limit: 50, fields: ['domain', 'status', 'health_score', 'sitemap_url', 'next_action'] });
         return JSON.stringify({ count: res.items.length, domains: res.items });
       }
       case 'list_system_builds': {
-        const res = await base44.entities.SystemBuild.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['title', 'build_type', 'status'] });
+        const res = await db.entities.SystemBuild.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['title', 'build_type', 'status'] });
         return JSON.stringify({ count: res.items.length, builds: res.items });
       }
       case 'create_system_build': {
-        const build = await base44.entities.SystemBuild.create({
+        const build = await db.entities.SystemBuild.create({
           title: args.title,
           build_type: args.build_type,
           what_to_build: args.what_to_build || '',
@@ -243,11 +244,11 @@ async function executeTool(base44: any, name: string, args: any): Promise<string
         return JSON.stringify({ success: true, build_id: build.id, message: `System build created: ${args.title}` });
       }
       case 'list_crm_contacts': {
-        const res = await base44.entities.CrmContact.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['name', 'email', 'status', 'phone'] });
+        const res = await db.entities.CrmContact.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['name', 'email', 'status', 'phone'] });
         return JSON.stringify({ count: res.items.length, contacts: res.items });
       }
       case 'send_sms': {
-        const fnRes = await base44.functions.invoke('executeAutonomousAction', {
+        const fnRes = await db.functions.invoke('executeAutonomousAction', {
           action: 'send_sms',
           to_number: args.to_number,
           body: args.body,
@@ -258,15 +259,15 @@ async function executeTool(base44: any, name: string, args: any): Promise<string
         return JSON.stringify({ success: true, message_sid: d.message_sid, conversation_id: d.conversation_id, message: `SMS sent to ${args.to_number}` });
       }
       case 'list_conversations': {
-        const res = await base44.entities.Conversation.filter({ status: { $in: ['active', 'idle'] } }, { sort: '-last_message_at', limit: args.limit || 20, fields: ['participant_identity', 'contact_name', 'last_message_preview', 'last_message_at', 'status', 'unread_count'] });
+        const res = await db.entities.Conversation.filter({ status: { $in: ['active', 'idle'] } }, { sort: '-last_message_at', limit: args.limit || 20, fields: ['participant_identity', 'contact_name', 'last_message_preview', 'last_message_at', 'status', 'unread_count'] });
         return JSON.stringify({ count: res.items.length, conversations: res.items });
       }
       case 'list_campaigns': {
-        const res = await base44.entities.Campaign.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['name', 'channel', 'status', 'sent_count', 'delivered_count', 'failed_count'] });
+        const res = await db.entities.Campaign.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['name', 'channel', 'status', 'sent_count', 'delivered_count', 'failed_count'] });
         return JSON.stringify({ count: res.items.length, campaigns: res.items });
       }
       case 'create_campaign': {
-        const camp = await base44.entities.Campaign.create({
+        const camp = await db.entities.Campaign.create({
           name: args.name,
           channel: args.channel,
           message_template: args.message_template,
@@ -276,29 +277,29 @@ async function executeTool(base44: any, name: string, args: any): Promise<string
         return JSON.stringify({ success: true, campaign_id: camp.id, message: `Campaign created: ${args.name}` });
       }
       case 'list_vault_accounts': {
-        const res = await base44.entities.VaultAccount.filter({}, { sort: '-created_date', limit: args.limit || 50, fields: ['name', 'provider', 'management_url', 'connector_id'] });
+        const res = await db.entities.VaultAccount.filter({}, { sort: '-created_date', limit: args.limit || 50, fields: ['name', 'provider', 'management_url', 'connector_id'] });
         return JSON.stringify({ count: res.items.length, accounts: res.items.map((a: any) => ({ name: a.name, provider: a.provider, management_url: a.management_url || '', connected: Boolean(a.connector_id) })) });
       }
       case 'provision_site': {
-        const fnRes = await base44.functions.invoke('provisionSite', { name: args.name, repo_url: args.repo_url || '', domain: args.domain || '', client_id: args.client_id || '' });
+        const fnRes = await db.functions.invoke('provisionSite', { name: args.name, repo_url: args.repo_url || '', domain: args.domain || '', client_id: args.client_id || '' });
         const d = fnRes?.data || {};
         if (d.error) return JSON.stringify({ error: d.error });
         return JSON.stringify({ success: true, deployment_url: d.deployment_url || d.vercel_url || '', message: `Site provisioned: ${args.name}` });
       }
       case 'provision_client_infrastructure': {
-        const fnRes = await base44.functions.invoke('provisionClientInfrastructure', { name: args.name, client_id: args.client_id, stack_type: args.stack_type || 'vite_app', description: args.description || '' });
+        const fnRes = await db.functions.invoke('provisionClientInfrastructure', { name: args.name, client_id: args.client_id, stack_type: args.stack_type || 'vite_app', description: args.description || '' });
         const d = fnRes?.data || {};
         if (d.error) return JSON.stringify({ error: d.error });
         return JSON.stringify({ success: true, infrastructure_id: d.id || '', provision_status: d.provision_status || 'pending', message: `Client infrastructure provisioned: ${args.name}` });
       }
       case 'bootstrap_supabase': {
-        const fnRes = await base44.functions.invoke('bootstrapSupabase', { dry_run: args.dry_run !== false, google_client_id: args.google_client_id || '' });
+        const fnRes = await db.functions.invoke('bootstrapSupabase', { dry_run: args.dry_run !== false, google_client_id: args.google_client_id || '' });
         const d = fnRes?.data || {};
         if (d.error) return JSON.stringify({ error: d.error });
         return JSON.stringify({ success: true, dry_run: d.dry_run, steps: d.steps || [], message: d.dry_run ? 'Supabase credentials validated (dry run).' : 'Supabase OAuth and profiles configured.' });
       }
       case 'domain_operations': {
-        const fnRes = await base44.functions.invoke('domainOperations', { action: args.action, domain: args.domain || '' });
+        const fnRes = await db.functions.invoke('domainOperations', { action: args.action, domain: args.domain || '' });
         const d = fnRes?.data || {};
         if (d.error) return JSON.stringify({ error: d.error });
         return JSON.stringify({ success: true, action: args.action, domain: args.domain || '', result: d });
@@ -314,9 +315,13 @@ async function executeTool(base44: any, name: string, args: any): Promise<string
 export default async function(req: Request): Promise<Response> {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
+    const user = await getSupabaseUser(req);
     if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
+    // Use service role for all entity/function calls — the Supabase JWT is not
+    // recognized by Base44 RLS, so asServiceRole bypasses it (we already verified
+    // admin role via getSupabaseUser above).
+    const db = base44.asServiceRole;
 
     const body = await req.json();
     const agentName = body.agent_name;
@@ -328,11 +333,11 @@ export default async function(req: Request): Promise<Response> {
 
     // Fetch live system context for the system prompt
     const [pendingRes, completedRes, domainRes, buildRes, batchRes] = await Promise.all([
-      base44.entities.AgentTask.count({ status: 'pending' }),
-      base44.entities.AgentTask.count({ status: 'completed' }),
-      base44.entities.Domain.count({}),
-      base44.entities.SystemBuild.count({}),
-      base44.entities.BatchOperation.count({})
+      db.entities.AgentTask.count({ status: 'pending' }),
+      db.entities.AgentTask.count({ status: 'completed' }),
+      db.entities.Domain.count({}),
+      db.entities.SystemBuild.count({}),
+      db.entities.BatchOperation.count({})
     ]);
 
     const systemPrompt = buildSystemPrompt(agentName, {
@@ -370,7 +375,7 @@ export default async function(req: Request): Promise<Response> {
           const toolArgs = JSON.parse(toolCallMatch[1]);
           const toolName = toolArgs.name;
           const toolParams = toolArgs.arguments || toolArgs.params || {};
-          const toolResult = await executeTool(base44, toolName, toolParams);
+          const toolResult = await executeTool(db, toolName, toolParams);
           toolResults.push({ tool: toolName, result: JSON.parse(toolResult) });
 
           // Add the tool result to the conversation and continue the loop
