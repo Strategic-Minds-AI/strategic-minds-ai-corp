@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
-import { ArrowLeft, Loader2, Search, TrendingDown, ShieldAlert, Wrench, Mail, Activity, FileSearch, ChevronRight, AlertTriangle, CheckCircle2, DollarSign, Gauge } from "lucide-react";
+import { ArrowLeft, Loader2, Search, TrendingDown, ShieldAlert, Wrench, Mail, Activity, FileSearch, ChevronRight, AlertTriangle, CheckCircle2, DollarSign, Gauge, Network, Database, ShieldCheck } from "lucide-react";
 
 export default function DiagnosticConsole() {
   const navigate = useNavigate();
@@ -48,6 +48,9 @@ export default function DiagnosticConsole() {
     { path: "/diagnostic/monitoring", label: "Monitoring", icon: Activity, desc: "Continuous health checks" },
     { path: "/diagnostic/risks", label: "Risk Register", icon: ShieldAlert, desc: "Track and mitigate risks" },
     { path: "/diagnostic/outreach", label: "Outreach Drafts", icon: Mail, desc: "Value-first prospect emails" },
+    { path: "/diagnostic/evidence", label: "Evidence Trail", icon: Database, desc: "Audit receipts & snapshots" },
+    { path: "/diagnostic/leaks", label: "Revenue Leaks", icon: TrendingDown, desc: "Quantified $ impact" },
+    { path: "/diagnostic/system-map", label: "System Map", icon: Network, desc: "Detected tech stack" },
   ];
 
   return (
@@ -73,6 +76,9 @@ export default function DiagnosticConsole() {
                 <StatCard label="Repair Plans" value={stats.repair_plans || 0} icon={Wrench} />
                 <StatCard label="Avg Health" value={`${stats.avg_health_score || 0}/100`} icon={Gauge} />
                 <StatCard label="Revenue Leak" value={`$${((stats.total_leak_max || 0) / 1000).toFixed(0)}K`} icon={DollarSign} />
+                <StatCard label="Evidence" value={stats.evidence_records || 0} icon={Database} />
+                <StatCard label="System Nodes" value={stats.system_nodes || 0} icon={Network} />
+                <StatCard label="Snapshots" value={stats.scan_snapshots || 0} icon={ShieldCheck} />
               </div>
             )}
 

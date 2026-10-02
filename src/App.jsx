@@ -62,6 +62,9 @@ const RepairPlanConsole = lazy(() => import('@/pages/RepairPlanConsole'));
 const MonitoringConsole = lazy(() => import('@/pages/MonitoringConsole'));
 const RiskRegister = lazy(() => import('@/pages/RiskRegister'));
 const OutreachConsole = lazy(() => import('@/pages/OutreachConsole'));
+const SystemMapPage = lazy(() => import('@/pages/SystemMapPage'));
+const RevenueLeaksPage = lazy(() => import('@/pages/RevenueLeaksPage'));
+const EvidenceConsole = lazy(() => import('@/pages/EvidenceConsole'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -140,6 +143,12 @@ const AuthenticatedApp = () => {
           <Route path="/diagnostic/monitoring" element={<MonitoringConsole />} />
           <Route path="/diagnostic/risks" element={<RiskRegister />} />
           <Route path="/diagnostic/outreach" element={<OutreachConsole />} />
+          <Route path="/diagnostic/system-map/:auditId" element={<SystemMapPage />} />
+          <Route path="/diagnostic/leaks/:auditId" element={<RevenueLeaksPage />} />
+          <Route path="/diagnostic/evidence/:auditId" element={<EvidenceConsole />} />
+          <Route path="/diagnostic/system-map" element={<SystemMapPage />} />
+          <Route path="/diagnostic/leaks" element={<RevenueLeaksPage />} />
+          <Route path="/diagnostic/evidence" element={<EvidenceConsole />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>

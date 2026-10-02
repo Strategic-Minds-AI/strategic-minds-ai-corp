@@ -14,7 +14,7 @@ export default async function(req: Request): Promise<Response> {
     const body = await req.json();
     const { action } = body;
 
-    if (action === 'runAudit') return await runAudit(base44, body);
+    if (action === 'runAudit') return await runAudit(base44, body, user);
     if (action === 'generateRepairPlan') return await generateRepairPlan(base44, body);
     if (action === 'dashboardStats') return await dashboardStats(base44);
     if (action === 'listAudits') return await listAudits(base44, body);
@@ -43,7 +43,7 @@ async function hashId(input: string): Promise<string> {
 }
 
 // ─── Main audit runner ───────────────────────────────────────────────
-async function runAudit(base44: any, body: any) {
+async function runAudit(base44: any, body: any, user: any) {
   const { company_url, company_name, audit_type = 'full' } = body;
   if (!company_url) return Response.json({ error: 'company_url required' }, { status: 400 });
 

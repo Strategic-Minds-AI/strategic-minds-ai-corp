@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
-import { ArrowLeft, Loader2, Wrench, Mail, ShieldAlert, ChevronRight, CheckCircle2, XCircle, AlertTriangle, FileText, TrendingDown, Search, Activity, Cpu, Eye, Server, Target, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Loader2, Wrench, Mail, ShieldAlert, ChevronRight, CheckCircle2, XCircle, AlertTriangle, FileText, TrendingDown, Search, Activity, Cpu, Eye, Server, Target, ShieldCheck, Network, Database } from "lucide-react";
 
 const SEVERITY_STYLE = {
   critical: { bg: "bg-destructive/10", text: "text-destructive", label: "Critical" },
@@ -109,6 +109,15 @@ export default function AuditDetail() {
           </button>
           <button onClick={genOutreach} disabled={generatingOutreach} className="xa-btn-outline">
             {generatingOutreach ? <><Loader2 className="w-4 h-4 animate-spin" /> Generating…</> : <><Mail className="w-4 h-4" /> Draft Outreach</>}
+          </button>
+          <button onClick={() => navigate(`/diagnostic/system-map/${auditId}`)} className="xa-btn-outline">
+            <Network className="w-4 h-4" /> System Map
+          </button>
+          <button onClick={() => navigate(`/diagnostic/leaks/${auditId}`)} className="xa-btn-outline">
+            <TrendingDown className="w-4 h-4" /> Revenue Leaks
+          </button>
+          <button onClick={() => navigate(`/diagnostic/evidence/${auditId}`)} className="xa-btn-outline">
+            <Database className="w-4 h-4" /> Evidence Trail
           </button>
         </div>
         {actionError && <div className="mb-4 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{actionError}</div>}
