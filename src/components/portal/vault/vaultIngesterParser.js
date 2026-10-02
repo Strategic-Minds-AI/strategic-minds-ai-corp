@@ -166,6 +166,55 @@ function parseCsv(text) {
   return rows;
 }
 
+function parseMarkdown(text) {
+  const entries = [];
+  // 1) Markdown tables: | Title | Provider | Username | Secret | URL | Notes |
+  const tableMatch = text.match(/^\s*\|.*\|\s*\n\|[\s\-:|]+\|\s*\n((?:\|.*\|\s*\n?)+)/im);
+  if (tableMatch) {
+    const headerLine = text.split(/\r?\n/).find(l => l.trim().startsWith('|'));
+    const headers = headerLine.split('|').map(h => h.trim().toLowerCase()).filter(Boolean);
+    const body = tableMatch[1];
+    for (const row of body.split(/\r?\n/)) {
+      if (!row.trim() || !row.includes('|')) continue;
+      const cells = row.split('|').map(c => c.trim()).filter((_, i, arr) => i > 0 && i < arr.length - 1 || (i === 0 || i === arr.length - 1) ? false : true);
+      // simpler: split and drop empty ends
+      const all = row.split('|').map(c => c.trim());
+      if (all.length < 2) continue;
+      const cleanCells = all.slice(1, -1);
+      if (cleanCells.length < headers.length) continue;
+      const obj = {};
+      headers.forEach((h, idx) => { obj[h] = cleanCells[idx] || ''; });
+      entries.push(normalizeObject(obj));
+    }
+  }
+  // 2) Code blocks containing KEY=VALUE
+  const codeBlocks = text.match(/```[\s\S]*?```/g) || [];
+  for (const block of codeBlocks) {
+    const inner = block.replace(/^```[a-zA-Z]*\n?/, '').replace(/```$/, '');
+    entries.push(...parseEnv(inner));
+  }
+  // 3) Inline key-value under headings: ## Service \n KEY=VALUE or Label: value
+  const sections = text.split(/^#{1,4}\s+/m);
+  for (const section of sections) {
+    const lines = section.split(/\r?\n/);
+    const heading = lines[0]?.trim();
+    for (let i = 1; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line || line.startsWith('```')) continue;
+      const eq = line.indexOf('=');
+      const colon = line.indexOf(':');
+      let key, value;
+      if (eq > -1 && (colon === -1 || eq < colon)) { key = line.slice(0, eq); value = line.slice(eq + 1); }
+      else if (colon > -1) { key = line.slice(0, colon); value = line.slice(colon + 1); }
+      else continue;
+      const entry = entryFromPair(key, value);
+      if (entry && heading && !entry.provider) entry.provider = heading;
+      if (entry) entries.push(entry);
+    }
+  }
+  return entries;
+}
+
 export function parseSecretFile(fileName, text) {
   const lower = (fileName || '').toLowerCase();
   let entries = [];
@@ -173,10 +222,11 @@ export function parseSecretFile(fileName, text) {
   try {
     if (lower.endsWith('.json')) { format = 'json'; entries = parseJson(text); }
     else if (lower.endsWith('.csv')) { format = 'csv'; entries = parseCsv(text); }
-    else { format = 'env'; entries = parseEnv(text); }
+    else if (lower.endsWith('.md') || lower.endsWith('.markdown')) { format = 'markdown'; entries = parseMarkdown(text); }
+    else { format = 'text'; entries = parseEnv(text); }
   } catch (err) {
     // fallback: try env parsing
-    try { entries = parseEnv(text); format = 'env (fallback)'; }
+    try { entries = parseEnv(text); format = 'text (fallback)'; }
     catch { throw new Error(`Could not parse file: ${err.message}`); }
   }
   // Deduplicate by title+provider+secret

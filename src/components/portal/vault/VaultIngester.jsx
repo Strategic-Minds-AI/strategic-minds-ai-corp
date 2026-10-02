@@ -86,8 +86,8 @@ export default function VaultIngester({ vault, onDone }) {
         <label className="flex cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-border bg-muted/40 p-10 text-center transition hover:border-primary hover:bg-muted/60">
           <FileText size={32} className="text-muted-foreground" />
           <span className="text-sm font-medium text-foreground">Drop or choose a secrets file</span>
-          <span className="text-xs text-muted-foreground">.env, .json, or .csv — up to 2 MB</span>
-          <input ref={fileRef} type="file" accept=".env,.json,.csv,.txt,text/plain,application/json,text/csv,text/plain" className="hidden" onChange={e => handleFile(e.target.files?.[0])} />
+          <span className="text-xs text-muted-foreground">.env, .json, .csv, .md, or .txt — up to 2 MB</span>
+          <input ref={fileRef} type="file" accept=".env,.json,.csv,.md,.markdown,.txt,text/plain,application/json,text/csv,text/markdown" className="hidden" onChange={e => handleFile(e.target.files?.[0])} />
           {busy && <Loader2 size={18} className="animate-spin text-primary" />}
         </label>
       )}
