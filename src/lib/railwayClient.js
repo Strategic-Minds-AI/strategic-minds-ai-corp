@@ -1,6 +1,5 @@
 // Frontend client for the migrated Railway backend service.
-// Auth stays on Base44 — this client forwards the Base44 access token
-// to Railway, which validates it via the auth bridge.
+// Auth is now on Supabase — this client forwards the Supabase access token.
 //
 // Usage (replaces base44.functions.invoke for migrated functions):
 //   import { callRailway } from '@/lib/railwayClient';
@@ -8,22 +7,13 @@
 //
 // Set VITE_RAILWAY_URL in your env to the Railway service URL.
 
-import { base44 } from '@/api/base44Client';
+import { getAccessToken } from '@/lib/supabaseAuthClient';
 
 const RAILWAY_URL = import.meta.env.VITE_RAILWAY_URL || '';
 
-function getToken() {
-  // The Base44 SDK stores the access token in localStorage under a known key.
-  try {
-    const raw = localStorage.getItem('base44_access_token') || localStorage.getItem('sb-access-token');
-    if (raw) return raw;
-  } catch {}
-  return null;
-}
-
 export async function callRailway(functionName, payload) {
   if (!RAILWAY_URL) throw new Error('VITE_RAILWAY_URL not set — cannot reach Railway backend');
-  const token = getToken();
+  const token = await getAccessToken();
   if (!token) throw new Error('Not authenticated');
 
   const res = await fetch(`${RAILWAY_URL}/functions/${functionName}`, {
