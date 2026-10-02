@@ -38,8 +38,8 @@ export default function Login() {
   return (
     <AuthLayout
       icon={LogIn}
-      title="Welcome back"
-      subtitle="Log in to your account"
+      title={safeReturnTo().startsWith('/admin') ? 'Admin sign-in' : 'Welcome back'}
+      subtitle={safeReturnTo().startsWith('/admin') ? 'Use your approved owner account. If you have not registered yet, select Create one below and verify your email.' : 'Log in to your account'}
       footer={
         <>
           Don't have an account?{" "}

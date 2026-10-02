@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 import { useAuth } from '@/lib/AuthContext';
 import AdminChatSidebar from './AdminChatSidebar';
@@ -20,8 +21,11 @@ export default function AdminChatWorkspace(props) {
   const history = useAdminChatHistory(user?.id);
   const chats = history.chats;
   const [selectedId, setSelectedId] = useState(null);
-  const [view, setView] = useState('chat');
-  const [draft, setDraft] = useState('');
+  const location = useLocation();
+  const urlParams = new URLSearchParams(window.location.search);
+  const initialView = urlParams.get('view');
+  const [view, setView] = useState(['dashboard','clients','projects','crm','commerce','blog','insider','domains','phone','comms','discovery','infrastructure','provisioning','google-workspace','vault','settings','bootstrap','ingestion','mirror','benchmarks','chatgpt'].includes(initialView) ? initialView : 'chat');
+  const [draft, setDraft] = useState(location.state?.draft || '');
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const [projectId, setProjectId] = useState('');

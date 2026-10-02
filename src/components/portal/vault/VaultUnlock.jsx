@@ -1,0 +1,12 @@
+import { useState } from 'react';
+import { LockKeyhole, Loader2 } from 'lucide-react';
+export default function VaultUnlock({ creating, onUnlock }) {
+  const [password, setPassword] = useState(''), [confirm, setConfirm] = useState(''), [busy, setBusy] = useState(false), [error, setError] = useState('');
+  async function submit(event) {
+    event.preventDefault(); setError('');
+    if (creating && password !== confirm) { setError('Your vault passwords do not match.'); return; }
+    setBusy(true);
+    try { await onUnlock(password); setPassword(''); setConfirm(''); } catch (failure) { setError(failure.message); } finally { setBusy(false); }
+  }
+  return <section className="mx-auto max-w-xl rounded-xl border border-border bg-card p-6 md:p-8"><LockKeyhole size={32} className="mb-5 text-primary" aria-hidden="true"/><h2 className="mb-3 text-xl">{creating ? 'Create your encrypted vault' : 'Your vault is locked'}</h2><p className="mb-5 text-sm leading-relaxed text-muted-foreground">{creating ? 'Choose a separate vault password. Passwords, keys, account details and notes are encrypted in your browser before they are saved.' : 'Enter your vault password to open your saved credentials.'}</p><form onSubmit={submit} className="space-y-4"><label className="block text-sm font-medium">Vault password<input type="password" required minLength={creating ? 12 : undefined} maxLength={256} autoComplete={creating ? 'new-password' : 'current-password'} value={password} onChange={event => setPassword(event.target.value)} className="agency-input" autoFocus/></label>{creating && <label className="block text-sm font-medium">Confirm vault password<input type="password" required maxLength={256} autoComplete="new-password" value={confirm} onChange={event => setConfirm(event.target.value)} className="agency-input"/></label>}{error && <p role="alert" className="text-sm text-destructive">{error}</p>}<button type="submit" disabled={busy} className="agency-button w-full">{busy && <Loader2 size={16} className="animate-spin"/>}{busy ? 'Opening vault…' : creating ? 'Create vault' : 'Unlock vault'}</button></form><p className="mt-5 text-xs leading-relaxed text-muted-foreground">Keep this password safe: it cannot be recovered. Item names and service labels remain readable to your admin account; credential contents do not. The vault locks after 5 minutes without activity.</p></section>;
+}

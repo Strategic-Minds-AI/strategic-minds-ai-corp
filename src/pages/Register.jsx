@@ -26,7 +26,7 @@ export default function Register() {
     }
     setLoading(true);
     try {
-      const { data } = await signUp(email, password);
+      const data = await signUp(email, password);
       // If Supabase returns a session immediately (email confirmation disabled),
       // redirect right away. Otherwise, show the "check your email" screen.
       if (data?.session) {

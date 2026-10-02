@@ -54,6 +54,8 @@ export const footerNav: NavItem[] = [
       { title: "Pricing", href: "/pricing" },
       { title: "Contact", href: "/contact" },
       { title: "Client Portal", href: "/portal" },
+      { title: "Admin Dashboard", href: "/admin" },
+      { title: "Admin Vault", href: "/admin/vault" },
     ],
   },
 ];

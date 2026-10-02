@@ -50,14 +50,11 @@ export async function signUp(email, password, fullName) {
   const { data, error } = await supabaseAuth.auth.signUp({
     email,
     password,
-    options: { data: { full_name: fullName || '' } },
+    options: { data: { full_name: fullName || '' }, emailRedirectTo: resolveOAuthRedirect() },
   });
   if (error) throw error;
-  if (data.user) {
-    await supabaseAuth
-      .from('profiles')
-      .upsert({ id: data.user.id, email, full_name: fullName || '', role: 'user' });
-  }
+  // The protected database trigger creates profiles and assigns approved roles.
+  // Signup must not overwrite an owner's role or grant client-controlled roles.
   return data;
 }
 

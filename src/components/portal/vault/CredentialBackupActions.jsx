@@ -1,0 +1,10 @@
+import { useRef, useState } from 'react';
+import { Download, Upload } from 'lucide-react';
+import { downloadVaultBackup, restoreVaultBackup } from '@/components/portal/vault/vaultBackupFile';
+export default function CredentialBackupActions({ vault, onRestored }) {
+  const fileInput = useRef(null);
+  const [busy, setBusy] = useState(''), [message, setMessage] = useState(''), [error, setError] = useState('');
+  async function run(label, action) { setBusy(label); setMessage(''); setError(''); try { await action(); } catch (failure) { setError(failure.message); } finally { setBusy(''); } }
+  async function restore(event) { const file = event.target.files?.[0]; event.target.value = ''; if (file) await run('Restoring…', async () => { if (await restoreVaultBackup(vault, file)) { onRestored(); setMessage('Encrypted backup restored.'); } }); }
+  return <section className="space-y-2 rounded-lg border border-border bg-muted/50 p-4"><div className="flex flex-wrap items-center gap-4"><button type="button" disabled={Boolean(busy)} onClick={() => run('Preparing backup…', async () => { await downloadVaultBackup(vault); setMessage('Encrypted backup downloaded.'); })} className="inline-flex min-h-11 items-center gap-2 text-sm text-primary"><Download size={16}/>Download encrypted backup</button><button type="button" disabled={Boolean(busy)} onClick={() => fileInput.current.click()} className="inline-flex min-h-11 items-center gap-2 text-sm text-primary"><Upload size={16}/>Restore backup</button><input ref={fileInput} type="file" accept="application/json,.json" onChange={restore} className="hidden" aria-label="Choose encrypted vault backup"/></div><p className="mb-0 text-xs text-muted-foreground">Backups contain encrypted credentials, not readable passwords. Restore files are read locally; only their encrypted entries are saved. Keep your vault password and restore using this same admin account.</p>{busy && <p role="status" className="mb-0 text-sm">{busy}</p>}{message && <p role="status" className="mb-0 text-sm">{message}</p>}{error && <p role="alert" className="mb-0 text-sm text-destructive">{error}</p>}</section>;
+}

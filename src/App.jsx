@@ -17,6 +17,8 @@ import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
 import AuthCallback from '@/pages/AuthCallback';
+import Admin from '@/pages/Admin';
+import AdminVaultPage from '@/pages/AdminVaultPage';
 import OAuthConsent from '@/pages/OAuthConsent';
 import { Toaster as LegacyToaster } from 'sonner';
 const HomeSEOAgency = lazy(() => import('@/pages/home-seo-agency'));
@@ -113,6 +115,12 @@ const AuthenticatedApp = () => {
             <Route path="/portal/benchmark" element={<Benchmark />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
+        </Route>
+        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fadmin" replace />} />}>
+          <Route path="/admin" element={<Admin />} />
+        </Route>
+        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fadmin%2Fvault" replace />} />}>
+          <Route path="/admin/vault" element={<AdminVaultPage />} />
         </Route>
         <Route path="/insider" element={<InsiderApp />} />
         <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fagents" replace />} />}>
