@@ -118,7 +118,7 @@ export async function getAccessToken() {
 // OAuth provider's authorized redirect URIs. The builder preview runs on
 // localhost / preview-sandbox hosts which are NOT registered, so Google
 // rejects the code exchange. Always redirect back to the published app.
-const PUBLISHED_APP_URL = 'https://strategic-ai-consulting.base44.app';
+const PUBLISHED_APP_URL = 'https://strategicmindsai.com';
 
 function resolveOAuthRedirect(redirectTo) {
   // If an explicit redirect is provided and points to the published app or
