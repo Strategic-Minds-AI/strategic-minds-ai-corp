@@ -39,6 +39,7 @@ const TOOLS = [
   ['factory', 'System Factory'],
   ['batch', 'Batch Operations'],
   ['website-factory', 'Website Factory'],
+  ['frontend-factory', 'Frontend Factory'],
   ['mission-control', 'Mission Control'],
   ['mission', 'Growth Mission'],
   ['domains', 'Domain Registry'],
