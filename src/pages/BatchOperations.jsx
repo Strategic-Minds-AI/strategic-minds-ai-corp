@@ -61,7 +61,7 @@ export default function BatchOperations() {
 
         <BatchHistory refreshKey={refreshKey} />
 
-        <div className="xa-card p-4 bg-[#FFF7B3]/30 border-[#E6D400]/30">
+        <div className="xa-card p-4 bg-[#E6F0FF]/30 border-[#004CE6]/30">
           <p className="text-xs text-black/60 leading-relaxed">
             <strong className="text-black">How it works:</strong> Define a template with {"{variables}"}, set your batch size, toggle which operations run (Google connect, social, video, content optimization), and launch. The backend dispatches autonomous tasks for every site × every phase. The worker picks them up and executes — build → deploy → connect → post → analyze → optimize — all hands-free. Use the Worker Fleet to scale execution across multiple workers.
           </p>

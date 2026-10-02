@@ -87,12 +87,12 @@ export default function FactoryApprovals() {
 }
 
 function RiskBadge({ risk }) {
-  const styles = { READ: 'bg-blue-500/10 text-blue-600', DRAFT: 'bg-muted text-muted-foreground', BRANCH_WRITE: 'bg-yellow-500/10 text-yellow-600', PROTECTED: 'bg-destructive/10 text-destructive' };
+  const styles = { READ: 'bg-blue-500/10 text-blue-600', DRAFT: 'bg-muted text-muted-foreground', BRANCH_WRITE: 'bg-amber-500/10 text-amber-600', PROTECTED: 'bg-destructive/10 text-destructive' };
   return <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${styles[risk] || styles.DRAFT}`}>{risk}</span>;
 }
 
 function ApprovalStatusBadge({ status }) {
-  const styles = { pending: 'bg-yellow-500/10 text-yellow-600', approved: 'bg-green-500/10 text-green-600', rejected: 'bg-destructive/10 text-destructive', expired: 'bg-muted text-muted-foreground', cancelled: 'bg-muted text-muted-foreground' };
+  const styles = { pending: 'bg-amber-500/10 text-amber-600', approved: 'bg-green-500/10 text-green-600', rejected: 'bg-destructive/10 text-destructive', expired: 'bg-muted text-muted-foreground', cancelled: 'bg-muted text-muted-foreground' };
   const icons = { pending: <Clock size={10} />, approved: <CheckCircle size={10} />, rejected: <XCircle size={10} /> };
   return <span className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold ${styles[status] || styles.pending}`}>{icons[status]}{status}</span>;
 }

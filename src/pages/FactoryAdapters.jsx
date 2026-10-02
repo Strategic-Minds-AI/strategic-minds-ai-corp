@@ -97,7 +97,7 @@ export default function FactoryAdapters() {
                       <div key={act.name} className="flex items-center gap-2 text-[10px]">
                         <span className="font-mono text-foreground">{act.name}</span>
                         <span className="rounded bg-muted px-1 py-0.5 text-muted-foreground">{act.risk_class}</span>
-                        {act.requires_approval && <span className="text-yellow-600">approval</span>}
+                        {act.requires_approval && <span className="text-amber-600">approval</span>}
                       </div>
                     ))}
                   </div>
@@ -147,6 +147,6 @@ export default function FactoryAdapters() {
 }
 
 function HealthBadge({ status }) {
-  const styles = { healthy: 'bg-green-500/10 text-green-600', degraded: 'bg-yellow-500/10 text-yellow-600', offline: 'bg-destructive/10 text-destructive', not_configured: 'bg-muted text-muted-foreground', unknown: 'bg-muted text-muted-foreground' };
+  const styles = { healthy: 'bg-green-500/10 text-green-600', degraded: 'bg-amber-500/10 text-amber-600', offline: 'bg-destructive/10 text-destructive', not_configured: 'bg-muted text-muted-foreground', unknown: 'bg-muted text-muted-foreground' };
   return <span className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold ${styles[status] || styles.unknown}`}><Activity size={10} />{status}</span>;
 }

@@ -147,7 +147,7 @@ function StatusBadge({ status }) {
     PASSED: 'bg-green-500/10 text-green-600',
     FAILED: 'bg-destructive/10 text-destructive',
     RUNNING: 'bg-blue-500/10 text-blue-600',
-    BLOCKED: 'bg-yellow-500/10 text-yellow-600',
+    BLOCKED: 'bg-amber-500/10 text-amber-600',
     CANCELLED: 'bg-muted text-muted-foreground',
     DRAFT: 'bg-muted text-muted-foreground',
     EXPORTED: 'bg-purple-500/10 text-purple-600',

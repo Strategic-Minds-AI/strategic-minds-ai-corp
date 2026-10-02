@@ -97,6 +97,6 @@ export default function FactoryProjects() {
 }
 
 function ProjectStatusBadge({ status }) {
-  const styles = { intake: 'bg-muted text-muted-foreground', planning: 'bg-blue-500/10 text-blue-600', building: 'bg-cyan-500/10 text-cyan-600', validating: 'bg-yellow-500/10 text-yellow-600', delivered: 'bg-green-500/10 text-green-600', failed: 'bg-destructive/10 text-destructive', cancelled: 'bg-muted text-muted-foreground' };
+  const styles = { intake: 'bg-muted text-muted-foreground', planning: 'bg-blue-500/10 text-blue-600', building: 'bg-cyan-500/10 text-cyan-600', validating: 'bg-amber-500/10 text-amber-600', delivered: 'bg-green-500/10 text-green-600', failed: 'bg-destructive/10 text-destructive', cancelled: 'bg-muted text-muted-foreground' };
   return <span className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-bold ${styles[status] || styles.intake}`}>{status}</span>;
 }

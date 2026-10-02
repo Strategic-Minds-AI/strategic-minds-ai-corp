@@ -42,7 +42,7 @@ export default function FactoryProvisioning() {
                   <span className="font-mono text-sm font-semibold text-foreground">{t.id}</span>
                   <span className="rounded bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary">v{t.version}</span>
                   <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground">{t.mode}</span>
-                  {t.live_execution_requires_approval && <span className="rounded bg-yellow-500/10 px-1.5 py-0.5 text-[10px] font-bold text-yellow-600">approval required</span>}
+                  {t.live_execution_requires_approval && <span className="rounded bg-amber-500/10 px-1.5 py-0.5 text-[10px] font-bold text-amber-600">approval required</span>}
                 </div>
               </div>
             ))}
@@ -83,6 +83,6 @@ export default function FactoryProvisioning() {
 }
 
 function PlanStatusBadge({ status }) {
-  const styles = { draft: 'bg-muted text-muted-foreground', awaiting_approval: 'bg-yellow-500/10 text-yellow-600', approved: 'bg-blue-500/10 text-blue-600', executing: 'bg-cyan-500/10 text-cyan-600', completed: 'bg-green-500/10 text-green-600', failed: 'bg-destructive/10 text-destructive', rolled_back: 'bg-orange-500/10 text-orange-600' };
+  const styles = { draft: 'bg-muted text-muted-foreground', awaiting_approval: 'bg-amber-500/10 text-amber-600', approved: 'bg-blue-500/10 text-blue-600', executing: 'bg-cyan-500/10 text-cyan-600', completed: 'bg-green-500/10 text-green-600', failed: 'bg-destructive/10 text-destructive', rolled_back: 'bg-orange-500/10 text-orange-600' };
   return <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${styles[status] || styles.draft}`}>{status}</span>;
 }

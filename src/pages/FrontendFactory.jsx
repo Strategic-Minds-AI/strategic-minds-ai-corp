@@ -336,7 +336,7 @@ export default function FrontendFactory() {
                     <span className="text-sm font-medium text-foreground">{spec.title}</span>
                     <span className="ml-2 text-[10px] text-muted-foreground">{spec.task_id}</span>
                     <div className="text-[10px] text-muted-foreground">
-                      <span className={`rounded px-1.5 py-0.5 font-bold uppercase ${spec.status === 'building' ? 'bg-yellow-500/10 text-yellow-600' : spec.status === 'delivered' ? 'bg-green-500/10 text-green-600' : 'bg-muted text-muted-foreground'}`}>{spec.status}</span>
+                      <span className={`rounded px-1.5 py-0.5 font-bold uppercase ${spec.status === 'building' ? 'bg-amber-500/10 text-amber-600' : spec.status === 'delivered' ? 'bg-green-500/10 text-green-600' : 'bg-muted text-muted-foreground'}`}>{spec.status}</span>
                       {spec.deliver_to && <span className="ml-2">{spec.deliver_to}</span>}
                     </div>
                   </div>

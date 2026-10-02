@@ -244,7 +244,7 @@ export default function FactoryScanner() {
               </div>
               <div className="rounded-xl border border-border bg-card p-4 shadow-sm">
                 <p className="text-[10px] font-bold uppercase text-muted-foreground">Warnings</p>
-                <p className={`mt-1 text-2xl font-bold ${results.summary.warnings > 0 ? 'text-yellow-600' : 'text-green-600'}`}>{results.summary.warnings}</p>
+                <p className={`mt-1 text-2xl font-bold ${results.summary.warnings > 0 ? 'text-amber-600' : 'text-green-600'}`}>{results.summary.warnings}</p>
               </div>
               <div className={`rounded-xl border p-4 shadow-sm ${results.summary.ready_for_production ? 'border-green-500/30 bg-green-500/5' : 'border-destructive/30 bg-destructive/5'}`}>
                 <p className="text-[10px] font-bold uppercase text-muted-foreground">Production Ready</p>
@@ -279,15 +279,15 @@ export default function FactoryScanner() {
 
             {/* Warnings */}
             {warningFindings.length > 0 && (
-              <div className="mt-3 rounded-xl border border-yellow-500/30 bg-yellow-500/5 p-4">
-                <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-yellow-600">
+              <div className="mt-3 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4">
+                <h3 className="mb-3 flex items-center gap-2 text-sm font-semibold text-amber-600">
                   <AlertTriangle size={16} /> Warnings ({warningFindings.length})
                 </h3>
                 <div className="space-y-2">
                   {warningFindings.map((f, i) => (
-                    <div key={i} className="rounded-lg border border-yellow-500/20 bg-background p-3">
+                    <div key={i} className="rounded-lg border border-amber-500/20 bg-background p-3">
                       <div className="flex items-center gap-2">
-                        <AlertTriangle size={14} className="text-yellow-600" />
+                        <AlertTriangle size={14} className="text-amber-600" />
                         <span className="font-mono text-xs font-bold text-foreground">{f.target}</span>
                         <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground">{f.target_type}</span>
                       </div>

@@ -25,8 +25,8 @@ export default function CostOptimizer({ freeMode, setFreeMode }) {
     <section className="xa-card p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <div className="w-9 h-9 rounded-lg bg-[#FFF7B3] flex items-center justify-center">
-            <DollarSign className="w-5 h-5 text-[#8A7300]" />
+          <div className="w-9 h-9 rounded-lg bg-[#E6F0FF] flex items-center justify-center">
+            <DollarSign className="w-5 h-5 text-[#0046FF]" />
           </div>
           <div>
             <h2 className="font-heading font-bold text-lg text-black">Free Tier Strategy</h2>

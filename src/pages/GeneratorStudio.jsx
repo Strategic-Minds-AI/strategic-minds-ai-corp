@@ -191,7 +191,7 @@ export default function GeneratorStudio() {
                   )}
                   {validation.warnings.length > 0 && (
                     <ul className="mt-2 space-y-1">
-                      {validation.warnings.map((w, i) => <li key={i} className="text-xs text-yellow-600">⚠ {w}</li>)}
+                      {validation.warnings.map((w, i) => <li key={i} className="text-xs text-amber-600">⚠ {w}</li>)}
                     </ul>
                   )}
                 </div>

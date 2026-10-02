@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import { Plus, Loader2, Globe, ShieldCheck, AlertTriangle, ExternalLink } from "lucide-react";
 
 const STATUS_STYLE = {
-  onboarding: "bg-[#FFF7B3] text-[#8A7300]",
+  onboarding: "bg-[#E6F0FF] text-[#0046FF]",
   verifying: "bg-blue-50 text-blue-600",
   verified: "bg-emerald-50 text-emerald-600",
   active: "bg-emerald-50 text-emerald-600",
@@ -76,7 +76,7 @@ export default function DomainRegistry() {
         </div>
 
         {loading ? (
-          <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-[#CCBB00]" /></div>
+          <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-[#0052CC]" /></div>
         ) : domains.length === 0 ? (
           <div className="xa-card p-10 text-center">
             <Globe className="w-8 h-8 mx-auto text-black/20" />
@@ -89,8 +89,8 @@ export default function DomainRegistry() {
               const style = STATUS_STYLE[status] || STATUS_STYLE.active;
               return (
                 <div key={d.id} className="xa-card p-4 flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#FFF7B3] flex items-center justify-center shrink-0">
-                    <Globe className="w-5 h-5 text-[#8A7300]" />
+                  <div className="w-10 h-10 rounded-lg bg-[#E6F0FF] flex items-center justify-center shrink-0">
+                    <Globe className="w-5 h-5 text-[#0046FF]" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="font-bold text-black text-sm truncate">{d.domain}</div>

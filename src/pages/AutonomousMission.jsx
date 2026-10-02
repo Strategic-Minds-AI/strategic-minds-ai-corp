@@ -37,7 +37,7 @@ export default function AutonomousMission() {
 
   return (
     <div className="min-h-screen bg-white">
-      <section className="border-b border-[#E5E7EB] bg-gradient-to-b from-[#FFF7B3]/30 to-white">
+      <section className="border-b border-[#E5E7EB] bg-gradient-to-b from-[#E6F0FF]/30 to-white">
         <div className="max-w-4xl mx-auto px-6 py-12">
           <button onClick={() => navigate("/agents")} className="flex items-center gap-2 text-sm font-semibold text-black/50 hover:text-black mb-6">
             <ArrowLeft className="w-4 h-4" /> Command Center
@@ -98,7 +98,7 @@ export default function AutonomousMission() {
               <ol className="space-y-2">
                 {result.trace.map((t, i) => (
                   <li key={i} className="flex items-start gap-3 text-sm">
-                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#FFF7B3] text-black font-bold text-xs flex items-center justify-center">{i + 1}</span>
+                    <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#E6F0FF] text-black font-bold text-xs flex items-center justify-center">{i + 1}</span>
                     <div>
                       <p className="font-semibold text-black">{STAGE_LABELS[t.stage] || t.stage}</p>
                       <p className="text-black/50 font-mono text-xs mt-0.5">{JSON.stringify({ ...t, stage: undefined }).replace(/^\{|:undefined|"|\}$/g, m => m === "{" || m === "}" ? "" : m)}</p>

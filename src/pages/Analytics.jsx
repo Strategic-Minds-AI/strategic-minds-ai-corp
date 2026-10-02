@@ -4,10 +4,10 @@ import { base44 } from "@/api/base44Client";
 import { Loader2, RefreshCw, Activity, Globe, Hammer, Layers, Zap, Link2, Rocket, Clock, Wifi } from "lucide-react";
 
 const STATUS_COLORS = {
-  pending: "#8A7300", in_progress: "#2563EB", completed: "#16A34A", failed: "#DC2626",
-  available: "#16A34A", bought: "#7C3AED", unavailable: "#DC2626", discovered: "#8A7300",
-  delivered: "#16A34A", building: "#2563EB", spec_submitted: "#8A7300", planning: "#2563EB",
-  running: "#2563EB", complete: "#16A34A", queued: "#8A7300"
+  pending: "#0046FF", in_progress: "#2563EB", completed: "#16A34A", failed: "#DC2626",
+  available: "#16A34A", bought: "#7C3AED", unavailable: "#DC2626", discovered: "#0046FF",
+  delivered: "#16A34A", building: "#2563EB", spec_submitted: "#0046FF", planning: "#2563EB",
+  running: "#2563EB", complete: "#16A34A", queued: "#0046FF"
 };
 
 export default function Analytics() {
@@ -133,28 +133,28 @@ export default function Analytics() {
         </div>
 
         {loading && !stats ? (
-          <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-[#CCBB00]" /></div>
+          <div className="flex justify-center py-12"><Loader2 className="w-6 h-6 animate-spin text-[#0052CC]" /></div>
         ) : stats ? (
           <div className="grid grid-cols-2 gap-3">
             <div className="xa-card p-4">
-              <div className="flex items-center gap-2 mb-2"><Activity className="w-4 h-4 text-[#CCBB00]" /><span className="text-xs font-bold text-black/50 uppercase">Tasks</span></div>
+              <div className="flex items-center gap-2 mb-2"><Activity className="w-4 h-4 text-[#0052CC]" /><span className="text-xs font-bold text-black/50 uppercase">Tasks</span></div>
               <div className="font-heading font-black text-2xl text-black">{total(stats.tasks)}</div>
               <div className="flex gap-2 mt-1.5 text-[10px]">
-                <span className="text-[#8A7300] font-bold">{stats.tasks.pending || 0} pending</span>
+                <span className="text-[#0046FF] font-bold">{stats.tasks.pending || 0} pending</span>
                 <span className="text-green-600 font-bold">{stats.tasks.completed || 0} done</span>
                 <span className="text-red-500 font-bold">{stats.tasks.failed || 0} fail</span>
               </div>
             </div>
             <div className="xa-card p-4">
-              <div className="flex items-center gap-2 mb-2"><Globe className="w-4 h-4 text-[#CCBB00]" /><span className="text-xs font-bold text-black/50 uppercase">Domains</span></div>
+              <div className="flex items-center gap-2 mb-2"><Globe className="w-4 h-4 text-[#0052CC]" /><span className="text-xs font-bold text-black/50 uppercase">Domains</span></div>
               <div className="font-heading font-black text-2xl text-black">{total(stats.domains)}</div>
               <div className="flex gap-2 mt-1.5 text-[10px]">
-                <span className="text-[#8A7300] font-bold">{stats.domains.available || 0} avail</span>
+                <span className="text-[#0046FF] font-bold">{stats.domains.available || 0} avail</span>
                 <span className="text-purple-600 font-bold">{stats.domains.bought || 0} bought</span>
               </div>
             </div>
             <div className="xa-card p-4">
-              <div className="flex items-center gap-2 mb-2"><Hammer className="w-4 h-4 text-[#CCBB00]" /><span className="text-xs font-bold text-black/50 uppercase">Builds</span></div>
+              <div className="flex items-center gap-2 mb-2"><Hammer className="w-4 h-4 text-[#0052CC]" /><span className="text-xs font-bold text-black/50 uppercase">Builds</span></div>
               <div className="font-heading font-black text-2xl text-black">{total(stats.builds)}</div>
               <div className="flex gap-2 mt-1.5 text-[10px]">
                 <span className="text-blue-600 font-bold">{stats.builds.building || 0} building</span>
@@ -162,7 +162,7 @@ export default function Analytics() {
               </div>
             </div>
             <div className="xa-card p-4">
-              <div className="flex items-center gap-2 mb-2"><Layers className="w-4 h-4 text-[#CCBB00]" /><span className="text-xs font-bold text-black/50 uppercase">Batches</span></div>
+              <div className="flex items-center gap-2 mb-2"><Layers className="w-4 h-4 text-[#0052CC]" /><span className="text-xs font-bold text-black/50 uppercase">Batches</span></div>
               <div className="font-heading font-black text-2xl text-black">{total(stats.batches)}</div>
               <div className="flex gap-2 mt-1.5 text-[10px]">
                 <span className="text-blue-600 font-bold">{stats.batches.running || 0} running</span>
@@ -210,7 +210,7 @@ export default function Analytics() {
           ) : (
             <div className="space-y-1.5">
               {activity.map((t) => {
-                const color = STATUS_COLORS[t.status] || "#8A7300";
+                const color = STATUS_COLORS[t.status] || "#0046FF";
                 return (
                   <div key={t.id} className="xa-card p-3 flex items-center gap-2">
                     <div className="w-2 h-2 rounded-full shrink-0" style={{ background: color }} />

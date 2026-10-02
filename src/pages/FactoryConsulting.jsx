@@ -51,7 +51,7 @@ export default function FactoryConsulting() {
               <span className="ml-auto rounded bg-primary/10 px-1.5 py-0.5 text-[10px] text-primary">v{t.version}</span>
             </div>
             {t.requires_evidence && (
-              <p className="mt-2 text-[10px] font-bold uppercase text-yellow-600">Evidence required</p>
+              <p className="mt-2 text-[10px] font-bold uppercase text-amber-600">Evidence required</p>
             )}
           </div>
           ))}

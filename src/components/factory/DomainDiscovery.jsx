@@ -30,7 +30,7 @@ export default function DomainDiscovery({ onDiscovered }) {
   return (
     <section className="xa-card p-5">
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-9 h-9 rounded-lg bg-[#FFF7B3] flex items-center justify-center"><Globe className="w-5 h-5 text-[#8A7300]" /></div>
+        <div className="w-9 h-9 rounded-lg bg-[#E6F0FF] flex items-center justify-center"><Globe className="w-5 h-5 text-[#0046FF]" /></div>
         <div>
           <h2 className="font-heading font-bold text-lg text-black">Domain Discovery</h2>
           <p className="text-xs text-black/50">Discover across all TLDs · check availability</p>
@@ -44,7 +44,7 @@ export default function DomainDiscovery({ onDiscovered }) {
           {TLDS.map(t => (
             <button key={t} onClick={() => toggleTld(t)}
               className={`px-2.5 py-1.5 rounded-lg border text-xs font-bold transition-all ${selectedTlds.includes(t) ? "border-transparent text-black" : "border-[#E5E7EB] text-black/40"}`}
-              style={selectedTlds.includes(t) ? { background: "linear-gradient(135deg,#FFF7B3,#FFEA00 20%,#E6D400 45%,#FFEE33 65%,#FFEA00 80%,#CCBB00)" } : {}}>
+              style={selectedTlds.includes(t) ? { background: "linear-gradient(135deg,#E6F0FF,#0066FF 20%,#004CE6 45%,#3B82F6 65%,#0066FF 80%,#0052CC)" } : {}}>
               .{t}
             </button>
           ))}

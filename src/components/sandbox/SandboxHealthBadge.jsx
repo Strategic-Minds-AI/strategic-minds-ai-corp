@@ -6,7 +6,7 @@ export default function SandboxHealthBadge({ sandbox }) {
 
   const config = {
     healthy: { icon: CheckCircle2, color: 'text-green-600', bg: 'bg-green-500/10', label: 'Healthy' },
-    degraded: { icon: AlertTriangle, color: 'text-yellow-600', bg: 'bg-yellow-500/10', label: 'Degraded' },
+    degraded: { icon: AlertTriangle, color: 'text-amber-600', bg: 'bg-amber-500/10', label: 'Degraded' },
     offline: { icon: XCircle, color: 'text-destructive', bg: 'bg-destructive/10', label: 'Offline' },
     unknown: { icon: HelpCircle, color: 'text-muted-foreground', bg: 'bg-muted', label: 'No heartbeat' },
   };

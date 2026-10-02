@@ -89,6 +89,6 @@ export default function FactoryArtifacts() {
 }
 
 function ValidationStateBadge({ state }) {
-  const styles = { validated: 'bg-green-500/10 text-green-600', failed: 'bg-destructive/10 text-destructive', pending: 'bg-muted text-muted-foreground', blocked: 'bg-yellow-500/10 text-yellow-600' };
+  const styles = { validated: 'bg-green-500/10 text-green-600', failed: 'bg-destructive/10 text-destructive', pending: 'bg-muted text-muted-foreground', blocked: 'bg-amber-500/10 text-amber-600' };
   return <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${styles[state] || styles.pending}`}>{state}</span>;
 }

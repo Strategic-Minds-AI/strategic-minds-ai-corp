@@ -107,7 +107,7 @@ export default function SandboxManager() {
             <p className="mt-1 text-2xl font-bold text-foreground">{healthy}</p>
           </div>
           <div className="rounded-xl border border-border bg-card p-4">
-            <div className="flex items-center gap-2"><Activity size={14} className="text-yellow-600"/><span className="text-[10px] font-bold uppercase text-muted-foreground">Degraded</span></div>
+            <div className="flex items-center gap-2"><Activity size={14} className="text-amber-600"/><span className="text-[10px] font-bold uppercase text-muted-foreground">Degraded</span></div>
             <p className="mt-1 text-2xl font-bold text-foreground">{degraded}</p>
           </div>
           <div className="rounded-xl border border-border bg-card p-4">
@@ -188,7 +188,7 @@ export default function SandboxManager() {
                           {sb.environment} {sb.agent_name ? `· ${sb.agent_name}` : ''} {sb.description ? `· ${sb.description}` : ''}
                           {sb.cycles_completed > 0 && ` · ${sb.cycles_completed} cycles`}
                         </div>
-                        {sb.current_task_id && <div className="mt-1 flex items-center gap-1 text-[11px] text-yellow-600"><Loader2 size={10} className="animate-spin"/> Executing task {sb.current_task_id.slice(0, 8)}...</div>}
+                        {sb.current_task_id && <div className="mt-1 flex items-center gap-1 text-[11px] text-amber-600"><Loader2 size={10} className="animate-spin"/> Executing task {sb.current_task_id.slice(0, 8)}...</div>}
                         {sb.last_error && <div className="mt-1 text-[11px] text-destructive truncate">Last error: {sb.last_error}</div>}
                         {sb.url && <a href={sb.url} target="_blank" rel="noreferrer" className="text-xs text-primary hover:underline">{sb.url}</a>}
                         {sb.key_prefix && (
@@ -248,7 +248,7 @@ export default function SandboxManager() {
                 {tasks.map(t => (
                   <div key={t.id} className="rounded-lg border border-border bg-card p-3 shadow-sm">
                     <div className="flex items-center gap-2">
-                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${t.status === 'pending' ? 'bg-muted text-muted-foreground' : t.status === 'in_progress' ? 'bg-yellow-500/10 text-yellow-600' : t.status === 'completed' ? 'bg-green-500/10 text-green-600' : 'bg-destructive/10 text-destructive'}`}>{t.status}</span>
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${t.status === 'pending' ? 'bg-muted text-muted-foreground' : t.status === 'in_progress' ? 'bg-amber-500/10 text-amber-600' : t.status === 'completed' ? 'bg-green-500/10 text-green-600' : 'bg-destructive/10 text-destructive'}`}>{t.status}</span>
                       <span className="text-sm font-medium text-foreground">{t.title}</span>
                       <span className="ml-auto text-[11px] text-muted-foreground">{t.agent_name} · {t.task_type}</span>
                     </div>

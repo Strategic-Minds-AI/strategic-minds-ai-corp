@@ -18,7 +18,7 @@ export default function TemplateGenerator({ onGenerated }) {
         niche,
         style: style || "modern, professional",
         sections: ["hero", "services", "about", "testimonials", "contact", "faq"],
-        colors: ["#FFFFFF", "#FFEA00", "#000000"],
+        colors: ["#FFFFFF", "#0066FF", "#000000"],
         fonts: ["Inter", "Roboto"],
         features: ["contact_form", "booking", "google_maps", "testimonials", "seo_optimized"],
         pages: ["home", "about", "services", "contact"]
@@ -32,7 +32,7 @@ export default function TemplateGenerator({ onGenerated }) {
   return (
     <section className="xa-card p-5">
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-9 h-9 rounded-lg bg-[#FFF7B3] flex items-center justify-center"><FileCode className="w-5 h-5 text-[#8A7300]" /></div>
+        <div className="w-9 h-9 rounded-lg bg-[#E6F0FF] flex items-center justify-center"><FileCode className="w-5 h-5 text-[#0046FF]" /></div>
         <div>
           <h2 className="font-heading font-bold text-lg text-black">Auto Template Generator</h2>
           <p className="text-xs text-black/50">AI generates a full website template spec from your niche</p>
@@ -55,7 +55,7 @@ export default function TemplateGenerator({ onGenerated }) {
             <div className="space-y-1 max-h-48 overflow-y-auto xa-scroll text-xs">
               {Object.entries(template.template).map(([k, v]) => (
                 <div key={k} className="flex gap-2">
-                  <span className="font-bold text-[#CCBB00] shrink-0">{k}:</span>
+                  <span className="font-bold text-[#0052CC] shrink-0">{k}:</span>
                   <span className="text-black/60 truncate">{typeof v === "string" ? v.slice(0, 80) : JSON.stringify(v).slice(0, 80)}</span>
                 </div>
               ))}

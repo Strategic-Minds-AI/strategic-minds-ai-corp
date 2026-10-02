@@ -68,7 +68,7 @@ export default function WebsiteFactory() {
         )}
         {error && <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-sm text-red-700">{error}</div>}
 
-        <div className="xa-card p-4 bg-[#FFF7B3]/30 border-[#E6D400]/30">
+        <div className="xa-card p-4 bg-[#E6F0FF]/30 border-[#004CE6]/30">
           <p className="text-xs text-black/60 leading-relaxed">
             <strong className="text-black">The full stack:</strong> Discover domains across all TLDs → buy via GoDaddy → AI-generate templates → create GitHub repos → build with Base44 → deploy to Vercel + Railway → connect Supabase backend → store data in Drive → auto-connect Google + social → auto-post → auto-analyze → auto-optimize. All from this one page. The worker executes every phase autonomously.
           </p>

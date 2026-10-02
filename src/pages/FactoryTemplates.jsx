@@ -95,6 +95,6 @@ export default function FactoryTemplates() {
 }
 
 function TemplateStatusBadge({ status }) {
-  const styles = { draft: 'bg-muted text-muted-foreground', active: 'bg-green-500/10 text-green-600', deprecated: 'bg-yellow-500/10 text-yellow-600', frozen: 'bg-blue-500/10 text-blue-600' };
+  const styles = { draft: 'bg-muted text-muted-foreground', active: 'bg-green-500/10 text-green-600', deprecated: 'bg-amber-500/10 text-amber-600', frozen: 'bg-blue-500/10 text-blue-600' };
   return <span className={`ml-auto rounded-full px-2 py-0.5 text-[10px] font-bold ${styles[status] || styles.draft}`}>{status}</span>;
 }
