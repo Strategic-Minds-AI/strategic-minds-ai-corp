@@ -299,3 +299,11 @@
 .xa-scroll::-webkit-scrollbar-track { background: transparent; }
 .xa-scroll::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 9999px; }
 .xa-scroll::-webkit-scrollbar-thumb:hover { background: #0066FF; }
+
+.xa-icon-chip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 12px;
+  background: linear-gradient(135deg, #E6F0FF, #0066FF20);
+  color: #004CE6; flex: none;
+}
+.xa-card-subtle { background: hsl(var(--muted)); }

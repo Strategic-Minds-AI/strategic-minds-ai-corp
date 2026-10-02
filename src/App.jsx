@@ -73,6 +73,8 @@ const Terms = lazy(() => import('@/pages/Terms'));
 const Privacy = lazy(() => import('@/pages/Privacy'));
 const SmsOptIn = lazy(() => import('@/pages/SmsOptIn'));
 const CommsInbox = lazy(() => import('@/pages/CommsInbox'));
+const VisualGallery = lazy(() => import('@/pages/VisualGallery'));
+const Visualizer = lazy(() => import('@/pages/Visualizer'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -163,6 +165,8 @@ const AuthenticatedApp = () => {
           <Route path="/diagnostic/evidence" element={<EvidenceConsole />} />
           <Route path="/diagnostic/clone" element={<CloneStudio />} />
           <Route path="/comms" element={<CommsInbox />} />
+          <Route path="/gallery" element={<VisualGallery />} />
+          <Route path="/visualizer" element={<Visualizer />} />
           <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
