@@ -1,3 +1,6 @@
+// NOTATION: All LLM calls in this app route through the Vercel AI Gateway
+// (base44/shared/aiGateway.ts) via the adminAssistant backend function —
+// never the credit-blocked built-in InvokeLLM integration.
 import { base44 } from '@/api/base44Client';
 
 export async function runChatAction({ messages, mode, attachments, executionMode = 'plan' }) {
@@ -14,18 +17,20 @@ export async function runChatAction({ messages, mode, attachments, executionMode
     return { content: 'Here is the image you requested.', imageUrl: result.url };
   }
   if (mode === 'web' || attachments.length) {
-    const urls = await Promise.all(attachments.map(async file => {
-      const result = await base44.integrations.Core.CreateFileSignedUrl({ file_uri: file.file_uri });
-      return result.signed_url;
-    }));
-    const user = await base44.auth.me();
-    const context = guidedMessages.slice(-8).map(m => `${m.role}: ${m.content}`).join('\n\n');
-    const result = await base44.integrations.Core.InvokeLLM({
-      prompt: `You are the Strategic Minds AI agency administrator's assistant. Do not claim access to portal records or permission to change them. Follow these personal response preferences when appropriate:\n${(user.assistant_instructions || '').slice(0, 15000)}\n\nConversation:\n${context}\n\n${mode === 'web' ? 'Use current online information. Include source links for factual claims; say when a fact cannot be verified.' : 'Analyze the attached files in the context of the latest user message.'}`,
-      ...(urls.length ? { file_urls: urls } : {}),
-      ...(mode === 'web' ? { add_context_from_internet: true } : {}),
-    });
-    return { content: typeof result === 'string' ? result : JSON.stringify(result) };
+    // Route through the Vercel AI Gateway via adminAssistant (no built-in InvokeLLM).
+    // The gateway does not support live web search or file_url vision; attachment
+    // names are passed as context so the assistant is aware of what was shared.
+    const attachmentNote = attachments.length
+      ? `\n\n[Attachments shared: ${attachments.map(f => f.name).join(', ')}]`
+      : '';
+    const webNote = mode === 'web'
+      ? '\n\n[Web mode: live web search is not available via the AI Gateway — answer from training knowledge and say when a fact cannot be verified.]'
+      : '';
+    const augmented = guidedMessages.map((m, i) =>
+      i === guidedMessages.length - 1 ? { ...m, content: m.content + attachmentNote + webNote } : m
+    );
+    const { data } = await base44.functions.invoke('adminAssistant', { messages: augmented, executionMode });
+    return { content: data.reply };
   }
   const { data } = await base44.functions.invoke('adminAssistant', { messages, executionMode });
   return { content: data.reply };

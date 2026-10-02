@@ -1,4 +1,7 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+// NOTATION: All LLM calls in this function route through the Vercel AI Gateway
+// (base44/shared/aiGateway.ts) — never the credit-blocked built-in InvokeLLM.
+import { callAIGateway } from '../../shared/aiGateway.ts';
 
 export default async function(req: Request): Promise<Response> {
   try {
@@ -189,11 +192,9 @@ export default async function(req: Request): Promise<Response> {
         const compSummaries = [];
         for (const comp of compDomains.slice(0, 3)) {
           try {
-            const llmRes = await base44.integrations.Core.InvokeLLM({
-              prompt: `Analyze the competitor website ${comp}. Search for information about their SEO strategy, top-ranking content, target keywords, market positioning, and any notable strengths or weaknesses. Provide a concise competitive intelligence summary.`,
-              add_context_from_internet: true,
-              model: 'gemini_3_8_flash',
-              response_json_schema: {
+            const llmRes = await callAIGateway({
+              prompt: `Analyze the competitor website ${comp}. Based on general knowledge, provide a concise competitive intelligence summary covering their likely SEO strategy, target keywords, market positioning, and notable strengths or weaknesses.`,
+              jsonSchema: {
                 type: 'object',
                 properties: {
                   summary: { type: 'string' },
@@ -203,7 +204,7 @@ export default async function(req: Request): Promise<Response> {
                 },
               },
             });
-            compSummaries.push({ domain: comp, ...(typeof llmRes === 'object' ? llmRes : { summary: String(llmRes) }) });
+            compSummaries.push({ domain: comp, ...(llmRes.json || { summary: llmRes.content }) });
           } catch (e: any) {
             compSummaries.push({ domain: comp, error: e.message });
           }
@@ -237,9 +238,9 @@ Provide a strategic analysis with:
 
 Be specific and data-driven. Focus on SEO, content, technical health, and growth. If a data source is missing, note what's needed to enable it.`;
 
-      const insightRes = await base44.integrations.Core.InvokeLLM({
+      const insightRes = await callAIGateway({
         prompt: insightPrompt,
-        response_json_schema: {
+        jsonSchema: {
           type: 'object',
           properties: {
             executive_summary: { type: 'string' },
@@ -250,7 +251,7 @@ Be specific and data-driven. Focus on SEO, content, technical health, and growth
           },
         },
       });
-      insight = typeof insightRes === 'object' ? insightRes : { executive_summary: String(insightRes), opportunities: [], issues: [], next_actions: [], next_action: 'Review latest analysis' };
+      insight = insightRes.json || { executive_summary: insightRes.content, opportunities: [], issues: [], next_actions: [], next_action: 'Review latest analysis' };
     } catch (llmError: any) {
       // Fallback: generate a basic insight from raw data without LLM
       const issues: string[] = [];
