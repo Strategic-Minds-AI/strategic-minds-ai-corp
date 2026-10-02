@@ -9,8 +9,8 @@ import { MessageSquare, Phone, CheckCircle, Info, AlertCircle } from 'lucide-rea
 // is provisioned.
 // ──────────────────────────────────────────────────────────────
 
-const SMS_NUMBER = '[YOUR TWILIO NUMBER]'; // ← Replace with your Twilio number
-const SMS_KEYWORD = 'START'; // ← The keyword customers text to opt in
+const SMS_NUMBER = '(866) 571-1174'; // Twilio toll-free number
+const SMS_KEYWORD = 'START'; // The keyword customers text to opt in
 
 export default function SmsOptIn() {
   return (
