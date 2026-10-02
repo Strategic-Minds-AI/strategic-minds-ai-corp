@@ -2,10 +2,11 @@ import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
 import { chatKey, pageOffset } from '../../shared/adminChatValidation.ts';
 import { deleteConversations } from '../../shared/adminChatConversations.ts';
 import { beginTurn, finishTurn } from '../../shared/adminChatTurns.ts';
+import { getSupabaseUser } from '../../shared/supabaseAuth.ts';
 export default async function(req: Request): Promise<Response> {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
+    const user = await getSupabaseUser(req);
     if (!user) return Response.json({ error: 'Sign in first.' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Admin access required.' }, { status: 403 });
     if (req.method !== 'POST') return Response.json({ error: 'Use POST.' }, { status: 405 });
