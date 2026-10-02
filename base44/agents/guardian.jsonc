@@ -24,28 +24,47 @@
     },
     {
       "function_name": "vaultDirectory",
-      "description": "Read the admin vault account directory \u2014 returns account references (name, provider, management URL), never credentials."
+      "description": "Read the admin vault account directory \u2014 returns account references only, never credentials"
     },
     {
       "function_name": "provisionSite",
-      "description": "Provision a website deployment to Vercel using configured hosting secrets."
+      "description": "Provision a website deployment to Vercel using configured hosting secrets"
     },
     {
       "function_name": "provisionSystem",
-      "description": "Provision a backend system or service into target infrastructure."
+      "description": "Provision a backend system or service into target infrastructure"
     },
     {
       "function_name": "provisionClientInfrastructure",
-      "description": "Provision full client infrastructure (GitHub repo, Vercel, Railway, Supabase, domain) for a new client."
+      "description": "Provision full client infrastructure for a new client project"
     },
     {
       "function_name": "bootstrapSupabase",
-      "description": "Configure Supabase Google OAuth, redirect URLs, and automatic profile triggers."
+      "description": "Configure Supabase Google OAuth, redirect URLs, and profile triggers"
     },
     {
       "function_name": "domainOperations",
-      "description": "Manage domain DNS, registration, and configuration via GoDaddy API."
+      "description": "Manage domain DNS and registration via GoDaddy API"
     }
   ],
+  "context_files": [],
+  "app_user_connector_configs": [],
+  "selected_skill_names": [],
+  "selected_workspace_skill_ids": [],
+  "model": "automatic",
+  "whatsapp_greeting": null,
+  "telegram_greeting": null,
+  "line_greeting": null,
+  "memory_config": {
+    "enabled": true,
+    "scope": "both",
+    "include_other_conversation_context": false,
+    "instructions": null
+  },
+  "voice_config": {
+    "voice_id": null
+  },
+  "emails_settings": null,
+  "allow_anonymous_access": false,
   "name": "guardian"
 }
