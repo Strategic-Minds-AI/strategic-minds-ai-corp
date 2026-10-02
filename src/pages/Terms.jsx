@@ -16,7 +16,7 @@ export default function Terms() {
         <LegalContent lastUpdated="October 2, 2026">
           <p>
             These Terms of Service ("Terms") govern your access to and use of the Strategic Minds AI
-            website located at <a href="https://strategic-ai-consulting.base44.app">strategic-ai-consulting.base44.app</a>{" "}
+            website located at <a href="https://strategicmindsai.com">strategicmindsai.com</a>{" "}
             (the "Site") and the services offered by Strategic Minds AI ("we," "us," or "our"). By
             accessing or using the Site, you agree to be bound by these Terms. If you do not agree,
             please do not use the Site.
