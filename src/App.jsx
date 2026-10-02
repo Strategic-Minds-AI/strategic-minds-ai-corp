@@ -66,6 +66,9 @@ const RevenueLeaksPage = lazy(() => import('@/pages/RevenueLeaksPage'));
 const EvidenceConsole = lazy(() => import('@/pages/EvidenceConsole'));
 const CloneStudio = lazy(() => import('@/pages/CloneStudio'));
 const SystemProvisioner = lazy(() => import('@/pages/SystemProvisioner'));
+const Terms = lazy(() => import('@/pages/Terms'));
+const Privacy = lazy(() => import('@/pages/Privacy'));
+const SmsOptIn = lazy(() => import('@/pages/SmsOptIn'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -99,6 +102,9 @@ const AuthenticatedApp = () => {
           <Route path="/services" element={<Services />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/sms-opt-in" element={<SmsOptIn />} />
           <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fportal" replace />} />}>
             <Route path="/portal" element={<Portal />} />
             <Route path="/portal/benchmark" element={<Benchmark />} />
