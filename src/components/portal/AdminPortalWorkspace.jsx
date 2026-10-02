@@ -10,6 +10,7 @@ import ChatGPTConnection from './ChatGPTConnection';
 import AdminIngestion from './AdminIngestion';
 import GoogleWorkspacePanel from './GoogleWorkspacePanel';
 import AdminPhoneLink from '@/components/portal/phone/AdminPhoneLink';
+import CommsInbox from '@/pages/CommsInbox';
 import DomainOperations from './DomainOperations';
 import PerformanceDashboard from './PerformanceDashboard';
 import BlogEditorialCalendar from './BlogEditorialCalendar';
@@ -24,6 +25,7 @@ export default function AdminPortalWorkspace({ projects, requests, clients, sele
       {active === 'domains' && <DomainOperations />}
       {active === 'chatgpt' && <ChatGPTConnection />}
       {active === 'phone' && <AdminPhoneLink />}
+      {active === 'comms' && <CommsInbox />}
       {active === 'ingestion' && <AdminIngestion projects={projects}/>}
       {active === 'google-workspace' && <GoogleWorkspacePanel />}
       {active === 'crm' && <CrmPanel />}

@@ -1,0 +1,126 @@
+{
+  "name": "CommunicationTemplate",
+  "type": "object",
+  "properties": {
+    "industry": {
+      "type": "string",
+      "default": "universal"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "voice",
+        "sms",
+        "mms",
+        "whatsapp",
+        "email",
+        "facebook",
+        "instagram",
+        "linkedin",
+        "twitter",
+        "tiktok",
+        "discord",
+        "universal"
+      ],
+      "default": "sms"
+    },
+    "situation": {
+      "type": "string",
+      "enum": [
+        "sales",
+        "marketing",
+        "follow_up",
+        "outreach",
+        "response",
+        "objection_handling",
+        "qualification",
+        "closing",
+        "appointment",
+        "nurture",
+        "re_engagement"
+      ],
+      "default": "sales"
+    },
+    "tone": {
+      "type": "string",
+      "enum": [
+        "professional",
+        "casual",
+        "urgent",
+        "empathetic",
+        "authoritative",
+        "friendly",
+        "persuasive",
+        "consultative",
+        "energetic",
+        "calm"
+      ],
+      "default": "professional"
+    },
+    "persona_id": {
+      "type": "string",
+      "description": "Linked AgentPersona ID"
+    },
+    "template_body": {
+      "type": "string",
+      "description": "The message template with {{first_name}} {{company}} placeholders"
+    },
+    "high_response_words": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "effectiveness_score": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 100
+    },
+    "target_audience": {
+      "type": "string"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "sequence_day": {
+      "type": "integer",
+      "default": 0,
+      "description": "Day number in a multi-day sequence (1, 2, 3...)"
+    },
+    "playbook_id": {
+      "type": "string",
+      "description": "Which playbook this template belongs to"
+    }
+  },
+  "required": [
+    "industry",
+    "channel",
+    "situation",
+    "template_body"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "name": "CommsEvent",
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "type": "string",
+      "description": "Reference to Conversation"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "voice",
+        "sms",
+        "mms",
+        "whatsapp",
+        "email",
+        "video"
+      ]
+    },
+    "direction": {
+      "type": "string",
+      "enum": [
+        "inbound",
+        "outbound"
+      ]
+    },
+    "from_addr": {
+      "type": "string"
+    },
+    "to_addr": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "Message body or voice transcript"
+    },
+    "media_urls": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON array of media URLs for MMS"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "queued",
+        "sent",
+        "delivered",
+        "completed",
+        "ringing",
+        "failed",
+        "undelivered",
+        "cancelled"
+      ],
+      "default": "active"
+    },
+    "provider_message_id": {
+      "type": "string",
+      "description": "Twilio message/call SID"
+    },
+    "error_code": {
+      "type": "string"
+    },
+    "error_detail": {
+      "type": "string"
+    },
+    "duration_sec": {
+      "type": "number",
+      "default": 0
+    },
+    "classification": {
+      "type": "string",
+      "enum": [
+        "LIVE",
+        "PROVIDER-BACKED",
+        "SANDBOX"
+      ],
+      "default": "LIVE"
+    },
+    "agent_generated": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if outbound message was AI-generated"
+    },
+    "campaign_id": {
+      "type": "string",
+      "description": "Campaign this event belongs to"
+    },
+    "recording_url": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "channel",
+    "direction"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

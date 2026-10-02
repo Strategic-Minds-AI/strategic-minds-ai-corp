@@ -1,0 +1,184 @@
+{
+  "name": "AgentPersona",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "persona_type": {
+      "type": "string",
+      "enum": [
+        "voice",
+        "email",
+        "phone",
+        "social_media",
+        "super",
+        "swarm_coordinator",
+        "swarm_worker",
+        "fulfillment",
+        "shadow"
+      ],
+      "default": "voice"
+    },
+    "agent_tier": {
+      "type": "string",
+      "enum": [
+        "standard",
+        "super",
+        "swarm",
+        "fulfillment",
+        "shadow"
+      ],
+      "default": "standard",
+      "description": "Power tier of the agent"
+    },
+    "system_prompt": {
+      "type": "string",
+      "description": "The agent's intelligence file \u2014 defines behavior and rules"
+    },
+    "personality_traits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "tone": {
+      "type": "string"
+    },
+    "assigned_context": {
+      "type": "string",
+      "description": "Situation or job this persona is assigned to"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true
+    },
+    "avatar_color": {
+      "type": "string",
+      "default": "#0066FF"
+    },
+    "playbook_id": {
+      "type": "string",
+      "description": "Which playbook from the library this agent runs"
+    },
+    "assigned_number": {
+      "type": "string",
+      "description": "Phone number this agent sends from"
+    },
+    "target_industry": {
+      "type": "string"
+    },
+    "target_tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "sms",
+          "mms",
+          "voice",
+          "whatsapp",
+          "email",
+          "cloud_browser",
+          "web_interact",
+          "api_access",
+          "cross_site_automation",
+          "shadow_mode",
+          "social_media"
+        ]
+      },
+      "default": [
+        "sms"
+      ]
+    },
+    "shadow_mode": {
+      "type": "boolean",
+      "default": false
+    },
+    "swarm_id": {
+      "type": "string"
+    },
+    "swarm_role": {
+      "type": "string",
+      "enum": [
+        "coordinator",
+        "worker"
+      ],
+      "default": "worker"
+    },
+    "swarm_members": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "power_level": {
+      "type": "number",
+      "default": 1,
+      "minimum": 1,
+      "maximum": 10
+    },
+    "autonomy_level": {
+      "type": "string",
+      "enum": [
+        "supervised",
+        "autonomous",
+        "fully_autonomous"
+      ],
+      "default": "supervised"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "paused",
+        "draft",
+        "archived"
+      ],
+      "default": "draft"
+    },
+    "provisioned_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "contacts_assigned": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name",
+    "agent_tier",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
