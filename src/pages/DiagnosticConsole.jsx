@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
-import { ArrowLeft, Loader2, Search, TrendingDown, ShieldAlert, Wrench, Mail, Activity, FileSearch, ChevronRight, AlertTriangle, CheckCircle2, DollarSign, Gauge, Network, Database, ShieldCheck } from "lucide-react";
+import { ArrowLeft, Loader2, Search, TrendingDown, ShieldAlert, Wrench, Mail, Activity, FileSearch, ChevronRight, AlertTriangle, CheckCircle2, DollarSign, Gauge, Network, Database, ShieldCheck, Copy } from "lucide-react";
 
 export default function DiagnosticConsole() {
   const navigate = useNavigate();
@@ -51,6 +51,7 @@ export default function DiagnosticConsole() {
     { path: "/diagnostic/evidence", label: "Evidence Trail", icon: Database, desc: "Audit receipts & snapshots" },
     { path: "/diagnostic/leaks", label: "Revenue Leaks", icon: TrendingDown, desc: "Quantified $ impact" },
     { path: "/diagnostic/system-map", label: "System Map", icon: Network, desc: "Detected tech stack" },
+    { path: "/diagnostic/clone", label: "Site Clone Studio", icon: Copy, desc: "Deterministic site cloning" },
   ];
 
   return (

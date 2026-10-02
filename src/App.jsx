@@ -65,6 +65,7 @@ const OutreachConsole = lazy(() => import('@/pages/OutreachConsole'));
 const SystemMapPage = lazy(() => import('@/pages/SystemMapPage'));
 const RevenueLeaksPage = lazy(() => import('@/pages/RevenueLeaksPage'));
 const EvidenceConsole = lazy(() => import('@/pages/EvidenceConsole'));
+const CloneStudio = lazy(() => import('@/pages/CloneStudio'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -149,6 +150,7 @@ const AuthenticatedApp = () => {
           <Route path="/diagnostic/system-map" element={<SystemMapPage />} />
           <Route path="/diagnostic/leaks" element={<RevenueLeaksPage />} />
           <Route path="/diagnostic/evidence" element={<EvidenceConsole />} />
+          <Route path="/diagnostic/clone" element={<CloneStudio />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
       </Routes>

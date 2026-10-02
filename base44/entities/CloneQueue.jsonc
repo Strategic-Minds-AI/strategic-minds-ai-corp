@@ -1,0 +1,135 @@
+{
+  "name": "CloneQueue",
+  "type": "object",
+  "properties": {
+    "target_url": {
+      "type": "string",
+      "description": "URL of the site to clone"
+    },
+    "site_name": {
+      "type": "string",
+      "description": "Derived or manual name of the target site"
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry the site serves"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "critical",
+        "high",
+        "medium",
+        "low"
+      ],
+      "default": "medium"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "cloning",
+        "validating",
+        "passed",
+        "failed",
+        "cancelled"
+      ],
+      "default": "queued"
+    },
+    "clone_method": {
+      "type": "string",
+      "enum": [
+        "single_page",
+        "multi_page"
+      ],
+      "default": "single_page"
+    },
+    "pages_cloned": {
+      "type": "number",
+      "default": 0
+    },
+    "images_rehosted": {
+      "type": "number",
+      "default": 0
+    },
+    "images_total": {
+      "type": "number",
+      "default": 0
+    },
+    "css_inlined": {
+      "type": "number",
+      "default": 0
+    },
+    "links_rewritten": {
+      "type": "number",
+      "default": 0
+    },
+    "parity_score": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Deterministic parity score 0-100"
+    },
+    "brand_name": {
+      "type": "string",
+      "description": "Brand name swapped into the clone"
+    },
+    "brand_phone": {
+      "type": "string"
+    },
+    "brand_email": {
+      "type": "string"
+    },
+    "vercel_url": {
+      "type": "string",
+      "description": "Deployment URL if deployed"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit that triggered this clone"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "diagnostic",
+        "discovery"
+      ],
+      "default": "manual"
+    },
+    "error": {
+      "type": "string",
+      "description": "Error message if clone failed"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "target_url",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
