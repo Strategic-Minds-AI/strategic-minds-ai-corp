@@ -6,6 +6,7 @@ const sections = [
   ['infrastructure', 'Infrastructure'],
   ['provisioning', 'Site provisioning'],
   ['projects', 'Project requests'],
+  ['bootstrap', 'Supabase bootstrap'],
 ];
 
 export default function AdminPortalMenu({ active, onSelect }) {
