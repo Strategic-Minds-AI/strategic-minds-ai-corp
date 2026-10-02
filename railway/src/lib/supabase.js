@@ -1,6 +1,7 @@
 // Supabase client for the Railway backend service.
-// Uses the service-role key — bypasses RLS. Admin checks are enforced
-// by the auth middleware (auth bridge back to Base44).
+// Uses the service-role key only on the trusted server runtime. Browser clients
+// must use the project's publishable key instead. Authorization is enforced by
+// railway/src/lib/auth.js after validating the caller's Supabase JWT.
 import { createClient } from '@supabase/supabase-js';
 
 const url = process.env.SUPABASE_URL;
