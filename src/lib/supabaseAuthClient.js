@@ -23,23 +23,17 @@ async function initAuth() {
     let url = import.meta.env.VITE_SUPABASE_URL;
     let anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-    // Fall back to backend config endpoint
+    // Fall back to the public config endpoint; initialization failures must
+    // reach the sign-in screen instead of silently discarding the session.
     if (!url || !anonKey) {
-      try {
-        const res = await base44.functions.invoke('getAuthConfig', {});
-        url = res.data?.supabaseUrl;
-        anonKey = res.data?.supabaseAnonKey;
-      } catch (e) {
-        console.warn('Failed to fetch Supabase auth config:', e.message);
-      }
+      const res = await base44.functions.invoke('getAuthConfig', {});
+      url = res.data?.supabaseUrl;
+      anonKey = res.data?.supabaseAnonKey;
     }
+    if (!url || !anonKey) throw new Error('Sign-in configuration is unavailable. Please try again.');
 
-    if (!url || !anonKey) {
-      console.warn('Supabase URL / anon key not available — auth will not work');
-    }
-
-    _client = createClient(url || '', anonKey || '', {
-      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true },
+    _client = createClient(url, anonKey, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit' },
     });
     return _client;
   })();
@@ -81,15 +75,21 @@ export async function signOut() {
 
 export async function getSession() {
   const supabaseAuth = await initAuth();
-  const { data } = await supabaseAuth.auth.getSession();
+  // getSession alone does not report a failed OAuth URL exchange. Await and
+  // check initialization so the return handler can display the real error.
+  const { error: initializationError } = await supabaseAuth.auth.initialize();
+  if (initializationError) throw initializationError;
+  const { data, error } = await supabaseAuth.auth.getSession();
+  if (error) throw error;
   return data.session;
 }
 
 export async function getUser() {
   const supabaseAuth = await initAuth();
   const {
-    data: { user },
+    data: { user }, error,
   } = await supabaseAuth.auth.getUser();
+  if (error) throw error;
   if (!user) return null;
   const { data: profile } = await supabaseAuth
     .from('profiles')
@@ -121,14 +121,22 @@ const PUBLISHED_APP_URL = 'https://strategic-ai-consulting.base44.app';
 const OAUTH_APP_ORIGINS = [PUBLISHED_APP_URL, 'https://strategicmindai.com', 'https://strategicmindsai.com'];
 
 function resolveOAuthRedirect(redirectTo) {
-  const origin = OAUTH_APP_ORIGINS.includes(window.location.origin) ? window.location.origin : PUBLISHED_APP_URL;
+  let origin = OAUTH_APP_ORIGINS.includes(window.location.origin) ? window.location.origin : PUBLISHED_APP_URL;
+  let returnTo = safeReturnTo();
   if (redirectTo) {
     try {
       const destination = new URL(redirectTo, origin);
-      if (OAUTH_APP_ORIGINS.includes(destination.origin)) return destination.href;
+      if (OAUTH_APP_ORIGINS.includes(destination.origin)) {
+        origin = destination.origin;
+        returnTo = destination.pathname + destination.search + destination.hash;
+      }
     } catch { /* use the safe post-login destination */ }
   }
-  return new URL(safeReturnTo(), origin).href;
+  // A public return handler completes session restoration before entering
+  // protected routes, and retains Google errors instead of losing the hash.
+  const callback = new URL('/auth/callback', origin);
+  callback.searchParams.set('returnTo', returnTo);
+  return callback.href;
 }
 
 export async function signInWithGoogle(redirectTo) {

@@ -20,44 +20,50 @@ export const AuthProvider = ({ children }) => {
   const [appPublicSettings, setAppPublicSettings] = useState(null);
 
   useEffect(() => {
+    let active = true;
     let unsubscribe = null;
-
-    (async () => {
+    let revision = 0;
+    const restore = async (session, initializationError) => {
+      const current = ++revision;
+      setIsLoadingAuth(true);
       try {
-        const session = await getSession();
-        if (session) {
-          const u = await getUser();
+        if (initializationError) throw initializationError;
+        const u = session ? await getUser() : null;
+        if (active && current === revision) {
           setUser(u);
-          setIsAuthenticated(true);
+          setIsAuthenticated(Boolean(u));
+          setAuthError(null);
         }
-      } catch {
-        /* not authenticated */
-      } finally {
-        setIsLoadingAuth(false);
-        setAuthChecked(true);
-      }
-
-      // Subscribe to Supabase auth state changes
-      const { data } = await onAuthStateChange((event, session) => {
-        if (!session || event === 'SIGNED_OUT') {
+      } catch (error) {
+        if (active && current === revision) {
           setUser(null);
           setIsAuthenticated(false);
-        } else if (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED') {
-          // Supabase holds an auth lock during this callback. Defer SDK calls
-          // until it returns so restoring a Google session cannot deadlock.
-          setTimeout(async () => {
-            const u = await getUser();
-            setUser(u);
-            setIsAuthenticated(Boolean(u));
-          }, 0);
+          setAuthError({ message: error.message || 'Your sign-in session could not be restored.' });
         }
-      });
-      unsubscribe = () => data?.subscription?.unsubscribe();
-    })();
-
-    return () => {
-      if (unsubscribe) unsubscribe();
+      } finally {
+        if (active && current === revision) {
+          setIsLoadingAuth(false);
+          setAuthChecked(true);
+        }
+      }
     };
+    (async () => {
+      try {
+        // Subscribe before restoration so the returned Google session is not missed.
+        const { data } = await onAuthStateChange((event, session) => {
+          if (event !== 'INITIAL_SESSION') {
+            setTimeout(() => { if (active) restore(session); }, 0);
+          }
+        });
+        if (!active) { data?.subscription?.unsubscribe(); return; }
+        unsubscribe = () => data?.subscription?.unsubscribe();
+        const session = await getSession();
+        if (active) await restore(session);
+      } catch (error) {
+        if (active) await restore(null, error);
+      }
+    })();
+    return () => { active = false; unsubscribe?.(); };
   }, []);
 
   const checkUserAuth = async () => {

@@ -5,9 +5,11 @@ export function safeReturnTo() {
   if (!value || !value.startsWith('/') || value.startsWith('//') || /[\\\x00-\x1f\x7f]/.test(value)) return '/portal';
   try {
     const destination = new URL(value, window.location.origin);
-    if (destination.origin !== window.location.origin || destination.pathname.startsWith('//')) return '/';
+    if (destination.origin !== window.location.origin || destination.pathname.startsWith('//')) return '/portal';
+    const pathname = destination.pathname.replace(/\/+$/, '');
+    if (['/login', '/register', '/forgot-password', '/reset-password', '/auth/callback'].includes(pathname)) return '/portal';
     return destination.pathname + destination.search + destination.hash;
   } catch {
-    return '/';
+    return '/portal';
   }
 }

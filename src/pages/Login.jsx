@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "@/lib/AuthContext";
 import { Link } from "react-router-dom";
 import { signIn } from "@/lib/supabaseAuthClient";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,11 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { isAuthenticated, isLoadingAuth, authError } = useAuth();
+  const signInError = error || authError?.message;
+  useEffect(() => {
+    if (isAuthenticated && !isLoadingAuth) window.location.replace(safeReturnTo());
+  }, [isAuthenticated, isLoadingAuth]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -54,9 +60,9 @@ export default function Login() {
         </div>
       </div>
 
-      {error && (
+      {signInError && (
         <div role="alert" className="mb-4 p-3 rounded-lg bg-destructive/10 text-destructive text-sm">
-          {error}
+          {signInError}
         </div>
       )}
 

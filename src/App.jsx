@@ -16,6 +16,7 @@ import Login from '@/pages/Login';
 import Register from '@/pages/Register';
 import ForgotPassword from '@/pages/ForgotPassword';
 import ResetPassword from '@/pages/ResetPassword';
+import AuthCallback from '@/pages/AuthCallback';
 import OAuthConsent from '@/pages/OAuthConsent';
 import { Toaster as LegacyToaster } from 'sonner';
 const HomeSEOAgency = lazy(() => import('@/pages/home-seo-agency'));
@@ -89,6 +90,7 @@ const AuthenticatedApp = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/oauth/consent" element={<OAuthConsent />} />
         <Route element={<AgencyLayout />}>
           <Route path="/" element={<Home />} />
