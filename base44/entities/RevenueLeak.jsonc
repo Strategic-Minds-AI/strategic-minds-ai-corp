@@ -1,0 +1,105 @@
+{
+  "name": "RevenueLeak",
+  "type": "object",
+  "properties": {
+    "leak_id": {
+      "type": "string",
+      "description": "Deterministic leak ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "finding_id": {
+      "type": "string",
+      "description": "Reference to AuditFinding causing this leak"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "conversion_loss",
+        "seo_traffic_loss",
+        "security_breach_risk",
+        "performance_penalty",
+        "trust_deficit",
+        "mobile_gap",
+        "content_gap",
+        "infrastructure_cost",
+        "compliance_fine_risk"
+      ],
+      "description": "Category of revenue leak"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Description of how revenue is leaking"
+    },
+    "annual_impact_min": {
+      "type": "number",
+      "default": 0,
+      "description": "Minimum estimated annual revenue impact in USD"
+    },
+    "annual_impact_max": {
+      "type": "number",
+      "default": 0,
+      "description": "Maximum estimated annual revenue impact in USD"
+    },
+    "confidence": {
+      "type": "number",
+      "default": 80,
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Confidence score 0-100"
+    },
+    "recovery_potential": {
+      "type": "string",
+      "enum": [
+        "full",
+        "partial",
+        "minimal"
+      ],
+      "default": "partial",
+      "description": "How much of the leak is recoverable"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "identified",
+        "quantified",
+        "approved",
+        "recovering",
+        "recovered"
+      ],
+      "default": "identified"
+    }
+  },
+  "required": [
+    "leak_id",
+    "audit_id",
+    "category",
+    "annual_impact_min",
+    "annual_impact_max"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

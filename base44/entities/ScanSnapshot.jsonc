@@ -1,0 +1,96 @@
+{
+  "name": "ScanSnapshot",
+  "type": "object",
+  "properties": {
+    "snapshot_id": {
+      "type": "string",
+      "description": "Deterministic snapshot ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "company_url": {
+      "type": "string",
+      "description": "URL scanned"
+    },
+    "health_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0
+    },
+    "finding_count": {
+      "type": "number",
+      "default": 0
+    },
+    "critical_count": {
+      "type": "number",
+      "default": 0
+    },
+    "high_count": {
+      "type": "number",
+      "default": 0
+    },
+    "leak_count": {
+      "type": "number",
+      "default": 0
+    },
+    "annual_leak_min": {
+      "type": "number",
+      "default": 0
+    },
+    "annual_leak_max": {
+      "type": "number",
+      "default": 0
+    },
+    "tech_stack": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "JSON array of detected technologies"
+    },
+    "scanned_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "scan_type": {
+      "type": "string",
+      "enum": [
+        "full",
+        "security",
+        "seo",
+        "performance",
+        "monitoring"
+      ],
+      "default": "full"
+    }
+  },
+  "required": [
+    "snapshot_id",
+    "audit_id",
+    "health_score",
+    "scanned_at"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

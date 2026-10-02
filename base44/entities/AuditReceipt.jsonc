@@ -1,0 +1,84 @@
+{
+  "name": "AuditReceipt",
+  "type": "object",
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "description": "Deterministic receipt ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "system": {
+      "type": "string",
+      "description": "Which system produced this receipt (diagnostic_engine, security_scanner, seo_crawler, etc.)"
+    },
+    "action": {
+      "type": "string",
+      "description": "What action was performed (run_audit, generate_plan, approve_finding, etc.)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "success",
+        "failed",
+        "partial",
+        "rolled_back"
+      ],
+      "default": "success"
+    },
+    "summary": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Human-readable summary"
+    },
+    "evidence": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "JSON evidence payload"
+    },
+    "rollback": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "JSON rollback plan if applicable"
+    },
+    "performed_by": {
+      "type": "string",
+      "description": "User ID who triggered the action"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "receipt_id",
+    "system",
+    "action",
+    "status",
+    "summary"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "name": "SystemNode",
+  "type": "object",
+  "properties": {
+    "node_id": {
+      "type": "string",
+      "description": "Deterministic node ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "node_type": {
+      "type": "string",
+      "enum": [
+        "website",
+        "crm",
+        "email_marketing",
+        "analytics",
+        "payment",
+        "hosting",
+        "cdn",
+        "cms",
+        "framework",
+        "social",
+        "advertising",
+        "support",
+        "booking",
+        "forms",
+        "other"
+      ],
+      "description": "Type of business system"
+    },
+    "name": {
+      "type": "string",
+      "description": "System name (e.g. WordPress, Google Analytics, Stripe)"
+    },
+    "detected_from": {
+      "type": "string",
+      "description": "How this system was detected (html_pattern, header, script_src)"
+    },
+    "health_status": {
+      "type": "string",
+      "enum": [
+        "healthy",
+        "warning",
+        "critical",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "owner_role": {
+      "type": "string",
+      "description": "Responsible role (IT Lead, Marketing Director, etc.)"
+    },
+    "risk_count": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of findings associated with this system"
+    }
+  },
+  "required": [
+    "node_id",
+    "audit_id",
+    "node_type",
+    "name"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

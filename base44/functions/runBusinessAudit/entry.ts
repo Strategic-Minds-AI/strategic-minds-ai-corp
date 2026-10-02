@@ -22,6 +22,12 @@ export default async function(req: Request): Promise<Response> {
     if (action === 'approveFinding') return await approveFinding(base44, body);
     if (action === 'generateOutreach') return await generateOutreach(base44, body);
     if (action === 'runMonitoring') return await runMonitoring(base44, body);
+    if (action === 'getSystemMap') return await getSystemMap(base44, body);
+    if (action === 'getRevenueLeaks') return await getRevenueLeaks(base44, body);
+    if (action === 'getEvidence') return await getEvidence(base44, body);
+    if (action === 'getSnapshots') return await getSnapshots(base44, body);
+    if (action === 'getReceipts') return await getReceipts(base44, body);
+    if (action === 'getTechStack') return await getTechStack(base44, body);
 
     return Response.json({ error: 'Unknown action: ' + action }, { status: 400 });
   } catch (error) {
@@ -161,6 +167,25 @@ async function runAudit(base44: any, body: any) {
     });
   }
 
+  // 10. Deep security scan — sensitive paths, WordPress version, broken links
+  let techStack: string[] = [];
+  if (pageResult.ok) {
+    techStack = detectTechStack(pageResult.html);
+    evidence.push({ source_type: 'tech_stack', source_uri: normalizedUrl, captured_at: new Date().toISOString(), content_summary: `Detected: ${techStack.join(', ')}`, content_hash: '' });
+
+    const sensitiveFindings = await checkSensitivePaths(normalizedUrl);
+    findings.push(...sensitiveFindings.findings);
+    evidence.push(...sensitiveFindings.evidence);
+
+    const wpFindings = checkWordPressVersion(pageResult.html);
+    findings.push(...wpFindings.findings);
+    evidence.push(...wpFindings.evidence);
+
+    const brokenLinkFindings = await checkBrokenLinks(pageResult.html, normalizedUrl);
+    findings.push(...brokenLinkFindings.findings);
+    evidence.push(...brokenLinkFindings.evidence);
+  }
+
   // Calculate scores
   const criticalCount = findings.filter(f => f.severity === 'critical').length;
   const highCount = findings.filter(f => f.severity === 'high').length;
@@ -190,7 +215,7 @@ async function runAudit(base44: any, body: any) {
     }
   );
 
-  // Create finding records
+  // Create finding records + evidence + revenue leaks
   for (const f of findings) {
     const fid = await hashId(`finding:${auditId}:${f.title}`);
     await base44.entities.AuditFinding.create({
@@ -208,7 +233,117 @@ async function runAudit(base44: any, body: any) {
       annual_impact_max: f.annual_impact_max || 0,
       approval_status: 'pending'
     });
+
+    // Create RevenueLeak per finding
+    if ((f.annual_impact_max || 0) > 0) {
+      const leakId = await hashId(`leak:${auditId}:${fid}`);
+      const leakCategory = mapLeakCategory(f.category);
+      await base44.entities.RevenueLeak.create({
+        leak_id: leakId,
+        audit_id: auditId,
+        finding_id: fid,
+        category: leakCategory,
+        description: `${f.title}: ${f.business_impact || ''}`,
+        annual_impact_min: f.annual_impact_min || 0,
+        annual_impact_max: f.annual_impact_max || 0,
+        confidence: f.confidence,
+        recovery_potential: f.severity === 'critical' ? 'full' : f.severity === 'high' ? 'partial' : 'minimal',
+        status: 'quantified'
+      });
+    }
   }
+
+  // Create Evidence records
+  for (const ev of evidence) {
+    const evId = await hashId(`evidence:${auditId}:${ev.source_uri}:${ev.captured_at}`);
+    const contentHash = await hashId(ev.content_summary || ev.source_uri);
+    await base44.entities.Evidence.create({
+      evidence_id: evId,
+      audit_id: auditId,
+      source_type: ev.source_type,
+      source_uri: ev.source_uri,
+      captured_at: ev.captured_at,
+      content_summary: (ev.content_summary || '').slice(0, 5000),
+      content_hash: contentHash,
+      raw_snippet: (ev.raw_snippet || '').slice(0, 10000),
+      status_code: ev.status_code || null
+    });
+  }
+
+  // Create ScanSnapshot
+  const snapshotId = await hashId(`snapshot:${auditId}:${Date.now()}`);
+  await base44.entities.ScanSnapshot.create({
+    snapshot_id: snapshotId,
+    audit_id: auditId,
+    company_url: normalizedUrl,
+    health_score: healthScore,
+    finding_count: findings.length,
+    critical_count: criticalCount,
+    high_count: highCount,
+    leak_count: findings.filter(f => (f.annual_impact_max || 0) > 0).length,
+    annual_leak_min: annualLeakMin,
+    annual_leak_max: annualLeakMax,
+    tech_stack: JSON.stringify(techStack),
+    scanned_at: new Date().toISOString(),
+    scan_type: audit_type
+  });
+
+  // Create SystemNodes from tech stack
+  const nodeIds: Record<string, string> = {};
+  for (const tech of techStack) {
+    const nodeId = await hashId(`node:${auditId}:${tech}`);
+    const nodeType = mapTechToNodeType(tech);
+    const nodeRiskCount = findings.filter(f => f.category === 'security' || f.category === 'technical').length;
+    await base44.entities.SystemNode.create({
+      node_id: nodeId,
+      audit_id: auditId,
+      node_type: nodeType,
+      name: tech,
+      detected_from: 'html_pattern',
+      health_status: nodeRiskCount > 5 ? 'critical' : nodeRiskCount > 2 ? 'warning' : 'healthy',
+      owner_role: nodeType === 'cms' ? 'IT Lead' : nodeType === 'analytics' ? 'Marketing Director' : 'Operations Lead',
+      risk_count: nodeRiskCount
+    });
+    nodeIds[tech] = nodeId;
+  }
+
+  // Create SystemEdges — website depends on hosting/cdn, cms feeds analytics, etc.
+  const techSet = new Set(techStack);
+  if (nodeIds['Cloudflare'] && nodeIds['Website']) {
+    // skip — we don't have a "Website" node, edges are between detected tech
+  }
+  if (techSet.has('WordPress') && techSet.has('Google Analytics')) {
+    const edgeId = await hashId(`edge:${auditId}:wp_ga`);
+    await base44.entities.SystemEdge.create({
+      edge_id: edgeId, audit_id: auditId,
+      source_node_id: nodeIds['WordPress'], target_node_id: nodeIds['Google Analytics'],
+      relationship: 'feeds_data_to', risk_status: 'unknown',
+      description: 'WordPress site feeds traffic data to Google Analytics'
+    });
+  }
+  if (techSet.has('Cloudflare') && techSet.has('WordPress')) {
+    const edgeId = await hashId(`edge:${auditId}:cf_wp`);
+    await base44.entities.SystemEdge.create({
+      edge_id: edgeId, audit_id: auditId,
+      source_node_id: nodeIds['Cloudflare'], target_node_id: nodeIds['WordPress'],
+      relationship: 'protected_by', risk_status: 'secure',
+      description: 'Cloudflare CDN protects and caches WordPress site'
+    });
+  }
+
+  // Create AuditReceipt
+  const receiptId = await hashId(`receipt:${auditId}:${Date.now()}`);
+  await base44.entities.AuditReceipt.create({
+    receipt_id: receiptId,
+    audit_id: auditId,
+    system: 'diagnostic_engine',
+    action: 'run_audit',
+    status: 'success',
+    summary: `Audit completed for ${company_name || cleanUrl} — ${findings.length} findings, health ${healthScore}/100, $${annualLeakMin}-${annualLeakMax} annual leak`,
+    evidence: JSON.stringify({ audit_id: auditId, url: normalizedUrl, findings: findings.length, health_score: healthScore, tech_stack: techStack }),
+    performed_by: user.id,
+    created_at: new Date().toISOString()
+  });
 
   return Response.json({
     audit_id: auditId,
@@ -356,12 +491,17 @@ Best regards`;
 
 // ─── Dashboard stats ─────────────────────────────────────────────────
 async function dashboardStats(base44: any) {
-  const [audits, findings, plans, drafts, risks] = await Promise.all([
+  const [audits, findings, plans, drafts, risks, leaks, evidence, snapshots, receipts, nodes] = await Promise.all([
     base44.entities.BusinessAudit.filter({}, { limit: 500 }),
     base44.entities.AuditFinding.filter({}, { limit: 500 }),
     base44.entities.RepairPlan.filter({}, { limit: 100 }),
     base44.entities.OutreachDraft.filter({}, { limit: 100 }),
-    base44.entities.RiskRegister.filter({}, { limit: 100 })
+    base44.entities.RiskRegister.filter({}, { limit: 100 }),
+    base44.entities.RevenueLeak.filter({}, { limit: 500 }),
+    base44.entities.Evidence.filter({}, { limit: 500 }),
+    base44.entities.ScanSnapshot.filter({}, { limit: 200 }),
+    base44.entities.AuditReceipt.filter({}, { limit: 200 }),
+    base44.entities.SystemNode.filter({}, { limit: 200 })
   ]);
 
   const auditItems = audits.items || [];
@@ -369,6 +509,11 @@ async function dashboardStats(base44: any) {
   const planItems = plans.items || [];
   const draftItems = drafts.items || [];
   const riskItems = risks.items || [];
+  const leakItems = leaks.items || [];
+  const evidenceItems = evidence.items || [];
+  const snapshotItems = snapshots.items || [];
+  const receiptItems = receipts.items || [];
+  const nodeItems = nodes.items || [];
 
   const totalLeakMin = auditItems.reduce((s, a) => s + (a.annual_leak_min || 0), 0);
   const totalLeakMax = auditItems.reduce((s, a) => s + (a.annual_leak_max || 0), 0);
@@ -384,6 +529,11 @@ async function dashboardStats(base44: any) {
     pending_outreach: draftItems.filter(d => d.approval_status === 'pending_review').length,
     risks: riskItems.length,
     open_risks: riskItems.filter(r => r.status !== 'resolved').length,
+    revenue_leaks: leakItems.length,
+    evidence_records: evidenceItems.length,
+    scan_snapshots: snapshotItems.length,
+    receipts: receiptItems.length,
+    system_nodes: nodeItems.length,
     total_leak_min: totalLeakMin,
     total_leak_max: totalLeakMax,
     avg_health_score: avgHealth
@@ -404,17 +554,29 @@ async function getAudit(base44: any, body: any) {
   const audit = auditRes.items[0];
   if (!audit) return Response.json({ error: 'Not found' }, { status: 404 });
 
-  const findingsRes = await base44.entities.AuditFinding.filter({ audit_id }, { limit: 500 });
-  const plansRes = await base44.entities.RepairPlan.filter({ audit_id }, { limit: 50 });
-  const draftsRes = await base44.entities.OutreachDraft.filter({ audit_id }, { limit: 50 });
-  const risksRes = await base44.entities.RiskRegister.filter({ audit_id }, { limit: 50 });
+  const [findingsRes, plansRes, draftsRes, risksRes, leaksRes, evidenceRes, snapshotsRes, nodesRes, edgesRes] = await Promise.all([
+    base44.entities.AuditFinding.filter({ audit_id }, { limit: 500 }),
+    base44.entities.RepairPlan.filter({ audit_id }, { limit: 50 }),
+    base44.entities.OutreachDraft.filter({ audit_id }, { limit: 50 }),
+    base44.entities.RiskRegister.filter({ audit_id }, { limit: 50 }),
+    base44.entities.RevenueLeak.filter({ audit_id }, { limit: 500, sort: '-annual_impact_max' }),
+    base44.entities.Evidence.filter({ audit_id }, { limit: 500, sort: '-captured_at' }),
+    base44.entities.ScanSnapshot.filter({ audit_id }, { limit: 100, sort: '-scanned_at' }),
+    base44.entities.SystemNode.filter({ audit_id }, { limit: 200 }),
+    base44.entities.SystemEdge.filter({ audit_id }, { limit: 200 })
+  ]);
 
   return Response.json({
     audit,
     findings: findingsRes.items || [],
     plans: plansRes.items || [],
     drafts: draftsRes.items || [],
-    risks: risksRes.items || []
+    risks: risksRes.items || [],
+    leaks: leaksRes.items || [],
+    evidence: evidenceRes.items || [],
+    snapshots: snapshotsRes.items || [],
+    nodes: nodesRes.items || [],
+    edges: edgesRes.items || []
   });
 }
 
@@ -804,6 +966,220 @@ async function checkSitemap(url: string) {
   } catch (e) {
     return { ok: false, detail: 'sitemap.xml not reachable: ' + e.message, evidence: { source_type: 'sitemap_xml', source_uri: sitemapUrl, captured_at: new Date().toISOString(), content_summary: 'Fetch error', content_hash: '' } };
   }
+}
+
+// ─── Deep security: tech stack detection ──────────────────────────────
+function detectTechStack(html: string): string[] {
+  const stack: string[] = [];
+  const checks: [string, RegExp][] = [
+    ['React', /react|_next\/static|__NEXT_DATA__/i],
+    ['Vue.js', /vue\.js|vuejs|__vue/i],
+    ['Angular', /angular|ng-app/i],
+    ['WordPress', /wp-content|wp-includes|wordpress/i],
+    ['Shopify', /shopify|cdn\.shopify/i],
+    ['Squarespace', /squarespace/i],
+    ['Wix', /wix\.com|wixstatic/i],
+    ['HubSpot CMS', /hubspot|hs-scripts/i],
+    ['Google Analytics', /google-analytics|gtag\(|googletagmanager/i],
+    ['Facebook Pixel', /facebook\.com\/tr|fbq\(/i],
+    ['Hotjar', /hotjar/i],
+    ['Cloudflare', /cloudflare/i],
+    ['jQuery', /jquery/i],
+    ['Bootstrap', /bootstrap/i],
+    ['Tailwind CSS', /tailwind/i],
+    ['Intercom', /intercom/i],
+    ['Zendesk', /zendesk/i],
+    ['Salesforce', /salesforce/i],
+    ['Marketo', /marketo/i],
+    ['Segment', /segment\.io|analytics\.js/i]
+  ];
+  for (const [name, re] of checks) { if (re.test(html)) stack.push(name); }
+  return stack;
+}
+
+// ─── Deep security: sensitive path probing ────────────────────────────
+async function checkSensitivePaths(url: string) {
+  const findings: any[] = [];
+  const evidence: any[] = [];
+  const sensitivePaths = ['/wp-admin/', '/admin', '/.git/config', '/.env', '/wp-config.php', '/phpinfo.php', '/.DS_Store', '/backup/', '/.htaccess'];
+
+  const checks = await Promise.all(sensitivePaths.map(async (p) => {
+    try {
+      const checkUrl = new URL(p, url).href;
+      const res = await fetch(checkUrl, { method: 'GET', signal: AbortSignal.timeout(8000), redirect: 'follow' });
+      return { path: p, status: res.status, ok: res.ok };
+    } catch { return { path: p, status: 0, ok: false }; }
+  }));
+
+  for (const check of checks) {
+    if (check.ok && check.status === 200) {
+      const isGit = check.path.includes('.git');
+      const isEnv = check.path.includes('.env');
+      const isAdmin = check.path.includes('admin') || check.path.includes('wp-admin');
+      const isConfig = check.path.includes('config') || check.path.includes('htaccess');
+      if (isGit || isEnv || isConfig) {
+        findings.push({
+          title: `Exposed Sensitive File: ${check.path}`,
+          description: `The path ${check.path} is publicly accessible and returns HTTP 200.`,
+          category: 'security', severity: 'critical', confidence: 98,
+          business_impact: 'Attackers can read credentials and source code — leading to full system compromise.',
+          recommended_repair: `Restrict access to ${check.path} via server configuration or .htaccess rules.`,
+          annual_impact_min: 30000, annual_impact_max: 150000
+        });
+      } else if (isAdmin) {
+        findings.push({
+          title: `Exposed Admin Panel: ${check.path}`,
+          description: `The admin panel at ${check.path} is publicly accessible.`,
+          category: 'security', severity: 'high', confidence: 85,
+          business_impact: 'Brute-force attacks on admin panels are a leading cause of site takeovers.',
+          recommended_repair: 'Add IP restrictions, 2FA, and rate limiting to the admin panel.',
+          annual_impact_min: 10000, annual_impact_max: 50000
+        });
+      }
+      evidence.push({ source_type: 'sensitive_path', source_uri: new URL(check.path, url).href, captured_at: new Date().toISOString(), content_summary: `HTTP ${check.status} — exposed`, content_hash: '' });
+    }
+  }
+  return { findings, evidence };
+}
+
+// ─── Deep security: WordPress version detection ──────────────────────
+function checkWordPressVersion(html: string) {
+  const findings: any[] = [];
+  const evidence: any[] = [];
+  if (/wp-content|wp-includes/i.test(html)) {
+    const versionMatch = html.match(/wp-includes\/[^?]*\?ver=([0-9.]+)/i);
+    if (versionMatch) {
+      const ver = parseFloat(versionMatch[1]);
+      if (ver < 6.0) {
+        findings.push({
+          title: `Outdated WordPress Version (${versionMatch[1]})`,
+          description: `WordPress version ${versionMatch[1]} was detected. Versions below 6.0 have known vulnerabilities.`,
+          category: 'security', severity: 'high', confidence: 88,
+          business_impact: 'Outdated WordPress is the #1 cause of website compromises.',
+          recommended_repair: 'Update WordPress to the latest version immediately.',
+          annual_impact_min: 8000, annual_impact_max: 40000
+        });
+      }
+      evidence.push({ source_type: 'tech_stack', source_uri: '', captured_at: new Date().toISOString(), content_summary: `WordPress ${versionMatch[1]} detected`, content_hash: '' });
+    }
+  }
+  return { findings, evidence };
+}
+
+// ─── Deep security: broken link checker ──────────────────────────────
+async function checkBrokenLinks(html: string, baseUrl: string) {
+  const findings: any[] = [];
+  const evidence: any[] = [];
+  const linkRegex = /<a[^>]+href=["']([^"']+)["']/gi;
+  const internalLinks: string[] = [];
+  let m;
+  const baseOrigin = baseUrl.replace(/\/$/, '').split('#')[0];
+  while ((m = linkRegex.exec(html)) !== null) {
+    try {
+      const fullUrl = new URL(m[1], baseUrl).href;
+      if (fullUrl.startsWith(baseOrigin)) internalLinks.push(fullUrl);
+    } catch {}
+  }
+  const uniqueLinks = [...new Set(internalLinks)].slice(0, 8);
+  if (uniqueLinks.length === 0) return { findings, evidence };
+
+  const checks = await Promise.all(uniqueLinks.map(async (l) => {
+    try { const res = await fetch(l, { method: 'HEAD', signal: AbortSignal.timeout(8000) }); return { url: l, status: res.status }; }
+    catch { return { url: l, status: 0 }; }
+  }));
+  const broken = checks.filter(c => c.status === 404 || c.status === 0);
+  if (broken.length > 0) {
+    findings.push({
+      title: `${broken.length} Broken Internal Link${broken.length > 1 ? 's' : ''}`,
+      description: `Found ${broken.length} broken internal link(s): ${broken.map(b => b.url).join(', ').slice(0, 200)}`,
+      category: 'technical', severity: 'medium', confidence: 92,
+      business_impact: 'Broken links hurt SEO rankings and reduce conversions.',
+      recommended_repair: 'Fix or redirect broken links. Set up 301 redirects.',
+      annual_impact_min: 3000, annual_impact_max: 15000
+    });
+    evidence.push({ source_type: 'broken_link', source_uri: baseUrl, captured_at: new Date().toISOString(), content_summary: `${broken.length} broken links found`, content_hash: '' });
+  }
+  return { findings, evidence };
+}
+
+// ─── Map finding category to revenue leak category ───────────────────
+function mapLeakCategory(cat: string): string {
+  const map: Record<string, string> = {
+    'conversion': 'conversion_loss',
+    'seo': 'seo_traffic_loss',
+    'security': 'security_breach_risk',
+    'performance': 'performance_penalty',
+    'ux': 'trust_deficit',
+    'content': 'content_gap',
+    'technical': 'infrastructure_cost',
+    'infrastructure': 'infrastructure_cost',
+    'compliance': 'compliance_fine_risk'
+  };
+  return map[cat] || 'conversion_loss';
+}
+
+// ─── Map tech name to system node type ────────────────────────────────
+function mapTechToNodeType(tech: string): string {
+  const map: Record<string, string> = {
+    'WordPress': 'cms', 'Shopify': 'cms', 'Squarespace': 'cms', 'Wix': 'cms', 'HubSpot CMS': 'cms',
+    'React': 'framework', 'Vue.js': 'framework', 'Angular': 'framework',
+    'Google Analytics': 'analytics', 'Facebook Pixel': 'advertising', 'Hotjar': 'analytics',
+    'Cloudflare': 'cdn', 'jQuery': 'framework', 'Bootstrap': 'framework', 'Tailwind CSS': 'framework',
+    'Intercom': 'support', 'Zendesk': 'support', 'Salesforce': 'crm', 'Marketo': 'email_marketing',
+    'Segment': 'analytics'
+  };
+  return map[tech] || 'other';
+}
+
+// ─── Get system map (nodes + edges) ───────────────────────────────────
+async function getSystemMap(base44: any, body: any) {
+  const { audit_id } = body;
+  if (!audit_id) return Response.json({ error: 'audit_id required' }, { status: 400 });
+  const [nodesRes, edgesRes] = await Promise.all([
+    base44.entities.SystemNode.filter({ audit_id }, { limit: 200 }),
+    base44.entities.SystemEdge.filter({ audit_id }, { limit: 200 })
+  ]);
+  return Response.json({ nodes: nodesRes.items || [], edges: edgesRes.items || [] });
+}
+
+// ─── Get revenue leaks for an audit ───────────────────────────────────
+async function getRevenueLeaks(base44: any, body: any) {
+  const { audit_id } = body;
+  if (!audit_id) return Response.json({ error: 'audit_id required' }, { status: 400 });
+  const res = await base44.entities.RevenueLeak.filter({ audit_id }, { limit: 500, sort: '-annual_impact_max' });
+  return Response.json({ leaks: res.items || [] });
+}
+
+// ─── Get evidence for an audit ───────────────────────────────────────
+async function getEvidence(base44: any, body: any) {
+  const { audit_id } = body;
+  if (!audit_id) return Response.json({ error: 'audit_id required' }, { status: 400 });
+  const res = await base44.entities.Evidence.filter({ audit_id }, { limit: 500, sort: '-captured_at' });
+  return Response.json({ evidence: res.items || [] });
+}
+
+// ─── Get scan snapshots for an audit ──────────────────────────────────
+async function getSnapshots(base44: any, body: any) {
+  const { audit_id } = body;
+  if (!audit_id) return Response.json({ error: 'audit_id required' }, { status: 400 });
+  const res = await base44.entities.ScanSnapshot.filter({ audit_id }, { limit: 100, sort: '-scanned_at' });
+  return Response.json({ snapshots: res.items || [] });
+}
+
+// ─── Get audit receipts ──────────────────────────────────────────────
+async function getReceipts(base44: any, body: any) {
+  const { audit_id } = body;
+  const query = audit_id ? { audit_id } : {};
+  const res = await base44.entities.AuditReceipt.filter(query, { limit: 200, sort: '-created_date' });
+  return Response.json({ receipts: res.items || [] });
+}
+
+// ─── Get tech stack for an audit ─────────────────────────────────────
+async function getTechStack(base44: any, body: any) {
+  const { audit_id } = body;
+  if (!audit_id) return Response.json({ error: 'audit_id required' }, { status: 400 });
+  const res = await base44.entities.SystemNode.filter({ audit_id }, { limit: 100 });
+  return Response.json({ tech: (res.items || []).map(n => ({ name: n.name, type: n.node_type, health: n.health_status, risks: n.risk_count })) });
 }
 
 function generateReport(company: string, url: string, findings: any[], healthScore: number, leakMin: number, leakMax: number) {

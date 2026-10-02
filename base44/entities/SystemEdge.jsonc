@@ -1,0 +1,79 @@
+{
+  "name": "SystemEdge",
+  "type": "object",
+  "properties": {
+    "edge_id": {
+      "type": "string",
+      "description": "Deterministic edge ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "source_node_id": {
+      "type": "string",
+      "description": "Reference to SystemNode (source)"
+    },
+    "target_node_id": {
+      "type": "string",
+      "description": "Reference to SystemNode (target)"
+    },
+    "relationship": {
+      "type": "string",
+      "enum": [
+        "depends_on",
+        "integrates_with",
+        "feeds_data_to",
+        "shares_users_with",
+        "hosts",
+        "protected_by",
+        "monitored_by"
+      ],
+      "description": "Relationship type between systems"
+    },
+    "risk_status": {
+      "type": "string",
+      "enum": [
+        "secure",
+        "warning",
+        "critical",
+        "unknown"
+      ],
+      "default": "unknown"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Edge description"
+    }
+  },
+  "required": [
+    "edge_id",
+    "audit_id",
+    "source_node_id",
+    "target_node_id",
+    "relationship"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

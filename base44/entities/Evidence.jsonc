@@ -1,0 +1,90 @@
+{
+  "name": "Evidence",
+  "type": "object",
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "description": "Deterministic evidence ID"
+    },
+    "audit_id": {
+      "type": "string",
+      "description": "Reference to BusinessAudit"
+    },
+    "finding_id": {
+      "type": "string",
+      "description": "Reference to AuditFinding this evidence supports"
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "http_response",
+        "html_content",
+        "header_check",
+        "ssl_certificate",
+        "robots_txt",
+        "sitemap_xml",
+        "sensitive_path",
+        "broken_link",
+        "tech_stack",
+        "page_structure"
+      ],
+      "description": "Type of evidence source"
+    },
+    "source_uri": {
+      "type": "string",
+      "description": "URL or path where evidence was captured"
+    },
+    "captured_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When evidence was captured"
+    },
+    "content_summary": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "Summary of captured content"
+    },
+    "content_hash": {
+      "type": "string",
+      "description": "SHA-256 hash of raw evidence content for integrity"
+    },
+    "raw_snippet": {
+      "type": "string",
+      "maxLength": 10000,
+      "description": "Raw evidence snippet (HTML, header value, etc.)"
+    },
+    "status_code": {
+      "type": "number",
+      "description": "HTTP status code if applicable"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "audit_id",
+    "source_type",
+    "source_uri",
+    "captured_at"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
