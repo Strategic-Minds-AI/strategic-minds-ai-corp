@@ -127,6 +127,77 @@ const TOOLS = [
         required: ['name', 'channel', 'message_template']
       }
     }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_vault_accounts',
+      description: 'List the admin vault account directory — connected accounts and references (name, provider, management URL). Never returns credentials or secret values.',
+      parameters: { type: 'object', properties: { limit: { type: 'number', description: 'Max accounts to return (default 50)' } } }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'provision_site',
+      description: 'Provision a website deployment to Vercel using configured hosting secrets. Use when implementing a site into production hosting.',
+      parameters: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'Site or project name' },
+          repo_url: { type: 'string', description: 'GitHub repository URL to deploy from' },
+          domain: { type: 'string', description: 'Custom domain to configure (optional)' },
+          client_id: { type: 'string', description: 'Associated client ID if applicable' }
+        },
+        required: ['name']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'provision_client_infrastructure',
+      description: 'Provision full client infrastructure — GitHub repo, Vercel hosting, Railway backend, Supabase database, and domain — for a new client project. Use when onboarding a new client system end-to-end.',
+      parameters: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'Infrastructure project name' },
+          client_id: { type: 'string', description: 'Client ID to associate' },
+          stack_type: { type: 'string', enum: ['static_site', 'vite_app', 'fullstack', 'backend_api', 'mobile_app'], description: 'Stack type to provision' },
+          description: { type: 'string', description: 'What this system is for' }
+        },
+        required: ['name', 'client_id']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'bootstrap_supabase',
+      description: 'Configure Supabase Google OAuth client, redirect URLs, and automatic user-profile creation triggers. Use when implementing authentication into a Supabase-backed system.',
+      parameters: {
+        type: 'object',
+        properties: {
+          dry_run: { type: 'boolean', description: 'Validate credentials without making changes (default true)' },
+          google_client_id: { type: 'string', description: 'Google OAuth client ID (optional — uses app secret if omitted)' }
+        }
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'domain_operations',
+      description: 'Manage domain DNS, registration, and configuration via the GoDaddy API. Use when implementing a domain into a system.',
+      parameters: {
+        type: 'object',
+        properties: {
+          action: { type: 'string', enum: ['check_availability', 'register', 'configure_dns', 'list_domains'], description: 'Domain operation to perform' },
+          domain: { type: 'string', description: 'Domain name (e.g. example.com)' }
+        },
+        required: ['action']
+      }
+    }
   }
 ];
 
@@ -203,6 +274,34 @@ async function executeTool(base44: any, name: string, args: any): Promise<string
           status: 'draft'
         });
         return JSON.stringify({ success: true, campaign_id: camp.id, message: `Campaign created: ${args.name}` });
+      }
+      case 'list_vault_accounts': {
+        const res = await base44.entities.VaultAccount.filter({}, { sort: '-created_date', limit: args.limit || 50, fields: ['name', 'provider', 'management_url', 'connector_id'] });
+        return JSON.stringify({ count: res.items.length, accounts: res.items.map((a: any) => ({ name: a.name, provider: a.provider, management_url: a.management_url || '', connected: Boolean(a.connector_id) })) });
+      }
+      case 'provision_site': {
+        const fnRes = await base44.functions.invoke('provisionSite', { name: args.name, repo_url: args.repo_url || '', domain: args.domain || '', client_id: args.client_id || '' });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, deployment_url: d.deployment_url || d.vercel_url || '', message: `Site provisioned: ${args.name}` });
+      }
+      case 'provision_client_infrastructure': {
+        const fnRes = await base44.functions.invoke('provisionClientInfrastructure', { name: args.name, client_id: args.client_id, stack_type: args.stack_type || 'vite_app', description: args.description || '' });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, infrastructure_id: d.id || '', provision_status: d.provision_status || 'pending', message: `Client infrastructure provisioned: ${args.name}` });
+      }
+      case 'bootstrap_supabase': {
+        const fnRes = await base44.functions.invoke('bootstrapSupabase', { dry_run: args.dry_run !== false, google_client_id: args.google_client_id || '' });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, dry_run: d.dry_run, steps: d.steps || [], message: d.dry_run ? 'Supabase credentials validated (dry run).' : 'Supabase OAuth and profiles configured.' });
+      }
+      case 'domain_operations': {
+        const fnRes = await base44.functions.invoke('domainOperations', { action: args.action, domain: args.domain || '' });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, action: args.action, domain: args.domain || '', result: d });
       }
       default:
         return JSON.stringify({ error: `Unknown tool: ${name}` });

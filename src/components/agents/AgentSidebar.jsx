@@ -32,6 +32,7 @@ const AGENT_GROUPS = [
   { label: 'Build', agents: ['code_architect'] },
   { label: 'Grow', agents: ['social_strategist', 'sales_engine'] },
   { label: 'Discover', agents: ['brand_guardian'] },
+  { label: 'Secure', agents: ['guardian'] },
 ];
 
 const TOOLS = [
@@ -55,6 +56,7 @@ export const AGENT_META = {
   social_strategist: { label: 'Social Strategist', icon: 'megaphone' },
   sales_engine: { label: 'Sales Engine', icon: 'rocket' },
   brand_guardian: { label: 'Brand Guardian', icon: 'sparkles' },
+  guardian: { label: 'Guardian Agent', icon: 'shield' },
   replicator: { label: 'The Replicator', icon: 'gitfork' },
   swarm: { label: 'The Swarm', icon: 'users' },
 };
