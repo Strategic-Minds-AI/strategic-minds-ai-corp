@@ -1,0 +1,12 @@
+# Exclude non-frontend directories from Vercel deployments.
+# These are backend / infrastructure that run elsewhere (Base44, Railway, Supabase).
+base44
+railway
+supabase
+_generated_linegate
+automation
+.github
+skills-lock.json
+AGENTS.md
+CLAUDE.md
+README.md
