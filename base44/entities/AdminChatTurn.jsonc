@@ -104,11 +104,6 @@
     "create": {
       "$and": [
         {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
           "data.owner_id": "{{user.id}}"
         },
         {
@@ -117,40 +112,13 @@
       ]
     },
     "read": {
-      "$and": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        }
-      ]
+      "created_by_id": "{{user.id}}"
     },
     "update": {
-      "$and": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        }
-      ]
+      "created_by_id": "{{user.id}}"
     },
     "delete": {
-      "$and": [
-        {
-          "user_condition": {
-            "role": "admin"
-          }
-        },
-        {
-          "created_by_id": "{{user.id}}"
-        }
-      ]
+      "created_by_id": "{{user.id}}"
     }
   }
 }
