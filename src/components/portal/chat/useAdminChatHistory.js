@@ -5,12 +5,13 @@ import { enqueueOperation, readOutbox } from '@/components/portal/chat/chatHisto
 import projectChatOutbox from '@/components/portal/chat/projectChatOutbox';
 import synchronizeChatOutbox from '@/components/portal/chat/synchronizeChatOutbox';
 import migrateChatHistory from '@/components/portal/chat/migrateChatHistory';
+import { readChatCache, writeChatCache, clearChatCache } from '@/components/portal/chat/chatHistoryCache';
 export default function useAdminChatHistory(ownerId) {
-  const [chats,setChats] = useState([]); const [scope,setScope] = useState(ownerId); const [loading,setLoading] = useState(true); const [ready,setReady] = useState(false); const [error,setError] = useState(''); const [busy,setBusy] = useState(0);
+  const [chats,setChats] = useState(() => { const cached = readChatCache(ownerId); return cached ? cached.chats : []; }); const [scope,setScope] = useState(ownerId); const [loading,setLoading] = useState(true); const [ready,setReady] = useState(false); const [error,setError] = useState(''); const [busy,setBusy] = useState(0);
   const ticket = useRef(0); const hydrated = useRef(false); const flushing = useRef(null);
   const refresh = useCallback(async () => {
     const request = ++ticket.current; const snapshot = await loadHistory(ownerId);
-    if (request === ticket.current) setChats(projectChatOutbox(snapshot, readOutbox(ownerId)));
+    if (request === ticket.current) { const projected = projectChatOutbox(snapshot, readOutbox(ownerId)); setChats(projected); writeChatCache(ownerId, projected); }
   },[ownerId]);
   const flush = useCallback(() => {
     if (!flushing.current) flushing.current = synchronizeChatOutbox(ownerId).finally(() => { flushing.current = null; });
@@ -18,12 +19,16 @@ export default function useAdminChatHistory(ownerId) {
   },[ownerId]);
   const synchronize = useCallback(async () => {
     if (!ownerId) return; setLoading(true); setError('');
-    try { await migrateChatHistory(ownerId); await flush(); await refresh(); hydrated.current = true; setReady(true); }
-    catch (failure) { setError(failure.response?.data?.error || failure.message || 'History synchronization failed. Your existing browser history is retained until import succeeds.'); }
+    try { await migrateChatHistory(ownerId); await flush(); await refresh(); hydrated.current = true; setReady(true); setError(''); }
+    catch (failure) { setError(failure.response?.data?.error || failure.message || 'History synchronization failed. Your cached conversations are still visible below.'); }
     finally { setLoading(false); }
   },[ownerId,flush,refresh]);
   useEffect(() => {
-    setScope(ownerId); setChats([]); setReady(false); hydrated.current = false; synchronize();
+    setScope(ownerId);
+    // Show cached chats instantly instead of clearing to empty.
+    const cached = readChatCache(ownerId);
+    setChats(cached ? cached.chats : []);
+    setReady(false); hydrated.current = false; synchronize();
     const update = event => { if (hydrated.current && (!event?.data?.owner_id || event.data.owner_id === ownerId)) refresh().catch(failure => setError(failure.message || 'Could not refresh history.')); };
     const subscriptions = ownerId ? [base44.entities.AdminConversation.subscribe(update),base44.entities.AdminChatTurn.subscribe(update)] : [];
     const timer = setInterval(() => { if (!document.hidden) update(); },15000); window.addEventListener('focus',update); window.addEventListener('online',synchronize);
@@ -43,6 +48,6 @@ export default function useAdminChatHistory(ownerId) {
     complete: payload => queued({ ...payload,action:'complete' }),
     fail: async payload => { try { await work(() => historyRequest(ownerId,'fail',payload)); } catch { /* The visible synchronization error preserves the failure; no model retry. */ } },
     remove: chatKey => queued({ action:'delete',chatKey }),
-    clear: () => work(async () => { const { before } = await historyRequest(ownerId,'prepareClear'); enqueueOperation(ownerId,{ action:'clear',before }); setChats(previous => projectChatOutbox(previous,readOutbox(ownerId))); await flush(); })
+    clear: () => work(async () => { const { before } = await historyRequest(ownerId,'prepareClear'); enqueueOperation(ownerId,{ action:'clear',before }); setChats(previous => projectChatOutbox(previous,readOutbox(ownerId))); await flush(); clearChatCache(ownerId); })
   };
 }

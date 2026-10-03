@@ -41,10 +41,11 @@ export default function BackendConnections() {
     setTestResult(r => ({ ...r, [serviceId]: 'testing' }));
     try {
       // Check if the env vars are configured on the backend
-      const { callFunction } = await import('@/lib/functionClient');
-      const res = await callFunction('gptSync', { action: 'status' }).catch(() => ({}));
-      // For non-GPT services, check if env exists via a simple health probe
-      const envConfigured = serviceId === 'openai' ? res.configured : Boolean(process.env?.[BACKEND_SERVICES.find(s => s.id === serviceId)?.env?.[0]]);
+      const { functions } = await import('@/lib/functionClient');
+      const res = (await functions.invoke('gptSync', { action: 'status' }).catch(() => ({})))?.data || {};
+      // The frontend can't read backend env vars; use the vault entry presence
+      // and the GPT status probe as the connection signal.
+      const envConfigured = serviceId === 'openai' ? res.configured : entries.some(e => e.provider === serviceId);
       setTestResult(r => ({ ...r, [serviceId]: envConfigured ? 'ok' : 'missing' }));
     } catch { setTestResult(r => ({ ...r, [serviceId]: 'missing' })); }
     setTesting(null);

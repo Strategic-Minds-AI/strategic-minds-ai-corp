@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { KeyRound, Plus, Copy, Check, Trash2, Ban, Shield, Zap, Eye } from 'lucide-react';
 import AdminShell from '@/components/portal/AdminShell';
-import { callFunction } from '@/lib/functionClient';
+import { functions } from '@/lib/functionClient';
 
 const KEY_TYPES = [
   { value: 'admin', label: 'Admin — full read/write access', prefix: 'xa_admin_', color: 'text-destructive' },
@@ -24,7 +24,7 @@ export default function ApiGenerator() {
     setLoading(true);
     setError('');
     try {
-      const res = await callFunction('manageApiKeys', { action: 'list' });
+      const res = (await functions.invoke('manageApiKeys', { action: 'list' })).data;
       setKeys(res.keys || []);
     } catch (e) { setError(e.message); }
     setLoading(false);
@@ -36,7 +36,7 @@ export default function ApiGenerator() {
     if (!newKey.key_name.trim()) { setError('Give the key a name.'); return; }
     setCreating(true); setError('');
     try {
-      const res = await callFunction('manageApiKeys', { action: 'create', ...newKey });
+      const res = (await functions.invoke('manageApiKeys', { action: 'create', ...newKey })).data;
       setGeneratedKey(res.key);
       setNewKey({ key_name: '', key_type: 'vision_cortex', permissions: [] });
       loadKeys();
@@ -46,12 +46,12 @@ export default function ApiGenerator() {
 
   async function handleRevoke(id) {
     if (!confirm('Revoke this key? It will stop working immediately.')) return;
-    try { await callFunction('manageApiKeys', { action: 'revoke', key_id: id }); loadKeys(); } catch (e) { setError(e.message); }
+    try { await functions.invoke('manageApiKeys', { action: 'revoke', key_id: id }); loadKeys(); } catch (e) { setError(e.message); }
   }
 
   async function handleDelete(id) {
     if (!confirm('Permanently delete this key?')) return;
-    try { await callFunction('manageApiKeys', { action: 'delete', key_id: id }); loadKeys(); } catch (e) { setError(e.message); }
+    try { await functions.invoke('manageApiKeys', { action: 'delete', key_id: id }); loadKeys(); } catch (e) { setError(e.message); }
   }
 
   function togglePermission(perm) {

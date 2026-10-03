@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ArrowUpRight, Link2, ShieldCheck, RefreshCw, Send, Check, X, Zap, MessageSquare } from 'lucide-react';
-import { callFunction } from '@/lib/functionClient';
+import { functions } from '@/lib/functionClient';
 
 export default function ChatGPTConnection() {
   const [status, setStatus] = useState(null);
@@ -14,7 +14,7 @@ export default function ChatGPTConnection() {
   const loadStatus = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await callFunction('gptSync', { action: 'status' });
+      const res = (await functions.invoke('gptSync', { action: 'status' })).data;
       setStatus(res);
     } catch (e) { setError(e.message); }
     setLoading(false);
@@ -28,7 +28,7 @@ export default function ChatGPTConnection() {
     const userMsg = { role: 'user', content: message, ts: Date.now() };
     setHistory(h => [...h, userMsg]);
     try {
-      const res = await callFunction('gptSync', { action: 'sync', message, thread_id: threadId, instructions: 'You are the Strategic Minds AI agent bridged into this ChatGPT business account. Respond as GPT would, with actionable business intelligence.' });
+      const res = (await functions.invoke('gptSync', { action: 'sync', message, thread_id: threadId, instructions: 'You are the Strategic Minds AI agent bridged into this ChatGPT business account. Respond as GPT would, with actionable business intelligence.' })).data;
       if (res.error) throw new Error(res.error);
       setThreadId(res.thread_id || threadId);
       setHistory(h => [...h, { role: 'gpt', content: res.gpt_response, ts: Date.now(), bridge: res.bridge }]);
