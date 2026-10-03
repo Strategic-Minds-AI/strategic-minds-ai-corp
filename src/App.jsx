@@ -133,7 +133,7 @@ const AuthenticatedApp = () => {
           <Route path="/mission" element={<AutonomousMission />} />
           <Route path="/architect" element={<MetaArchitect />} />
           <Route path="/mission-control" element={<MissionControl />} />
-          <Route path="/factory" element={<SystemFactory />} />
+          <Route path="/system-factory" element={<SystemFactory />} />
           <Route path="/batch" element={<BatchOperations />} />
           <Route path="/website-factory" element={<WebsiteFactory />} />
           <Route path="/sandboxes" element={<SandboxManager />} />
