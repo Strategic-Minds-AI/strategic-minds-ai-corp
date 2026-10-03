@@ -4,22 +4,26 @@ import { resolve, relative } from 'node:path';
 import { build } from 'esbuild';
 import { tableName } from '../lib/entityTableMap.js';
 import { buildSchema } from './schemaBuilder.mjs';
+import { auditStandalone } from './auditStandalone.mjs';
+import { exportOwnedSource } from './exportOwnedSource.mjs';
+import { archiveOwnedRelease } from './archiveOwnedRelease.mjs';
 const root=process.cwd();const output=resolve(root,'.standalone');await mkdir(resolve(output,'api'),{recursive:true});
+const backendSource=await readdir('backend').then(()=>'backend').catch(error=>{if(error.code==='ENOENT')return 'base44';throw error;});
 const schemas={};const tables={};
-for(const file of await readdir('base44/entities')) {if(!file.endsWith('.jsonc'))continue;const schema=JSON.parse(await readFile(`base44/entities/${file}`,'utf8'));schemas[schema.name]=schema;tables[schema.name]=tableName(schema.name);}
+for(const file of await readdir(`${backendSource}/entities`)) {if(!file.endsWith('.jsonc'))continue;const schema=JSON.parse(await readFile(`${backendSource}/entities/${file}`,'utf8'));schemas[schema.name]=schema;tables[schema.name]=tableName(schema.name);}
 const generatorExtras={generator_key:{type:'string'},steps_json:{type:'string'},artifacts_json:{type:'string'}};
 if(schemas.GeneratorRun)Object.assign(schemas.GeneratorRun.properties,generatorExtras);
-const agents={};for(const file of await readdir('base44/agents'))if(file.endsWith('.jsonc'))agents[file.slice(0,-6)]=JSON.parse(await readFile(`base44/agents/${file}`,'utf8'));
-const functions=(await readdir('base44/functions')).sort();const schedules=[];const entityJobs=[];
+const agents={};for(const file of await readdir(`${backendSource}/agents`))if(file.endsWith('.jsonc'))agents[file.slice(0,-6)]=JSON.parse(await readFile(`${backendSource}/agents/${file}`,'utf8'));
+const functions=(await readdir(`${backendSource}/functions`)).sort();const schedules=[];const entityJobs=[];
 const active=new Set(['Autonomous Build Loop','AutoBuild Recovery','CRM Scheduled Follow-ups','Daily Encrypted Vault Backup','Lead to CRM Sync','Sitemap on Post Publish','Sitemap on Project Publish']);
-for(const file of await readdir('base44/workflows')) {
-  const flow=JSON.parse(await readFile(`base44/workflows/${file}`,'utf8'));if(!active.has(flow.name))continue;
+for(const file of await readdir(`${backendSource}/workflows`)) {
+  const flow=JSON.parse(await readFile(`${backendSource}/workflows/${file}`,'utf8'));if(!active.has(flow.name))continue;
   if(flow.trigger.condition)throw new Error(`Workflow condition needs explicit migration: ${flow.name}`);
   const steps=flow.definition.do;if(steps.length!==1)throw new Error(`Workflow needs explicit migration: ${flow.name}`);
   const step=Object.values(steps[0])[0];if(step.call!=='invoke_backend_function' || step.then!=='end')throw new Error(`Unsupported workflow: ${flow.name}`);
   const job={name:flow.name,...step.with,config:flow.trigger.config};if(job.config.trigger_type==='scheduled')schedules.push(job);else entityJobs.push({...job,...job.config});
 }
-const registry=`import ${JSON.stringify(resolve(root,'src/server/client.mjs'))};\n`+functions.map((name,index)=>`import f${index} from ${JSON.stringify(resolve(root,`base44/functions/${name}/entry.ts`))};`).join('\n')+`\nimport {configureRuntime} from ${JSON.stringify(resolve(root,'src/server/runtime.mjs'))};\nconfigureRuntime(${JSON.stringify({schemas,tables,agents,schedules}).slice(0,-1)},handlers:{${functions.map((name,index)=>`${JSON.stringify(name)}:f${index}`).join(',')}}});`;
+const registry=`import ${JSON.stringify(resolve(root,'src/server/client.mjs'))};\n`+functions.map((name,index)=>`import f${index} from ${JSON.stringify(resolve(root,`${backendSource}/functions/${name}/entry.ts`))};`).join('\n')+`\nimport {configureRuntime} from ${JSON.stringify(resolve(root,'src/server/runtime.mjs'))};\nconfigureRuntime(${JSON.stringify({schemas,tables,agents,schedules}).slice(0,-1)},handlers:{${functions.map((name,index)=>`${JSON.stringify(name)}:f${index}`).join(',')}}});`;
 const plugin={name:'owned-runtime',setup(bundler){
   bundler.onResolve({filter:/registry\.mjs$/},()=>({path:'registry',namespace:'generated'}));
   bundler.onLoad({filter:/.*/,namespace:'generated'},()=>({contents:registry,loader:'js',resolveDir:root}));
@@ -41,10 +45,13 @@ await writeFile(resolve(output,'vercel.json'),JSON.stringify({version:2,buildCom
 await cp('src/deployment/standalone.env.example',resolve(output,'.env.example'));
 await cp('src/deployment/STANDALONE.md',resolve(output,'README.md'));
 await mkdir(resolve(output,'workers'),{recursive:true});
-await cp('base44/shared/sandbox/railwayWorker.js',resolve(output,'workers/railwayWorker.js'));
+await cp(`${backendSource}/shared/sandbox/railwayWorker.js`,resolve(output,'workers/railwayWorker.js'));
 for(const file of ['server.mjs','api/runtime.mjs']) {
   const text=await readFile(resolve(output,file),'utf8');
   if(/(?:from\s*|import\s*\()["'](?:@base44\/|base44:runtime)/.test(text))throw new Error('Forbidden platform runtime dependency');
 }
-await writeFile(resolve(output,'dependency-audit.json'),JSON.stringify({platformRuntimeDependencies:0,functions:functions.length,agents:Object.keys(agents).length,entities:Object.keys(schemas).length,schedules:schedules.map(job=>job.name),entityWorkflows:entityJobs.map(job=>job.name),gateway:'https://ai-gateway.vercel.sh/v1',runtimeDependencies:pkg.dependencies},null,2));
-console.log(`Standalone deployment built: ${functions.length} functions, ${Object.keys(schemas).length} entities; zero platform SDK/runtime packages.`);
+const audit=await auditStandalone(output,[server,api]);
+const source=await exportOwnedSource(output,backendSource);
+await writeFile(resolve(output,'dependency-audit.json'),JSON.stringify({...audit,source,functions:functions.length,agents:Object.keys(agents).length,entities:Object.keys(schemas).length,schedules:schedules.map(job=>job.name),entityWorkflows:entityJobs.map(job=>job.name),gateway:'https://ai-gateway.vercel.sh/v1',runtimeDependencies:pkg.dependencies},null,2));
+const archive=await archiveOwnedRelease(output);
+console.log(`Independent release and editable source built: ${functions.length} functions, ${Object.keys(schemas).length} entities; zero platform SDK, runtime, hosted URLs or source build dependencies. Archive: ${archive}`);

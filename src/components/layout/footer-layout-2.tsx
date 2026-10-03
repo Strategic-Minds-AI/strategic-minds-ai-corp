@@ -96,10 +96,7 @@ const FooterLayout2 = () => {
       <div className="border-t py-12">
         <div className="container text-center">
           <span className="text-xs">
-            © {new Date().getFullYear()} Margin, Made by{" "}
-            <a href="https://base44.com" className="hover:text-primary">
-              Base44
-            </a>
+            © {new Date().getFullYear()} Strategic Minds AI
           </span>
         </div>
       </div>

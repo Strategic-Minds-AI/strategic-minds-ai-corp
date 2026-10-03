@@ -12,7 +12,8 @@ export async function ensureConversation(base44, ownerId, body) {
   return { row: await base44.entities.AdminConversation.create({ owner_id: ownerId, chat_key: body.chatKey, title: body.title.trim(), archived: false, last_activity: new Date().toISOString() }), archived: false };
 }
 export async function touchConversation(base44, ownerId, key) {
-  await base44.entities.AdminConversation.updateMany({ owner_id: ownerId, chat_key: key, archived: false }, { $max: { last_activity: new Date().toISOString() } });
+  const lastActivity = new Date().toISOString();
+  await base44.entities.AdminConversation.updateMany({ owner_id: ownerId, chat_key: key, archived: false, $or: [{ last_activity: null }, { last_activity: { $lt: lastActivity } }] }, { $set: { last_activity: lastActivity } });
 }
 export async function deleteConversations(base44, ownerId, key, before) {
   const query = { owner_id: ownerId, archived: false, ...(key ? { chat_key: chatKey(key) } : { created_date: { $lte: before } }) };

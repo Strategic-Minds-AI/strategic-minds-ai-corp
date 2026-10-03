@@ -1,7 +1,10 @@
 // Owned runtime configuration, populated by the standalone build.
 import { trustedUser, trustRequest } from './context.mjs';
 export const runtime = { handlers: {}, schemas: {}, tables: {}, agents: {} };
-export function configureRuntime(config) { Object.assign(runtime, config); }
+export function configureRuntime(config) {
+  if (!process.env.SUPABASE_SERVICE_KEY && process.env.SUPABASE_SERVICE_ROLE_KEY) process.env.SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  Object.assign(runtime, config);
+}
 export const secrets = { get: name => process.env[name] || (name === 'BASE44_APP_ID' ? process.env.APP_ID : undefined) };
 export function waitUntil(promise) { promise.catch(error => console.error('Background operation failed', error.message)); }
 export function notConfigured(service) { return Object.assign(new Error(`NOT_CONFIGURED: ${service}`), { code: 'NOT_CONFIGURED', status: 503 }); }

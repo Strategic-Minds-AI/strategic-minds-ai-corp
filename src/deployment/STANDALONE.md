@@ -1,15 +1,18 @@
 # Strategic Minds AI: independent deployment
 
-Run `npm run build:standalone` in the editor checkout. Deploy the resulting `.standalone` directory, not the editor checkout. Its package manifest contains no platform packages and its browser build uses only the standard React plugin. The root editor's mandatory tooling packages are not shipped or installed in this deployment.
+Run `npm run build:standalone` in the editor checkout. The release contains two independent deliverables: `.standalone` is the runnable deployment and `.standalone/source` is the complete editable source project. The source has its own package manifest and Vite configuration with zero Base44 packages; install it with `npm install` and rebuild it with `npm run build` outside this editor. The backend definitions are in `backend/` in the source export, not a platform runtime. No editor account, platform SDK or platform credits are required to rebuild or run either deliverable.
+
+The root editor's mandatory tooling packages are not shipped in the exported source or production deployment. The legacy `base44` variable in some screens is a local compatibility adapter for Supabase, not the Base44 SDK. Browser calls always use your owned backend; no hidden fallback to hosted platform functions is enabled. The hero image and resource PDF are included locally in `public/`.
 
 ## Deployment
 
 1. Review and apply `schema.sql` to the owned Supabase database. It adds missing tables/columns, preserves entity access rules, enables RLS, installs profile creation, private/public storage buckets, server-side aggregation, and durable automation jobs. Existing records are not copied by the build: migrate data separately before switching production traffic. Existing profiles and admin grants are retained.
 2. Configure the server-only variables from `.env.example` in the owned hosting dashboard. Existing editor secrets are not automatically transferred. Never publish gateway, service-role, encryption or provider keys in browser-prefixed variables.
-3. Deploy this directory to Vercel as a full-stack static/API project, or run `npm start` on Railway and host `dist` on Vercel. For the split deployment set `VITE_RAILWAY_API_URL` before rebuilding and set CORS `ALLOWED_ORIGINS` to the frontend origin.
+3. Deploy the release directory (not the editor checkout or the source subdirectory) to Vercel as a full-stack static/API project, or run `npm start` on Railway and host `dist` on Vercel. Set `VITE_RUNTIME_API_URL` before rebuilding for split hosting and set CORS `ALLOWED_ORIGINS` to the frontend origin. Leaving that browser setting blank uses the same-origin `/api/runtime` server. An old frontend-only deployment will return 404 until the independent backend is deployed.
 4. Set `APP_URL` to the frontend origin and `API_URL` to the full backend base. Add the frontend auth callback and reset-password URLs to Supabase's allowed redirect URLs. Set `JOB_OWNER_ID` to an existing approved admin profile; cron does not invent an admin identity. Set `CRON_SECRET` for the Vercel cron, or `ENABLE_SCHEDULER=true` on the always-on Railway backend (not both).
 5. Google accounts must be reauthorized on this deployment. Tokens stored by another platform are not copied, exposed or reused. Register `API_URL/connections/callback` with the owner's Google OAuth client. GitHub/Supabase management and other provider connections need their own securely stored credentials; until connected they return `NOT_CONFIGURED`, not fake completion.
 6. Update Stripe/Twilio and worker callback URLs to `API_URL/functions/<name>`. Transfer the existing app identifier to `APP_ID` to maintain checkout metadata and signatures. Keep the same Stripe endpoint/signing secret when updating an existing endpoint. Twilio signatures are checked before processing.
+7. Platform-managed MCP authorization is not an independent MCP server and is not migrated by this release. Its legacy consent page is retained, but external AI clients must be migrated separately before shutting down the old MCP connection. Native agents and their tool execution use the independent runtime.
 
 ## Routing and gateway
 
@@ -17,4 +20,4 @@ All browser function and integration requests use one owned transport. No SDK, p
 
 For video generation use the always-on Railway backend or a Vercel plan that permits the configured long-running function duration; do not deploy a function-duration limit exceeding your hosting plan. The generated Vercel manifest can be adjusted to that plan before deployment.
 
-`dependency-audit.json` records the compiled handler/schema inventory and external runtime packages. An emitted bundle containing a platform SDK dependency makes the build fail. This is a deployment build audit, not certification that production secrets, data migration or provider callbacks have been completed.
+`dependency-audit.json` records the compiled handler/schema inventory, browser/server scan counts and external runtime packages. Both browser and server bundles are scanned; a platform SDK, runtime import or Base44-hosted URL makes the build fail. The editable source manifest also excludes all Base44 packages. This is a build audit, not certification that production secrets, data migration or provider callbacks have been completed; do not switch production traffic until those are configured.

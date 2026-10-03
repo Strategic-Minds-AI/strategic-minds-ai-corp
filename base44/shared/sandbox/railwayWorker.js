@@ -6,7 +6,7 @@
  * 
  * Environment variables:
  *   SANDBOX_API_KEY  - The sk_sbx_... API key for this sandbox (required)
- *   APP_URL          - The app URL (default: https://strategic-ai-consulting.base44.app)
+ *   API_URL          - The owned backend base URL (required; no platform fallback)
  *   POLL_INTERVAL    - Poll interval in ms (default: 60000)
  *   MAX_CYCLES       - Max poll cycles before exit (default: 0 = infinite)
  * 

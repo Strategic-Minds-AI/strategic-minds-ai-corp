@@ -91,4 +91,4 @@ export const footerNav2: NavItem[] = [
 ];
 
 export const DOWNLOAD_FILE_URL =
-  "https://media.base44.com/files/public/6a5a38c973cbadd255396d0f/8360f2ad8_Vibe_Coding_Platform_for_Building_Apps_and_Websites___Base44.pdf";
+  "/resources/vibe-coding-guide.pdf";
