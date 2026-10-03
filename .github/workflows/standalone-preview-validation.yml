@@ -27,3 +27,10 @@ jobs:
           test -f .standalone/server.mjs
           test -f .standalone/dependency-audit.json
           test -f .standalone/dist/index.html
+      - name: Package validated owned runtime
+        uses: actions/upload-artifact@v4
+        with:
+          name: strategic-minds-owned-runtime
+          path: .standalone/
+          if-no-files-found: error
+          retention-days: 7
