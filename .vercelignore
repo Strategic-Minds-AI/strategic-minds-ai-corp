@@ -1,6 +1,6 @@
-# Exclude non-frontend directories from Vercel deployments.
-# These are backend / infrastructure that run elsewhere (Base44, Railway, Supabase).
-base44
+# Keep backend definitions: the independent API is built with the website.
+.standalone
+.vercel
 railway
 supabase
 _generated_linegate

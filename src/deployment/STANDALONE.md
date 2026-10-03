@@ -14,6 +14,10 @@ The root editor's mandatory tooling packages are not shipped in the exported sou
 6. Update Stripe/Twilio and worker callback URLs to `API_URL/functions/<name>`. Transfer the existing app identifier to `APP_ID` to maintain checkout metadata and signatures. Keep the same Stripe endpoint/signing secret when updating an existing endpoint. Twilio signatures are checked before processing.
 7. Platform-managed MCP authorization is not an independent MCP server and is not migrated by this release. Its legacy consent page is retained, but external AI clients must be migrated separately before shutting down the old MCP connection. Native agents and their tool execution use the independent runtime.
 
+## Repository deployments on Vercel
+
+The repository's `vercel.json` runs `npm run build:vercel`, which emits both the website and the independent API using Vercel's Build Output API. Do not replace that command with a frontend-only `vite build` or exclude the backend definitions: doing so removes `/api/runtime` on the next automatic deployment. The exported editable source includes the same full-stack deployment configuration.
+
 ## Routing and gateway
 
 All browser function and integration requests use one owned transport. No SDK, platform-hosted functions, agents, storage, workflow runner, connector tokens or integration-credit fallback is used by the standalone runtime. Existing function names are compiled to local handlers; nested calls dispatch in-process while retaining validated identity. Text, structured extraction, image generation, speech, transcription, video and agent tool loops use the owner's Vercel AI Gateway. Generated media is stored in Supabase. Independent Google OAuth credentials are encrypted at rest; unavailable integrations report explicit configuration errors.
