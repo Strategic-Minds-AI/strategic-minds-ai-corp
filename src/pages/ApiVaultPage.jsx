@@ -1,5 +1,6 @@
 import AdminShell from '@/components/portal/AdminShell';
 import BackendConnections from '@/components/portal/vault/BackendConnections';
+import AgentKeyStore from '@/components/portal/vault/AgentKeyStore';
 export default function ApiVaultPage() {
   return <AdminShell>
     <div className="mb-8">
@@ -7,6 +8,7 @@ export default function ApiVaultPage() {
       <h1 className="mb-3">Backend service credentials</h1>
       <p className="text-sm text-muted-foreground">Encrypted storage for Supabase, Vercel, Railway, GitHub, OpenAI, and other backend system credentials. Secrets are encrypted at rest and never exposed to the frontend.</p>
     </div>
+    <AgentKeyStore />
     <BackendConnections />
   </AdminShell>;
 }

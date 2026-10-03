@@ -336,6 +336,28 @@ export const ASSISTANT_TOOLS = [
   {
     type: 'function',
     function: {
+      name: 'list_agent_secrets',
+      description: 'List all secrets stored in the Agent Key Store (names and metadata only — never exposes values). Use this to discover what credentials are available before retrieving one.',
+      parameters: { type: 'object', properties: {} }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_secret',
+      description: 'Retrieve the decrypted value of a secret from the Agent Key Store. Use this when a task requires an API key, token, or credential that the operator has securely stored. The value is returned in the result — use it for the API call and never echo it back to the user.',
+      parameters: {
+        type: 'object',
+        properties: {
+          name: { type: 'string', description: 'The secret name (e.g. OPENAI_API_KEY, STRIPE_SECRET_KEY). Case-insensitive.' }
+        },
+        required: ['name']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
       name: 'list_api_keys',
       description: 'List all API keys (without exposing full key values).',
       parameters: { type: 'object', properties: {} }
@@ -536,6 +558,18 @@ export async function executeAssistantTool(db: any, name: string, args: any): Pr
         const d = fnRes?.data || {};
         if (d.error) return JSON.stringify({ error: d.error });
         return JSON.stringify({ success: true, key_value: d.key?.key_value, key_prefix: d.key?.key_prefix, key_id: d.key?.id, message: `API key generated: ${args.key_name}. Store the key value securely — it won't be shown again.` });
+      }
+      case 'list_agent_secrets': {
+        const fnRes = await db.functions.invoke('agentSecrets', { action: 'list' });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ count: d.secrets.length, secrets: d.secrets });
+      }
+      case 'get_secret': {
+        const fnRes = await db.functions.invoke('agentSecrets', { action: 'retrieve', name: args.name });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, name: d.name, value: d.value, message: `Secret "${d.name}" retrieved. Use it for the API call and do not echo the value back.` });
       }
       case 'list_api_keys': {
         const fnRes = await db.functions.invoke('manageApiKeys', { action: 'list' });
