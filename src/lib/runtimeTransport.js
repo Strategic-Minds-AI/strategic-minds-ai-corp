@@ -1,5 +1,9 @@
 // Every request uses the owner's backend. There is no platform fallback.
-export const API_BASE = (import.meta.env.VITE_RUNTIME_API_URL || import.meta.env.VITE_RAILWAY_API_URL || import.meta.env.VITE_RAILWAY_URL || '/api/runtime').replace(/\/$/, '');
+// When no custom backend is configured (standalone not yet deployed), fall back
+// to same-origin so requests hit the Base44 platform's native /functions/<name>
+// endpoints. Once VITE_RUNTIME_API_URL is set, all traffic routes to the owner's
+// independent backend instead.
+export const API_BASE = (import.meta.env.VITE_RUNTIME_API_URL || import.meta.env.VITE_RAILWAY_API_URL || import.meta.env.VITE_RAILWAY_URL || '').replace(/\/$/, '');
 export async function runtimeRequest(path, payload, { token, method = 'POST', form = false } = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
     method,
