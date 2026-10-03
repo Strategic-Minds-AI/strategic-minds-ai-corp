@@ -107,6 +107,1277 @@
           "destructive_hint": false,
           "idempotent_hint": true
         }
+      },
+      {
+        "name": "admin_assistant_chat",
+        "title": "Admin Assistant Chat",
+        "description": "Send a message to the Strategic Minds AI admin assistant powered by the Vercel AI Gateway. Returns a text reply for planning, writing, and answering questions. Admin only. Pass an array of messages with role 'user' or 'assistant' and string content.",
+        "handler": "adminAssistant",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "messages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": { "type": "string", "enum": ["user", "assistant"] },
+                  "content": { "type": "string" }
+                }
+              },
+              "description": "Conversation messages, most recent last. Max 12 messages, each up to 4000 chars."
+            },
+            "executionMode": {
+              "type": "string",
+              "enum": ["plan", "build"],
+              "description": "plan = analyze and draft plans only; build = produce reviewable implementation drafts"
+            },
+            "maxOutputTokens": {
+              "type": "integer",
+              "description": "Optional output limit, 256 to 8192"
+            }
+          },
+          "required": ["messages"]
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "admin_account_overview",
+        "title": "List Connected Infrastructure Accounts",
+        "description": "List connected infrastructure accounts for a given provider (vercel, supabase, github, or railway). Admin only. Returns project/repo lists with IDs, names, and management URLs.",
+        "handler": "adminAccountOverview",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "enum": ["vercel", "supabase", "github", "railway"],
+              "description": "Which infrastructure provider to list accounts for"
+            }
+          },
+          "required": ["provider"]
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "admin_chat_history",
+        "title": "Manage Admin Chat History",
+        "description": "List, begin, complete, or clear admin chat conversation history. Admin only. Use action 'conversations' to list conversations, 'turns' to get messages for specific chats, 'begin' to start a turn, 'complete' to finish one, or 'clear' to delete history before a timestamp.",
+        "handler": "adminChatHistory",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["conversations", "turns", "begin", "complete", "fail", "delete", "clear", "prepareClear", "import"],
+              "description": "History action to perform"
+            },
+            "chatKey": { "type": "string", "description": "Conversation key (for begin/complete/delete)" },
+            "turnKey": { "type": "string", "description": "Turn key (for begin/complete)" },
+            "chatKeys": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "Up to 40 conversation keys (for turns action)"
+            },
+            "title": { "type": "string", "description": "Conversation title (for begin)" },
+            "userMessage": { "type": "object", "description": "User message object (for begin)" },
+            "assistantMessage": { "type": "object", "description": "Assistant message object (for complete)" },
+            "skip": { "type": "integer", "description": "Page offset (for conversations/turns)" },
+            "before": { "type": "string", "description": "ISO timestamp cutoff (for clear)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "admin_gmail_account",
+        "title": "Read Gmail Account",
+        "description": "Read a connected Gmail inbox's profile or recent messages. Admin only. Use action 'profile' for account info or 'recent' for the latest 5 inbox messages.",
+        "handler": "adminGmailAccount",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "connectorId": {
+              "type": "string",
+              "description": "The Gmail connector ID to read from"
+            },
+            "action": {
+              "type": "string",
+              "enum": ["profile", "recent"],
+              "description": "profile = account info, recent = latest 5 inbox messages"
+            }
+          },
+          "required": ["connectorId"]
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "admin_personal_calendar",
+        "title": "Manage Personal Calendar",
+        "description": "List upcoming Google Calendar events or create a new event. Admin only. Use action 'list' for upcoming events or 'create' with title, start, and end ISO datetimes.",
+        "handler": "adminPersonalCalendar",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["list", "create"],
+              "description": "list = upcoming events, create = new event"
+            },
+            "title": { "type": "string", "description": "Event title (for create, max 200 chars)" },
+            "start": { "type": "string", "description": "Start ISO datetime (for create)" },
+            "end": { "type": "string", "description": "End ISO datetime (for create, must be after start)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "agency_drive_ingest",
+        "title": "Google Drive Operations",
+        "description": "Manage files and folders in the agency's Google Drive. Admin only. Actions: recentFiles (list recent files), folders (list folders), ensureFolder (create/find a folder), upload (upload a private file to a folder), projectFolder (get or create a project's folder chain), saveProjectText (save a markdown document to a project folder). All write actions require approved=true.",
+        "handler": "agencyDriveIngest",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["recentFiles", "folders", "ensureFolder", "upload", "projectFolder", "saveProjectText"],
+              "description": "Drive action to perform"
+            },
+            "folderId": { "type": "string", "description": "Target folder ID (defaults to root)" },
+            "name": { "type": "string", "description": "Folder or file name" },
+            "fileUri": { "type": "string", "description": "Private file URI to upload (for upload)" },
+            "mimeType": { "type": "string", "description": "MIME type of the file (for upload)" },
+            "projectId": { "type": "string", "description": "Client project ID (for projectFolder/saveProjectText)" },
+            "content": { "type": "string", "description": "Markdown content (for saveProjectText, max 200000 chars)" },
+            "pageToken": { "type": "string", "description": "Pagination token (for folders)" },
+            "approved": { "type": "boolean", "description": "Must be true for write actions" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "benchmark_hub",
+        "title": "Benchmark Audit Hub",
+        "description": "Access the benchmark audit hub: list criteria, catalog, roadmap, checkpoints, enhancement jobs, and save reports to Drive. Admin only. Actions: info, catalog, checkpoint, saveCheckpoint, roadmap, prepare, plan, jobs, saveDrive.",
+        "handler": "benchmarkHub",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["info", "catalog", "checkpoint", "saveCheckpoint", "roadmap", "prepare", "plan", "jobs", "saveDrive"],
+              "description": "Benchmark action to perform"
+            },
+            "criterionId": { "type": "string", "description": "Criterion ID (for prepare)" },
+            "route": { "type": "string", "description": "Route (for prepare)" },
+            "requestId": { "type": "string", "description": "Request ID (for prepare/saveCheckpoint)" },
+            "jobId": { "type": "string", "description": "Enhancement job ID (for plan)" },
+            "skip": { "type": "integer", "description": "Page offset (for jobs)" },
+            "projectId": { "type": "string", "description": "Drive project ID (for saveDrive)" },
+            "summary": { "type": "string", "description": "Checkpoint summary (for saveCheckpoint)" },
+            "implemented": { "type": "array", "items": { "type": "string" }, "description": "Implemented items (for saveCheckpoint)" },
+            "verification": { "type": "array", "items": { "type": "string" }, "description": "Verification items (for saveCheckpoint)" },
+            "blockers": { "type": "array", "items": { "type": "string" }, "description": "Blockers (for saveCheckpoint)" },
+            "nextBatch": { "type": "string", "description": "Next batch plan (for saveCheckpoint)" },
+            "workItems": { "type": "array", "items": { "type": "object" }, "description": "Work items (for saveCheckpoint)" },
+            "approved": { "type": "boolean", "description": "Must be true for saveDrive" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "benchmark_validator",
+        "title": "Benchmark Validator",
+        "description": "Run benchmark validation: execute a read-only validation run, self-check, or review a plan. Admin only. Actions: run (execute validation), selfcheck (run self-checks), reviewPlan (review an enhancement plan).",
+        "handler": "benchmarkValidator",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["run", "selfcheck", "reviewPlan"],
+              "description": "Validator action to perform"
+            },
+            "jobId": { "type": "string", "description": "Enhancement job ID (for reviewPlan)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "benchmark_coding",
+        "title": "Benchmark Coding Automation",
+        "description": "Manage the benchmark coding automation system on GitHub. Admin only. Actions: status (check automation health), install (install automation), enable, pause, run, authorizeLive (authorize live release). All actions except status require approved=true.",
+        "handler": "benchmarkCoding",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["status", "install", "enable", "pause", "run", "authorizeLive"],
+              "description": "Coding automation action"
+            },
+            "approved": { "type": "boolean", "description": "Must be true for all actions except status" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "bootstrap_supabase",
+        "title": "Bootstrap Supabase Auth",
+        "description": "Configure Supabase Google OAuth credentials, redirect URLs, and the profiles table with auto-create trigger. Admin only. Use dryRun=true to validate without writing.",
+        "handler": "bootstrapSupabase",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "dryRun": { "type": "boolean", "description": "Validate credentials without making changes" },
+            "supabaseAccessToken": { "type": "string", "description": "Optional Supabase PAT; otherwise uses the connected Supabase connector" }
+          }
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "commerce_checkout",
+        "title": "Create Stripe Checkout Session",
+        "description": "Create a Stripe Checkout session for a catalog item. Returns a URL the buyer navigates to. No auth required — public endpoint. Pass the catalog item ID, buyer name, email, and a valid HTTPS return URL.",
+        "handler": "commerceCheckout",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "itemId": { "type": "string", "description": "Catalog item ID to purchase" },
+            "name": { "type": "string", "description": "Buyer full name, 2 to 120 characters" },
+            "email": { "type": "string", "description": "Buyer email address" },
+            "returnUrl": { "type": "string", "description": "HTTPS return URL after checkout" },
+            "clientId": { "type": "string", "description": "Optional client UUID if logged in" }
+          },
+          "required": ["itemId", "name", "email", "returnUrl"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "commerce_approve",
+        "title": "Approve Paid Order",
+        "description": "Approve a paid commerce order and create or link a client project. Admin only. The order must be in 'paid_awaiting_approval' status and the client email must match a registered user.",
+        "handler": "commerceApprove",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "orderId": { "type": "string", "description": "Commerce order ID to approve" },
+            "clientId": { "type": "string", "description": "Registered client user ID matching the order email" }
+          },
+          "required": ["orderId", "clientId"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "comms_console",
+        "title": "Communications Console",
+        "description": "Manage SMS/text conversations, send outbound messages, create agent personas, and manage campaigns. Admin only. Actions: list (conversations), messages (get messages for a conversation), send (send SMS), updateConversation, listAgents, createAgent, listPlaybooks, listCampaigns, createCampaign, status.",
+        "handler": "commsConsole",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["list", "messages", "send", "updateConversation", "listAgents", "createAgent", "listPlaybooks", "listCampaigns", "createCampaign", "status"],
+              "description": "Comms console action"
+            },
+            "conversation_id": { "type": "string", "description": "Conversation ID (for messages/updateConversation)" },
+            "to": { "type": "string", "description": "Recipient phone number in E.164 format (for send)" },
+            "body": { "type": "string", "description": "Message body, max 1600 chars (for send)" },
+            "from_number": { "type": "string", "description": "Optional sender phone number (for send)" },
+            "contact_name": { "type": "string", "description": "Contact name (for updateConversation)" },
+            "status": { "type": "string", "description": "Conversation status (for updateConversation)" },
+            "assigned_agent_id": { "type": "string", "description": "Agent persona ID (for updateConversation)" },
+            "name": { "type": "string", "description": "Agent or campaign name (for createAgent/createCampaign)" },
+            "agent_tier": { "type": "string", "enum": ["standard", "super", "swarm", "fulfillment", "shadow"], "description": "Agent tier (for createAgent)" },
+            "system_prompt": { "type": "string", "description": "Agent system prompt (for createAgent)" },
+            "tone": { "type": "string", "description": "Agent tone (for createAgent)" },
+            "target_industry": { "type": "string", "description": "Target industry (for createAgent)" },
+            "playbook_id": { "type": "string", "description": "Playbook ID (for createAgent)" },
+            "channel": { "type": "string", "enum": ["sms", "mms", "voice", "whatsapp"], "description": "Campaign channel (for createCampaign)" },
+            "message_template": { "type": "string", "description": "Campaign message template (for createCampaign)" },
+            "persona_id": { "type": "string", "description": "Agent persona ID (for createCampaign)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "crm_assist",
+        "title": "Draft CRM Follow-Up Email",
+        "description": "Generate a polite follow-up email draft for a CRM contact using the AI Gateway. Admin only. Pass the CRM contact ID; returns a subject and body.",
+        "handler": "crmAssist",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "contactId": { "type": "string", "description": "CRM contact ID to draft a follow-up for" }
+          },
+          "required": ["contactId"]
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "crm_follow_ups",
+        "title": "Send Scheduled CRM Follow-Ups",
+        "description": "Process all due scheduled CRM follow-up emails and send them via Gmail. Admin only. Returns the count of sent and failed follow-ups.",
+        "handler": "crmFollowUps",
+        "input_schema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "crm_google",
+        "title": "Google CRM Operations",
+        "description": "Sync CRM contacts with Google Contacts and Calendar. Admin only. Actions: listContacts (list Google Contacts), saveContact (sync a CRM contact to Google Contacts), listCalendar (list upcoming events), createCall (schedule a 30-min strategy call with a contact).",
+        "handler": "crmGoogle",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["listContacts", "saveContact", "listCalendar", "createCall"],
+              "description": "Google CRM action"
+            },
+            "contactId": { "type": "string", "description": "CRM contact ID (for saveContact/createCall)" },
+            "start": { "type": "string", "description": "Future ISO datetime for the call (for createCall)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "dashboard_metrics",
+        "title": "Dashboard Metrics",
+        "description": "Get aggregated agency dashboard metrics: leads by type and trend, CRM contacts by status, content counts, commerce orders by status, and domain traffic data. Admin only.",
+        "handler": "dashboardMetrics",
+        "input_schema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "dispatch_agent_task",
+        "title": "Dispatch Agent Task",
+        "description": "Create, list, bulk-create, cancel, or get a queue summary of agent tasks. Admin only. Actions: create (single task), bulk_create (multiple tasks), list (filter tasks), queue_summary (per-agent counts), cancel (delete a task).",
+        "handler": "dispatchAgentTask",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["create", "bulk_create", "list", "queue_summary", "cancel"],
+              "description": "Task dispatch action"
+            },
+            "agent_name": { "type": "string", "description": "Agent name (for create)" },
+            "task_type": { "type": "string", "description": "Task category, e.g. google_connect, build_system (for create)" },
+            "title": { "type": "string", "description": "Task title (for create)" },
+            "description": { "type": "string", "description": "Task details (for create)" },
+            "priority": { "type": "string", "enum": ["low", "medium", "high", "urgent"], "description": "Task priority (for create)" },
+            "domain": { "type": "string", "description": "Associated domain (for create)" },
+            "autonomous": { "type": "boolean", "description": "Whether the task is autonomous (for create)" },
+            "tasks": { "type": "array", "items": { "type": "object" }, "description": "Array of task objects (for bulk_create)" },
+            "status": { "type": "string", "description": "Filter by status (for list)" },
+            "limit": { "type": "integer", "description": "Max tasks to return (for list, default 50)" },
+            "task_id": { "type": "string", "description": "Task ID (for cancel)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "domain_operations",
+        "title": "Domain Operations",
+        "description": "Analyze a domain's SEO health: fetch sitemap, read Google Search Console and Analytics data, scan competitors, and generate strategic insights. Admin only. Pass a domain_id or domain name.",
+        "handler": "domainOperations",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "domain_id": { "type": "string", "description": "Domain record ID" },
+            "domain": { "type": "string", "description": "Domain name (e.g. example.com)" }
+          }
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "dominance_engine",
+        "title": "Digital Dominance Engine",
+        "description": "Launch and manage fully automated digital dominance campaigns. Admin only. Actions: launch (start a new campaign with keyword, city, state), runPhase (run a specific phase), runAll (run all remaining phases), getStatus (poll progress), listActive (list campaigns), fameScore (calculate fame score).",
+        "handler": "dominanceEngine",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["launch", "runPhase", "runAll", "getStatus", "listActive", "fameScore"],
+              "description": "Dominance engine action"
+            },
+            "keyword": { "type": "string", "description": "Target keyword/niche (for launch)" },
+            "city": { "type": "string", "description": "Target city (for launch)" },
+            "state": { "type": "string", "description": "Target state (for launch)" },
+            "niche_id": { "type": "string", "description": "Niche ID (for launch)" },
+            "auto_purchase_domain": { "type": "boolean", "description": "Auto-purchase domain if available (for launch)" },
+            "auto_deploy_vercel": { "type": "boolean", "description": "Auto-deploy to Vercel (for launch)" },
+            "campaign_id": { "type": "string", "description": "Campaign ID (for runPhase/runAll/getStatus/fameScore)" },
+            "phase_name": { "type": "string", "description": "Phase name (for runPhase)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "execute_autonomous_action",
+        "title": "Execute Autonomous Action",
+        "description": "Execute real autonomous actions: send SMS/MMS, make voice calls, run AI tasks, scrape web pages, create CRM leads, and send playbook messages. Admin only. Actions: capability_status, send_sms, send_mms, make_call, ai_task, web_scrape, create_lead, send_playbook_message.",
+        "handler": "executeAutonomousAction",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["capability_status", "send_sms", "send_mms", "make_call", "ai_task", "web_scrape", "create_lead", "send_playbook_message"],
+              "description": "Autonomous action to execute"
+            },
+            "to_number": { "type": "string", "description": "Recipient phone in E.164 format (for send_sms/send_mms/make_call)" },
+            "from_number": { "type": "string", "description": "Optional sender number" },
+            "message": { "type": "string", "description": "Message body, max 1600 chars (for send_sms/send_mms)" },
+            "media_url": { "type": "string", "description": "Media URL (for send_mms)" },
+            "twiml_url": { "type": "string", "description": "TwiML URL (for make_call)" },
+            "conversation_id": { "type": "string", "description": "Existing conversation ID (optional)" },
+            "system_prompt": { "type": "string", "description": "System prompt (for ai_task)" },
+            "messages": { "type": "array", "items": { "type": "object" }, "description": "Message array (for ai_task)" },
+            "model": { "type": "string", "description": "AI model (for ai_task)" },
+            "json_schema": { "type": "object", "description": "Optional JSON schema (for ai_task)" },
+            "url": { "type": "string", "description": "URL to scrape (for web_scrape)" },
+            "full_name": { "type": "string", "description": "Lead name (for create_lead)" },
+            "email": { "type": "string", "description": "Lead email (for create_lead)" },
+            "phone": { "type": "string", "description": "Lead phone (for create_lead)" },
+            "company": { "type": "string", "description": "Lead company (for create_lead)" },
+            "industry": { "type": "string", "description": "Lead industry (for create_lead)" },
+            "source": { "type": "string", "description": "Lead source (for create_lead)" },
+            "playbook_id": { "type": "string", "description": "Playbook ID (for send_playbook_message)" },
+            "day": { "type": "integer", "description": "Day number in the sequence (for send_playbook_message)" },
+            "contact": { "type": "object", "description": "Contact object with phone and name (for send_playbook_message)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "execute_generator",
+        "title": "Execute Generator DAG",
+        "description": "Execute a DAG-based generator by key, or deploy a completed run to sandbox or production. Admin only. Pass generator_id and input; optionally set action to deploy_sandbox or deploy_production with a run_id.",
+        "handler": "executeGenerator",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "generator_id": { "type": "string", "description": "Generator key to execute" },
+            "input": { "type": "object", "description": "Input data for the generator" },
+            "run_id": { "type": "string", "description": "Existing run ID (for deploy actions)" },
+            "action": {
+              "type": "string",
+              "enum": ["execute", "deploy_sandbox", "deploy_production"],
+              "description": "execute = run the DAG, deploy_sandbox/deploy_production = deploy a completed run"
+            },
+            "sandbox_id": { "type": "string", "description": "Sandbox ID (for deploy_sandbox)" },
+            "test_command": { "type": "string", "description": "Test command (for deploy_sandbox)" },
+            "project_name": { "type": "string", "description": "Project name (for deploy_production)" },
+            "stack_type": { "type": "string", "description": "Stack type (for deploy_production)" },
+            "domain": { "type": "string", "description": "Domain (for deploy_production)" },
+            "env_vars": { "type": "object", "description": "Env vars (for deploy_production)" },
+            "client_id": { "type": "string", "description": "Client ID (for deploy_production)" }
+          },
+          "required": ["generator_id"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "factory_os",
+        "title": "Factory OS",
+        "description": "Manage the generator factory: CRUD generators, runs, steps, artifacts, validation receipts, repair tasks, approvals, projects, template packs, adapters, and provisioning plans. Admin only. Pass an action and the relevant fields for that action.",
+        "handler": "factoryOS",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["listGenerators", "createGenerator", "updateGenerator", "deleteGenerator", "freezeGenerator", "listRuns", "createRun", "updateRun", "cancelRun", "listSteps", "createStep", "updateStep", "listArtifacts", "createArtifact", "listValidationReceipts", "createValidationReceipt", "listRepairTasks", "createRepairTask", "updateRepairTask", "listApprovals", "createApproval", "resolveApproval", "listProjects", "createProject", "updateProject", "listTemplatePacks", "createTemplatePack", "listAdapters", "createAdapter", "updateAdapter", "listProvisioningPlans", "createProvisioningPlan", "updateProvisioningPlan", "dashboardStats"],
+              "description": "Factory OS action"
+            },
+            "id": { "type": "string", "description": "Record ID (for update/delete/freeze/cancel/resolve actions)" },
+            "definition": { "type": "object", "description": "Generator definition (for createGenerator)" },
+            "generator_id": { "type": "string", "description": "Generator ID (for createRun/listRuns/listSteps)" },
+            "input": { "type": "object", "description": "Run input (for createRun)" },
+            "seed": { "type": "string", "description": "Run seed (for createRun)" },
+            "project_id": { "type": "string", "description": "Project ID (for createRun/listRuns)" },
+            "status": { "type": "string", "description": "Filter or set status" },
+            "limit": { "type": "integer", "description": "Max records to return" },
+            "run_id": { "type": "string", "description": "Run ID (for listSteps/listArtifacts/etc.)" },
+            "step": { "type": "object", "description": "Step object (for createStep)" },
+            "artifact": { "type": "object", "description": "Artifact object (for createArtifact)" },
+            "receipt": { "type": "object", "description": "Receipt object (for createValidationReceipt)" },
+            "repair": { "type": "object", "description": "Repair object (for createRepairTask)" },
+            "approval": { "type": "object", "description": "Approval object (for createApproval)" },
+            "resolution_note": { "type": "string", "description": "Resolution note (for resolveApproval)" },
+            "project": { "type": "object", "description": "Project object (for createProject)" },
+            "pack": { "type": "object", "description": "Template pack object (for createTemplatePack)" },
+            "adapter": { "type": "object", "description": "Adapter object (for createAdapter)" },
+            "plan": { "type": "object", "description": "Provisioning plan object (for createProvisioningPlan)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "frontend_factory",
+        "title": "Frontend Factory",
+        "description": "Persist compiled BuildSpecs, list/get/delete specs, and dispatch build tasks to sandbox workers. Admin only for persist/dispatchBuild/deleteSpec. Actions: persist, listSpecs, getSpec, dispatchBuild, deleteSpec.",
+        "handler": "frontendFactory",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["persist", "listSpecs", "getSpec", "dispatchBuild", "deleteSpec"],
+              "description": "Frontend factory action"
+            },
+            "build_spec": { "type": "object", "description": "Compiled BuildSpec with project_id (for persist)" },
+            "title": { "type": "string", "description": "Spec title (for persist)" },
+            "niche": { "type": "string", "description": "Niche (for persist)" },
+            "domain": { "type": "string", "description": "Domain (for persist)" },
+            "project_id": { "type": "string", "description": "Project ID (for getSpec/dispatchBuild/deleteSpec)" },
+            "sandbox_id": { "type": "string", "description": "Sandbox ID (for dispatchBuild)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "generate_logo",
+        "title": "Generate Logo",
+        "description": "Generate a professional brand logo using the AI Gateway image endpoint. Authenticated users. Pass a brand name and optional colors and style.",
+        "handler": "generateLogo",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "brandName": { "type": "string", "description": "Brand name for the logo" },
+            "primaryColor": { "type": "string", "description": "Primary color hex (default #0059ff)" },
+            "secondaryColor": { "type": "string", "description": "Secondary color hex (default #0d2f96)" },
+            "style": { "type": "string", "description": "Logo style description (default: Modern minimalist geometric mark)" }
+          },
+          "required": ["brandName"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "generate_sitemap",
+        "title": "Generate and Submit Sitemap",
+        "description": "Generate an XML sitemap for all static pages, blog posts, and projects, upload it to public storage, and submit it to Google Search Console. Admin only.",
+        "handler": "generateSitemap",
+        "input_schema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "generate_viral_presets",
+        "title": "Generate Viral Color Presets",
+        "description": "Generate trending color palette presets for SaaS/tech brands using the AI Gateway. Authenticated users. Pass an optional count (1-12, default 6).",
+        "handler": "generateViralPresets",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "count": { "type": "integer", "description": "Number of presets to generate (1-12, default 6)" }
+          }
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "ingest_template",
+        "title": "Ingest and Manage Templates",
+        "description": "Ingest raw HTML templates, update extracted patterns, list/get/delete/activate/deactivate templates. Admin only. Actions: ingest, update, list, get, delete, activate, deactivate.",
+        "handler": "ingestTemplate",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["ingest", "update", "list", "get", "delete", "activate", "deactivate"],
+              "description": "Template action"
+            },
+            "name": { "type": "string", "description": "Template name (for ingest)" },
+            "content": { "type": "string", "description": "Raw HTML content (for ingest, max 50000 chars)" },
+            "source_type": { "type": "string", "description": "Source type, e.g. html (for ingest)" },
+            "source_url": { "type": "string", "description": "Source URL (for ingest)" },
+            "tags": { "type": "array", "items": { "type": "string" }, "description": "Tags (for ingest)" },
+            "template_id": { "type": "string", "description": "Template ID (for update/get/delete/activate/deactivate)" },
+            "extracted_patterns": { "type": "object", "description": "Extracted pattern data (for update)" },
+            "pattern_summary": { "type": "string", "description": "Pattern summary (for update)" },
+            "color_palette": { "type": "object", "description": "Color palette (for update)" },
+            "font_families": { "type": "object", "description": "Font families (for update)" },
+            "section_count": { "type": "integer", "description": "Section count (for update)" },
+            "status": { "type": "string", "description": "Filter by status (for list)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "list_portal_clients",
+        "title": "List Portal Clients",
+        "description": "List all registered client (role=user) profiles from the agency's Supabase project. Admin only. Returns id, email, full_name, and role for each client.",
+        "handler": "listPortalClients",
+        "input_schema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "manage_sandboxes",
+        "title": "Manage Sandboxes",
+        "description": "Create, list, delete, and health-check Railway and local sandbox environments. Admin only. Actions: list, create_railway, create_local, delete, health_check, railway_environments.",
+        "handler": "manageSandboxes",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["list", "create_railway", "create_local", "delete", "health_check", "railway_environments"],
+              "description": "Sandbox management action"
+            },
+            "name": { "type": "string", "description": "Sandbox name (for create actions)" },
+            "description": { "type": "string", "description": "Sandbox description (for create actions)" },
+            "agent_name": { "type": "string", "description": "Agent name to assign (for create actions)" },
+            "config": { "type": "string", "description": "JSON config string (for create_local)" },
+            "sandbox_id": { "type": "string", "description": "Sandbox ID (for delete)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "process_auto_build_step",
+        "title": "Process Auto Builder Step",
+        "description": "Execute a single pipeline step for an AutoBuild record (marketing or system-build pipeline). Admin or employee. Pass build_id, step name, and optionally advance (default true) and force (to override a running lock).",
+        "handler": "processAutoBuildStep",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "build_id": { "type": "string", "description": "AutoBuild record ID" },
+            "step": {
+              "type": "string",
+              "enum": ["profile", "vision", "strategy", "names", "content", "logo", "brand", "website", "social", "video", "review", "architecture", "data_model", "ui_system", "codegen", "deploy", "system_review"],
+              "description": "Pipeline step to execute"
+            },
+            "advance": { "type": "boolean", "description": "Auto-advance to the next step after completion (default true)" },
+            "force": { "type": "boolean", "description": "Override a running lock" },
+            "skip_validation": { "type": "boolean", "description": "Skip the post-step validation loop" }
+          },
+          "required": ["build_id", "step"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "provision_client_infrastructure",
+        "title": "Provision Client Infrastructure",
+        "description": "Provision GitHub repos, Vercel projects, Railway services, and Supabase databases for client projects. Admin only (list action available to authenticated users). Actions: listMine, list, create, github, vercel, railway, railwayService.",
+        "handler": "provisionClientInfrastructure",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["listMine", "list", "create", "github", "vercel", "railway", "railwayService"],
+              "description": "Infrastructure provisioning action"
+            },
+            "name": { "type": "string", "description": "Project name, 3-80 chars (for create)" },
+            "clientId": { "type": "string", "description": "Client user ID (for create)" },
+            "capabilities": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["code", "data"] },
+              "description": "Capabilities to provision (for create)"
+            },
+            "id": { "type": "string", "description": "Infrastructure record ID (for github/vercel/railway/railwayService)" },
+            "workspaceId": { "type": "string", "description": "Railway workspace ID (for railway)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "provision_customer_database",
+        "title": "Provision Customer Supabase Database",
+        "description": "List Supabase organizations and sites, or create a new Supabase project for a client. Admin only. Actions: list (organizations + sites), create (new Supabase project).",
+        "handler": "provisionCustomerDatabase",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["list", "create"],
+              "description": "Database provisioning action"
+            },
+            "name": { "type": "string", "description": "Site name, 3-120 chars (for create)" },
+            "clientId": { "type": "string", "description": "Client user ID (for create)" },
+            "organizationSlug": { "type": "string", "description": "Supabase organization slug (for create)" },
+            "infrastructureId": { "type": "string", "description": "Optional infrastructure record to link (for create)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "provision_site",
+        "title": "Provision Website Deployment",
+        "description": "Full website provisioning pipeline: GitHub repo + Vercel project + optional Supabase. Admin only. Actions: provision (full pipeline), github_only, supabase_only, list, get, delete, refresh_deployment.",
+        "handler": "provisionSite",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["provision", "github_only", "supabase_only", "list", "get", "delete", "refresh_deployment"],
+              "description": "Site provisioning action"
+            },
+            "project_name": { "type": "string", "description": "Project name (for provision/github_only/supabase_only)" },
+            "template_id": { "type": "string", "description": "Template asset ID (for provision/github_only)" },
+            "build_spec": { "type": "object", "description": "UFF BuildSpec (for provision/github_only)" },
+            "custom_html": { "type": "string", "description": "Custom HTML content (for provision/github_only)" },
+            "needs_backend": { "type": "boolean", "description": "Create Supabase backend (for provision)" },
+            "supabase_region": { "type": "string", "description": "Supabase region (for provision/supabase_only)" },
+            "region": { "type": "string", "description": "Supabase region (for supabase_only)" },
+            "site_id": { "type": "string", "description": "Site ID (for get/delete/refresh_deployment)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "provision_system",
+        "title": "Provision Full System Stack",
+        "description": "Unified infrastructure orchestrator: provision an entire system stack (GitHub + Vercel + Railway + Supabase + GoDaddy domain) in one call, or manage individual resources. Admin only. Actions: provision, github, vercel, railway, supabase, domain_check, domain_configure, envVars, list, get, dashboard, update, delete.",
+        "handler": "provisionSystem",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["provision", "github", "vercel", "railway", "supabase", "domain_check", "domain_configure", "envVars", "list", "get", "dashboard", "update", "delete"],
+              "description": "System provisioning action"
+            },
+            "name": { "type": "string", "description": "System name (for provision/github)" },
+            "stack_type": { "type": "string", "enum": ["static_site", "vite_app", "fullstack", "backend_api", "mobile_app"], "description": "Stack type (for provision)" },
+            "needs_vercel": { "type": "boolean", "description": "Provision Vercel (for provision)" },
+            "needs_railway": { "type": "boolean", "description": "Provision Railway (for provision)" },
+            "needs_supabase": { "type": "boolean", "description": "Provision Supabase (for provision)" },
+            "needs_domain": { "type": "boolean", "description": "Configure domain (for provision)" },
+            "domain": { "type": "string", "description": "Domain name (for provision/domain_check/domain_configure)" },
+            "env_vars": { "type": "object", "description": "Environment variables (for provision/envVars)" },
+            "supabase_region": { "type": "string", "description": "Supabase region (for provision/supabase)" },
+            "client_id": { "type": "string", "description": "Client ID (for provision)" },
+            "system_id": { "type": "string", "description": "System ID (for individual actions)" },
+            "with_service": { "type": "boolean", "description": "Create Railway service too (for railway)" },
+            "region": { "type": "string", "description": "Supabase region (for supabase)" },
+            "notes": { "type": "string", "description": "Notes (for update)" },
+            "provision_status": { "type": "string", "description": "Provision status (for update)" },
+            "limit": { "type": "integer", "description": "Max records (for list)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "recover_stuck_auto_builds",
+        "title": "Recover Stuck Auto Builds",
+        "description": "Scan for AutoBuild records stuck in 'running' status or in 'failed' status, and recover them by re-running their current step. Admin only. Returns counts of scanned, recovered, skipped, and marked_failed builds.",
+        "handler": "recoverStuckAutoBuilds",
+        "input_schema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "run_agent_chat",
+        "title": "Run Agent Chat",
+        "description": "Run a conversation with a specialist agent (orchestrator, growth_operator, code_architect, social_strategist, sales_engine, brand_guardian, replicator, swarm) with native tool calling for live system operations. Admin only. Pass agent_name and a messages array.",
+        "handler": "runAgentChat",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "agent_name": {
+              "type": "string",
+              "enum": ["orchestrator", "growth_operator", "code_architect", "social_strategist", "sales_engine", "brand_guardian", "replicator", "swarm"],
+              "description": "Which specialist agent to chat with"
+            },
+            "messages": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "role": { "type": "string" },
+                  "content": { "type": "string" }
+                }
+              },
+              "description": "Conversation history"
+            }
+          },
+          "required": ["agent_name", "messages"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "run_agent_loop",
+        "title": "Run Agent Loop",
+        "description": "Execute a bounded loop of pending autonomous agent tasks (up to 20 cycles). Admin only. Processes tasks by type: google_connect, index_check, competitor_scan, social_connect, build_system, growth_audit, content_optimize. Returns cycles run, actions executed, and follow-ups dispatched.",
+        "handler": "runAgentLoop",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "max_cycles": { "type": "integer", "description": "Max cycles to run (1-20, default 5)" },
+            "trigger": { "type": "string", "description": "Trigger source label (default manual)" }
+          }
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "run_autonomous_build",
+        "title": "Run Autonomous Build Cycle",
+        "description": "Drive the AutoBuilder pipeline: find builds with auto_advance=true and process their next step (max 3 per cycle). Admin only. Enforces blast-radius caps and governance tier checks.",
+        "handler": "runAutonomousBuild",
+        "input_schema": {
+          "type": "object",
+          "properties": {}
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "run_batch_operation",
+        "title": "Run Batch Operation",
+        "description": "Create a batch of site-building tasks across multiple sites with configurable phases (build, Google connect, social connect, video, content optimize). Admin only. Dispatches tasks to the agent queue.",
+        "handler": "runBatchOperation",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "name": { "type": "string", "description": "Batch operation name" },
+            "batch_size": { "type": "integer", "description": "Number of sites (1-100, default 10)" },
+            "google_connect": { "type": "boolean", "description": "Include Google connect phase (default true)" },
+            "social_connect": { "type": "boolean", "description": "Include social connect phase (default true)" },
+            "video_generate": { "type": "boolean", "description": "Include video generation phase (default false)" },
+            "content_optimize": { "type": "boolean", "description": "Include content optimization phase (default true)" },
+            "free_mode": { "type": "boolean", "description": "Free mode (default true)" }
+          }
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "run_business_audit",
+        "title": "Run Business Diagnostic Audit",
+        "description": "Deterministic business diagnostic engine — real HTTP checks with no LLM. Admin only. Actions: runAudit (full scan of a company URL), generateRepairPlan (30-60-90 day plan), dashboardStats, listAudits, getAudit, approveFinding, generateOutreach, runMonitoring, getSystemMap, getRevenueLeaks, getEvidence, getSnapshots, getReceipts, getTechStack.",
+        "handler": "runBusinessAudit",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["runAudit", "generateRepairPlan", "dashboardStats", "listAudits", "getAudit", "approveFinding", "generateOutreach", "runMonitoring", "getSystemMap", "getRevenueLeaks", "getEvidence", "getSnapshots", "getReceipts", "getTechStack"],
+              "description": "Audit action"
+            },
+            "company_url": { "type": "string", "description": "Company URL to audit (for runAudit)" },
+            "company_name": { "type": "string", "description": "Company name (for runAudit)" },
+            "audit_type": { "type": "string", "description": "Audit type (for runAudit, default full)" },
+            "audit_id": { "type": "string", "description": "Audit ID (for most actions)" },
+            "finding_id": { "type": "string", "description": "Finding ID (for approveFinding)" },
+            "status": { "type": "string", "description": "Approval status (for approveFinding)" },
+            "limit": { "type": "integer", "description": "Max records (for listAudits)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "run_growth_mission",
+        "title": "Run Growth Mission",
+        "description": "Run a growth mission for a domain: fetch robots.txt, discover and inspect sitemap, compute health score, generate LLM insight, update the domain record, and dispatch follow-up tasks. Admin only. Pass a domain name.",
+        "handler": "runGrowthMission",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "domain": { "type": "string", "description": "Domain name to run the growth mission for" }
+          },
+          "required": ["domain"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "run_meta_architect",
+        "title": "Run Meta Architect",
+        "description": "Run the Meta Architect mission: inspect the system registry, dispatch a task, run a growth mission on the first domain, and generate a strategic mission brief via the AI Gateway. Admin only. Pass an optional goal.",
+        "handler": "runMetaArchitect",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "goal": { "type": "string", "description": "Strategic goal for the mission (default: audit the system and dispatch follow-up tasks)" }
+          }
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "run_site_clone",
+        "title": "Clone Website",
+        "description": "Deterministic site-clone engine: fetch a target site, inline CSS, rehost images, rewrite links, swap branding, and compute a parity score. Admin only. Actions: cloneSite, listQueue, dashboardStats, deleteItem, updateStatus.",
+        "handler": "runSiteClone",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["cloneSite", "listQueue", "dashboardStats", "deleteItem", "updateStatus"],
+              "description": "Clone action"
+            },
+            "target_url": { "type": "string", "description": "URL to clone (for cloneSite)" },
+            "site_name": { "type": "string", "description": "Site name (for cloneSite)" },
+            "industry": { "type": "string", "description": "Industry (for cloneSite)" },
+            "brand_name": { "type": "string", "description": "Replacement brand name (for cloneSite)" },
+            "brand_phone": { "type": "string", "description": "Replacement phone (for cloneSite)" },
+            "brand_email": { "type": "string", "description": "Replacement email (for cloneSite)" },
+            "queue_id": { "type": "string", "description": "Existing queue ID (for cloneSite)" },
+            "audit_id": { "type": "string", "description": "Associated audit ID (for cloneSite)" },
+            "source": { "type": "string", "description": "Source label (for cloneSite)" },
+            "id": { "type": "string", "description": "Queue item ID (for deleteItem/updateStatus)" },
+            "status": { "type": "string", "description": "New status (for updateStatus)" },
+            "limit": { "type": "integer", "description": "Max records (for listQueue)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "sandbox_auth",
+        "title": "Sandbox Worker Auth",
+        "description": "Sandbox worker authentication and task polling/execution/reporting endpoint. Authenticated via sandbox API key (sk_sbx_...), not user session. Actions: poll (claim tasks), execute (run a task), report (submit result), heartbeat, health (admin-only).",
+        "handler": "sandboxAuth",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["poll", "execute", "report", "heartbeat", "health"],
+              "description": "Sandbox worker action"
+            },
+            "agent_name": { "type": "string", "description": "Agent name to poll for (for poll)" },
+            "task_id": { "type": "string", "description": "Task ID (for execute/report)" },
+            "claim_token": { "type": "string", "description": "Claim token from poll (for execute/report)" },
+            "status": { "type": "string", "description": "Task status (for report)" },
+            "result": { "type": "object", "description": "Task result (for report)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "send_form_emails",
+        "title": "Send Form Notification Emails",
+        "description": "Send agency notification emails for form submissions (contact, quotation, newsletter, search, pricing). Admin only. Requires approved=true. Notifies the site owner only.",
+        "handler": "send-form-emails",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "approved": { "type": "boolean", "description": "Must be true to send" },
+            "form_type": { "type": "string", "enum": ["contact", "quotation", "newsletter", "newsletter_v2", "search", "pricing"], "description": "Form type" },
+            "name": { "type": "string", "description": "Submitter name" },
+            "email": { "type": "string", "description": "Submitter email" },
+            "phone": { "type": "string", "description": "Submitter phone" },
+            "website": { "type": "string", "description": "Submitter website" },
+            "service": { "type": "string", "description": "Service of interest" },
+            "message": { "type": "string", "description": "Message body" },
+            "query": { "type": "string", "description": "Search query" },
+            "plan_title": { "type": "string", "description": "Plan title (for pricing)" }
+          },
+          "required": ["approved"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "sync_lead_to_crm",
+        "title": "Sync Lead to CRM",
+        "description": "Sync a Lead record to the CRM contacts table, creating a CrmContact with a scheduled follow-up. No auth required — uses service role. Pass lead_id.",
+        "handler": "syncLeadToCrm",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "lead_id": { "type": "string", "description": "Lead record ID to sync" }
+          },
+          "required": ["lead_id"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "vault_backup",
+        "title": "Encrypted Vault Backup",
+        "description": "Create, list, or preview encrypted vault backups stored in Google Drive. Admin only. Actions: create (new encrypted backup), list (list existing backups), preview (decrypt and preview a backup).",
+        "handler": "vaultBackup",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["create", "list", "preview"],
+              "description": "Backup action"
+            },
+            "fileId": { "type": "string", "description": "Drive file ID (for preview)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": false,
+          "idempotent_hint": false
+        }
+      },
+      {
+        "name": "vault_connection",
+        "title": "Verify Vault Connection",
+        "description": "Verify a connected OAuth account (GitHub, Supabase, or Google Drive) for the vault. Admin only. Pass the connector ID.",
+        "handler": "vaultConnection",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "connectorId": {
+              "type": "string",
+              "description": "Connector ID to verify (GitHub, Supabase, or Drive slot)"
+            }
+          },
+          "required": ["connectorId"]
+        },
+        "annotations": {
+          "read_only_hint": true,
+          "destructive_hint": false,
+          "idempotent_hint": true
+        }
+      },
+      {
+        "name": "vault_key_admin",
+        "title": "Manage Vault Access Keys",
+        "description": "List, create, or revoke directory-read vault access keys. Admin only. Actions: list (your keys), create (new key with label and 7/30/90 day expiry), revoke (revoke a key by ID).",
+        "handler": "vaultKeyAdmin",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": ["list", "create", "revoke"],
+              "description": "Key management action"
+            },
+            "label": { "type": "string", "description": "Key label, 1-100 chars (for create)" },
+            "days": { "type": "integer", "enum": [7, 30, 90], "description": "Expiry in days (for create)" },
+            "id": { "type": "string", "description": "Key ID (for revoke)" }
+          },
+          "required": ["action"]
+        },
+        "annotations": {
+          "read_only_hint": false,
+          "destructive_hint": true,
+          "idempotent_hint": false
+        }
       }
     ]
   }
