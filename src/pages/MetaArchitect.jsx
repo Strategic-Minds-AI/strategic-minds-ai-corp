@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import { base44 } from "@/api/base44Client";
 import { Sparkles, Loader2, CheckCircle2, AlertTriangle, ArrowLeft, Cpu, Wrench } from "lucide-react";
+import useSessionState from "@/hooks/useSessionState";
 
 const STAGE_LABELS = {
   agent_start: "Agent loop started",
@@ -16,10 +17,10 @@ const STAGE_LABELS = {
 
 export default function MetaArchitect() {
   const navigate = useNavigate();
-  const [goal, setGoal] = useState("Audit benearme.com, run the growth pipeline, and dispatch any follow-up tasks the specialists should own.");
-  const [running, setRunning] = useState(false);
-  const [result, setResult] = useState(null);
-  const [error, setError] = useState(null);
+  const [goal, setGoal] = useSessionState("metaArchitect.goal", "Audit benearme.com, run the growth pipeline, and dispatch any follow-up tasks the specialists should own.");
+  const [running, setRunning] = useSessionState("metaArchitect.running", false);
+  const [result, setResult] = useSessionState("metaArchitect.result", null);
+  const [error, setError] = useSessionState("metaArchitect.error", null);
 
   const run = async () => {
     setRunning(true);
