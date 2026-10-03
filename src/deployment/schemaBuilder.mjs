@@ -26,5 +26,6 @@ export async function buildSchema(schemas,tables,entityJobs) {
     const args=JSON.stringify(job.args || {});
     sql+=`\ndrop trigger if exists ${identifier(triggerName)} on public.${identifier(table)};\ncreate trigger ${identifier(triggerName)} after ${job.events.map(event=>event==='create'?'insert':event).join(' or ')} on public.${identifier(table)} for each row execute function public.runtime_enqueue_entity_job(${quote(job.function_name)},${quote(args)});\n`;
   }
+  sql += '\n' + await readFile('src/deployment/adminChatRuntime.sql', 'utf8');
   return sql;
 }

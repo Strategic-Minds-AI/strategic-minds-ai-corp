@@ -52,6 +52,15 @@ export async function handleRequest(request) {
   } catch(error) {console.error('Runtime request failed',error.message);return Response.json({error:error.message,code:error.code},{status:error.status || 500});}
 }
 export async function nodeHandler(req,res) {
+  const originHeader = req.headers.origin;
+  const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(',').map(value => value.trim()).filter(Boolean);
+  if (!allowedOrigins.length || allowedOrigins.includes(originHeader)) {
+    res.setHeader('Access-Control-Allow-Origin', allowedOrigins.length ? originHeader : '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Authorization, Content-Type');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+    res.setHeader('Vary', 'Origin');
+  }
+  if (req.method === 'OPTIONS') { res.statusCode = 204; res.end(); return; }
   const chunks=[];for await(const chunk of req)chunks.push(chunk);
   const headers=new Headers();for(const [key,value] of Object.entries(req.headers))if(value)headers.set(key,Array.isArray(value)?value.join(','):value);
   const origin=process.env.API_URL || `http://localhost:${process.env.PORT || 3000}`;
