@@ -954,4 +954,61 @@ create table if not exists enhancement_jobs (
   error text
 );
 
+-- ============================================================
+-- OPERATOR SUBSYSTEM + AGENT KEY STORE
+-- ============================================================
+
+alter table domains add column if not exists health_score numeric default 0;
+
+create table if not exists agent_secret (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now(),
+  created_by text,
+  name text unique not null,
+  encrypted_value text not null,
+  description text,
+  category text default 'api_key',
+  last_used timestamptz,
+  used_count numeric default 0
+);
+drop trigger if exists set_updated_at_agent_secret on agent_secret;
+create trigger set_updated_at_agent_secret before update on agent_secret for each row execute function set_updated_at();
+
+create table if not exists operator_device (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now(),
+  created_by text,
+  name text not null,
+  token_hash text,
+  expires_at timestamptz,
+  enabled boolean default true,
+  revoked boolean default false,
+  last_seen timestamptz,
+  platform text,
+  input_allowed boolean default false,
+  browser_configured boolean default false
+);
+drop trigger if exists set_updated_at_operator_device on operator_device;
+create trigger set_updated_at_operator_device before update on operator_device for each row execute function set_updated_at();
+
+create table if not exists operator_task (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamptz default now(),
+  updated_at timestamptz default now(),
+  created_by text,
+  title text not null,
+  instructions text,
+  target text default 'cloud_browser',
+  status text default 'queued',
+  result text,
+  source text default 'manual',
+  schedule_id text,
+  schedule_slot text,
+  account_id text
+);
+drop trigger if exists set_updated_at_operator_task on operator_task;
+create trigger set_updated_at_operator_task before update on operator_task for each row execute function set_updated_at();
+
 -- Done. Run this in your Supabase SQL editor.

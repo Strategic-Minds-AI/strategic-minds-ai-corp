@@ -124,6 +124,13 @@ const TABLE_MAP = {
   SystemSnapshot: 'system_snapshots',
   BenchmarkResult: 'benchmark_results',
   AutobuilderConfig: 'autobuilder_configs',
+  AgentSecret: 'agent_secret',
+  OperatorDevice: 'operator_device',
+  OperatorTask: 'operator_task',
+  OperatorCommand: 'operator_command',
+  OperatorSchedule: 'operator_schedule',
+  OperatorAudit: 'operator_audit',
+  OperatorDecision: 'operator_decision',
 };
 
 export function tableName(entityName) {
