@@ -1,0 +1,93 @@
+{
+  "name": "ComputerCommand",
+  "type": "object",
+  "properties": {
+    "device_id": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string",
+      "enum": [
+        "screen_info",
+        "open_url",
+        "click",
+        "type_text",
+        "press_key",
+        "scroll",
+        "browser_health",
+        "browser_start",
+        "browser_action",
+        "browser_close",
+        "phone_status",
+        "phone_tap",
+        "phone_swipe",
+        "phone_text",
+        "phone_key"
+      ]
+    },
+    "arguments": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "running",
+        "succeeded",
+        "failed",
+        "cancelled",
+        "uncertain"
+      ],
+      "default": "queued"
+    },
+    "lease": {
+      "type": "string"
+    },
+    "expires_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "finished_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "result": {
+      "type": "string",
+      "maxLength": 5000
+    }
+  },
+  "required": [
+    "device_id",
+    "action",
+    "arguments",
+    "status",
+    "expires_at"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

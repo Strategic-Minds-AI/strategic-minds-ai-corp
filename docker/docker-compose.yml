@@ -1,0 +1,70 @@
+# Strategic Minds AI — Full Pipeline (Docker Compose)
+# Converges: local companion + cloud browser engine + backend runtime
+# Connects to: Supabase (database), Vercel (frontend), Railway (backend), Git (source)
+# Google Cloud: deploy browser-engine as a Cloud Run service (see README)
+#
+# Usage:
+#   1. Pair a device in the admin portal → get OPERATOR_TOKEN + OPERATOR_DEVICE_ID
+#   2. Set your backend URL (Vercel or Railway) as OPERATOR_ENDPOINT
+#   3. docker compose up -d
+
+services:
+  # ── Desktop Companion (headless cloud-browser mode) ──
+  # Polls your owned backend for queued commands.
+  # For full desktop GUI control (click/type/screenshot), run natively on your desktop.
+  companion:
+    build: ./companion
+    restart: unless-stopped
+    environment:
+      - OPERATOR_ENDPOINT=${OPERATOR_ENDPOINT}          # https://your-app.vercel.app/api/runtime/functions/deviceBridge
+      - OPERATOR_TOKEN=${OPERATOR_TOKEN}                 # 64-char hex from pairing
+      - OPERATOR_DEVICE_ID=${OPERATOR_DEVICE_ID}         # device UUID from pairing
+      - OPERATOR_BROWSER_URL=${OPERATOR_BROWSER_URL:-}   # optional cloud browser engine
+      - OPERATOR_BROWSER_KEY=${OPERATOR_BROWSER_KEY:-}   # optional cloud browser engine
+      - OPERATOR_ALLOW_INPUT=${OPERATOR_ALLOW_INPUT:-true}
+    volumes:
+      - companion-receipts:/app/receipts
+    networks:
+      - strategic-net
+
+  # ── Cloud Browser Engine (Playwright) ──
+  # Headless Chromium for browser automation actions.
+  # Deploy on Railway, Google Cloud Run, or run locally.
+  browser-engine:
+    image: mcr.microsoft.com/playwright:v1.48.0-jammy
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    environment:
+      - BROWSER_API_KEY=${BROWSER_API_KEY:-strategic-browser-key}
+      - BROWSER_PORT=3100
+    command: ["npx", "playwright", "run-server", "--port", "3100"]
+    networks:
+      - strategic-net
+
+  # ── Backend Runtime (optional — for local development) ──
+  # In production, this runs on Railway or Vercel.
+  # Uncomment to run locally for development.
+  # backend:
+  #   build:
+  #     context: ..
+  #     dockerfile: docker/backend/Dockerfile
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - SUPABASE_URL=${SUPABASE_URL}
+  #     - SUPABASE_ANON_KEY=${SUPABASE_ANON_KEY}
+  #     - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+  #     - AI_GATEWAY_API_KEY=${AI_GATEWAY_API_KEY}
+  #     - CRON_SECRET=${CRON_SECRET}
+  #     - JOB_OWNER_ID=${JOB_OWNER_ID}
+  #   networks:
+  #     - strategic-net
+
+volumes:
+  companion-receipts:
+
+networks:
+  strategic-net:
+    driver: bridge

@@ -76,6 +76,7 @@ const CommsInbox = lazy(() => import('@/pages/CommsInbox'));
 const VisualGallery = lazy(() => import('@/pages/VisualGallery'));
 const Visualizer = lazy(() => import('@/pages/Visualizer'));
 const AutoBuilder = lazy(() => import('@/pages/AutoBuilder'));
+const OperatorConsole = lazy(() => import('@/pages/OperatorConsole'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -169,6 +170,7 @@ const AuthenticatedApp = () => {
           <Route path="/gallery" element={<VisualGallery />} />
           <Route path="/visualizer" element={<Visualizer />} />
           <Route path="/auto-builder" element={<AutoBuilder />} />
+          <Route path="/operator" element={<OperatorConsole />} />
           <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
