@@ -1,7 +1,7 @@
 {
   "name": "AutoBuild",
   "type": "object",
-  "description": "Admin-driven Auto Builder queue \u2014 supports multiple product types (marketing site, web app, e-commerce, platform). Each product type has its own dedicated pipeline of steps. The admin creates a build, picks a product type, then walks through the exact same client portal experience (timeline, StepCoach, generators) against that build. All client portal hooks transparently read/write the AutoBuild record via AutoBuildContext.",
+  "description": "Admin-driven Auto Builder queue \u2014 supports multiple product types (marketing site, web app, e-commerce, platform). Each product type has its own dedicated pipeline of steps. The admin creates a build, picks a product type, then walks through the exact same client portal experience against that build.",
   "properties": {
     "description": {
       "type": "string",
@@ -28,7 +28,7 @@
         "platform"
       ],
       "default": "marketing_site",
-      "description": "What kind of digital product this build produces. Each type has its own pipeline (see buildProductTypes.js). marketing_site = premium marketing website; web_app = SaaS/app with auth + database; ecommerce = online store; platform = multi-sided marketplace."
+      "description": "What kind of digital product this build produces. Each type has its own pipeline."
     },
     "profile": {
       "type": "object",
@@ -71,8 +71,7 @@
           "type": "string"
         },
         "product_description": {
-          "type": "string",
-          "description": "For non-marketing builds: what the app/platform/store does"
+          "type": "string"
         },
         "target_audience": {
           "type": "string"
@@ -87,7 +86,7 @@
     },
     "vision": {
       "type": "object",
-      "description": "Generated vision document \u2014 the mandatory foundation before building. Defines what we're building, why, for whom, and what success looks like. Produced by generateVisionDoc.",
+      "description": "Generated vision document \u2014 the mandatory foundation before building.",
       "properties": {
         "mission": {
           "type": "string"
@@ -131,7 +130,7 @@
     },
     "strategy": {
       "type": "object",
-      "description": "Generated strategy document \u2014 the mandatory plan before building. Defines how we win: positioning, GTM, revenue, pricing, channels, roadmap, risks. Produced by generateStrategyDoc from the approved vision.",
+      "description": "Generated strategy document \u2014 the mandatory plan before building.",
       "properties": {
         "competitive_positioning": {
           "type": "string"
@@ -205,7 +204,7 @@
         "complete"
       ],
       "default": "profile",
-      "description": "Which pipeline step this build is on. Marketing builds use profile\u2192vision\u2192strategy\u2192names\u2192content\u2192...\u2192review. System builds use profile\u2192vision\u2192strategy\u2192architecture\u2192data_model\u2192ui_system\u2192codegen\u2192deploy\u2192system_review."
+      "description": "Which pipeline step this build is on."
     },
     "status": {
       "type": "string",
@@ -217,12 +216,12 @@
         "failed"
       ],
       "default": "queued",
-      "description": "Queue status \u2014 queued = waiting, running = step in progress, paused = admin halted, complete = finished, failed = errored"
+      "description": "Queue status"
     },
     "auto_advance": {
       "type": "boolean",
       "default": false,
-      "description": "When true, the queue processor automatically advances to the next step after each step completes \u2014 the autonomy toggle"
+      "description": "When true, the queue processor automatically advances to the next step after each step completes"
     },
     "governance_tier": {
       "type": "string",
@@ -232,17 +231,17 @@
         "red"
       ],
       "default": "green",
-      "description": "Autonomy tier: green = fully automatic, yellow = auto-generate but pause before deploy for approval, red = pause at every step for operator approval"
+      "description": "Autonomy tier: green = fully automatic, yellow = pause before deploy, red = pause at every step"
     },
     "step_started_at": {
       "type": "string",
       "format": "date-time",
-      "description": "When the current step started executing \u2014 used for accurate stuck detection (not updated_date which changes on every write)"
+      "description": "When the current step started executing \u2014 used for accurate stuck detection"
     },
     "actions_today": {
       "type": "number",
       "default": 0,
-      "description": "Blast radius cap \u2014 how many autonomous actions taken on this build today (resets daily)"
+      "description": "Blast radius cap \u2014 how many autonomous actions taken on this build today"
     },
     "last_action_date": {
       "type": "string",
@@ -251,11 +250,11 @@
     "compile_verified": {
       "type": "boolean",
       "default": false,
-      "description": "Whether the code manifest passed the deterministic compile gate (compileAndVerify). Cannot be packaged until this is true."
+      "description": "Whether the code manifest passed the deterministic compile gate"
     },
     "architecture": {
       "type": "object",
-      "description": "Generated system architecture spec (for web_app/ecommerce/platform builds) \u2014 the full blueprint: tech stack, pages, data models, features, integrations, user flows. Produced by generateSystemArchitecture.",
+      "description": "Generated system architecture spec (for web_app/ecommerce/platform builds)",
       "properties": {
         "concept": {
           "type": "string"
@@ -309,7 +308,7 @@
     },
     "data_model": {
       "type": "object",
-      "description": "Generated detailed data model spec (for web_app/ecommerce/platform builds) \u2014 refined entity schemas with field-level validation, indexes, relationships, seed data, and API endpoints. Produced by generateDataModel from the architecture spec.",
+      "description": "Generated detailed data model spec",
       "properties": {
         "entities": {
           "type": "array",
@@ -336,7 +335,7 @@
     },
     "ui_system": {
       "type": "object",
-      "description": "Generated UI design system spec (for web_app/ecommerce/platform builds) \u2014 color palette, typography scale, spacing system, component library, layout patterns, responsive breakpoints, and theme tokens. Produced by generateUiSystem from the architecture spec.",
+      "description": "Generated UI design system spec",
       "properties": {
         "color_palette": {
           "type": "object"
@@ -375,7 +374,7 @@
     },
     "code_manifest": {
       "type": "object",
-      "description": "Generated codebase manifest (future codegen step) \u2014 the list of files, their paths, and content references that make up the deployable codebase.",
+      "description": "Generated codebase manifest",
       "properties": {
         "repo_url": {
           "type": "string"
@@ -397,7 +396,7 @@
     },
     "deployment": {
       "type": "object",
-      "description": "Deployment record (future deploy step) \u2014 where the codebase is hosted, the live URL, and deployment status.",
+      "description": "Deployment record",
       "properties": {
         "platform": {
           "type": "string"
@@ -449,7 +448,7 @@
     },
     "website_content": {
       "type": "object",
-      "description": "Generated website copy (hero, about, services, faq) \u2014 marketing builds"
+      "description": "Generated website copy \u2014 marketing builds"
     },
     "website_images": {
       "type": "array",
@@ -488,12 +487,11 @@
       "description": "Steps that have been completed (server-persisted step paths)"
     },
     "source_vision_cortex_idea_id": {
-      "type": "string",
-      "description": "If this build was created from an idea submitted by the external Vision Cortex app via the receiveVisionCortexIdea webhook, this is Vision Cortex's idea ID. Used for dedup \u2014 if the same idea is submitted twice, the webhook returns the existing build instead of creating a duplicate."
+      "type": "string"
     },
     "vision_cortex_scores": {
       "type": "object",
-      "description": "Scores from the external Vision Cortex app (overall, profitability, scalability, niche_strength, usability, competition, trend_momentum, technical_feasibility) \u2014 preserved so the builder can see why Vision Cortex approved this idea.",
+      "description": "Scores from the external Vision Cortex app",
       "properties": {
         "overall": {
           "type": "number"
