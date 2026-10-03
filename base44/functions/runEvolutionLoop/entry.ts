@@ -2,9 +2,13 @@
 // The autonomous brain that audits, fixes, heals, hardens, and evolves the system
 // against the benchmark criteria up to the highest possible score.
 // Called by the "Recursive Evolution Loop" workflow every 30 minutes.
+//
+// ZERO Base44 dependencies. Uses the owned Supabase runtime + Vercel AI Gateway exclusively.
 
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
+import { callAIGateway } from '../../shared/aiGateway.ts';
 import { criteria } from '../../shared/benchmarkCriteria.ts';
+import { readBenchmarkState } from '../../shared/benchmarkStore.ts';
 
 // ── Agent mapping by benchmark domain ──────────────────────────
 const DOMAIN_AGENT_MAP: Record<string, string> = {
@@ -35,6 +39,7 @@ export default async function(req: Request): Promise<Response> {
     const body = await req.json().catch(() => ({}));
     const maxIterations = Math.min(body.max_iterations || 3, 10);
     const targetScore = body.target_score || 95;
+    const ownerId = base44.ownerId || '';
 
     const evolutionLog: any[] = [];
     let iteration = 0;
@@ -42,15 +47,19 @@ export default async function(req: Request): Promise<Response> {
     let previousScore = 0;
 
     for (iteration = 0; iteration < maxIterations; iteration++) {
-      // ── Phase 1: AUDIT ──
-      const audit = await auditSystem(db);
+      // ── Phase 1: AUDIT (via owned benchmark store) ──
+      const benchmarkState = await readBenchmarkState(db, ownerId);
       previousScore = currentScore;
-      currentScore = audit.overallScore;
+      currentScore = benchmarkState.score;
+
+      const failingCriteria = criteria.filter(c =>
+        c.baseline === 'Missing' || c.baseline === 'Partial' || c.baseline === 'Blocked'
+      );
 
       // ── Phase 2: DISPATCH fix tasks to agents ──
-      const dispatched = await dispatchFixTasks(db, audit.failingCriteria, iteration);
+      const dispatched = await dispatchFixTasks(db, failingCriteria, iteration);
 
-      // ── Phase 3: EXECUTE pending AgentTasks ──
+      // ── Phase 3: EXECUTE pending AgentTasks (via Vercel AI Gateway) ──
       const executed = await executePendingTasks(base44, db);
 
       // ── Phase 4: HEAL stuck/failed tasks ──
@@ -59,13 +68,13 @@ export default async function(req: Request): Promise<Response> {
       // ── Phase 5: HARDEN on plateau ──
       let hardened = 0;
       if (iteration > 0 && currentScore - previousScore === 0) {
-        hardened = await dispatchEnhancementTasks(db, audit.failingCriteria, iteration);
+        hardened = await dispatchEnhancementTasks(db, failingCriteria, iteration);
       }
 
       // ── Phase 6: RE-AUDIT ──
-      const reAudit = await auditSystem(db);
+      const reBenchmark = await readBenchmarkState(db, ownerId);
       previousScore = currentScore;
-      currentScore = reAudit.overallScore;
+      currentScore = reBenchmark.score;
 
       // ── Phase 7: LOG cycle ──
       evolutionLog.push({
@@ -73,13 +82,13 @@ export default async function(req: Request): Promise<Response> {
         previous_score: previousScore,
         current_score: currentScore,
         improvement: currentScore - previousScore,
-        failing_criteria: reAudit.failingCriteria.length,
+        failing_criteria: failingCriteria.length,
         total_criteria: criteria.length,
         dispatched,
         executed: executed.count,
         healed,
         hardened,
-        llm_used: executed.llmUsed,
+        gateway_used: executed.gatewayUsed,
       });
 
       // ── Phase 8: CHECK termination ──
@@ -121,17 +130,6 @@ export default async function(req: Request): Promise<Response> {
   } catch (error) {
     return Response.json({ error: error.message, evolution_log: [] }, { status: 500 });
   }
-}
-
-// ── AUDIT: Identify failing criteria ────────────────────────────
-async function auditSystem(db: any) {
-  const failingCriteria = criteria.filter(c =>
-    c.baseline === 'Missing' || c.baseline === 'Partial' || c.baseline === 'Blocked'
-  );
-  const passingCount = criteria.length - failingCriteria.length;
-  const overallScore = Math.round((passingCount / criteria.length) * 100);
-
-  return { overallScore, failingCriteria, passingCount, totalCount: criteria.length };
 }
 
 // ── DISPATCH: Create AgentTasks for failing criteria ────────────
@@ -178,10 +176,10 @@ async function dispatchFixTasks(db: any, failing: any[], iteration: number) {
   return count;
 }
 
-// ── EXECUTE: Run pending AgentTasks ──────────────────────────────
+// ── EXECUTE: Run pending AgentTasks via Vercel AI Gateway ────────
 async function executePendingTasks(base44: any, db: any) {
   let count = 0;
-  let llmUsed = false;
+  let gatewayUsed = false;
 
   const pending = await db.entities.AgentTask.filter(
     { status: 'pending', autonomous: true },
@@ -208,103 +206,104 @@ async function executePendingTasks(base44: any, db: any) {
           result = `Index coverage check queued for ${task.domain || 'primary domain'}.`;
           break;
 
-        case 'competitor_scan':
-          try {
-            const aiResult = await base44.integrations.Core.InvokeLLM({
-              prompt: `Analyze competitor landscape for: ${task.domain || task.title}. Return JSON with competitors (array of 3 domains), gaps (array of 3 opportunity areas), and recommended_actions (array of 3 actions).`,
-              response_json_schema: { type: 'object', properties: {
+        case 'competitor_scan': {
+          const aiResult = await callAIGateway({
+            prompt: `Analyze competitor landscape for: ${task.domain || task.title}. Return JSON with competitors (array of 3 domains), gaps (array of 3 opportunity areas), and recommended_actions (array of 3 actions).`,
+            responseJsonSchema: {
+              type: 'object',
+              properties: {
                 competitors: { type: 'array', items: { type: 'string' } },
                 gaps: { type: 'array', items: { type: 'string' } },
                 recommended_actions: { type: 'array', items: { type: 'string' } },
-              }},
-            });
-            result = `Competitor intelligence: ${JSON.stringify(aiResult.competitors || [])}. Gaps: ${JSON.stringify(aiResult.gaps || [])}`;
-            llmUsed = true;
-          } catch (e) {
-            result = `Competitor scan queued (LLM unavailable: ${e.message}).`;
-          }
+              },
+            },
+          });
+          result = `Competitor intelligence: ${JSON.stringify(aiResult.json?.competitors || [])}. Gaps: ${JSON.stringify(aiResult.json?.gaps || [])}`;
+          gatewayUsed = true;
           break;
+        }
 
-        case 'build_system':
-          try {
-            const desc = JSON.parse(task.description || '{}');
-            const aiResult = await base44.integrations.Core.InvokeLLM({
-              prompt: `Implement benchmark criterion ${desc.criterion_id}: ${desc.functional_expectation || ''}. Finding: ${desc.finding || ''}. Prerequisites: ${(desc.prerequisites || []).join(', ')}. Return JSON with approach (string), files_to_create (array), files_to_modify (array), and acceptance_tests (array).`,
-              response_json_schema: { type: 'object', properties: {
+        case 'build_system': {
+          const desc = JSON.parse(task.description || '{}');
+          const aiResult = await callAIGateway({
+            prompt: `Implement benchmark criterion ${desc.criterion_id}: ${desc.functional_expectation || ''}. Finding: ${desc.finding || ''}. Prerequisites: ${(desc.prerequisites || []).join(', ')}. Return JSON with approach (string), files_to_create (array), files_to_modify (array), and acceptance_tests (array).`,
+            responseJsonSchema: {
+              type: 'object',
+              properties: {
                 approach: { type: 'string' },
                 files_to_create: { type: 'array', items: { type: 'string' } },
                 files_to_modify: { type: 'array', items: { type: 'string' } },
                 acceptance_tests: { type: 'array', items: { type: 'string' } },
-              }},
-            });
-            result = `Build plan for ${desc.criterion_id}: ${aiResult.approach || 'N/A'}. Files: ${(aiResult.files_to_create || []).length} new, ${(aiResult.files_to_modify || []).length} modified.`;
-            llmUsed = true;
-          } catch (e) {
-            result = `Build plan queued (LLM unavailable: ${e.message}).`;
-          }
+              },
+            },
+          });
+          result = `Build plan for ${desc.criterion_id}: ${aiResult.json?.approach || 'N/A'}. Files: ${(aiResult.json?.files_to_create || []).length} new, ${(aiResult.json?.files_to_modify || []).length} modified.`;
+          gatewayUsed = true;
           break;
+        }
 
-        case 'enhance_system':
-          try {
-            const desc = JSON.parse(task.description || '{}');
-            const aiResult = await base44.integrations.Core.InvokeLLM({
-              prompt: `Enhance benchmark criterion ${desc.criterion_id}: ${desc.functional_expectation || ''}. Current finding: ${desc.finding || 'Partial'}. Return JSON with gaps (array of missing pieces), fixes (array of specific code changes), and validation_steps (array).`,
-              response_json_schema: { type: 'object', properties: {
+        case 'enhance_system': {
+          const desc = JSON.parse(task.description || '{}');
+          const aiResult = await callAIGateway({
+            prompt: `Enhance benchmark criterion ${desc.criterion_id}: ${desc.functional_expectation || ''}. Current finding: ${desc.finding || 'Partial'}. Return JSON with gaps (array of missing pieces), fixes (array of specific code changes), and validation_steps (array).`,
+            responseJsonSchema: {
+              type: 'object',
+              properties: {
                 gaps: { type: 'array', items: { type: 'string' } },
                 fixes: { type: 'array', items: { type: 'string' } },
                 validation_steps: { type: 'array', items: { type: 'string' } },
-              }},
-            });
-            result = `Enhancement plan for ${desc.criterion_id}: ${(aiResult.gaps || []).length} gaps, ${(aiResult.fixes || []).length} fixes.`;
-            llmUsed = true;
-          } catch (e) {
-            result = `Enhancement queued (LLM unavailable: ${e.message}).`;
-          }
+              },
+            },
+          });
+          result = `Enhancement plan for ${desc.criterion_id}: ${(aiResult.json?.gaps || []).length} gaps, ${(aiResult.json?.fixes || []).length} fixes.`;
+          gatewayUsed = true;
           break;
+        }
 
-        case 'unblock_system':
-          try {
-            const desc = JSON.parse(task.description || '{}');
-            const aiResult = await base44.integrations.Core.InvokeLLM({
-              prompt: `Unblock benchmark criterion ${desc.criterion_id}: ${desc.finding || 'Blocked'}. Prerequisites: ${(desc.prerequisites || []).join(', ')}. Return JSON with blocker (string), prerequisites (array), and alternative_approach (string).`,
-              response_json_schema: { type: 'object', properties: {
+        case 'unblock_system': {
+          const desc = JSON.parse(task.description || '{}');
+          const aiResult = await callAIGateway({
+            prompt: `Unblock benchmark criterion ${desc.criterion_id}: ${desc.finding || 'Blocked'}. Prerequisites: ${(desc.prerequisites || []).join(', ')}. Return JSON with blocker (string), prerequisites (array), and alternative_approach (string).`,
+            responseJsonSchema: {
+              type: 'object',
+              properties: {
                 blocker: { type: 'string' },
                 prerequisites: { type: 'array', items: { type: 'string' } },
                 alternative_approach: { type: 'string' },
-              }},
-            });
-            result = `Unblock plan for ${desc.criterion_id}: ${aiResult.blocker || 'N/A'}. Alternative: ${aiResult.alternative_approach || 'N/A'}.`;
-            llmUsed = true;
-          } catch (e) {
-            result = `Unblock analysis queued (LLM unavailable: ${e.message}).`;
-          }
+              },
+            },
+          });
+          result = `Unblock plan for ${desc.criterion_id}: ${aiResult.json?.blocker || 'N/A'}. Alternative: ${aiResult.json?.alternative_approach || 'N/A'}.`;
+          gatewayUsed = true;
           break;
+        }
 
-        case 'content_optimize':
-          try {
-            const aiResult = await base44.integrations.Core.InvokeLLM({
-              prompt: `Create a content optimization plan for: ${task.title}. Return JSON with headline_suggestions (array of 3), meta_description (string), and content_priorities (array of 3).`,
-              response_json_schema: { type: 'object', properties: {
+        case 'content_optimize': {
+          const aiResult = await callAIGateway({
+            prompt: `Create a content optimization plan for: ${task.title}. Return JSON with headline_suggestions (array of 3), meta_description (string), and content_priorities (array of 3).`,
+            responseJsonSchema: {
+              type: 'object',
+              properties: {
                 headline_suggestions: { type: 'array', items: { type: 'string' } },
                 meta_description: { type: 'string' },
                 content_priorities: { type: 'array', items: { type: 'string' } },
-              }},
-            });
-            result = `Content plan: ${(aiResult.headline_suggestions || []).length} headlines.`;
-            llmUsed = true;
-          } catch (e) {
-            result = `Content optimization queued (LLM unavailable: ${e.message}).`;
-          }
+              },
+            },
+          });
+          result = `Content plan: ${(aiResult.json?.headline_suggestions || []).length} headlines.`;
+          gatewayUsed = true;
           break;
+        }
 
-        case 'growth_audit':
+        case 'growth_audit': {
           try {
             const growthRes = await base44.functions.invoke('runGrowthMission', { domain: task.domain });
-            result = `Growth mission complete. Health score: ${growthRes.data?.result?.health_score || 'N/A'}`;
+            result = `Growth mission complete. Health score: ${growthRes?.result?.health_score || 'N/A'}`;
           } catch (e) {
             result = `Growth mission failed: ${e.message}`;
           }
           break;
+        }
 
         default:
           result = `Task executed: ${task.title}`;
@@ -335,7 +334,7 @@ async function executePendingTasks(base44: any, db: any) {
     }
   }
 
-  return { count, llmUsed };
+  return { count, gatewayUsed };
 }
 
 // ── HEAL: Recover stuck/failed tasks ────────────────────────────
