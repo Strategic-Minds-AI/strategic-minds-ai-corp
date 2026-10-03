@@ -1,1 +1,1 @@
-export { default } from '../../src/server/handler.mjs';
+export { default } from '../../.standalone/api/runtime.mjs';
