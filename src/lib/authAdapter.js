@@ -8,21 +8,30 @@ import { getSupabase, getAccessToken } from './supabaseClient';
 export const auth = {
   async me() {
     const supabase = await getSupabase();
-    const { data: { user }, error } = await supabase.auth.getUser();
-    if (error || !user) return null;
-    const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
-    return {
-      id: user.id,
-      email: user.email,
-      role: profile?.role || 'user',
-      full_name: profile?.full_name || user.user_metadata?.full_name || '',
-    };
+    try {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error || !user) return null;
+      const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
+      return {
+        id: user.id,
+        email: user.email,
+        role: profile?.role || 'user',
+        full_name: profile?.full_name || user.user_metadata?.full_name || '',
+      };
+    } catch {
+      // Corrupted local session can surface as a JSON parse error.
+      return null;
+    }
   },
 
   async isAuthenticated() {
     const supabase = await getSupabase();
-    const { data } = await supabase.auth.getSession();
-    return !!data.session;
+    try {
+      const { data } = await supabase.auth.getSession();
+      return !!data.session;
+    } catch {
+      return false;
+    }
   },
 
   async updateMe(data) {
