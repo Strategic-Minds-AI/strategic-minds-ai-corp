@@ -1,0 +1,17 @@
+{
+  "name": "Strategic Minds AI — Strategy First. Intelligence Applied.",
+  "short_name": "Strategic Minds",
+  "description": "AI strategy, intelligent automation, and thoughtful digital experiences. Strategic Minds AI helps you turn the promise of AI into practical business progress.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#0066ff",
+  "icons": [
+    { "src": "/brand-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "/strategic-minds-ai-logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ],
+  "categories": ["business", "productivity", "education"]
+}
