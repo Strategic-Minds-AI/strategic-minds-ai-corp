@@ -256,6 +256,94 @@ export const ASSISTANT_TOOLS = [
   {
     type: 'function',
     function: {
+      name: 'list_operator_devices',
+      description: 'List paired operator devices (desktop companions and cloud browsers) that can receive commands. Returns device name, platform, online status, and capabilities.',
+      parameters: { type: 'object', properties: { limit: { type: 'number', description: 'Max devices to return (default 20)' } } }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'send_operator_command',
+      description: 'Send a command to a paired operator device (open URL, click, type text, press key, scroll, browser action). The device executes it and returns a result.',
+      parameters: {
+        type: 'object',
+        properties: {
+          device_id: { type: 'string', description: 'Device ID from list_operator_devices' },
+          action: { type: 'string', enum: ['open_url', 'click', 'type_text', 'press_key', 'scroll', 'browser_action', 'browser_health', 'screen_info'], description: 'Command action' },
+          arguments: { type: 'object', description: 'Action arguments (url, x/y, text, key, etc.)', additionalProperties: true }
+        },
+        required: ['device_id', 'action']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'create_operator_task',
+      description: 'Create an autonomous operator task for a cloud browser or desktop companion to execute. The task is queued and picked up by the target device.',
+      parameters: {
+        type: 'object',
+        properties: {
+          title: { type: 'string', description: 'Task title' },
+          instructions: { type: 'string', description: 'Detailed instructions for the operator' },
+          target: { type: 'string', enum: ['computer', 'cloud_browser'], description: 'Where to run the task' }
+        },
+        required: ['title', 'instructions', 'target']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_operator_tasks',
+      description: 'List operator tasks and their execution status.',
+      parameters: { type: 'object', properties: { status: { type: 'string', enum: ['queued', 'running', 'completed', 'failed'] }, limit: { type: 'number' } } }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'gpt_sync',
+      description: 'Send a message to the connected ChatGPT business account and receive GPT\'s response back. Enables bidirectional communication between this chat agent and GPT.',
+      parameters: {
+        type: 'object',
+        properties: {
+          message: { type: 'string', description: 'Message to send to GPT' },
+          thread_id: { type: 'string', description: 'Existing thread ID to continue a conversation (optional)' },
+          instructions: { type: 'string', description: 'Optional system instructions for GPT' }
+        },
+        required: ['message']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'generate_api_key',
+      description: 'Generate a new API key that external apps can use to connect to this system. Returns the key value once.',
+      parameters: {
+        type: 'object',
+        properties: {
+          key_name: { type: 'string', description: 'Human-readable name for the key' },
+          key_type: { type: 'string', enum: ['admin', 'user', 'vision_cortex'], description: 'admin=full access, user=read-only, vision_cortex=autonomous' },
+          permissions: { type: 'array', items: { type: 'string' }, description: 'Permission scopes' }
+        },
+        required: ['key_name', 'key_type']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_api_keys',
+      description: 'List all API keys (without exposing full key values).',
+      parameters: { type: 'object', properties: {} }
+    }
+  },
+  {
+    type: 'function',
+    function: {
       name: 'create_testimonial',
       description: 'Create a new customer testimonial with name, company, comment, and rating.',
       parameters: {
@@ -410,6 +498,50 @@ export async function executeAssistantTool(db: any, name: string, args: any): Pr
           display_order: 0
         });
         return JSON.stringify({ success: true, project_id: project.id, slug, message: `Project created: ${args.title}` });
+      }
+      case 'list_operator_devices': {
+        const res = await db.entities.OperatorDevice.filter({ enabled: true }, { sort: '-last_seen', limit: args.limit || 20, fields: ['name', 'platform', 'last_seen', 'enabled', 'input_allowed', 'browser_configured'] });
+        return JSON.stringify({ count: res.items.length, devices: res.items.map((d: any) => ({ id: d.id, name: d.name, platform: d.platform, last_seen: d.last_seen, online: d.last_seen ? (Date.now() - new Date(d.last_seen).getTime()) < 120000 : false, input_allowed: d.input_allowed, browser_configured: d.browser_configured })) });
+      }
+      case 'send_operator_command': {
+        const fnRes = await db.functions.invoke('computerControl', { device_id: args.device_id, action: args.action, arguments: args.arguments || {} });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, command_id: d.command_id, status: d.status, result: d.result || '', message: `Command ${args.action} sent to device ${args.device_id}` });
+      }
+      case 'create_operator_task': {
+        const task = await db.entities.OperatorTask.create({
+          title: args.title,
+          instructions: args.instructions,
+          target: args.target,
+          status: 'queued',
+          source: 'manual',
+        });
+        return JSON.stringify({ success: true, task_id: task.id, message: `Operator task queued: ${args.title}` });
+      }
+      case 'list_operator_tasks': {
+        const query: any = {};
+        if (args.status) query.status = args.status;
+        const res = await db.entities.OperatorTask.filter(query, { sort: '-created_date', limit: args.limit || 20, fields: ['title', 'target', 'status', 'result', 'source'] });
+        return JSON.stringify({ count: res.items.length, tasks: res.items });
+      }
+      case 'gpt_sync': {
+        const fnRes = await db.functions.invoke('gptSync', { action: 'sync', message: args.message, thread_id: args.thread_id || null, instructions: args.instructions || '' });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, gpt_response: d.gpt_response, thread_id: d.thread_id, bridge: d.bridge, message: 'GPT responded.' });
+      }
+      case 'generate_api_key': {
+        const fnRes = await db.functions.invoke('manageApiKeys', { action: 'create', key_name: args.key_name, key_type: args.key_type, permissions: args.permissions || [] });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, key_value: d.key?.key_value, key_prefix: d.key?.key_prefix, key_id: d.key?.id, message: `API key generated: ${args.key_name}. Store the key value securely — it won't be shown again.` });
+      }
+      case 'list_api_keys': {
+        const fnRes = await db.functions.invoke('manageApiKeys', { action: 'list' });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ count: d.keys.length, keys: d.keys });
       }
       case 'create_testimonial': {
         const testimonial = await db.entities.Testimonial.create({

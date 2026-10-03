@@ -77,6 +77,8 @@ const VisualGallery = lazy(() => import('@/pages/VisualGallery'));
 const Visualizer = lazy(() => import('@/pages/Visualizer'));
 const AutoBuilder = lazy(() => import('@/pages/AutoBuilder'));
 const OperatorConsole = lazy(() => import('@/pages/OperatorConsole'));
+const ApiGenerator = lazy(() => import('@/pages/ApiGenerator'));
+const ApiVaultPage = lazy(() => import('@/pages/ApiVaultPage'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -171,6 +173,8 @@ const AuthenticatedApp = () => {
           <Route path="/visualizer" element={<Visualizer />} />
           <Route path="/auto-builder" element={<AutoBuilder />} />
           <Route path="/operator" element={<OperatorConsole />} />
+          <Route path="/admin/api-generator" element={<ApiGenerator />} />
+          <Route path="/admin/api-vault" element={<ApiVaultPage />} />
           <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
