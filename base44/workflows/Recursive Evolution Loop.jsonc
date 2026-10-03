@@ -1,0 +1,48 @@
+{
+  "name": "Recursive Evolution Loop",
+  "description": "The autonomous self-healing evolution engine. Every 30 minutes: audits the system against the benchmark criteria, identifies failing/partial criteria, dispatches fix tasks to the right super agents (guardian, code_architect, orchestrator, social_strategist, sales_engine), executes the tasks via AI Gateway, heals stuck/failed tasks, hardens on plateau, re-audits, and recurses until the system reaches the highest possible benchmark score. Fully autonomous end-to-end.",
+  "trigger": {
+    "condition": null,
+    "config": {
+      "trigger_type": "scheduled",
+      "events": [],
+      "schedule_mode": "interval",
+      "cron_expression": null,
+      "one_time_date": null,
+      "timezone": "America/New_York",
+      "interval_value": 30,
+      "interval_unit": "minutes",
+      "interval_anchor": null,
+      "ends_type": "never",
+      "ends_on_date": null,
+      "ends_after_count": null
+    }
+  },
+  "definition": {
+    "document": {
+      "dsl": "1.0.0",
+      "name": "recursive_evolution_loop",
+      "version": "1.0",
+      "namespace": "base44"
+    },
+    "do": [
+      {
+        "run_evolution": {
+          "call": "invoke_backend_function",
+          "with": {
+            "function_name": "runEvolutionLoop",
+            "args": {
+              "max_iterations": 3,
+              "target_score": 95
+            }
+          },
+          "then": "end",
+          "x-base44": {
+            "title": "Run evolution cycle",
+            "description": "Audit, fix, heal, harden, re-audit, recurse"
+          }
+        }
+      }
+    ]
+  }
+}
