@@ -544,7 +544,7 @@ export async function executeAssistantTool(db: any, name: string, args: any): Pr
       case 'list_operator_tasks': {
         const query: any = {};
         if (args.status) query.status = args.status;
-        const res = await db.entities.OperatorTask.filter(query, { sort: '-created_date', limit: args.limit || 20, fields: ['title', 'target', 'status', 'result', 'source'] });
+        const res = await db.entities.OperatorTask.filter(query, { sort: '-created_at', limit: args.limit || 20, fields: ['title', 'target', 'status', 'result', 'source'] });
         return JSON.stringify({ count: res.items.length, tasks: res.items });
       }
       case 'gpt_sync': {

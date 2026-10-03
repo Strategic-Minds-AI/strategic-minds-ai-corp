@@ -15,7 +15,7 @@ export default async function(req: Request): Promise<Response> {
     const action = body.action || 'list';
 
     if (action === 'list') {
-      const res = await base44.entities.AgentSecret.filter({}, { sort: '-created_date', limit: 200, fields: ['name', 'description', 'category', 'last_used', 'used_count', 'created_date'] });
+      const res = await base44.entities.AgentSecret.filter({}, { sort: '-created_at', limit: 200, fields: ['name', 'description', 'category', 'last_used', 'used_count', 'created_at'] });
       return Response.json({ secrets: res.items || [] });
     }
 

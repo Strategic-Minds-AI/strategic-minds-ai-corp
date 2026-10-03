@@ -13,14 +13,14 @@ export default async function(req: Request): Promise<Response> {
     const op = body.operation;
 
     if (op === 'list') {
-      const res = await client.entities.OperatorDevice.filter({ created_by_id: user.id }, { sort: '-created_date', limit: 50 });
+      const res = await client.entities.OperatorDevice.filter({ created_by_id: user.id }, { sort: '-created_at', limit: 50 });
       return Response.json({ devices: (res.items || []).map(publicDevice) });
     }
 
     if (op === 'create') {
       const name = String(body.name || '').trim();
       if (!name || name.length > 80) return Response.json({ error: 'Enter a device name up to 80 characters.' }, { status: 400 });
-      const existingRes = await client.entities.OperatorDevice.filter({ created_by_id: user.id, revoked: false }, { sort: '-created_date', limit: 10 });
+      const existingRes = await client.entities.OperatorDevice.filter({ created_by_id: user.id, revoked: false }, { sort: '-created_at', limit: 10 });
       if ((existingRes.items || []).length >= 10) return Response.json({ error: 'Revoke an unused device before pairing another (10-device limit).' }, { status: 400 });
       const token = Array.from(crypto.getRandomValues(new Uint8Array(32))).map(v => v.toString(16).padStart(2, '0')).join('');
       const device = await client.entities.OperatorDevice.create({
