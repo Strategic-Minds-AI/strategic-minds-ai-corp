@@ -1,0 +1,29 @@
+name: Standalone Preview Validation
+
+on:
+  push:
+    branches:
+      - feature/corp-runtime-vercel-route-20261003
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  standalone:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+      - run: npm ci
+      - run: npm run build:standalone
+      - name: Verify owned runtime artifacts
+        run: |
+          test -f .standalone/api/runtime.mjs
+          test -f .standalone/server.mjs
+          test -f .standalone/dependency-audit.json
+          test -f .standalone/dist/index.html
