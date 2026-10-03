@@ -41,7 +41,7 @@ for(const result of [server,api])for(const file of Object.keys(result.metafile.i
 const pkg={name:'strategic-minds-owned-runtime',private:true,type:'module',engines:{node:'22.x'},scripts:{start:'node server.mjs'},dependencies:{stripe:'^17.7.0',jose:'^6.1.0',nodemailer:'^6.9.16'}};
 await writeFile(resolve(output,'package.json'),JSON.stringify(pkg,null,2));
 await writeFile(resolve(output,'schema.sql'),await buildSchema(schemas,tables,entityJobs));
-await writeFile(resolve(output,'vercel.json'),JSON.stringify({version:2,buildCommand:'',outputDirectory:'dist',functions:{'api/runtime.mjs':{maxDuration:800}},rewrites:[{source:'/api/runtime/:path*',destination:'/api/runtime?route=:path*'},{source:'/((?!api/|assets/).*)',destination:'/index.html'}],crons:[{path:'/api/runtime/jobs/tick',schedule:'*/5 * * * *'}]},null,2));
+await writeFile(resolve(output,'vercel.json'),JSON.stringify({version:2,buildCommand:'',outputDirectory:'dist',functions:{'api/runtime.mjs':{maxDuration:800}},rewrites:[{source:'/api/runtime/:path*',destination:'/api/runtime?route=:path*'},{source:'/((?!api/|assets/).*)',destination:'/index.html'}]},null,2));
 await cp('src/deployment/standalone.env.example',resolve(output,'.env.example'));
 await cp('src/deployment/STANDALONE.md',resolve(output,'README.md'));
 await mkdir(resolve(output,'workers'),{recursive:true});
