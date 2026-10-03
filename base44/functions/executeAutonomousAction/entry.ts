@@ -1,4 +1,4 @@
-import { createClientFromRequest } from "npm:@base44/sdk@0.8.52";
+import { createClientFromRequest } from "../../shared/ownedClient.ts";
 import { callAIGateway } from "../../shared/aiGateway.ts";
 import { sendTwilioSms, makeTwilioCall, personalize, extractDeliveryStatus } from "../../shared/twilioMessaging.ts";
 
@@ -153,7 +153,7 @@ export default async function(req) {
       const fromNumber = from_number || process.env.TWILIO_PHONE_NUMBER;
       if (!fromNumber) return Response.json({ error: "TWILIO_PHONE_NUMBER not configured" }, { status: 503 });
 
-      const webhookUrl = twiml_url || `https://strategic-ai-consulting.base44.app/functions/twilioWebhook`;
+      const webhookUrl = twiml_url || `${process.env.API_URL || new URL(req.url).origin}/functions/twilioWebhook`;
       const result = await makeTwilioCall(fromNumber, to_number, webhookUrl);
 
       let convId = null;

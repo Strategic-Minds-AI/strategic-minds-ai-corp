@@ -4,7 +4,7 @@
 // Plain module: export helpers, no Deno.serve / no default export.
 // ═══════════════════════════════════════════════════════════════════
 
-import { createClientFromRequest } from "npm:@base44/sdk@0.8.52";
+
 
 // ── Types ────────────────────────────────────────────────────────
 export interface GeneratorArtifact {

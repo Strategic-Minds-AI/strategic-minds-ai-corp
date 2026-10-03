@@ -29,7 +29,8 @@ export const auth = {
     const supabase = await getSupabase();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) throw new Error('Not authenticated');
-    const { error } = await supabase.from('profiles').update(data).eq('id', user.id);
+    const { role, id, email, created_date, ...preferences } = data;
+    const { error } = await supabase.from('profiles').update(preferences).eq('id', user.id);
     if (error) throw new Error(error.message);
     return this.me();
   },
@@ -49,21 +50,8 @@ export const auth = {
 
 export const users = {
   async inviteUser(email, role) {
-    // Route to Railway endpoint (which uses Supabase admin API)
-    const RAILWAY_URL = import.meta.env.VITE_RAILWAY_API_URL;
-    if (RAILWAY_URL) {
-      const token = await getAccessToken();
-      const res = await fetch(`${RAILWAY_URL}/users/invite`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-        body: JSON.stringify({ email, role }),
-      });
-      return res.json();
-    }
-    throw new Error('User invites require VITE_RAILWAY_API_URL to be configured.');
+    const { runtimeRequest } = await import('@/lib/runtimeTransport');
+    return runtimeRequest('/users/invite', { email, role }, { token: await getAccessToken() });
   },
 };
 

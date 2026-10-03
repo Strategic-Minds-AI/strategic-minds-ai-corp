@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import { callAIGateway } from '../../shared/aiGateway.ts';
 import { getSupabaseUser } from '../../shared/supabaseAuth.ts';
 import { buildSystemPrompt, AGENT_INSTRUCTIONS } from '../../shared/agentInstructions.ts';
@@ -354,55 +354,22 @@ export default async function(req: Request): Promise<Response> {
       messages.push({ role: m.role === 'assistant' ? 'assistant' : 'user', content: m.content });
     }
 
-    // Tool loop — up to 5 rounds
-    let toolResults: any[] = [];
+    // Native tool calling through the owner's gateway, with a bounded execution loop.
+    const toolResults: any[] = [];
     for (let round = 0; round < 5; round++) {
-      const result = await callAIGateway({
-        model: 'anthropic/claude-sonnet-4-5',
-        messages,
-        temperature: 0.7,
-        maxTokens: 2000
-      });
-
-      // The Vercel AI Gateway returns content as text (no native tool calling in this simple mode)
-      // Check if the response contains JSON tool-call instructions
-      const content = result.content;
-
-      // Try to parse tool calls from the response (agents may output JSON tool calls in their content)
-      const toolCallMatch = content.match(/<tool_call>\s*([\s\S]*?)\s*<\/tool_call>/);
-      if (toolCallMatch) {
-        try {
-          const toolArgs = JSON.parse(toolCallMatch[1]);
-          const toolName = toolArgs.name;
-          const toolParams = toolArgs.arguments || toolArgs.params || {};
-          const toolResult = await executeTool(db, toolName, toolParams);
-          toolResults.push({ tool: toolName, result: JSON.parse(toolResult) });
-
-          // Add the tool result to the conversation and continue the loop
-          messages.push({ role: 'assistant', content });
-          messages.push({ role: 'user', content: `Tool result for ${toolName}: ${toolResult}\n\nContinue your response based on this result. If you need to call another tool, use the same <tool_call> format. Otherwise, provide your final response to the user.` });
-        } catch (e) {
-          break;
-        }
-      } else {
-        // No tool calls — return the final response
-        return Response.json({
-          agent_name: agentName,
-          content,
-          tool_results: toolResults,
-          model: result.model,
-          usage: result.usage
-        });
+      const result = await callAIGateway({ messages, tools: TOOLS, maxTokens: 4000 });
+      if (!result.tool_calls?.length) return Response.json({ agent_name: agentName, content: result.content, tool_results: toolResults, model: result.model, usage: result.usage });
+      messages.push(result.message);
+      for (const call of result.tool_calls) {
+        if (!TOOLS.some(tool => tool.function.name === call.function.name)) throw new Error('Unapproved agent tool');
+        const args = JSON.parse(call.function.arguments || '{}');
+        const toolResult = await executeTool(db, call.function.name, args);
+        toolResults.push({ tool: call.function.name, result: JSON.parse(toolResult) });
+        messages.push({ role: 'tool', tool_call_id: call.id, content: toolResult });
       }
     }
-
-    // If we exhausted the tool loop, return the last content
-    return Response.json({
-      agent_name: agentName,
-      content: 'I completed the requested actions. See the task queue for updates.',
-      tool_results: toolResults,
-      model: 'anthropic/claude-sonnet-4-5'
-    });
+    const result = await callAIGateway({ messages, maxTokens: 4000 });
+    return Response.json({ agent_name: agentName, content: result.content, tool_results: toolResults, model: result.model, usage: result.usage });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }

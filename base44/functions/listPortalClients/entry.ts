@@ -1,5 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
-import { secrets } from 'base44:runtime';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
+import { secrets } from '../../shared/runtimeSecrets.ts';
 
 // Lists app-user profiles from the agency Supabase project.
 // Replaces base44.entities.User.list(), which is denied under Supabase auth

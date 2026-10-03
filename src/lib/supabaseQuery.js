@@ -54,16 +54,18 @@ export function buildFilters(query) {
       for (const sub of value) {
         parts.push(...buildFilters(sub));
       }
-      if (parts.length) filters.push(`or=(${parts.join(',')})`);
+      if (parts.length) filters.push(`or=(${parts.map(part => part.replace('=', '.')).join(',')})`);
       continue;
     }
     if (key === '$and') {
-      filters.push(...buildFilters(value));
+      for (const part of value) filters.push(...buildFilters(part));
       continue;
     }
     if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
       for (const [op, opVal] of Object.entries(value)) {
-        filters.push(buildOperatorFilter(key, op, opVal));
+        if (op === '$options') continue;
+        const filter = buildOperatorFilter(key, op, opVal);
+        filters.push(op === '$regex' && value.$options?.includes('i') ? filter.replace('=like.', '=ilike.') : filter);
       }
     } else if (Array.isArray(value)) {
       filters.push(`${key}=in.(${value.map(escapeValue).join(',')})`);

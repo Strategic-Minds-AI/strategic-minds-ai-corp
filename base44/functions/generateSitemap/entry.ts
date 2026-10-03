@@ -1,10 +1,13 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 
-const BASE_URL = 'https://strategic-ai-consulting.base44.app';
+const BASE_URL = process.env.APP_URL;
 
 export default async function(req) {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+    if (!user || user.role !== 'admin') return Response.json({ error: 'Admin access required' }, { status: 403 });
+    if (!BASE_URL) return Response.json({ code: 'NOT_CONFIGURED', error: 'APP_URL is required' }, { status: 503 });
     const sr = base44.asServiceRole;
 
     const posts = await sr.entities.Post.filter({}, { sort: 'publish_date', limit: 500, fields: ['slug', 'publish_date', 'updated_date'] });

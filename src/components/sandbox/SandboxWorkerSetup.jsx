@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Terminal, Copy, Check, ChevronDown, ChevronUp } from 'lucide-react';
+import { API_BASE } from '@/lib/runtimeTransport';
 
 export default function SandboxWorkerSetup({ sandbox }) {
   const [expanded, setExpanded] = useState(false);
@@ -10,14 +11,15 @@ export default function SandboxWorkerSetup({ sandbox }) {
   const workerCode = `// railwayWorker.js — deploy this to your Railway service
 // Set environment variables:
 //   SANDBOX_API_KEY = <your sk_sbx_... key>
-//   APP_URL = https://strategic-ai-consulting.base44.app
+//   API_URL = ${new URL(API_BASE, window.location.origin).href.replace(/\/$/, '')}
 //   POLL_INTERVAL = 60000
 //   MAX_CYCLES = 0  (0 = infinite)
 //
 // Start command: node railwayWorker.js
 
 const SANDBOX_API_KEY = process.env.SANDBOX_API_KEY;
-const APP_URL = (process.env.APP_URL || 'https://strategic-ai-consulting.base44.app').replace(/\\/$/, '');
+const APP_URL = (process.env.API_URL || process.env.APP_URL || '').replace(/\\/$/, '');
+if (!APP_URL) throw new Error('NOT_CONFIGURED: API_URL');
 const POLL_INTERVAL = parseInt(process.env.POLL_INTERVAL || '60000', 10);
 const AUTH = \`\${APP_URL}/functions/sandboxAuth\`;
 
@@ -56,7 +58,7 @@ setInterval(() => {}, 1 << 30);`;
             <p className="mb-2 font-semibold text-foreground">Railway Environment Variables for {sandbox.name}:</p>
             <ul className="space-y-1">
               <li><code className="text-foreground">SANDBOX_API_KEY</code> = <span className="text-primary">your sk_sbx_... key (from sandbox creation)</span></li>
-              <li><code className="text-foreground">APP_URL</code> = <code className="text-foreground">https://strategic-ai-consulting.base44.app</code></li>
+              <li><code className="text-foreground">API_URL</code> = <code className="text-foreground">{new URL(API_BASE, window.location.origin).href.replace(/\/$/, '')}</code></li>
               <li><code className="text-foreground">POLL_INTERVAL</code> = <code className="text-foreground">60000</code> (60 seconds)</li>
               <li><code className="text-foreground">MAX_CYCLES</code> = <code className="text-foreground">0</code> (infinite)</li>
             </ul>

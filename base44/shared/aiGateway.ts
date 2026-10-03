@@ -6,8 +6,10 @@ const GATEWAY_URL = "https://ai-gateway.vercel.sh/v1/chat/completions";
 const DEFAULT_MODEL = "anthropic/claude-sonnet-4-5";
 
 export interface AIMessage {
-  role: "system" | "user" | "assistant";
-  content: string;
+  role: "system" | "user" | "assistant" | "tool";
+  content: any;
+  tool_call_id?: string;
+  tool_calls?: any[];
 }
 
 export interface AIGatewayOptions {
@@ -18,6 +20,7 @@ export interface AIGatewayOptions {
   temperature?: number;
   maxTokens?: number;
   jsonSchema?: Record<string, any>;
+  tools?: any[];
 }
 
 export interface AIGatewayResult {
@@ -25,6 +28,8 @@ export interface AIGatewayResult {
   json: any;
   model: string;
   usage: { prompt_tokens: number; completion_tokens: number; total_tokens: number };
+  tool_calls: any[];
+  message: any;
 }
 
 export async function callAIGateway(options: AIGatewayOptions): Promise<AIGatewayResult> {
@@ -44,8 +49,10 @@ export async function callAIGateway(options: AIGatewayOptions): Promise<AIGatewa
     max_tokens: options.maxTokens ?? 2000,
   };
   if (options.jsonSchema) {
+    messages.unshift({ role: 'system', content: `Return JSON conforming to this schema: ${JSON.stringify(options.jsonSchema)}` });
     body.response_format = { type: "json_object" };
   }
+  if (options.tools?.length) { body.tools = options.tools; body.tool_choice = 'auto'; }
 
   const res = await fetch(GATEWAY_URL, {
     method: "POST",
@@ -84,5 +91,7 @@ export async function callAIGateway(options: AIGatewayOptions): Promise<AIGatewa
     json: jsonResult,
     model: data.model || model,
     usage: data.usage || { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
+    tool_calls: data.choices?.[0]?.message?.tool_calls || [],
+    message: data.choices?.[0]?.message,
   };
 }

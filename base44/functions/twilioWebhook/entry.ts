@@ -1,4 +1,4 @@
-import { createClientFromRequest } from "npm:@base44/sdk@0.8.52";
+import { createClientFromRequest } from "../../shared/ownedClient.ts";
 import { callAIGateway } from "../../shared/aiGateway.ts";
 import { sendTwilioSms } from "../../shared/twilioMessaging.ts";
 
@@ -30,7 +30,7 @@ export default async function(req) {
       const toNumber = form.To || "";
       const callStatus = form.CallStatus || "ringing";
       const speechResult = form.SpeechResult || "";
-      const gatherUrl = "https://strategic-ai-consulting.base44.app/functions/twilioWebhook";
+      const gatherUrl = `${process.env.API_URL || new URL(req.url).origin}/functions/twilioWebhook`;
 
       // New call — create conversation and log event
       if (callStatus === "ringing" || (callStatus === "in-progress" && !speechResult)) {

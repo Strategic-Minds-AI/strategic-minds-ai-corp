@@ -140,7 +140,7 @@ export default function SandboxManager() {
                 {copiedId === 'new' ? <Check size={14} className="text-primary"/> : <Copy size={14}/>}
               </button>
             </div>
-            <p className="mt-2 text-xs text-muted-foreground">This key is shown <strong className="text-foreground">once</strong> — only a SHA-256 hash is stored. Endpoint: <code className="text-foreground">https://strategic-ai-consulting.base44.app/functions/sandboxAuth</code></p>
+            <p className="mt-2 text-xs text-muted-foreground">This key is shown <strong className="text-foreground">once</strong> — only a SHA-256 hash is stored. Endpoint: <code className="text-foreground">{new URL(`${import.meta.env.VITE_RAILWAY_API_URL || import.meta.env.VITE_RAILWAY_URL || '/api/runtime'}/functions/sandboxAuth`, window.location.origin).href}</code></p>
           </div>
         )}
 

@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import MailComposer from 'npm:nodemailer@6.9.16/lib/mail-composer/index.js';
 import { Buffer } from 'node:buffer';
 

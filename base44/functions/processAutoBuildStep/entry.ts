@@ -4,7 +4,7 @@
 // Marketing:  profile → vision → strategy → names → content → logo → brand → website → social → video → review
 // System:     profile → vision → strategy → architecture → data_model → ui_system → codegen → deploy → system_review
 
-import { createClientFromRequest } from "npm:@base44/sdk@0.8.52";
+import { createClientFromRequest } from "../../shared/ownedClient.ts";
 import {
   generateNames, generateContent, generateLogos, generateBrandPacks,
   generateWebsite, generateSocial, generateVideo,

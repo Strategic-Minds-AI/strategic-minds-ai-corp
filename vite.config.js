@@ -1,23 +1,14 @@
-import base44 from "@base44/vite-plugin"
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(async ({ command }) => ({ 
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
     extensions: [".tsx", ".ts", ".jsx", ".js", ".mjs", ".json"]
   },
   plugins: [
-    base44({
-      // Support for legacy code that imports the base44 SDK with @/integrations, @/entities, etc.
-      // can be removed if the code has been updated to use the new SDK imports from @base44/sdk
-      legacySDKImports: process.env.BASE44_LEGACY_SDK_IMPORTS === 'true',
-      hmrNotifier: true,
-      navigationNotifier: true,
-      analyticsTracker: true,
-      visualEditAgent: true
-    }),
+    ...(command === 'serve' ? [(await import('@base44/vite-plugin')).default({ legacySDKImports: false, hmrNotifier: true, navigationNotifier: true, analyticsTracker: false, visualEditAgent: true })] : []),
     react(),
   ]
-});
+}));

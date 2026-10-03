@@ -23,12 +23,12 @@ function entityAdapter(entityName) {
 
   async function _select(query, options = {}) {
     const supabase = await getSupabase();
-    const cols = options.fields ? options.fields.join(',') : '*';
+    const cols = options.fields ? [...new Set(['id', ...options.fields])].join(',') : '*';
     let dbQuery = supabase.from(table).select(cols);
     dbQuery = _applyFilters(dbQuery, query);
 
     if (options.sort) {
-      const s = parseSort(options.sort);
+      const s = parseSort(entityName === 'User' ? options.sort.replace('created_date', 'created_at') : options.sort);
       if (s) dbQuery = dbQuery.order(s.column, { ascending: s.ascending });
     }
 
@@ -51,8 +51,15 @@ function entityAdapter(entityName) {
   }
 
   return {
-    async filter(query, options = {}) {
-      return _select(query, options);
+    async filter(query, options, limit) {
+      if (options?.distinct) {
+        const supabase = await getSupabase();
+        const { data, error } = await supabase.rpc('entity_distinct', { table_name: table, column_name: options.distinct, conditions: query || {}, page_limit: options.limit || 50, page_offset: options.cursor ? decodeCursor(options.cursor) : 0 });
+        if (error) throw new Error(error.message);
+        return data;
+      }
+      if (options && typeof options === 'object') return _select(query, options);
+      return (await _select(query, { sort: options, limit: limit || 50 })).items;
     },
 
     async list(...args) {
@@ -60,10 +67,9 @@ function entityAdapter(entityName) {
         const opts = args[0];
         if (opts.distinct) {
           const supabase = await getSupabase();
-          const { data, error } = await supabase.from(table).select(opts.distinct);
+          const { data, error } = await supabase.rpc('entity_distinct', { table_name: table, column_name: opts.distinct, conditions: {}, page_limit: opts.limit || 50, page_offset: opts.cursor ? decodeCursor(opts.cursor) : 0 });
           if (error) throw new Error(error.message);
-          const values = [...new Set((data || []).map(r => r[opts.distinct]).filter(v => v !== null))];
-          return { items: values, next_cursor: null, has_more: false };
+          return data;
         }
         return _select({}, opts);
       }
@@ -149,37 +155,14 @@ function entityAdapter(entityName) {
     },
 
     async aggregate(options) {
-      const groupBy = options.groupBy;
-      const page = await _select(options.query || {}, { limit: 1000, sort: options.sort });
-      const rows = page.items;
-      if (!groupBy) {
-        const result = { count: rows.length };
-        for (const field of options.sum || []) result[`sum_${field}`] = rows.reduce((a, r) => a + (Number(r[field]) || 0), 0);
-        for (const field of options.avg || []) result[`avg_${field}`] = rows.length ? rows.reduce((a, r) => a + (Number(r[field]) || 0), 0) / rows.length : 0;
-        return { rows: [result], truncated: false };
-      }
-      const groups = {};
-      for (const r of rows) {
-        const key = r[groupBy];
-        if (!groups[key]) groups[key] = [];
-        groups[key].push(r);
-      }
-      const resultRows = Object.entries(groups).map(([key, items]) => {
-        const row = { [groupBy]: key, count: items.length };
-        for (const field of options.sum || []) row[`sum_${field}`] = items.reduce((a, r) => a + (Number(r[field]) || 0), 0);
-        for (const field of options.avg || []) row[`avg_${field}`] = items.length ? items.reduce((a, r) => a + (Number(r[field]) || 0), 0) / items.length : 0;
-        for (const field of options.min || []) row[`min_${field}`] = Math.min(...items.map(r => Number(r[field]) || 0));
-        for (const field of options.max || []) row[`max_${field}`] = Math.max(...items.map(r => Number(r[field]) || 0));
-        return row;
-      });
-      if (options.sort) {
-        const s = parseSort(options.sort);
-        resultRows.sort((a, b) => {
-          const dir = s.ascending ? 1 : -1;
-          return (a[s.column] || 0) > (b[s.column] || 0) ? dir : -dir;
-        });
-      }
-      return { rows: resultRows, truncated: false };
+      const supabase = await getSupabase();
+      const { data, error } = await supabase.rpc('entity_aggregate', { table_name: table, options });
+      if (error) throw new Error(error.message);
+      return data;
+    },
+    async schema() {
+      const { functions } = await import('@/lib/functionClient');
+      return (await functions.invoke('entitySchema', { name: entityName })).data;
     },
 
     async upsert(records, opts = {}) {

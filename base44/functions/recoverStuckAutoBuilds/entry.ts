@@ -4,7 +4,7 @@
 //   2. AutoBuild records in "failed" status (retry up to 3 times)
 // Recovers them by re-running the current step via processAutoBuildStep.
 
-import { createClientFromRequest } from "npm:@base44/sdk@0.8.52";
+import { createClientFromRequest } from "../../shared/ownedClient.ts";
 
 const STUCK_THRESHOLD_MINUTES = 10;
 const MAX_FAILURE_RETRIES = 2;
@@ -12,6 +12,9 @@ const MAX_FAILURE_RETRIES = 2;
 export default async function(req: Request): Promise<Response> {
   try {
     const base44 = createClientFromRequest(req);
+    const user = await base44.auth.me();
+    if (!user) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    if (user.role !== 'admin') return Response.json({ error: 'Admin access required' }, { status: 403 });
     const svc = base44.asServiceRole;
 
     const now = Date.now();

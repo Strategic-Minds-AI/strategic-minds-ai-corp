@@ -3,7 +3,8 @@ export const costRenewalStep = `      - name: Verify fresh zero-cost protection 
         run: |
           node --input-type=module <<'JS'
           import { appendFileSync } from 'node:fs';
-          const endpoint = 'https://strategic-ai-consulting.base44.app/functions/benchmarkCostRenewal';
+          if (!process.env.STRATEGIC_API_URL) throw new Error('NOT_CONFIGURED: STRATEGIC_API_URL');
+          const endpoint = process.env.STRATEGIC_API_URL.replace(/\\/$/, '') + '/functions/benchmarkCostRenewal';
           for (const body of [{}, { token: 'forged' }, { token: 'forged', approved: true }]) {
             const rejected = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body), signal: AbortSignal.timeout(30000) });
             if (rejected.status !== 403) throw new Error('Cost endpoint did not reject an unsigned grant.');

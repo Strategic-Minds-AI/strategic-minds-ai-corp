@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import { callAIGateway } from '../../shared/aiGateway.ts';
 
 export default async function(req: Request): Promise<Response> {

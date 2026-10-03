@@ -1,8 +1,9 @@
 import React from "react";
 import { Monitor, Cloud, Play, Copy } from "lucide-react";
+import { API_BASE } from '@/lib/runtimeTransport';
 
 export default function SandboxPanel() {
-  const localConfig = `APP_URL=https://strategic-ai-consulting.base44.app\nWORKER_SECRET=<your-secret>\nPOLL_INTERVAL=60000\nMAX_CYCLES=5`;
+  const localConfig = `API_URL=${new URL(API_BASE, window.location.origin).href.replace(/\/$/, '')}\nWORKER_SECRET=<your-secret>\nPOLL_INTERVAL=60000\nMAX_CYCLES=5`;
 
   const copyLocal = () => navigator.clipboard.writeText(localConfig);
 

@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 
 const LEASE_DURATION_MS = 10 * 60 * 1000; // 10 minutes
 const HEALTHY_THRESHOLD_MS = 3 * 60 * 1000; // 3 min

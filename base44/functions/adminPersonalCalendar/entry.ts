@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 
 const connectorId = '6aa76cc2470fe12f80973720';
 export default async function(req: Request): Promise<Response> {

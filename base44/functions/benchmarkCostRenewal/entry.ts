@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import { createRemoteJWKSet, jwtVerify } from 'npm:jose@6.1.0';
 import { githubClient, REPOSITORY, optional, verifyZeroCost, setVariable } from '../../shared/automation/github.ts';
 export default async function(req) {
@@ -12,7 +12,7 @@ export default async function(req) {
     let claims;
     try {
       const keys = createRemoteJWKSet(new URL('https://token.actions.githubusercontent.com/.well-known/jwks'), { timeoutDuration: 5000 });
-      const result = await jwtVerify(body.token, keys, { issuer: 'https://token.actions.githubusercontent.com', audience: 'https://strategic-ai-consulting.base44.app/functions/benchmarkCostRenewal', algorithms: ['RS256'], requiredClaims: ['exp', 'iat', 'nbf', 'sub'], maxTokenAge: '5m' });
+      const result = await jwtVerify(body.token, keys, { issuer: 'https://token.actions.githubusercontent.com', audience: `${process.env.API_URL || new URL(req.url).origin}/functions/benchmarkCostRenewal`, algorithms: ['RS256'], requiredClaims: ['exp', 'iat', 'nbf', 'sub'], maxTokenAge: '5m' });
       claims = result.payload;
     } catch { return Response.json({ error: 'Invalid or expired workflow identity.' }, { status: 403, headers }); }
     if (claims.repository !== REPOSITORY || claims.repository_id !== '1396772471' || claims.repository_owner_id !== '332008865' || claims.repository_visibility !== 'private' || claims.ref !== 'refs/heads/main' || !['repo:' + REPOSITORY + ':ref:refs/heads/main', 'repo:Strategic-Minds-AI@332008865/strategic-minds-ai-corp@1396772471:ref:refs/heads/main'].includes(claims.sub) || claims.workflow_ref !== REPOSITORY + '/.github/workflows/benchmark-coding.yml@refs/heads/main' || claims.runner_environment !== 'github-hosted' || !['schedule', 'workflow_dispatch'].includes(claims.event_name) || !/^[0-9]+$/.test(String(claims.run_id)) || !/^[0-9]+$/.test(String(claims.run_attempt)) || !/^[a-f0-9]{40}$/.test(String(claims.workflow_sha))) return Response.json({ error: 'Workflow identity outside approved scope.' }, { status: 403, headers });

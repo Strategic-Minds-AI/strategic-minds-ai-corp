@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import { hashVaultKey } from '../../shared/vaultKeys.ts';
 export default async function(req: Request): Promise<Response> {
   try {

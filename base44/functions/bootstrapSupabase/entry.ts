@@ -1,5 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
-import { secrets } from 'base44:runtime';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
+import { secrets } from '../../shared/runtimeSecrets.ts';
 import { checkGoogleAuthCredentials } from '../../shared/googleAuthCheck.ts';
 
 // ──────────────────────────────────────────────────────────────
@@ -19,11 +19,7 @@ import { checkGoogleAuthCredentials } from '../../shared/googleAuthCheck.ts';
 // Connection tokens stay server-side. Google credentials come from app secrets.
 // ──────────────────────────────────────────────────────────────
 
-const PUBLISHED_ORIGINS = [
-  'https://strategic-ai-consulting.base44.app',
-  'https://strategicmindai.com',
-  'https://strategicmindsai.com',
-];
+const PUBLISHED_ORIGINS = (process.env.APP_URL || '').split(',').filter(Boolean);
 
 const PROFILES_SQL = `
 create table if not exists public.profiles (
@@ -94,6 +90,7 @@ export default async function(req: Request): Promise<Response> {
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden — admin only' }, { status: 403 });
 
     const body = await req.json().catch(() => ({}));
+    if (!PUBLISHED_ORIGINS.length) return Response.json({ code: 'NOT_CONFIGURED', error: 'APP_URL is required.' }, { status: 503 });
     const pat = typeof body.supabaseAccessToken === 'string' ? body.supabaseAccessToken.trim() : '';
     const accessToken = pat || (await base44.asServiceRole.connectors.getConnection('supabase')).accessToken;
 

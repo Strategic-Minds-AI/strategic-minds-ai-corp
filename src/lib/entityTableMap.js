@@ -2,6 +2,7 @@
 // Mirrors railway/src/lib/supabase.js tableName() — keep both in sync.
 
 const TABLE_MAP = {
+  User: 'profiles',
   BusinessAudit: 'business_audits',
   AuditFinding: 'audit_findings',
   Evidence: 'evidence',

@@ -6,6 +6,7 @@
 import { getSupabaseUser } from "../../shared/supabaseAuth.ts";
 import { callAIGateway } from "../../shared/aiGateway.ts";
 import { deployToSandbox, provisionGeneratorOutput } from "../../shared/generatorDeployment.ts";
+import { persistGeneratorArtifacts, loadGeneratorArtifacts } from "../../shared/generatorArtifacts.ts";
 
 // ─── Text rendering (Handlebars-like) ───
 function resolvePath(obj, path) {
@@ -135,7 +136,8 @@ async function sha256(text) {
 
 // ─── Node executor ───
 async function executeNode(node, ctx) {
-  const { input, output, artifacts, def, run_id, entities } = ctx;
+  const { input, output, artifacts, def, run_id, entities, req } = ctx;
+  const generator_id = def.generator_key || def.id;
   const cfg = node.config || {};
 
   switch (node.type) {
@@ -223,7 +225,7 @@ async function executeNode(node, ctx) {
 
     case "deploy_to_sandbox": {
       try {
-        const base44 = (await import("npm:@base44/sdk@0.8.52")).createClientFromRequest(req);
+        const base44 = (await import("../../shared/ownedClient.ts")).createClientFromRequest(req);
         const result = await deployToSandbox(base44, {
           status: "passed",
           generator_id: def.id,
@@ -243,7 +245,7 @@ async function executeNode(node, ctx) {
 
     case "provision": {
       try {
-        const base44 = (await import("npm:@base44/sdk@0.8.52")).createClientFromRequest(req);
+        const base44 = (await import("../../shared/ownedClient.ts")).createClientFromRequest(req);
         const result = await provisionGeneratorOutput(base44, {
           status: "passed",
           generator_id: def.id,
@@ -281,6 +283,9 @@ export default async function(req: Request): Promise<Response> {
 
   const { generator_id, input = {}, run_id, action = "execute" } = body;
   if (!generator_id) return Response.json({ error: "generator_id is required" }, { status: 400 });
+  const supabaseUrl = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
+  const serviceKey = process.env.SUPABASE_SERVICE_KEY;
+  if (!supabaseUrl || !serviceKey) return Response.json({ error: "NOT_CONFIGURED: Supabase" }, { status: 503 });
 
   // ── Deploy action: deploy a completed run's artifacts to sandbox or production ──
   if (action === "deploy_sandbox" || action === "deploy_production") {
@@ -293,9 +298,10 @@ export default async function(req: Request): Promise<Response> {
     const run = Array.isArray(runs) ? runs[0] : null;
     if (!run) return Response.json({ error: "Run not found" }, { status: 404 });
 
-    const runArtifacts = (run.artifacts_json ? JSON.parse(run.artifacts_json) : []).map((a: any) => ({ ...a }));
+    if (run.status !== 'passed' || run.generator_key !== generator_id) return Response.json({ error: 'Only a passed matching generator run can be deployed' }, { status: 409 });
+    const runArtifacts = await loadGeneratorArtifacts(run.artifacts_json ? JSON.parse(run.artifacts_json) : []);
     const runOutput = run.output_json ? JSON.parse(run.output_json) : {};
-    const base44 = (await import("npm:@base44/sdk@0.8.52")).createClientFromRequest(req);
+    const base44 = (await import("../../shared/ownedClient.ts")).createClientFromRequest(req);
 
     if (action === "deploy_sandbox") {
       try {
@@ -316,16 +322,13 @@ export default async function(req: Request): Promise<Response> {
         stack_type: body.stack_type || "vite_app",
         domain: body.domain, env_vars: body.env_vars, client_id: body.client_id,
       });
-      return Response.json({ status: "provisioned", ...result });
+      return Response.json({ status: "pending", ...result });
     } catch (e) {
       return Response.json({ error: e.message }, { status: 500 });
     }
   }
 
-  // Load generator definition via Supabase REST API
-  const supabaseUrl = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
-  const serviceKey = process.env.SUPABASE_SERVICE_KEY;
-  if (!supabaseUrl || !serviceKey) return Response.json({ error: "Supabase not configured" }, { status: 500 });
+  // Load generator definition from the owned database.
 
   const defRes = await fetch(`${supabaseUrl}/rest/v1/generator_definitions?generator_key=eq.${encodeURIComponent(generator_id)}&limit=1`, {
     headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` },
@@ -357,7 +360,7 @@ export default async function(req: Request): Promise<Response> {
     if (!node) continue;
 
     const stepStart = Date.now();
-    const result = await executeNode(node, { input, output, artifacts, def, run_id, entities: null });
+    const result = await executeNode(node, { input, output, artifacts, def, run_id, entities: null, req });
     const elapsed = Date.now() - stepStart;
 
     const step = {
@@ -386,26 +389,24 @@ export default async function(req: Request): Promise<Response> {
     input_json: JSON.stringify(input),
     output_json: JSON.stringify(output),
     steps_json: JSON.stringify(steps),
-    artifacts_json: JSON.stringify(artifacts.map((a) => ({ name: a.name, path: a.path, sha256: a.sha256, media_type: a.media_type }))),
+    artifacts_json: JSON.stringify(await persistGeneratorArtifacts(artifacts, user.id)),
+    created_by_id: user.id,
     started_at: new Date().toISOString(),
     completed_at: new Date().toISOString(),
   };
 
-  try {
-    await fetch(`${supabaseUrl}/rest/v1/generator_runs`, {
-      method: "POST",
-      headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}`, "Content-Type": "application/json", Prefer: "return=representation" },
-      body: JSON.stringify(runRecord),
-    });
-  } catch (e) {
-    // Run persistence is best-effort; results are returned regardless
-    console.error("Failed to persist run:", e.message);
-  }
+  const savedResponse = await fetch(`${supabaseUrl}/rest/v1/generator_runs`, {
+    method: 'POST',
+    headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify(runRecord),
+  });
+  if (!savedResponse.ok) return Response.json({ error: 'Could not save generator run' }, { status: 502 });
+  const [savedRun] = await savedResponse.json();
 
   return Response.json({
     status: failed ? "failed" : "passed",
     generator_id,
-    run_id: run_id || null,
+    run_id: savedRun.id,
     steps,
     output,
     artifacts: artifacts.map((a) => ({ name: a.name, path: a.path, sha256: a.sha256, media_type: a.media_type })),

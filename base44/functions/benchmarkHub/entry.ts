@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import { criteria } from '../../shared/benchmarkCriteria.ts';
 import { sources, competitors, selectionPolicy, BENCHMARK_VERSION } from '../../shared/benchmarkSources.ts';
 import { findings, sourceBaseline } from '../../shared/benchmarkAudit.ts';

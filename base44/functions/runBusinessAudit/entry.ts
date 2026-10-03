@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 
 // Deterministic business diagnostic engine — no LLM, no credits.
 // Performs real HTTP checks: SSL, robots.txt, sitemap, page speed, SEO tags,

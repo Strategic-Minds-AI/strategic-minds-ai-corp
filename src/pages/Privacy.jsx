@@ -17,7 +17,7 @@ export default function Privacy() {
           <p>
             Strategic Minds AI ("we," "us," or "our") respects your privacy. This Privacy Policy
             explains how we collect, use, disclose, and protect your personal information when you
-            visit our website at <a href="https://strategic-ai-consulting.base44.app">strategic-ai-consulting.base44.app</a>{" "}
+            visit our website at <a href={window.location.origin}>{window.location.hostname}</a>{" "}
             or use our services.
           </p>
 

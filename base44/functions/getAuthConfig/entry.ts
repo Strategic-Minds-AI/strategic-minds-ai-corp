@@ -1,4 +1,4 @@
-import { secrets } from 'base44:runtime';
+import { secrets } from '../../shared/runtimeSecrets.ts';
 
 // ──────────────────────────────────────────────────────────────
 // getAuthConfig — returns the public Supabase config (URL + anon

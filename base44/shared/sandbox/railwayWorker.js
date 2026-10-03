@@ -14,7 +14,8 @@
  */
 
 const SANDBOX_API_KEY = process.env.SANDBOX_API_KEY || process.env.WORKER_SECRET;
-const APP_URL = (process.env.APP_URL || 'https://strategic-ai-consulting.base44.app').replace(/\/$/, '');
+const APP_URL = (process.env.API_URL || process.env.APP_URL || '').replace(/\/$/, '');
+if (!APP_URL) throw new Error('NOT_CONFIGURED: Set API_URL to the owned backend.');
 const POLL_INTERVAL = parseInt(process.env.POLL_INTERVAL || '60000', 10);
 const MAX_CYCLES = parseInt(process.env.MAX_CYCLES || '0', 10);
 const AUTH_ENDPOINT = `${APP_URL}/functions/sandboxAuth`;

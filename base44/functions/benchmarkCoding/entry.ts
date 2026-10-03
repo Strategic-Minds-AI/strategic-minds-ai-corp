@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import { githubClient } from '../../shared/automation/github.ts';
 import { automationStatus, installAutomation, controlAutomation } from '../../shared/automation/install.ts';
 import { authorizeLiveRelease } from '../../shared/automation/releaseConsent.ts';

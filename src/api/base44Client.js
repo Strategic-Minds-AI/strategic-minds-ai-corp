@@ -1,24 +1,5 @@
-// ──────────────────────────────────────────────────────────────
-// base44Client — Supabase-backed drop-in replacement for the Base44 SDK.
-//
-// This file exports `base44` with the same API shape as @base44/sdk:
-//   base44.entities.<Name>.filter/list/get/create/update/delete/count/...
-//   base44.functions.invoke(name, data)
-//   base44.integrations.Core.InvokeLLM/SendEmail/UploadPrivateFile/...
-//   base44.auth.me/isAuthenticated/logout/updateMe/redirectToLogin
-//   base44.users.inviteUser(email, role)
-//   base44.analytics.track(event)
-//   base44.setToken(token)
-//
-// Under the hood, entities hit Supabase, functions route to Railway
-// (falling back to Base44 for unmigrated functions), and integrations
-// use direct implementations (Vercel AI Gateway, Railway endpoints).
-//
-// The Base44 SDK is only lazy-loaded as a fallback for unmigrated
-// functions/integrations. Once all 55 functions are on Railway and
-// env vars are set, the @base44/sdk import is never reached.
-// ──────────────────────────────────────────────────────────────
-
+// Legacy name retained for existing screens; no platform SDK, requests or fallbacks.
+import { agents, connectors } from '@/lib/agentsAdapter';
 import { entityAdapter } from '@/lib/entityAdapter';
 import { functions } from '@/lib/functionClient';
 import { integrations } from '@/lib/integrationAdapter';
@@ -42,6 +23,8 @@ export const base44 = {
   entities,
   functions,
   integrations,
+  agents,
+  connectors,
   auth,
   users,
   analytics,

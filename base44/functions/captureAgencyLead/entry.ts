@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 
 export default async function(req) {
   try {
@@ -16,18 +16,8 @@ export default async function(req) {
     }
     // Intentionally public lead intake: insert-only, fixed project/table, no data is returned.
     const base44 = createClientFromRequest(req);
-    const { accessToken } = await base44.asServiceRole.connectors.getConnection('supabase');
-    const keysResponse = await fetch('https://api.supabase.com/v1/projects/jadlpbokfdkonvnfxjzs/api-keys', { headers: { Authorization: `Bearer ${accessToken}` } });
-    if (!keysResponse.ok) throw new Error('Could not access lead storage');
-    const keys = await keysResponse.json();
-    const key = keys.find((item) => item.name === 'service_role')?.api_key;
-    if (!key) throw new Error('Lead storage key unavailable');
-    const response = await fetch('https://jadlpbokfdkonvnfxjzs.supabase.co/rest/v1/agency_leads?on_conflict=id', {
-      method: 'POST',
-      headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'resolution=ignore-duplicates,return=minimal' },
-      body: JSON.stringify({ id, form_type, name, email, message }),
-    });
-    if (!response.ok) throw new Error('Could not save submission');
+    const existingLead = await base44.asServiceRole.entities.Lead.get(id);
+    if (!existingLead) await base44.asServiceRole.entities.Lead.create({ id, form_type, name, email, message });
     if (name && email) {
       try {
         const existing = await base44.asServiceRole.entities.CrmContact.filter({ source_id: id });

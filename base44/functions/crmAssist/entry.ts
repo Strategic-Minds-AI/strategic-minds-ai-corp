@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 // NOTATION: All LLM calls route through the Vercel AI Gateway (base44/shared/aiGateway.ts).
 import { callAIGateway } from '../../shared/aiGateway.ts';
 

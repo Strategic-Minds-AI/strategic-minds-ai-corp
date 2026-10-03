@@ -2,7 +2,7 @@
 // Shared provisioning primitives — used by provisionSite + provisionSystem
 // Plain module: export helpers, no Deno.serve / no default export.
 // ═══════════════════════════════════════════════════════════════════
-import { secrets } from 'base44:runtime';
+import { secrets } from './runtimeSecrets.ts';
 import { viteAuthFiles, backendAuthFiles } from './provisioningAuth.ts';
 
 export function slugify(name: string): string {

@@ -1,4 +1,4 @@
-import { secrets } from 'base44:runtime';
+import { secrets } from './runtimeSecrets.ts';
 import { Buffer } from 'node:buffer';
 
 async function backupKey() {

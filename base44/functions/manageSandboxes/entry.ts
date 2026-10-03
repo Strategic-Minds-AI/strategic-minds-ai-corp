@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 
 const RAILWAY_GRAPHQL = 'https://backboard.railway.app/graphql';
 const RAILWAY_PROJECT_ID = '15f90272-e2f6-4739-8286-91447f545d71';

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import VaultCopy from '@/components/portal/vault/VaultCopy';
-const endpoint = 'https://strategic-ai-consulting.base44.app/functions/vaultDirectory';
+import { API_BASE } from '@/lib/runtimeTransport';
+const endpoint = `${new URL(API_BASE, window.location.origin).href.replace(/\/$/, '')}/functions/vaultDirectory`;
 export default function VaultAccessKeys() {
   const [keys, setKeys] = useState(null); const [label, setLabel] = useState(''); const [days, setDays] = useState(30); const [token, setToken] = useState(''); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   async function load() {

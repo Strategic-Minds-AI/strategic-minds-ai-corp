@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import { chatKey, pageOffset } from '../../shared/adminChatValidation.ts';
 import { deleteConversations } from '../../shared/adminChatConversations.ts';
 import { beginTurn, finishTurn } from '../../shared/adminChatTurns.ts';

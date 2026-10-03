@@ -1,5 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
-import { secrets } from 'base44:runtime';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
+import { secrets } from '../../shared/runtimeSecrets.ts';
 import { encryptVault, decryptVault, vaultRows } from '../../shared/vaultBackupCrypto.ts';
 import { backupDrive, backupFolder, privateBackupFile, uploadVaultBackup, driveQuery } from '../../shared/vaultBackupDrive.ts';
 import { keyMetadata } from '../../shared/vaultKeys.ts';

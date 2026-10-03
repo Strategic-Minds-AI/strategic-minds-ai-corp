@@ -2,7 +2,7 @@
 // Finds builds with auto_advance=true and processes their next step.
 // Called by the "Run Cycle" button and by the Autonomous Build Loop workflow.
 
-import { createClientFromRequest } from "npm:@base44/sdk@0.8.52";
+import { createClientFromRequest } from "../../shared/ownedClient.ts";
 
 export default async function(req: Request): Promise<Response> {
   try {

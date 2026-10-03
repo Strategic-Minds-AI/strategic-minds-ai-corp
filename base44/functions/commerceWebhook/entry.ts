@@ -1,5 +1,5 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
-import { secrets } from 'base44:runtime';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
+import { secrets } from '../../shared/runtimeSecrets.ts';
 import Stripe from 'npm:stripe@17.7.0';
 
 export default async function(req) {

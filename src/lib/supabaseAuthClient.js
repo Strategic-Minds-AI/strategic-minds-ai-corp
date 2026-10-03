@@ -7,48 +7,10 @@
 // Exposes async wrappers: signUp, signIn, signOut, getSession, getUser,
 // onAuthStateChange, getAccessToken, signInWithGoogle,
 // resetPasswordForEmail, updateUserPassword, getSupabaseAuth.
-import { createClient } from '@supabase/supabase-js';
-import { base44 } from '@/api/base44Client';
+import { getSupabase } from '@/lib/supabaseClient';
 import { safeReturnTo } from '@/lib/authReturnTo';
-
-let _client = null;
-let _initPromise = null;
-
-async function initAuth() {
-  if (_client) return _client;
-  if (_initPromise) return _initPromise;
-
-  _initPromise = (async () => {
-    // Try Vite env vars first (for local dev / future platform support)
-    let url = import.meta.env.VITE_SUPABASE_URL;
-    let anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-
-    // Fall back to the public config endpoint; initialization failures must
-    // reach the sign-in screen instead of silently discarding the session.
-    if (!url || !anonKey) {
-      const res = await base44.functions.invoke('getAuthConfig', {});
-      url = res.data?.supabaseUrl;
-      anonKey = res.data?.supabaseAnonKey;
-    }
-    if (!url || !anonKey) throw new Error('Sign-in configuration is unavailable. Please try again.');
-
-    _client = createClient(url, anonKey, {
-      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true, flowType: 'implicit' },
-    });
-    return _client;
-  })();
-
-  try {
-    return await _initPromise;
-  } catch (error) {
-    _initPromise = null;
-    throw error;
-  }
-}
-
-export async function getSupabaseAuth() {
-  return initAuth();
-}
+const initAuth = getSupabase;
+export async function getSupabaseAuth() { return getSupabase(); }
 
 export async function signUp(email, password, fullName) {
   const supabaseAuth = await initAuth();
@@ -119,8 +81,8 @@ export async function getAccessToken() {
 
 // OAuth must return to a live app origin, never the embedded builder preview.
 // Supabase's Google callback remains on Supabase; these are app return URLs.
-const PUBLISHED_APP_URL = 'https://strategic-ai-consulting.base44.app';
-const OAUTH_APP_ORIGINS = [PUBLISHED_APP_URL, 'https://strategicmindai.com', 'https://strategicmindsai.com'];
+const PUBLISHED_APP_URL = import.meta.env.VITE_APP_URL || window.location.origin;
+const OAUTH_APP_ORIGINS = [...new Set([new URL(PUBLISHED_APP_URL).origin, window.location.origin])];
 
 function resolveOAuthRedirect(redirectTo) {
   let origin = OAUTH_APP_ORIGINS.includes(window.location.origin) ? window.location.origin : PUBLISHED_APP_URL;

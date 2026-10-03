@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 import { signProof } from '../../shared/benchmarkProof.ts';
 import { catalogRevision } from '../../shared/benchmarkPolicy.ts';
 import { receiptReport, ownedJob } from '../../shared/benchmarkStore.ts';

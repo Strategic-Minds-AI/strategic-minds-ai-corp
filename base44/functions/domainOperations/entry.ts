@@ -1,4 +1,4 @@
-import { createClientFromRequest } from 'npm:@base44/sdk@0.8.52';
+import { createClientFromRequest } from '../../shared/ownedClient.ts';
 // NOTATION: All LLM calls in this function route through the Vercel AI Gateway
 // (base44/shared/aiGateway.ts) — never the credit-blocked built-in InvokeLLM.
 import { callAIGateway } from '../../shared/aiGateway.ts';

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { base44 } from "@/api/base44Client";
+import { API_BASE } from '@/lib/runtimeTransport';
 import { Loader2, Plus, Copy, Trash2, Server, Cpu } from "lucide-react";
 
 const FOCUS_LABELS = { all: "All tasks", growth: "Growth ops", builds: "System builds", social: "Social", sales: "Sales", brand: "Brand" };
@@ -36,7 +37,7 @@ export default function WorkerFleetManager() {
   };
 
   const copyConfig = (w) => {
-    const cfg = `APP_URL=https://strategic-ai-consulting.base44.app\nWORKER_SECRET=<your-secret>\nPOLL_INTERVAL=${w.poll_interval}\nMAX_CYCLES=${w.max_cycles}\nREPORT_EMAIL=${w.report_email || ""}`;
+    const cfg = `API_URL=${new URL(API_BASE, window.location.origin).href.replace(/\/$/, '')}\nWORKER_SECRET=<your-secret>\nPOLL_INTERVAL=${w.poll_interval}\nMAX_CYCLES=${w.max_cycles}\nREPORT_EMAIL=${w.report_email || ""}`;
     navigator.clipboard.writeText(cfg);
   };
 
