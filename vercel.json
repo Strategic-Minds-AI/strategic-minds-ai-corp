@@ -1,8 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "vite",
-  "buildCommand": "vite build",
-  "outputDirectory": "dist",
+  "buildCommand": "npm run build:standalone",
+  "outputDirectory": ".standalone/dist",
   "installCommand": "npm install",
   "cleanUrls": true
 }
