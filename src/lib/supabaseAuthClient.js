@@ -43,13 +43,35 @@ export async function getSession() {
   // throw "Unexpected end of JSON input" during initialize/getSession. Detect
   // and clear it so the user lands on a clean login instead of a crash.
   clearCorruptedSession();
-  // getSession alone does not report a failed OAuth URL exchange. Await and
-  // check initialization so the return handler can display the real error.
-  const { error: initializationError } = await supabaseAuth.auth.initialize();
-  if (initializationError) throw initializationError;
-  const { data, error } = await supabaseAuth.auth.getSession();
-  if (error) throw error;
-  return data.session;
+  try {
+    // getSession alone does not report a failed OAuth URL exchange. Await and
+    // check initialization so the return handler can display the real error.
+    const { error: initializationError } = await supabaseAuth.auth.initialize();
+    if (initializationError) throw initializationError;
+    const { data, error } = await supabaseAuth.auth.getSession();
+    if (error) throw error;
+    return data.session;
+  } catch (error) {
+    if (/Unexpected end of JSON input|JSON\.parse/i.test(error.message)) {
+      // The session is corrupted beyond what the pre-scan caught. Force-clear
+      // all Supabase auth keys and retry once with a clean slate.
+      clearAllSupabaseStorage();
+      const { data } = await supabaseAuth.auth.getSession();
+      return data.session;
+    }
+    throw error;
+  }
+}
+
+function clearAllSupabaseStorage() {
+  try {
+    const keys = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('sb-')) keys.push(key);
+    }
+    keys.forEach(k => localStorage.removeItem(k));
+  } catch { /* localStorage may be unavailable */ }
 }
 
 function clearCorruptedSession() {
@@ -92,6 +114,10 @@ export async function getUser() {
 
 export async function onAuthStateChange(callback) {
   const supabaseAuth = await initAuth();
+  // Clear any corrupted session before subscribing — the SDK parses
+  // localStorage during listener setup and can throw "Unexpected end of
+  // JSON input" before getSession() gets a chance to recover.
+  clearCorruptedSession();
   return supabaseAuth.auth.onAuthStateChange(callback);
 }
 
