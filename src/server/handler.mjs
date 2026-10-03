@@ -8,7 +8,7 @@ import { conversationAction } from './conversations.mjs';
 import { connectAccount, completeConnection, disconnectAccount } from './connections.mjs';
 import { tickJobs } from './jobs.mjs';
 import { createHmac, timingSafeEqual } from 'node:crypto';
-const publicFunctions = new Set(['getAuthConfig','commerceCheckout','commerceQuote','captureAgencyLead','commerceWebhook','twilioWebhook','sandboxAuth','benchmarkCostRenewal','vaultDirectory','runEvolutionLoop']);
+const publicFunctions = new Set(['getAuthConfig','commerceCheckout','commerceQuote','captureAgencyLead','commerceWebhook','twilioWebhook','sandboxAuth','benchmarkCostRenewal','vaultDirectory']);
 async function checkTwilio(request) {
   if(!process.env.TWILIO_AUTH_TOKEN || !process.env.API_URL) throw notConfigured('Twilio webhook configuration');
   const form=new URLSearchParams(await request.clone().text());

@@ -20,6 +20,6 @@ const config = { version: 3, routes: [
   { src: '^/api/runtime(?:/(.*))?$', dest: '/api/runtime?route=$1' },
   { handle: 'filesystem' },
   { src: '/.*', dest: '/index.html' },
-], ...(process.env.ENABLE_VERCEL_CRON === 'true' ? { crons: [{ path: '/api/runtime/jobs/tick', schedule: '*/5 * * * *' }] } : {}) };
+], ...(process.env.ENABLE_VERCEL_CRON === 'true' && process.env.CRON_SECRET && process.env.JOB_OWNER_ID ? { crons: [{ path: '/api/runtime/jobs/tick', schedule: '*/5 * * * *' }] } : {}) };
 await writeFile(resolve(output, 'config.json'), JSON.stringify(config, null, 2));
 console.log(`Vercel full-stack output ready: ${audit.functions} independent handlers and the website.`);

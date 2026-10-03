@@ -19,11 +19,11 @@ export async function tickJobs() {
     if (!due) continue;
     await databaseRequest('/rest/v1/runtime_jobs?on_conflict=dedupe_key',{service:true,method:'POST',headers:{Prefer:'resolution=ignore-duplicates'},data:{dedupe_key:`${job.name}:${now.toISOString().slice(0,16)}`,function_name:job.function_name,args:job.args || {}}});
   }
-  const jobs=await (await databaseRequest('/rest/v1/rpc/runtime_claim_jobs',{service:true,method:'POST',data:{batch_size:3}})).json();
+  const jobs=await (await databaseRequest('/rest/v1/rpc/runtime_claim_jobs',{service:true,method:'POST',data:{batch_size:1}})).json();
   const results=[];
   for(const job of jobs) {
     const request=trustRequest(new Request('https://runtime.internal/jobs',{method:'POST',body:'{}'}),user);
-    try { const result=await invokeFunction(job.function_name,job.args,request); await databaseRequest(`/rest/v1/runtime_jobs?id=eq.${job.id}`,{service:true,method:'PATCH',data:{status:'succeeded',completed_at:new Date().toISOString(),result:result.data}}); results.push({id:job.id,status:'succeeded'}); }
+    try { const result=await invokeFunction(job.function_name,job.args,request); if(result.data?.ok===false || result.data?.error) throw new Error(result.data.error || `Action reported failure: ${job.function_name}`); await databaseRequest(`/rest/v1/runtime_jobs?id=eq.${job.id}`,{service:true,method:'PATCH',data:{status:'succeeded',completed_at:new Date().toISOString(),result:result.data}}); results.push({id:job.id,status:'succeeded'}); }
     catch(error) { console.error('Scheduled action failed',job.function_name,error.message); await databaseRequest(`/rest/v1/runtime_jobs?id=eq.${job.id}`,{service:true,method:'PATCH',data:{status:'failed',completed_at:new Date().toISOString(),error:error.message}}); results.push({id:job.id,status:'failed'}); }
   }
   return {processed:results};

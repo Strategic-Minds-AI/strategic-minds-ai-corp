@@ -16,6 +16,19 @@ export function policySQL(rule,schema) {
   if(rule.user_condition)return Object.entries(rule.user_condition).map(([field,value])=>field==='role'?`public.runtime_user_role()=${quote(value)}`:field==='id'?`auth.uid()::text=${quote(value)}`:`(auth.jwt()->>${quote(field)})=${quote(value)}`).join(' and ');
   return Object.entries(rule).map(([key,value])=>{
     const field=key.replace(/^data\./,'');const col=identifier(field);const array=schema.properties?.[field]?.type==='array';
+    if(field.includes('.')) {
+      const [root,...segments]=field.split('.');
+      let spec=schema.properties?.[root];
+      if(!spec || typeof value==='object')throw new Error(`Unsupported nested policy: ${field}`);
+      let path='$';
+      for(const segment of segments) {
+        if(spec.type==='array'){path+='[*]';spec=spec.items;}
+        spec=spec.properties?.[segment];
+        if(!spec)throw new Error(`Unknown nested policy field: ${field}`);
+        path+='.'+JSON.stringify(segment);
+      }
+      return `exists(select 1 from jsonb_path_query(${identifier(root)},${quote(path)}::jsonpath) as nested(value) where nested.value#>>'{}'=${sqlValue(value)})`;
+    }
     if(value===null)return `${col} is null`;
     if(typeof value!=='object')return array?`${col} ? ${sqlValue(value)}`:`${col}::text=${sqlValue(value)}`;
     return Object.entries(value).map(([op,operand])=>{

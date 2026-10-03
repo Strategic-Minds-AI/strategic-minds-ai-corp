@@ -2,11 +2,13 @@ import { runtime, notConfigured } from './runtime.mjs';
 import { tableName } from '../lib/entityTableMap.js';
 import { buildFilters } from '../lib/supabaseQuery.js';
 import { getSupabaseUser } from './auth.mjs';
+import { trustedUser } from './context.mjs';
 export async function databaseRequest(path, { method = 'GET', data, request, service = false, headers = {} } = {}) {
   const url = process.env.SUPABASE_URL?.replace(/\/$/, '');
-  const key = service ? process.env.SUPABASE_SERVICE_KEY : process.env.SUPABASE_ANON_KEY;
+  const elevated = service || trustedUser(request)?.role === 'admin';
+  const key = elevated ? process.env.SUPABASE_SERVICE_KEY : process.env.SUPABASE_ANON_KEY;
   if (!url || !key) throw notConfigured('Supabase');
-  const authorization = service ? `Bearer ${key}` : request?.headers.get('Authorization') || `Bearer ${key}`;
+  const authorization = elevated ? `Bearer ${key}` : request?.headers.get('Authorization') || `Bearer ${key}`;
   const response = await fetch(`${url}${path}`, { method, headers: { apikey: key, Authorization: authorization, 'Content-Type': 'application/json', ...headers }, ...(data !== undefined ? { body: JSON.stringify(data) } : {}) });
   if (!response.ok) { const error = await response.json(); throw Object.assign(new Error(error.message || 'Database operation failed'), { status: response.status }); }
   return response;

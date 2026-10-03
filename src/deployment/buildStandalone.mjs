@@ -15,7 +15,7 @@ const generatorExtras={generator_key:{type:'string'},steps_json:{type:'string'},
 if(schemas.GeneratorRun)Object.assign(schemas.GeneratorRun.properties,generatorExtras);
 const agents={};for(const file of await readdir(`${backendSource}/agents`))if(file.endsWith('.jsonc'))agents[file.slice(0,-6)]=JSON.parse(await readFile(`${backendSource}/agents/${file}`,'utf8'));
 const functions=(await readdir(`${backendSource}/functions`)).sort();const schedules=[];const entityJobs=[];
-const active=new Set(['Autonomous Build Loop','AutoBuild Recovery','CRM Scheduled Follow-ups','Daily Encrypted Vault Backup','Lead to CRM Sync','Sitemap on Post Publish','Sitemap on Project Publish']);
+const active=new Set(['Recursive Evolution Loop','Autonomous Build Loop','AutoBuild Recovery','CRM Scheduled Follow-ups','Daily Encrypted Vault Backup','Lead to CRM Sync','Sitemap on Post Publish','Sitemap on Project Publish']);
 for(const file of await readdir(`${backendSource}/workflows`)) {
   const flow=JSON.parse(await readFile(`${backendSource}/workflows/${file}`,'utf8'));if(!active.has(flow.name))continue;
   if(flow.trigger.condition)throw new Error(`Workflow condition needs explicit migration: ${flow.name}`);
@@ -42,7 +42,7 @@ for(const result of [server,api])for(const file of Object.keys(result.metafile.i
 const pkg={name:'strategic-minds-owned-runtime',private:true,type:'module',engines:{node:'22.x'},scripts:{start:'node server.mjs'},dependencies:{stripe:'^17.7.0',jose:'^6.1.0',nodemailer:'^6.9.16'}};
 await writeFile(resolve(output,'package.json'),JSON.stringify(pkg,null,2));
 await writeFile(resolve(output,'schema.sql'),await buildSchema(schemas,tables,entityJobs));
-await writeFile(resolve(output,'vercel.json'),JSON.stringify({version:2,buildCommand:'',outputDirectory:'dist',functions:{'api/runtime.mjs':{maxDuration:300}},rewrites:[{source:'/api/runtime/:path*',destination:'/api/runtime?route=:path*'},{source:'/((?!api/|assets/).*)',destination:'/index.html'}],...(process.env.ENABLE_VERCEL_CRON==='true'?{crons:[{path:'/api/runtime/jobs/tick',schedule:'*/5 * * * *'}]}:{})},null,2));
+await writeFile(resolve(output,'vercel.json'),JSON.stringify({version:2,buildCommand:'',outputDirectory:'dist',functions:{'api/runtime.mjs':{maxDuration:300}},rewrites:[{source:'/api/runtime/:path*',destination:'/api/runtime?route=:path*'},{source:'/((?!api/|assets/).*)',destination:'/index.html'}],...(process.env.ENABLE_VERCEL_CRON==='true' && process.env.CRON_SECRET && process.env.JOB_OWNER_ID?{crons:[{path:'/api/runtime/jobs/tick',schedule:'*/5 * * * *'}]}:{})},null,2));
 await cp('src/deployment/standalone.env.example',resolve(output,'.env.example'));
 await cp('src/deployment/STANDALONE.md',resolve(output,'README.md'));
 await mkdir(resolve(output,'workers'),{recursive:true});

@@ -326,11 +326,11 @@ export async function executeAssistantTool(db: any, name: string, args: any): Pr
         const fnRes = await db.functions.invoke('executeAutonomousAction', {
           action: 'send_sms',
           to_number: args.to_number,
-          body: args.body,
+          message: args.body,
           persona_id: args.persona_id || undefined
         });
         const d = fnRes?.data || {};
-        if (d.error) return JSON.stringify({ error: d.error });
+        if (d.error || d.ok === false) return JSON.stringify({ error: d.error || 'SMS delivery request failed.' });
         return JSON.stringify({ success: true, message_sid: d.message_sid, conversation_id: d.conversation_id, message: `SMS sent to ${args.to_number}` });
       }
       case 'list_conversations': {
