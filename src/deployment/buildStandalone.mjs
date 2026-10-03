@@ -51,7 +51,7 @@ for(const file of ['server.mjs','api/runtime.mjs']) {
   if(/(?:from\s*|import\s*\()["'](?:@base44\/|base44:runtime)/.test(text))throw new Error('Forbidden platform runtime dependency');
 }
 const audit=await auditStandalone(output,[server,api]);
-const source=await exportOwnedSource(output,backendSource);
+const source=process.env.VERCEL ? {directory:null,platformBuildDependencies:0,skipped:'vercel-runtime-build'} : await exportOwnedSource(output,backendSource);
 await writeFile(resolve(output,'dependency-audit.json'),JSON.stringify({...audit,source,functions:functions.length,agents:Object.keys(agents).length,entities:Object.keys(schemas).length,schedules:schedules.map(job=>job.name),entityWorkflows:entityJobs.map(job=>job.name),gateway:'https://ai-gateway.vercel.sh/v1',runtimeDependencies:pkg.dependencies},null,2));
-const archive=await archiveOwnedRelease(output);
+const archive=process.env.VERCEL ? 'skipped-on-vercel' : await archiveOwnedRelease(output);
 console.log(`Independent release and editable source built: ${functions.length} functions, ${Object.keys(schemas).length} entities; zero platform SDK, runtime, hosted URLs or source build dependencies. Archive: ${archive}`);
