@@ -14,9 +14,9 @@ export async function databaseRequest(path, { method = 'GET', data, request, ser
   return response;
 }
 function queryString(query, options = {}) {
-  const params = new URLSearchParams({ select: options.fields ? [...new Set(['id', ...options.fields])].join(',') : '*', limit: String(Math.min(options.limit || 50, 1000)) });
+  const params = new URLSearchParams({ select: options.fields ? [...new Set(['id', ...options.fields.map(f => f === 'created_date' ? 'created_at' : f)])].join(',') : '*', limit: String(Math.min(options.limit || 50, 1000)) });
   for (const filter of buildFilters(query)) { const i = filter.indexOf('='); params.append(filter.slice(0, i), filter.slice(i + 1)); }
-  const sort = options.sort || '-created_date'; params.set('order', `${sort.replace(/^-/, '')}.${sort.startsWith('-') ? 'desc' : 'asc'},id.asc`);
+  const sort = (options.sort || '-created_date').replace('created_date', 'created_at'); params.set('order', `${sort.replace(/^-/, '')}.${sort.startsWith('-') ? 'desc' : 'asc'},id.asc`);
   if (options.cursor) params.set('offset', Buffer.from(options.cursor, 'base64').toString());
   return params;
 }
@@ -24,7 +24,7 @@ export function entityAdapter(name, request, service = false) {
   const table = name === 'User' ? 'profiles' : runtime.tables[name] || tableName(name);
   const context = { request, service };
   const select = async (query = {}, options = {}) => {
-    const params = queryString(query, { ...options, sort: name === 'User' ? options.sort?.replace('created_date','created_at') || '-created_at' : options.sort });
+    const params = queryString(query, options);
     const response = await databaseRequest(`/rest/v1/${table}?${params}`, context);
     const items = await response.json(); const limit = Number(params.get('limit')); const offset = Number(params.get('offset') || 0);
     return { items, has_more: items.length === limit, next_cursor: items.length === limit ? Buffer.from(String(offset + limit)).toString('base64') : null };
