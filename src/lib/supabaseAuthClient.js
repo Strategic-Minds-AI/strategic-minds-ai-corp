@@ -39,6 +39,10 @@ export async function signOut() {
 
 export async function getSession() {
   const supabaseAuth = await initAuth();
+  // A corrupted or truncated session in localStorage makes the Supabase SDK
+  // throw "Unexpected end of JSON input" during initialize/getSession. Detect
+  // and clear it so the user lands on a clean login instead of a crash.
+  clearCorruptedSession();
   // getSession alone does not report a failed OAuth URL exchange. Await and
   // check initialization so the return handler can display the real error.
   const { error: initializationError } = await supabaseAuth.auth.initialize();
@@ -48,12 +52,30 @@ export async function getSession() {
   return data.session;
 }
 
+function clearCorruptedSession() {
+  try {
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key || !key.startsWith('sb-') || !key.endsWith('-auth-token')) continue;
+      const raw = localStorage.getItem(key);
+      if (!raw) continue;
+      try { JSON.parse(raw); }
+      catch { localStorage.removeItem(key); }
+    }
+  } catch { /* localStorage may be unavailable in some contexts */ }
+}
+
 export async function getUser() {
   const supabaseAuth = await initAuth();
   const {
     data: { user }, error,
   } = await supabaseAuth.auth.getUser();
-  if (error) throw error;
+  if (error) {
+    // A corrupted local session can surface as a JSON parse error.
+    // Treat it as "no user" so the login page renders normally.
+    if (/Unexpected end of JSON input|JSON\.parse/i.test(error.message)) return null;
+    throw error;
+  }
   if (!user) return null;
   const { data: profile } = await supabaseAuth
     .from('profiles')
@@ -75,8 +97,13 @@ export async function onAuthStateChange(callback) {
 
 export async function getAccessToken() {
   const supabaseAuth = await initAuth();
-  const { data } = await supabaseAuth.auth.getSession();
-  return data.session?.access_token || null;
+  try {
+    const { data } = await supabaseAuth.auth.getSession();
+    return data.session?.access_token || null;
+  } catch {
+    // Corrupted session or transient parse error — treat as unauthenticated.
+    return null;
+  }
 }
 
 // OAuth must return to a live app origin, never the embedded builder preview.

@@ -16,7 +16,10 @@ export async function getSupabase() {
   try { return await initializing; } catch (error) { initializing = null; throw error; }
 }
 export async function getAccessToken() {
-  const { data, error } = await (await getSupabase()).auth.getSession();
-  if (error) throw error;
-  return data.session?.access_token || null;
+  try {
+    const { data } = await (await getSupabase()).auth.getSession();
+    return data.session?.access_token || null;
+  } catch {
+    return null;
+  }
 }
