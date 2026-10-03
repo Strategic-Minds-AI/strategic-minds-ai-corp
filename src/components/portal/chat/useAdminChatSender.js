@@ -19,14 +19,15 @@ export default function useAdminChatSender({ history, chats, selectedId, setSele
       await history.begin({ chatKey, turnKey, title: existing?.title || text.slice(0,42), userMessage });
       started = true; setSelectedId(chatKey); setDraft('');
       answer = await runChatAction({ messages: next, mode: selectedMode, attachments: files, executionMode });
-      await history.complete({ chatKey, turnKey, assistantMessage: { role: 'assistant', ...answer } });
+      const assistantMessage = { role: 'assistant', content: answer.content, ...(answer.imageUrl ? { imageUrl: answer.imageUrl } : {}) };
+      await history.complete({ chatKey, turnKey, assistantMessage });
       setAttachments([]); setMode(null); setQuickTask(null);
       if (task) {
         try {
           const label = task === 'notes' ? 'Client notes summary' : 'Project outline';
           const name = `${label} ${new Date().toISOString().replace(/[:.]/g,'-')}.md`;
           const saved = await base44.functions.invoke('agencyDriveIngest', { action: 'saveProjectText', projectId: destination, name, content: `# ${label}\n\n${answer.content}`, approved: true });
-          await history.complete({ chatKey, turnKey, assistantMessage: { role: 'assistant', ...answer, savedUrl: saved.data.file.webViewLink } });
+          await history.complete({ chatKey, turnKey, assistantMessage: { ...assistantMessage, savedUrl: saved.data.file.webViewLink } });
         } catch (failure) { setError(`The answer is here, but saving its Drive deliverable failed: ${failure.response?.data?.error || failure.message}`); }
       }
     } catch (failure) {
