@@ -1,6 +1,6 @@
 {
   "name": "Recursive Evolution Loop",
-  "description": "The autonomous self-healing evolution engine. Every 30 minutes: audits the system against the benchmark criteria, identifies failing/partial criteria, dispatches fix tasks to the right super agents (guardian, code_architect, orchestrator, social_strategist, sales_engine), executes the tasks via AI Gateway, heals stuck/failed tasks, hardens on plateau, re-audits, and recurses until the system reaches the highest possible benchmark score. Fully autonomous end-to-end.",
+  "description": "The autonomous self-healing evolution engine. Every 10 minutes: audits the system against the benchmark criteria, identifies failing/partial criteria, dispatches fix tasks to the right super agents (guardian, code_architect, orchestrator, social_strategist, sales_engine), executes the tasks via Vercel AI Gateway, heals stuck/failed tasks, hardens on plateau, re-audits, and recurses until the system reaches 100% on every validation level. Fully autonomous end-to-end. Zero Base44 dependencies \u2014 operates on owned Supabase runtime + Vercel AI Gateway only.",
   "trigger": {
     "condition": null,
     "config": {
@@ -10,7 +10,7 @@
       "cron_expression": null,
       "one_time_date": null,
       "timezone": "America/New_York",
-      "interval_value": 30,
+      "interval_value": 10,
       "interval_unit": "minutes",
       "interval_anchor": null,
       "ends_type": "never",
@@ -32,14 +32,14 @@
           "with": {
             "function_name": "runEvolutionLoop",
             "args": {
-              "max_iterations": 3,
-              "target_score": 95
+              "max_iterations": 5,
+              "target_score": 100
             }
           },
           "then": "end",
           "x-base44": {
             "title": "Run evolution cycle",
-            "description": "Audit, fix, heal, harden, re-audit, recurse"
+            "description": "Audit, fix, heal, harden, re-audit, recurse until 100%"
           }
         }
       }
