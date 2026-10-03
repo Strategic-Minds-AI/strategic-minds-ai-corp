@@ -4,7 +4,7 @@ import { join } from 'node:path';
 const run = promisify(execFile);
 export async function archiveOwnedRelease(output) {
   const name = 'strategic-minds-independent.tar.gz';
-  if (process.env.VERCEL) return 'skipped-on-vercel';
+  if (process.env.VERCEL) return 'SKIPPED_ON_VERCEL';
   await run('tar', ['-czf', join(output, name), '-C', output, 'dist', 'api', 'workers', 'source', 'server.mjs', 'package.json', 'schema.sql', 'vercel.json', '.env.example', 'README.md', 'dependency-audit.json']);
   return name;
 }
