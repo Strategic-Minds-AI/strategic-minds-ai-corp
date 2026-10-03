@@ -29,6 +29,7 @@ const plugin={name:'owned-runtime',setup(bundler){
   bundler.onLoad({filter:/.*/,namespace:'generated'},()=>({contents:registry,loader:'js',resolveDir:root}));
   bundler.onResolve({filter:/^(npm:)?@base44\/sdk/},()=>{throw new Error('Forbidden platform SDK import');});
   bundler.onResolve({filter:/shared\/ownedClient\.ts$/},()=>({path:resolve(root,'src/server/client.mjs')}));
+  bundler.onResolve({filter:/shared\/runtimeSecrets\.ts$/},()=>({path:resolve(root,'src/server/runtime.mjs')}));
   bundler.onResolve({filter:/^base44:runtime$/},()=>{throw new Error('Forbidden platform runtime import');});
   bundler.onResolve({filter:/shared\/aiGateway\.ts$/},()=>({path:resolve(root,'src/server/gateway.mjs')}));
   bundler.onResolve({filter:/shared\/supabaseAuth\.ts$/},()=>({path:resolve(root,'src/server/auth.mjs')}));

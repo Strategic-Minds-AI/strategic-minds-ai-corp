@@ -9,6 +9,7 @@
     "build:standalone": "vite build --config src/deployment/viteStandalone.config.js && node src/deployment/buildStandalone.mjs",
     "build:vercel": "npm run build:standalone && npm --prefix .standalone install --omit=dev --ignore-scripts && node src/deployment/buildVercel.mjs",
     "start:standalone": "node .standalone/server.mjs",
+    "test:gateway": "node --test src/server/gatewayCredentials.test.mjs",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc -p ./jsconfig.json",

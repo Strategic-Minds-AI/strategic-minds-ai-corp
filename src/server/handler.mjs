@@ -1,5 +1,6 @@
 import './registry.mjs';
-import { runtime, invokeFunction, notConfigured } from './runtime.mjs';
+import { runtime, invokeFunction, notConfigured, secrets } from './runtime.mjs';
+import { withGatewayCredentials } from './gatewayCredentials.mjs';
 import { requireUser } from './auth.mjs';
 import { createIntegrations } from './integrations.mjs';
 import { databaseRequest } from './database.mjs';
@@ -18,10 +19,11 @@ async function checkTwilio(request) {
   if(actual.length!==expected.length || !timingSafeEqual(Buffer.from(actual),Buffer.from(expected))) throw Object.assign(new Error('Invalid webhook signature'),{status:403});
 }
 export async function handleRequest(request) {
+  return withGatewayCredentials(request, async () => {
   try {
     const url=new URL(request.url);let path=url.pathname.replace(/^\/api\/runtime/,'');
     if(url.searchParams.get('route')) path='/'+url.searchParams.get('route').replace(/^\//,'');
-    if(path==='/health') return Response.json({ok:true,service:'strategic-minds-runtime',ai:'vercel-ai-gateway',functions:Object.keys(runtime.handlers).length});
+    if(path==='/health') return Response.json({ok:true,service:'strategic-minds-runtime',ai:'vercel-ai-gateway',aiConfigured:Boolean(secrets.get('AI_GATEWAY_API_KEY')),functions:Object.keys(runtime.handlers).length});
     if(path==='/connections/callback') return completeConnection(request);
     if(path==='/jobs/tick') { if(!process.env.CRON_SECRET || request.headers.get('Authorization')!==`Bearer ${process.env.CRON_SECRET}`) return Response.json({error:'Unauthorized'},{status:401});return Response.json(await tickJobs()); }
     if(path==='/channels/whatsapp') { if(!process.env.WHATSAPP_ASSISTANT_NUMBER) throw notConfigured('Twilio WhatsApp assistant channel');return Response.redirect(`https://wa.me/${process.env.WHATSAPP_ASSISTANT_NUMBER.replace(/\D/g,'')}`); }
@@ -50,6 +52,7 @@ export async function handleRequest(request) {
     }
     return Response.json({error:'Not found'},{status:404});
   } catch(error) {console.error('Runtime request failed',error.message);return Response.json({error:error.message,code:error.code},{status:error.status || 500});}
+  });
 }
 export async function nodeHandler(req,res) {
   const originHeader = req.headers.origin;

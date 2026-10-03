@@ -1,9 +1,10 @@
 // SYSTEM NOTATION: Every model request goes exclusively to the owner's Vercel AI Gateway.
-import { notConfigured } from './runtime.mjs';
+import { notConfigured, secrets } from './runtime.mjs';
 const ENDPOINT = 'https://ai-gateway.vercel.sh/v1';
 export async function gatewayRequest(path, body, { form = false, headers = {} } = {}) {
-  if (!process.env.AI_GATEWAY_API_KEY) throw notConfigured('AI_GATEWAY_API_KEY');
-  const response = await fetch(`${ENDPOINT}${path}`, { method: 'POST', headers: { Authorization: `Bearer ${process.env.AI_GATEWAY_API_KEY}`, ...(!form ? { 'Content-Type': 'application/json' } : {}), ...headers }, body: form ? body : JSON.stringify(body), signal: AbortSignal.timeout(180000) });
+  const key = secrets.get('AI_GATEWAY_API_KEY');
+  if (!key) throw notConfigured('Vercel AI Gateway authentication on the backend host');
+  const response = await fetch(`${ENDPOINT}${path}`, { method: 'POST', headers: { ...(!form ? { 'Content-Type': 'application/json' } : {}), ...headers, Authorization: `Bearer ${key}` }, body: form ? body : JSON.stringify(body), signal: AbortSignal.timeout(180000) });
   if (!response.ok) { const error = await response.json(); throw Object.assign(new Error(error.error?.message || `Vercel AI Gateway failed (${response.status})`), { status: 502 }); }
   return response;
 }

@@ -1,6 +1,6 @@
 # LLM Routing Notation — Owner's Vercel AI Gateway
 
-Every AI request in the independent deployment uses `AI_GATEWAY_API_KEY` on the server. No browser-prefixed gateway key, platform SDK, hosted agent service, model-credit fallback, connector-token fallback or storage fallback is used.
+Every AI request in the independent deployment authenticates on the server using an explicit `AI_GATEWAY_API_KEY` or Vercel's injected request-scoped OIDC identity. Vercel Functions supply that identity in `x-vercel-oidc-token`, not an environment variable. The native request scope keeps concurrent credentials isolated and preserves them through nested handlers; explicit keys take precedence. Railway and local deployments require an explicit key or a local development OIDC token. No browser-prefixed gateway key, platform SDK, hosted agent service, model-credit fallback, connector-token fallback or storage fallback is used.
 
 `src/server/gateway.mjs` is the standalone transport. It accepts prompts, message history, JSON schemas and native tool definitions; it validates structured responses and rejects empty or truncated output. Existing shared gateway imports are composed to this transport by the standalone build. `AI_GATEWAY_MODEL` controls the default model; the server accepts provider-qualified overrides.
 

@@ -11,7 +11,7 @@ export default async function(req: Request): Promise<Response> {
     if (!user) return Response.json({ error: 'Sign in to use the assistant.' }, { status: 401 });
     if (user.role !== 'admin') return Response.json({ error: 'Admin access required.' }, { status: 403 });
     const key = secrets.get('AI_GATEWAY_API_KEY');
-    if (!key) return Response.json({ error: 'Add your Vercel AI Gateway key to the app secrets to start chatting.' }, { status: 503 });
+    if (!key) return Response.json({ error: 'The chat server cannot authenticate with Vercel AI Gateway. Enable Vercel authentication or configure the gateway key on the backend host.' }, { status: 503 });
     const body = await req.json();
     const executionGuidance = body.executionMode === 'build' ? 'BUILD MODE — DRAFT ONLY: Produce reviewable implementation drafts. No sandbox, browser, or computer worker is connected. Never claim execution, deployment or independent validation. Production mutations, customer communications, secrets, permission changes and new spend require explicit operator approval.' : 'PLAN MODE: Analyze and draft plans only. Identify evidence, unknown capabilities, permissions, approval requirements, validation and rollback. Do not claim to execute actions or change systems.';
     if (!Array.isArray(body.messages)) return Response.json({ error: 'Messages are required.' }, { status: 400 });
