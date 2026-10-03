@@ -1,6 +1,6 @@
-# Exclude non-frontend directories from Vercel deployments.
-# These are backend / infrastructure that run elsewhere (Base44, Railway, Supabase).
-base44
+# Exclude non-runtime infrastructure from Vercel deployments.
+# base44/ is retained as build-time source compatibility input; buildStandalone
+# rewrites it into the owned runtime and fails on surviving Base44 dependencies.
 railway
 supabase
 _generated_linegate
