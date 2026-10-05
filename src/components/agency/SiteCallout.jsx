@@ -1,4 +1,28 @@
-import { Link } from 'react-router-dom';
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+
 export default function SiteCallout() {
-  return <section className="agency-container py-12 lg:py-20"><div className="relative overflow-hidden rounded-md bg-quaternary px-7 py-10 text-primary-foreground md:flex md:items-center md:justify-between md:gap-10 md:px-12"><div className="relative z-10"><p className="mb-3 text-[10px] font-semibold uppercase tracking-widest text-primary-foreground">READY TO TURN AI POTENTIAL INTO RESULTS?</p><h2 className="mb-3 text-2xl font-bold text-primary-foreground md:text-3xl">Let’s build what’s next together.</h2><p className="max-w-2xl text-sm leading-relaxed text-primary-foreground">Book a consultation and discover how Strategic Minds AI can help your organization achieve measurable, sustainable growth.</p></div><div className="relative z-10 mt-7 flex flex-col gap-4 md:mt-0"><Link to="/contact" className="inline-flex shrink-0 rounded bg-primary px-6 py-3 text-xs font-semibold text-primary-foreground">Book a Consultation →</Link><a href="tel:7722090266" className="flex items-center justify-center gap-2 text-xs text-primary-foreground/90 hover:text-primary-foreground">Or call us at <strong>772-209-0266</strong></a></div><span aria-hidden="true" className="pointer-events-none absolute -right-10 -top-20 h-72 w-72 rounded-full border border-primary/40 shadow-[0_0_90px_30px_rgba(0,98,255,.25)]" /></div></section>;
+  return (
+    <section className="sm-section sm-cta-section">
+      <div className="agency-container">
+        <div className="sm-final-cta">
+          <div className="sm-final-glow" aria-hidden="true" />
+          <div className="relative z-10 max-w-3xl">
+            <p className="sm-kicker">YOUR NEXT MOVE</p>
+            <h2>Build a smarter operating system for your business.</h2>
+            <p>
+              Bring us the goal, bottleneck or opportunity. We’ll help turn it into a practical
+              AI strategy and a system designed to move the business forward.
+            </p>
+          </div>
+          <div className="relative z-10 flex flex-col gap-3 sm:flex-row lg:flex-col">
+            <Link to="/contact" className="sm-primary-cta">
+              Start a conversation <ArrowRight size={17} />
+            </Link>
+            <a href="tel:7722090266" className="sm-secondary-cta">772-209-0266</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 }
