@@ -10,7 +10,8 @@
         "newsletter",
         "newsletter_v2",
         "pricing",
-        "search"
+        "search",
+        "client_onboarding"
       ],
       "description": "Which form the submission came from"
     },
@@ -41,6 +42,26 @@
     "description": {
       "type": "string",
       "maxLength": 1000
+    },
+    "business": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "products_services": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "location_service_area": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "ideal_customer_goal": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "preferred_visual_style": {
+      "type": "string",
+      "maxLength": 5000
     }
   },
   "required": [
