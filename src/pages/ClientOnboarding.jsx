@@ -49,8 +49,8 @@ const questions = [
     eyebrow: 'BUSINESS',
     title: 'Business name + website / social links',
     prompt: 'What is your business called, and where can we see what already exists?',
-    context: 'This gives our AI research process a clean starting point. Include any website, Google Business Profile, Facebook, Instagram, TikTok, LinkedIn, YouTube, store or other useful public link.',
-    placeholder: 'Example: Acme Services\nWebsite: https://...\nInstagram: @...\nGoogle Business: ...',
+    context: 'Put the business name on the first line, then include any website, Google Business Profile, Facebook, Instagram, TikTok, LinkedIn, YouTube, store or other useful public link. This gives our research and project workspace a clean starting point.',
+    placeholder: 'Acme Services\nWebsite: https://...\nInstagram: @...\nGoogle Business: ...',
   },
   {
     key: 'products_services',
@@ -310,7 +310,7 @@ export default function ClientOnboarding() {
                     <p className="sm-kicker">INTAKE RECEIVED</p>
                     <h2>Your source truth is now ready for the next stage.</h2>
                     <p>
-                      The next workflow is research, Client Intelligence Profile, creative directions and your selection. Nothing moves into the final build until a direction is approved.
+                      Your intake has been captured. The system will prepare the client project workspace, then continue into research, Client Intelligence Profile, creative directions and your selection. Nothing moves into the final build until a direction is approved.
                     </p>
                     <Link to="/" className="sm-secondary-cta">Return to Strategic Minds AI</Link>
                   </div>
