@@ -63,13 +63,13 @@ const FooterLayout2 = () => {
                   <h2 className="mb-4 text-sm">{item.title}</h2>
                   <NavigationMenu orientation="vertical">
                     <NavigationMenuList className="flex-col items-start space-y-2">
-                      {item.items.map((link) => (
+                      {item.items?.map((link) => (
                         <NavigationMenuItem
                           key={link.title}
                           className="text-sm"
                         >
                           <Link
-                            to={link.href}
+                            to={link.href || '/'}
                             target={link?.external ? "_blank" : undefined}
                             rel={link?.external ? "noreferrer" : undefined}
                             className="block hover:text-primary"

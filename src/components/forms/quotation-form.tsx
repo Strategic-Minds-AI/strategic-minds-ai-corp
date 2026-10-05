@@ -44,22 +44,24 @@ export default function QuotationForm() {
   });
 
   function onSubmit(formData: FormInputs) {
-    startTransition(async () => {
-      try {
-        await base44.entities.Lead.create({
-          form_type: "quotation",
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          website: formData.website,
-          service: formData.service,
-          message: formData.message,
-        });
-        toast.success("Email sent!");
-        form.reset();
-      } catch (e) {
-        toast.error("Something went wrong. Please try again.");
-      }
+    startTransition(() => {
+      void (async () => {
+        try {
+          await base44.entities.Lead.create({
+            form_type: "quotation",
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            website: formData.website,
+            service: formData.service,
+            message: formData.message,
+          });
+          toast.success("Email sent!");
+          form.reset();
+        } catch (e) {
+          toast.error("Something went wrong. Please try again.");
+        }
+      })();
     });
   }
 

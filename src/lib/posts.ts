@@ -10,7 +10,8 @@ const sortPosts = (posts: Post[]) =>
 
 export const fetchPosts = async () => {
   const now = new Date();
-  const posts = ((await base44.entities.Post.list("created_date", 5000)) as Post[])
+  const page = await base44.entities.Post.list({ sort: "created_date", limit: 5000 });
+  const posts = (page.items as Post[])
     .filter(isValidPost)
     .filter((post) => !post.publish_date || new Date(post.publish_date) <= now);
 

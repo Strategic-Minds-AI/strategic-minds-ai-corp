@@ -30,17 +30,19 @@ const NewsletterFormLayout2 = () => {
   });
 
   function onSubmit(values: FormInputs) {
-    startTransition(async () => {
-      try {
-        await base44.entities.Lead.create({
-          form_type: "newsletter_v2",
-          email: values.email,
-        });
-        toast.success("You have been subscribed to our newsletter.");
-        form.reset();
-      } catch (e) {
-        toast.error("Something went wrong. Please try again.");
-      }
+    startTransition(() => {
+      void (async () => {
+        try {
+          await base44.entities.Lead.create({
+            form_type: "newsletter_v2",
+            email: values.email,
+          });
+          toast.success("You have been subscribed to our newsletter.");
+          form.reset();
+        } catch (e) {
+          toast.error("Something went wrong. Please try again.");
+        }
+      })();
     });
   }
 

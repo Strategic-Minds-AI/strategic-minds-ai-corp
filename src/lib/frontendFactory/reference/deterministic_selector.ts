@@ -1,5 +1,7 @@
+// @ts-nocheck
 // Reference algorithm — deterministic pattern selection with seeded tie-breaking.
 // Base44 implements equivalent logic in src/lib/frontendFactory/compatibility.ts
+// This file is pseudocode for documentation purposes and is not imported at runtime.
 
 export function choosePattern(candidates, context, seed) {
   const eligible = candidates

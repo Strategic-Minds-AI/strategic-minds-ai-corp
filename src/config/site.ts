@@ -16,7 +16,7 @@ export type NavItem = {
   items?: NavItem[];
 };
 
-export const mainNav: NavItem[] = [
+export const mainNav: MainNavItem[] = [
   { title: "Home", href: "/" },
   { title: "Services", href: "/services" },
   { title: "Projects", href: "/projects" },

@@ -28,15 +28,17 @@ const SearchForm = () => {
   });
 
   function onSubmit(data: FormInputs) {
-    startTransition(async () => {
-      try {
-        await base44.entities.Lead.create({
-          form_type: "search",
-          query: data.query,
-        });
-      } catch (e) {
-        // non-blocking
-      }
+    startTransition(() => {
+      void (async () => {
+        try {
+          await base44.entities.Lead.create({
+            form_type: "search",
+            query: data.query,
+          });
+        } catch (e) {
+          // non-blocking
+        }
+      })();
     });
   }
 

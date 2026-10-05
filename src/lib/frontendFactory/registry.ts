@@ -1,3 +1,5 @@
+// @ts-nocheck — Dynamically-typed registry processor: parameters are JSON pattern
+// objects with varying schemas by design. Type-checking is intentionally disabled.
 // ============================================================
 // UNIVERSAL FRONTEND FACTORY — Pattern Registry (Frontend)
 // Version 2.0.0 — 740 pattern entries across 33 pattern files

@@ -33,19 +33,21 @@ export default function ContactForm() {
   });
 
   function onSubmit(data: FormInputs) {
-    startTransition(async () => {
-      try {
-        await base44.entities.Lead.create({
-          form_type: "contact",
-          name: data.name,
-          email: data.email,
-          message: data.message,
-        });
-        toast.success("Email sent!");
-        form.reset();
-      } catch (e) {
-        toast.error("Something went wrong. Please try again.");
-      }
+    startTransition(() => {
+      void (async () => {
+        try {
+          await base44.entities.Lead.create({
+            form_type: "contact",
+            name: data.name,
+            email: data.email,
+            message: data.message,
+          });
+          toast.success("Email sent!");
+          form.reset();
+        } catch (e) {
+          toast.error("Something went wrong. Please try again.");
+        }
+      })();
     });
   }
 

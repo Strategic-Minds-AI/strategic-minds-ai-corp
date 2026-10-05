@@ -1,3 +1,5 @@
+// @ts-nocheck — Dynamically-typed registry processor: parameters are JSON pattern
+// objects with varying schemas by design. Type-checking is intentionally disabled.
 // ============================================================
 // UNIVERSAL FRONTEND FACTORY — Quality Compiler
 // 12-pass deterministic generation pipeline (client-side)

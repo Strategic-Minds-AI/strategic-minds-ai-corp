@@ -37,8 +37,8 @@ export function AutoBuildProvider({ children }: { children: ReactNode }) {
     if (!activeBuildId) { setActiveBuild(null); return; }
     try {
       const { base44 } = await import("@/api/base44Client");
-      const builds = await base44.entities.AutoBuild.filter({ id: activeBuildId }, "-created_date", 1);
-      setActiveBuild(builds?.[0] || builds?.items?.[0] || null);
+      const page = await base44.entities.AutoBuild.filter({ id: activeBuildId }, { sort: "-created_date", limit: 1 });
+      setActiveBuild(page?.items?.[0] || null);
     } catch { setActiveBuild(null); }
   };
 

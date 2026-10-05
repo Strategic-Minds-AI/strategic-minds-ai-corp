@@ -9,7 +9,8 @@ const sortTestimonials = (testimonials: Testimonial[]) =>
   [...testimonials].sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
 
 export const fetchTestimonials = async () => {
-  const testimonials = ((await base44.entities.Testimonial.list("created_date", 5000)) as Testimonial[]).filter(isValidTestimonial);
+  const page = await base44.entities.Testimonial.list({ sort: "created_date", limit: 5000 });
+  const testimonials = (page.items as Testimonial[]).filter(isValidTestimonial);
 
   // Public reads never trigger privileged sample-data creation.
   return sortTestimonials(testimonials);

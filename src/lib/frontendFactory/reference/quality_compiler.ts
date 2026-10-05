@@ -1,5 +1,7 @@
+// @ts-nocheck
 // Reference orchestration — 12-pass quality compiler pseudocode.
 // Base44 implements equivalent logic in src/lib/frontendFactory/compiler.ts
+// This file is pseudocode for documentation purposes and is not imported at runtime.
 
 export async function compileFrontend(input, registry, seed) {
   const intent = lockIntentContract(input);

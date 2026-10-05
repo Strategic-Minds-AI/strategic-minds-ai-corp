@@ -9,7 +9,8 @@ const sortProjects = (projects: Project[]) =>
   [...projects].sort((a, b) => (a.display_order ?? 0) - (b.display_order ?? 0));
 
 export const fetchProjects = async () => {
-  const projects = ((await base44.entities.Project.list("created_date", 5000)) as Project[]).filter(isValidProject);
+  const page = await base44.entities.Project.list({ sort: "created_date", limit: 5000 });
+  const projects = (page.items as Project[]).filter(isValidProject);
 
   // Public reads never trigger privileged sample-data creation.
   return sortProjects(projects);
