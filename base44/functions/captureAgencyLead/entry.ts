@@ -8,6 +8,11 @@ export default async function(req) {
     const body = JSON.parse(raw);
     if (body.company_url) return Response.json({ ok: true });
     const { id, form_type } = body;
+    const business = typeof body.business === 'string' ? body.business.trim() : '';
+    const products_services = typeof body.products_services === 'string' ? body.products_services.trim() : '';
+    const location_service_area = typeof body.location_service_area === 'string' ? body.location_service_area.trim() : '';
+    const ideal_customer_goal = typeof body.ideal_customer_goal === 'string' ? body.ideal_customer_goal.trim() : '';
+    const preferred_visual_style = typeof body.preferred_visual_style === 'string' ? body.preferred_visual_style.trim() : '';
     const name = typeof body.name === 'string' ? body.name.trim() : '';
     const email = typeof body.email === 'string' ? body.email.trim().toLowerCase() : '';
     const message = typeof body.message === 'string' ? body.message.trim() : '';
@@ -17,7 +22,9 @@ export default async function(req) {
     // Intentionally public lead intake: insert-only, fixed project/table, no data is returned.
     const base44 = createClientFromRequest(req);
     const existingLead = await base44.asServiceRole.entities.Lead.get(id);
-    if (!existingLead) await base44.asServiceRole.entities.Lead.create({ id, form_type, name, email, message });
+    if (!existingLead) await base44.asServiceRole.entities.Lead.create(isOnboarding
+      ? { id, form_type, business, products_services, location_service_area, ideal_customer_goal, preferred_visual_style }
+      : { id, form_type, name, email, message });
     if (name && email) {
       try {
         const existing = await base44.asServiceRole.entities.CrmContact.filter({ source_id: id });
