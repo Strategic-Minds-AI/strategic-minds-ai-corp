@@ -630,6 +630,30 @@ export async function executeAssistantTool(db: any, name: string, args: any): Pr
         });
         return JSON.stringify({ success: true, testimonial_id: testimonial.id, message: `Testimonial created for ${args.name}` });
       }
+      case 'generate_video': {
+        const fnRes = await db.functions.invoke('videoGateway', {
+          action: 'create',
+          prompt: args.prompt,
+          model: args.model || 'seedance_2_fast',
+          seconds: args.seconds || 8,
+          aspect_ratio: args.aspect_ratio || '16:9',
+          first_frame_url: args.first_frame_url || '',
+          generate_audio: args.generate_audio !== false,
+        });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: true, video_id: d.id, status: d.status, message: `Video generation submitted (ID: ${d.id}). Poll with check_video_status in ~15-60s.` });
+      }
+      case 'check_video_status': {
+        const fnRes = await db.functions.invoke('videoGateway', { action: 'retrieve', videoId: args.video_id });
+        const d = fnRes?.data || {};
+        if (d.error) return JSON.stringify({ error: d.error });
+        return JSON.stringify({ success: d.status === 'completed', video_id: d.id, status: d.status, url: d.url || null, message: d.status === 'completed' ? `Video ready: ${d.url}` : `Still ${d.status}. Poll again shortly.` });
+      }
+      case 'list_video_projects': {
+        const res = await db.entities.VideoProject.filter({}, { sort: '-created_date', limit: args.limit || 20, fields: ['title', 'status', 'output_url', 'clips'] });
+        return JSON.stringify({ count: res.items.length, projects: res.items });
+      }
       default:
         return JSON.stringify({ error: `Unknown tool: ${name}` });
     }
