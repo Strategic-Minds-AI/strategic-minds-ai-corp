@@ -23,6 +23,7 @@ import OAuthConsent from '@/pages/OAuthConsent';
 import { Toaster as LegacyToaster } from 'sonner';
 const HomeSEOAgency = lazy(() => import('@/pages/home-seo-agency'));
 const HomeConsulting = lazy(() => import('@/pages/home-consulting'));
+const ClientOnboarding = lazy(() => import('@/pages/ClientOnboarding'));
 const Projects = lazy(() => import('@/pages/projects'));
 const SingleProject = lazy(() => import('@/pages/single-project'));
 const Blog = lazy(() => import('@/pages/blog'));
@@ -103,6 +104,7 @@ const AuthenticatedApp = () => {
         <Route element={<AgencyLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<AgencyContact />} />
+          <Route path="/onboarding" element={<ClientOnboarding />} />
           <Route path="/seo-agency" element={<HomeSEOAgency />} />
           <Route path="/consulting" element={<HomeConsulting />} />
           <Route path="/projects" element={<Projects />} />
