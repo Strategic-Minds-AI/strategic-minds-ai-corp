@@ -2,8 +2,8 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
-const checks = spawnSync(process.execPath, ['--test', 'src/server/gatewayCredentials.test.mjs'], { stdio: 'inherit' });
-if (checks.status !== 0) throw new Error('Gateway authentication regression checks failed.');
+const checks = spawnSync(process.execPath, ['--test', 'src/server/gatewayCredentials.test.mjs', 'src/server/chatDatabase.test.mjs'], { stdio: 'inherit' });
+if (checks.status !== 0) throw new Error('Chat database or gateway authentication regression checks failed.');
 const release = resolve('.standalone');
 const output = resolve('.vercel/output');
 const fn = resolve(output, 'functions/api/runtime.func');

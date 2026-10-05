@@ -8,11 +8,11 @@ export async function runtimeRequest(path, payload, { token, method = 'POST', fo
     ...(method !== 'GET' ? { body: form ? payload : JSON.stringify(payload || {}) } : {}),
   });
   const text = await response.text();
-  const fail = message => Object.assign(new Error(message), { status: response.status, path });
+  const fail = (message, data) => Object.assign(new Error(message), { status: response.status, path, response: { status: response.status, data: data || { error: message } } });
   if (!text.trim()) throw fail(`The server returned an empty response for ${path} (HTTP ${response.status}).`);
   let data;
   try { data = JSON.parse(text); }
   catch { throw fail(`The server returned a non-JSON response for ${path} (HTTP ${response.status}). Check the backend address and deployment.`); }
-  if (!response.ok || data?.error) throw Object.assign(fail(data?.error?.message || (typeof data?.error === 'string' ? data.error : `Request failed (${response.status})`)), { code: data?.code });
+  if (!response.ok || data?.error) throw Object.assign(fail(data?.error?.message || (typeof data?.error === 'string' ? data.error : `Request failed (${response.status})`), data), { code: data?.code });
   return data;
 }

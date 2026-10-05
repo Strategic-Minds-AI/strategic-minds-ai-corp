@@ -1,4 +1,4 @@
-const VIDEO_URL = 'https://media.base44.com/videos/public/6abae414a929d6dc5a55b9cc/80af5bcc0_Home_Hero_AI_Video.mp4';
+const VIDEO_URL = '/home-hero-ai-video.mp4';
 
 export default function HomeHeroVideo() {
   return (

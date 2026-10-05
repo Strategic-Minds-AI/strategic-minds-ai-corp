@@ -1,7 +1,6 @@
 // videoGateway — CapCut-parity video generation via the Vercel AI Gateway video API.
 // Supports text-to-video AND image-to-video (first frame), 4-30s clips, multiple models.
 // SYSTEM NOTATION: Routes through the Vercel AI Gateway (base44.asServiceRole.aiGateway) — never credit-blocked integrations.
-import OpenAI from "npm:openai@6.45.0";
 import { getSupabaseUser } from "../../shared/supabaseAuth.ts";
 
 export default async function(req: Request): Promise<Response> {
@@ -17,7 +16,9 @@ export default async function(req: Request): Promise<Response> {
     // no provider key needed). We import the SDK lazily to stay compatible with the owned-client fallback.
     const { createClientFromRequest } = await import("../../shared/ownedClient.ts");
     const base44 = createClientFromRequest(req);
-    const { baseURL, token, headers } = base44.asServiceRole.aiGateway.connection();
+    const { baseURL, token, headers } = await base44.asServiceRole.aiGateway.connection();
+    // Load the optional video SDK only for video requests, not when chat boots.
+    const { default: OpenAI } = await import("npm:openai@6.45.0");
     const videos = new OpenAI({ baseURL, apiKey: token, defaultHeaders: headers }).videos;
 
     if (action === "create") {

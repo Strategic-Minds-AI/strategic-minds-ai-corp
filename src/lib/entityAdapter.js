@@ -23,12 +23,12 @@ function entityAdapter(entityName) {
 
   async function _select(query, options = {}) {
     const supabase = await getSupabase();
-    const cols = options.fields ? [...new Set(['id', ...options.fields.map(f => f === 'created_date' ? 'created_at' : f)])].join(',') : '*';
+    const cols = options.fields ? [...new Set(['id', ...options.fields])].join(',') : '*';
     let dbQuery = supabase.from(table).select(cols);
     dbQuery = _applyFilters(dbQuery, query);
 
     if (options.sort) {
-      const s = parseSort(options.sort.replace('created_date', 'created_at'));
+      const s = parseSort(options.sort);
       if (s) dbQuery = dbQuery.order(s.column, { ascending: s.ascending });
     }
 
