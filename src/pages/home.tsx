@@ -1,5 +1,6 @@
 import useFramerTransition from "@/hooks/use-transition";
 import SectionHero from "@/components/sections/section-hero";
+import HomeHeroVideo from "@/components/agency/HomeHeroVideo";
 import ServiceSpotlight from "@/components/services/ServiceSpotlight";
 import SectionLatestNews from "@/components/sections/section-latest-news";
 import HomeProcess from "@/components/agency/HomeProcess";
@@ -19,6 +20,7 @@ const Home = useFramerTransition(
 		</Helmet>
 		<main className="relative">
 			<SectionHero />
+			<HomeHeroVideo />
 			<ServiceSpotlight />
 			<HomeProcess />
 			<HomeTrust />

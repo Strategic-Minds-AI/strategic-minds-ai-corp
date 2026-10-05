@@ -16,8 +16,9 @@ export default async function(req) {
     }
     // Intentionally public lead intake: insert-only, fixed project/table, no data is returned.
     const base44 = createClientFromRequest(req);
-    const existingLead = await base44.asServiceRole.entities.Lead.get(id);
-    if (!existingLead) await base44.asServiceRole.entities.Lead.create({ id, form_type, name, email, message });
+    let leadExists = false;
+    try { await base44.asServiceRole.entities.Lead.get(id); leadExists = true; } catch { /* not found — will create */ }
+    if (!leadExists) await base44.asServiceRole.entities.Lead.create({ id, form_type, name, email, message });
     if (name && email) {
       try {
         const existing = await base44.asServiceRole.entities.CrmContact.filter({ source_id: id });
@@ -29,6 +30,24 @@ export default async function(req) {
           follow_up_status: 'paused',
         });
       } catch (crmError) { console.error('CRM intake failed:', crmError.message); }
+    }
+    if (name && email) {
+      try {
+        await base44.asServiceRole.integrations.Core.SendEmail({
+          to: 'jeremy@strategicmindsai.com',
+          subject: form_type === 'newsletter' ? `New insider playbook request from ${name}` : `New website inquiry from ${name}`,
+          text: [
+            `New ${form_type} submission on Strategic Minds AI.`,
+            '',
+            `Name: ${name}`,
+            `Email: ${email}`,
+            message ? `Message: ${message}` : '',
+            '',
+            '— Captured automatically from the website',
+          ].filter(Boolean).join('\n'),
+          from_name: 'Strategic Minds AI',
+        });
+      } catch (notifyError) { console.error('Owner notification failed:', notifyError.message); }
     }
     return Response.json({ ok: true });
   } catch (error) {
