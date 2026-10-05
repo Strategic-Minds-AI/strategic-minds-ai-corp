@@ -380,6 +380,47 @@ export const ASSISTANT_TOOLS = [
         required: ['name', 'company', 'comment']
       }
     }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'generate_video',
+      description: 'Generate an AI video clip (text-to-video or image-to-video) via the Vercel AI Gateway. The job runs asynchronously — this returns the gateway video ID and a note to poll for completion. Use this when the admin asks to create, generate, or make a video.',
+      parameters: {
+        type: 'object',
+        properties: {
+          prompt: { type: 'string', description: 'Detailed video generation prompt (subject, action, style, mood, setting)' },
+          model: { type: 'string', enum: ['seedance_2_fast', 'seedance_2_5', 'veo_3_1_fast', 'kling_3', 'grok_imagine_video_1_5'], description: 'Video model (default seedance_2_fast)' },
+          seconds: { type: 'number', description: 'Clip duration in seconds (4-30 depending on model, default 8)' },
+          aspect_ratio: { type: 'string', enum: ['16:9', '9:16', '1:1', '21:9', '3:4', '4:3'], description: 'Aspect ratio (default 16:9)' },
+          first_frame_url: { type: 'string', description: 'Public HTTPS URL of a first-frame image for image-to-video (optional)' },
+          generate_audio: { type: 'boolean', description: 'Generate audio (default true)' }
+        },
+        required: ['prompt']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'check_video_status',
+      description: 'Check the status of an async video generation job and return the video URL when ready.',
+      parameters: {
+        type: 'object',
+        properties: {
+          video_id: { type: 'string', description: 'Gateway video ID returned by generate_video' }
+        },
+        required: ['video_id']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_video_projects',
+      description: 'List saved video projects from the Video Studio.',
+      parameters: { type: 'object', properties: { limit: { type: 'number' } } }
+    }
   }
 ];
 

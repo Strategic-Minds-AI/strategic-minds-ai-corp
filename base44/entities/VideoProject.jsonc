@@ -1,0 +1,198 @@
+{
+  "name": "VideoProject",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Project name"
+    },
+    "prompt": {
+      "type": "string",
+      "description": "Main text-to-video prompt",
+      "maxLength": 4000
+    },
+    "model": {
+      "type": "string",
+      "enum": [
+        "seedance_2_5",
+        "seedance_2",
+        "seedance_2_fast",
+        "seedance_2_mini",
+        "veo_3_1_fast",
+        "veo_3_1_lite",
+        "kling_3",
+        "minimax_h3",
+        "grok_imagine_video_1_5"
+      ],
+      "default": "seedance_2_fast"
+    },
+    "seconds": {
+      "type": "number",
+      "default": 8,
+      "description": "Clip duration in seconds (4-30 depending on model)"
+    },
+    "aspect_ratio": {
+      "type": "string",
+      "enum": [
+        "16:9",
+        "9:16",
+        "1:1",
+        "21:9",
+        "3:4",
+        "4:3"
+      ],
+      "default": "16:9"
+    },
+    "resolution": {
+      "type": "string",
+      "enum": [
+        "480p",
+        "720p",
+        "1080p"
+      ],
+      "default": "720p"
+    },
+    "generate_audio": {
+      "type": "boolean",
+      "default": true
+    },
+    "first_frame_url": {
+      "type": "string",
+      "description": "Public HTTPS URL of the first-frame image for image-to-video"
+    },
+    "clips": {
+      "type": "array",
+      "description": "Generated clips sequenced in the timeline (multi-clip = 15-60s videos)",
+      "items": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "prompt": {
+            "type": "string"
+          },
+          "seconds": {
+            "type": "number"
+          },
+          "order": {
+            "type": "number"
+          },
+          "gateway_video_id": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "edits": {
+      "type": "object",
+      "description": "Client-side editor state: text overlays, filters, trim, transitions, music",
+      "properties": {
+        "text_overlays": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "x": {
+                "type": "number"
+              },
+              "y": {
+                "type": "number"
+              },
+              "start": {
+                "type": "number"
+              },
+              "end": {
+                "type": "number"
+              },
+              "font_size": {
+                "type": "number"
+              },
+              "color": {
+                "type": "string"
+              },
+              "bg": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "filter": {
+          "type": "string",
+          "description": "CSS filter name: none, warm, cool, vivid, noir, fade"
+        },
+        "trim_in": {
+          "type": "number",
+          "description": "Trim start point (seconds)"
+        },
+        "trim_out": {
+          "type": "number",
+          "description": "Trim end point (seconds)"
+        },
+        "transition": {
+          "type": "string",
+          "enum": [
+            "none",
+            "fade",
+            "slide",
+            "zoom"
+          ],
+          "default": "none"
+        },
+        "music_url": {
+          "type": "string",
+          "description": "Public URL of background music track"
+        },
+        "music_volume": {
+          "type": "number",
+          "default": 0.4
+        }
+      }
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "generating",
+        "ready",
+        "failed"
+      ],
+      "default": "draft"
+    },
+    "output_url": {
+      "type": "string",
+      "description": "Final composed video URL (last generated clip)"
+    },
+    "error": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

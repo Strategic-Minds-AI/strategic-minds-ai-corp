@@ -79,6 +79,7 @@ const AutoBuilder = lazy(() => import('@/pages/AutoBuilder'));
 const OperatorConsole = lazy(() => import('@/pages/OperatorConsole'));
 const ApiGenerator = lazy(() => import('@/pages/ApiGenerator'));
 const ApiVaultPage = lazy(() => import('@/pages/ApiVaultPage'));
+const VideoStudio = lazy(() => import('@/pages/VideoStudio'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -175,6 +176,7 @@ const AuthenticatedApp = () => {
           <Route path="/operator" element={<OperatorConsole />} />
           <Route path="/admin/api-generator" element={<ApiGenerator />} />
           <Route path="/admin/api-vault" element={<ApiVaultPage />} />
+          <Route path="/video-studio" element={<VideoStudio />} />
           <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
