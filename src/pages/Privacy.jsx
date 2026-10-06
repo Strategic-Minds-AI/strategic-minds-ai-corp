@@ -43,13 +43,34 @@ export default function Privacy() {
             <li>To comply with legal obligations</li>
           </ul>
 
-          <h2>3. SMS Text Messaging</h2>
+          <h2>3. SMS, WhatsApp & Voice Communications</h2>
+          <h3>SMS Text Messaging</h3>
           <p>
             If you opt in to SMS communications, we will send text messages to the mobile number you
             provide. We do not sell or rent your mobile information to third parties. You may opt out
             at any time by replying STOP to any message. See our{' '}
             <a href="/sms-opt-in">SMS Opt-In Policy</a> for full details including message frequency,
             HELP/STOP instructions, and carrier disclaimers.
+          </p>
+          <h3>WhatsApp Business Messaging</h3>
+          <p>
+            We may also send messages via WhatsApp Business. WhatsApp opt-in is separate from SMS opt-in
+            and requires you to initiate a conversation with our WhatsApp number or provide consent via
+            a web form. See our{' '}
+            <a href="/whatsapp-opt-in">WhatsApp Opt-In Policy</a> for details.
+          </p>
+          <h3>Voice Calls & AI Voice Technology</h3>
+          <p>
+            We use AI voice technology to handle and make phone calls. Calls may be recorded for
+            quality and training purposes. We operate under Florida's two-party consent law. See our{' '}
+            <a href="/call-disclosure">Voice Call & AI Disclosure</a> for full details.
+          </p>
+          <h3>Cross-Channel Opt-Out</h3>
+          <p>
+            When you opt out of any communication channel (SMS, WhatsApp, or voice), your opt-out is
+            recorded in our consent ledger and applies across all channels unless you specifically
+            opt back in. Visit our{' '}
+            <a href="/unsubscribe">Unsubscribe page</a> to opt out of all channels at once.
           </p>
 
           <h2>4. Sharing Your Information</h2>

@@ -72,6 +72,9 @@ const SystemProvisioner = lazy(() => import('@/pages/SystemProvisioner'));
 const Terms = lazy(() => import('@/pages/Terms'));
 const Privacy = lazy(() => import('@/pages/Privacy'));
 const SmsOptIn = lazy(() => import('@/pages/SmsOptIn'));
+const WhatsAppOptIn = lazy(() => import('@/pages/WhatsAppOptIn'));
+const CallDisclosure = lazy(() => import('@/pages/CallDisclosure'));
+const Unsubscribe = lazy(() => import('@/pages/Unsubscribe'));
 const CommsInbox = lazy(() => import('@/pages/CommsInbox'));
 const VisualGallery = lazy(() => import('@/pages/VisualGallery'));
 const Visualizer = lazy(() => import('@/pages/Visualizer'));
@@ -118,6 +121,9 @@ const AuthenticatedApp = () => {
           <Route path="/terms" element={<Terms />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/sms-opt-in" element={<SmsOptIn />} />
+          <Route path="/whatsapp-opt-in" element={<WhatsAppOptIn />} />
+          <Route path="/call-disclosure" element={<CallDisclosure />} />
+          <Route path="/unsubscribe" element={<Unsubscribe />} />
           <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fportal" replace />} />}>
             <Route path="/portal" element={<Portal />} />
             <Route path="/portal/benchmark" element={<Benchmark />} />

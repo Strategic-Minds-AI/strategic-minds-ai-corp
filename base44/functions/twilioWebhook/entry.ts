@@ -1,6 +1,7 @@
 import { createClientFromRequest } from "../../shared/ownedClient.ts";
 import { callAIGateway } from "../../shared/aiGateway.ts";
 import { sendTwilioSms } from "../../shared/twilioMessaging.ts";
+import { recordConsentEvent, isSuppressed } from "../../shared/consentManager.ts";
 
 // ── Twilio Inbound Webhook Handler ────────────────────────────────
 // Receives inbound SMS/MMS and Voice events from Twilio.
@@ -203,7 +204,43 @@ export default async function(req) {
       const optOut = /^(stop|unsubscribe|cancel|end|quit)$/i.test(messageBody.trim());
       if (optOut) {
         await base44.asServiceRole.entities.Conversation.update(conversation.id, { status: "archived" });
-        const reply = "You've been unsubscribed. Reply START to resubscribe. — Strategic Minds AI";
+        await recordConsentEvent(base44, {
+          phone_number: fromNumber,
+          channel: "all",
+          consent_type: "opt_out",
+          source: "keyword",
+          keyword_used: messageBody.trim().toUpperCase(),
+          provider_message_id: form.MessageSid,
+        });
+        const reply = "You've been unsubscribed from all Strategic Minds AI messages. Reply START to resubscribe. — Strategic Minds AI";
+        await sendTwilioSms(toNumber, fromNumber, reply);
+        await base44.asServiceRole.entities.CommsEvent.create({
+          conversation_id: conversation.id,
+          channel: "sms",
+          direction: "outbound",
+          from_addr: toNumber,
+          to_addr: fromNumber,
+          body: reply,
+          status: "sent",
+          classification: "LIVE",
+          agent_generated: true,
+        });
+        return new Response("<Response/>", { headers: { "Content-Type": "text/xml" } });
+      }
+
+      // Check for START / re-opt-in keywords
+      const reOptIn = /^(start|unstop|yes|begin)$/i.test(messageBody.trim());
+      if (reOptIn) {
+        await recordConsentEvent(base44, {
+          phone_number: fromNumber,
+          channel: "all",
+          consent_type: "re_opt_in",
+          source: "keyword",
+          keyword_used: messageBody.trim().toUpperCase(),
+          provider_message_id: form.MessageSid,
+        });
+        await base44.asServiceRole.entities.Conversation.update(conversation.id, { status: "active" });
+        const reply = "Welcome back to Strategic Minds AI! You've been resubscribed. Reply STOP to unsubscribe. Msg & data rates may apply.";
         await sendTwilioSms(toNumber, fromNumber, reply);
         await base44.asServiceRole.entities.CommsEvent.create({
           conversation_id: conversation.id,

@@ -3,6 +3,7 @@ import { callAIGateway } from "../../shared/aiGateway.ts";
 import { sendTwilioSms, makeTwilioCall } from "../../shared/twilioMessaging.ts";
 import { sendTelnyxSms, sendTelnyxWhatsApp, makeTelnyxCall } from "../../shared/telnyxMessaging.ts";
 import { EDEN_SYSTEM_PROMPT, EDEN_GREETING, EDEN_VOICEMAIL_GREETING, EDEN_VOICE } from "../../shared/edenSkyePersona.ts";
+import { isSuppressed, recordConsentEvent } from "../../shared/consentManager.ts";
 
 // ── Eden Skye: AI Executive Assistant Backend ──────────────────────
 // Handles voice calls (Twilio), SMS/MMS (Twilio + Telnyx), WhatsApp,
@@ -343,6 +344,12 @@ async function sendSms(base44, body) {
   const { to, message, provider, mediaUrl } = body;
   if (!to || !message) return Response.json({ error: "to and message required" }, { status: 400 });
 
+  // Cross-channel consent check — don't send to suppressed numbers
+  const suppressed = await isSuppressed(base44, to);
+  if (suppressed) {
+    return Response.json({ error: "Recipient has opted out of messages", suppressed: true }, { status: 403 });
+  }
+
   const fromNumber = process.env.TWILIO_PHONE_NUMBER;
   if (!fromNumber && provider !== "telnyx") return Response.json({ error: "TWILIO_PHONE_NUMBER not configured" }, { status: 503 });
 
@@ -396,6 +403,12 @@ async function sendSms(base44, body) {
 async function sendWhatsAppMsg(base44, body) {
   const { to, message } = body;
   if (!to || !message) return Response.json({ error: "to and message required" }, { status: 400 });
+
+  // Cross-channel consent check — don't send to suppressed numbers
+  const suppressed = await isSuppressed(base44, to);
+  if (suppressed) {
+    return Response.json({ error: "Recipient has opted out of WhatsApp messages", suppressed: true }, { status: 403 });
+  }
 
   const fromNumber = process.env.TELNYX_PHONE_NUMBER;
   if (!fromNumber) return Response.json({ error: "TELNYX_PHONE_NUMBER required for WhatsApp" }, { status: 503 });
