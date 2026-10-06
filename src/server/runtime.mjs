@@ -4,6 +4,7 @@ import { getGatewayCredential } from './gatewayCredentials.mjs';
 export const runtime = { handlers: {}, schemas: {}, tables: {}, agents: {} };
 export function configureRuntime(config) {
   if (!process.env.SUPABASE_SERVICE_KEY && process.env.SUPABASE_SERVICE_ROLE_KEY) process.env.SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!process.env.AI_GATEWAY_API_KEY && process.env.VERCEL_OIDC_TOKEN) process.env.AI_GATEWAY_API_KEY = process.env.VERCEL_OIDC_TOKEN;
   Object.assign(runtime, config);
 }
 export const secrets = { get: name => name === 'AI_GATEWAY_API_KEY' ? getGatewayCredential() : process.env[name] || (name === 'BASE44_APP_ID' ? process.env.APP_ID : undefined) };
