@@ -9,6 +9,7 @@ import RepoGenerator from "@/components/factory/RepoGenerator";
 import SandboxPanel from "@/components/factory/SandboxPanel";
 import IntegrationStack from "@/components/factory/IntegrationStack";
 import CostOptimizer from "@/components/factory/CostOptimizer";
+import SwarmNexusFactory from "@/components/factory/SwarmNexusFactory";
 
 export default function WebsiteFactory() {
   const navigate = useNavigate();
@@ -17,15 +18,21 @@ export default function WebsiteFactory() {
   const [error, setError] = useState(null);
   const [stage, setStage] = useState("discover");
   const [freeMode, setFreeMode] = useState(true);
+  const [factoryConfig, setFactoryConfig] = useState({ batch_size: 10, swarm_enabled: true, execution_mode: "shadow", swarm_concurrency: 3, wave_size: 10, source_truth_version: "Strategic_Minds_Universal_Client_Packet_v1.0" });
 
   const launchFull = async () => {
     setLaunching(true); setError(null); setResult(null);
     try {
       const res = await base44.functions.invoke("runBatchOperation", {
-        name: "Factory Pipeline", batch_size: 10, template: {}, variables: "[]",
+        name: "Factory Pipeline", batch_size: factoryConfig.batch_size, template: {}, variables: "[]",
         deploy_targets: freeMode ? ["github"] : ["railway", "github"],
         google_connect: true, social_connect: true, video_generate: !freeMode, content_optimize: true,
-        free_mode: freeMode
+        free_mode: freeMode,
+        swarm_enabled: true,
+        execution_mode: factoryConfig.execution_mode || "shadow",
+        swarm_concurrency: factoryConfig.swarm_concurrency || 3,
+        wave_size: factoryConfig.wave_size || 10,
+        source_truth_version: factoryConfig.source_truth_version || "Strategic_Minds_Universal_Client_Packet_v1.0"
       });
       setResult(res.data || res);
     } catch (e) { setError(e.message); }
@@ -49,6 +56,7 @@ export default function WebsiteFactory() {
 
       <main className="max-w-3xl mx-auto px-4 py-6 space-y-5">
         <CostOptimizer freeMode={freeMode} setFreeMode={setFreeMode} />
+        <SwarmNexusFactory form={factoryConfig} setForm={setFactoryConfig} />
         <PipelineOverview activeStage={stage} />
         <IntegrationStack />
         <DomainDiscovery onDiscovered={() => setStage("buy")} />
