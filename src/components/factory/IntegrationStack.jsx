@@ -1,33 +1,34 @@
 import React from "react";
-import { CheckCircle2, AlertCircle, Layers, Cloud, Database, HardDrive, Github, Train, Globe, Cpu } from "lucide-react";
+import { AlertCircle, Brain, CheckCircle2, Cloud, Database, GitBranch, Github, HardDrive, Layers3, ShieldCheck, Train } from "lucide-react";
 
 const STACK = [
-  { name: "Base44", role: "Templates + Control", icon: Layers, status: "connected", color: "#0052CC" },
-  { name: "Vercel AI Gateway", role: "AI generation", icon: Cpu, status: "needs_setup", color: "#000000" },
-  { name: "Supabase", role: "Backend / Database", icon: Database, status: "registered", color: "#16A34A" },
-  { name: "Vercel", role: "Frontend hosting", icon: Cloud, status: "needs_setup", color: "#000000" },
-  { name: "Google Drive", role: "Data storage", icon: HardDrive, status: "registered", color: "#2563EB" },
-  { name: "GitHub", role: "Code source of truth", icon: Github, status: "registered", color: "#000000" },
-  { name: "Railway", role: "Worker hosting 24/7", icon: Train, status: "active", color: "#7C3AED" },
-  { name: "GoDaddy", role: "Domain buying", icon: Globe, status: "needs_api_key", color: "#EA580C" }
+  { name: "Apex / Agent Zero", role: "Permanent commander", icon: Brain, status: "locked", color: "#000000" },
+  { name: "Swarm Nexus", role: "Parallel specialist layer", icon: Layers3, status: "branch", color: "#004CE6" },
+  { name: "GitHub", role: "Canonical code + immutable SHA", icon: Github, status: "runtime_check", color: "#000000" },
+  { name: "Vercel", role: "Preview + approval-gated production", icon: Cloud, status: "runtime_check", color: "#000000" },
+  { name: "Supabase", role: "Durable queue/state/receipts", icon: Database, status: "protected", color: "#16A34A" },
+  { name: "Google Drive", role: "Approved assets + evidence", icon: HardDrive, status: "runtime_check", color: "#2563EB" },
+  { name: "Railway", role: "Long-running workers only when required", icon: Train, status: "optional", color: "#7C3AED" },
+  { name: "Xtreme Fault Line", role: "Independent validation", icon: ShieldCheck, status: "required", color: "#EA580C" }
 ];
 
 const STATUS_META = {
-  connected: { icon: CheckCircle2, label: "Connected", color: "#16A34A", bg: "#DCFCE7" },
-  registered: { icon: CheckCircle2, label: "Registered", color: "#2563EB", bg: "#DBEAFE" },
-  active: { icon: CheckCircle2, label: "Active", color: "#16A34A", bg: "#DCFCE7" },
-  needs_setup: { icon: AlertCircle, label: "Needs setup", color: "#EA580C", bg: "#E6F0FF" },
-  needs_api_key: { icon: AlertCircle, label: "Needs API key", color: "#EA580C", bg: "#E6F0FF" }
+  locked: { icon: CheckCircle2, label: "Architecture lock", color: "#16A34A", bg: "#DCFCE7" },
+  branch: { icon: GitBranch, label: "Branch integration", color: "#2563EB", bg: "#DBEAFE" },
+  required: { icon: ShieldCheck, label: "Required gate", color: "#B45309", bg: "#FEF3C7" },
+  protected: { icon: AlertCircle, label: "Protected change", color: "#B45309", bg: "#FEF3C7" },
+  optional: { icon: AlertCircle, label: "When required", color: "#475569", bg: "#F1F5F9" },
+  runtime_check: { icon: AlertCircle, label: "Verify per run", color: "#475569", bg: "#F1F5F9" }
 };
 
 export default function IntegrationStack() {
   return (
     <section className="xa-card p-5">
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-9 h-9 rounded-lg bg-[#E6F0FF] flex items-center justify-center"><Layers className="w-5 h-5 text-[#0046FF]" /></div>
+        <div className="w-9 h-9 rounded-lg bg-[#E6F0FF] flex items-center justify-center"><Layers3 className="w-5 h-5 text-[#0046FF]" /></div>
         <div>
-          <h2 className="font-heading font-bold text-lg text-black">Integration Stack</h2>
-          <p className="text-xs text-black/50">Your full AI-enhanced website factory stack</p>
+          <h2 className="font-heading font-bold text-lg text-black">Factory Control Stack</h2>
+          <p className="text-xs text-black/50">Architecture roles, not unverified connection claims</p>
         </div>
       </div>
 
@@ -47,10 +48,14 @@ export default function IntegrationStack() {
                 </span>
               </div>
               <div className="font-bold text-black text-xs truncate">{s.name}</div>
-              <div className="text-[10px] text-black/45 truncate">{s.role}</div>
+              <div className="text-[10px] text-black/45">{s.role}</div>
             </div>
           );
         })}
+      </div>
+
+      <div className="mt-3 rounded-lg border border-[#E5E7EB] bg-[#F8FAFC] p-2.5 text-[10px] leading-4 text-black/55">
+        Runtime health must come from the current GitHub SHA, deployment identity, durable queue state, worker leases, validator receipts and protected approvals. This panel does not infer connectivity from configuration alone.
       </div>
     </section>
   );
