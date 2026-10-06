@@ -1,6 +1,7 @@
 import { base44 } from '@/api/base44Client';
+import chatHistoryPayload from '@/components/portal/chat/chatHistoryPayload';
 export async function historyRequest(ownerId, action, payload = {}) {
-  return (await base44.functions.invoke('adminChatHistory', { ...payload, ownerId, action })).data;
+  return (await base44.functions.invoke('adminChatHistory', { ...chatHistoryPayload(payload), ownerId, action })).data;
 }
 async function pages(ownerId, action, payload = {}) {
   const rows = []; let skip = 0;

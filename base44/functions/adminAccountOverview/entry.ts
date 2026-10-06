@@ -11,8 +11,11 @@ export default async function(req: Request): Promise<Response> {
     let items: { id: string; name: string; detail?: string; url?: string }[] = [];
     if (provider === 'vercel') {
       const token = secrets.get('VERCEL_API_TOKEN');
-      if (!token) return Response.json({ error: 'Vercel is not connected.' }, { status: 503 });
-      const response = await fetch('https://api.vercel.com/v10/projects?limit=100', { headers: { Authorization: `Bearer ${token}` } });
+      if (!token) return Response.json({ error: 'Your live server is missing its Vercel account token. Add VERCEL_API_TOKEN in the project’s Production environment settings, then redeploy.', code: 'VERCEL_ACCOUNT_NOT_CONFIGURED', setupUrl: secrets.get('VERCEL_ACCOUNT_SETTINGS_URL') || 'https://vercel.com/dashboard', requiredVariable: 'VERCEL_API_TOKEN' }, { status: 503 });
+      const projectsUrl = new URL('https://api.vercel.com/v10/projects?limit=100');
+      const teamId = secrets.get('VERCEL_TEAM_ID');
+      if (teamId) projectsUrl.searchParams.set('teamId', teamId);
+      const response = await fetch(projectsUrl, { headers: { Authorization: `Bearer ${token}` } });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error?.message || 'Vercel request failed.');
       items = (data.projects || []).map((p: any) => ({ id: p.id, name: p.name, detail: p.framework || '', url: `https://vercel.com/dashboard` }));
