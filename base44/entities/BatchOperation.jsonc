@@ -49,6 +49,7 @@
         "queued",
         "running",
         "complete",
+        "awaiting_approval",
         "failed"
       ],
       "default": "queued"
@@ -60,6 +61,72 @@
     "tasks_dispatched": {
       "type": "number",
       "default": 0
+    },
+    "swarm_enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Use Apex-governed Swarm Nexus wave execution"
+    },
+    "execution_mode": {
+      "type": "string",
+      "enum": [
+        "shadow",
+        "execute"
+      ],
+      "default": "shadow",
+      "description": "shadow compiles/validates only; execute may promote approved work"
+    },
+    "swarm_concurrency": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "default": 3
+    },
+    "wave_size": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 250,
+      "default": 10
+    },
+    "source_truth_version": {
+      "type": "string"
+    },
+    "pipeline_version": {
+      "type": "string",
+      "default": "swarm-nexus-website-factory-v1"
+    },
+    "triage_level": {
+      "type": "string",
+      "enum": [
+        "single",
+        "small",
+        "fleet",
+        "mass",
+        "mega"
+      ]
+    },
+    "sites_materialized": {
+      "type": "integer",
+      "default": 0
+    },
+    "next_site_index": {
+      "type": "integer",
+      "default": 1
+    },
+    "quality_gate": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "UNKNOWN"
+      ],
+      "default": "PENDING"
+    },
+    "checkpoint": {
+      "type": "object",
+      "description": "Durable wave checkpoint and synthesis metadata"
     }
   },
   "required": [
