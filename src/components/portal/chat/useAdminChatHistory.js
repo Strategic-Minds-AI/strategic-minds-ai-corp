@@ -10,10 +10,21 @@ import chatHistoryRecovery, { loadChatSnapshot } from '@/components/portal/chat/
 export default function useAdminChatHistory(ownerId) {
   const [chats,setChats] = useState(() => { const cached = readChatCache(ownerId); return cached ? cached.chats : []; }); const [scope,setScope] = useState(ownerId); const [loading,setLoading] = useState(true); const [ready,setReady] = useState(false); const [error,setError] = useState(''); const [busy,setBusy] = useState(0);
   const ticket = useRef(0); const hydrated = useRef(false); const flushing = useRef(null);
+  const chatsRef = useRef(chats); chatsRef.current = chats;
   const refresh = useCallback(async () => {
     const request = ++ticket.current;
     const snapshot = await loadChatSnapshot(() => loadHistory(ownerId), rows => projectChatOutbox(rows, readOutbox(ownerId)));
-    if (request === ticket.current) { setChats(snapshot.chats); writeChatCache(ownerId, snapshot.chats); }
+    if (request === ticket.current) {
+      // Don't wipe existing chats when the server returns an unexpected empty
+      // result. A transient sync gap or a race with a just-created conversation
+      // would otherwise clear both the UI and the local cache. Genuine
+      // deletions and clears are already handled through the outbox, so the
+      // local state is correct before this guard ever sees an empty list.
+      if (snapshot.chats.length === 0 && chatsRef.current.length > 0) {
+        return snapshot.warning || 'Your conversations are still saved. The server could not confirm them right now.';
+      }
+      setChats(snapshot.chats); writeChatCache(ownerId, snapshot.chats);
+    }
     return snapshot.warning;
   },[ownerId]);
   const flush = useCallback(() => {
