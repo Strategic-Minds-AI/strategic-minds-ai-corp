@@ -161,6 +161,43 @@ If an approved mockup/reference is absent, needs_client_selection must be true a
                   payload?.template?.approved_mockup_lock
                 );
 
+                await base44.entities.AgentTask.create({
+                  agent_name: 'fault_line',
+                  swarm_role: 'independent_validator',
+                  task_type: 'factory_validate_site',
+                  title: `Validate compiled site packet: ${task.site_key || task.title}`,
+                  description: JSON.stringify({
+                    compiled: JSON.parse(result),
+                    approved_lock: approvedLock,
+                    execution_mode: payload.execution_mode || 'shadow',
+                    max_repair_rounds: Number(payload?.requirements?.max_repair_rounds ?? 2)
+                  }),
+                  priority: 'high',
+                  autonomous: true,
+                  status: 'pending',
+                  batch_id: task.batch_id,
+                  client_id: task.client_id || '',
+                  project_id: task.project_id || '',
+                  site_id: task.site_id || task.site_key || '',
+                  site_key: task.site_key,
+                  source_truth_version: task.source_truth_version || payload.source_truth_version || '',
+                  template_version: task.template_version || '',
+                  brand_version: task.brand_version || '',
+                  mockup_version: task.mockup_version || '',
+                  git_repo: task.git_repo || '',
+                  git_branch: task.git_branch || '',
+                  git_sha: task.git_sha || '',
+                  preview_deployment_id: task.preview_deployment_id || '',
+                  rollback_pointer: task.rollback_pointer || '',
+                  phase: 'validate',
+                  checkpoint_key: task.checkpoint_key,
+                  idempotency_key: `${task.batch_id || payload.batch_id}:${task.site_id || task.site_key}:validate:${task.source_truth_version || payload.source_truth_version || 'v1'}`,
+                  validation_status: 'PENDING',
+                  repair_count: Number(task.repair_count || 0),
+                  domain: task.domain || ''
+                });
+                followupsDispatched++;
+
                 if (!approvedLock || packet.needs_client_selection !== false) {
                   await base44.entities.AgentTask.create({
                     agent_name: 'orchestrator',
@@ -199,6 +236,176 @@ If an approved mockup/reference is absent, needs_client_selection must be true a
               } catch (e) {
                 taskStatus = 'failed';
                 result = `Factory site compilation failed: ${e.message}`;
+              }
+              break;
+            case 'factory_validate_site':
+              try {
+                const validationInput = task.description ? JSON.parse(task.description) : {};
+                const compiled = validationInput.compiled || {};
+                const packet = compiled.packet || {};
+                const issues: string[] = [];
+                let validationStatus = 'PASS';
+
+                if (compiled.kind !== 'factory_site_packet' || !compiled.batch_id || !compiled.site_key) {
+                  validationStatus = 'FAIL';
+                  issues.push('Compiled packet identity is incomplete.');
+                }
+                if (!packet.build_spec || !Array.isArray(packet.validation_plan) || !Array.isArray(packet.blockers)) {
+                  validationStatus = 'FAIL';
+                  issues.push('Compiled packet is missing required build/validation structure.');
+                }
+                if (packet.source_truth_status === 'BLOCKED' || validationInput.approved_lock !== true || packet.needs_client_selection !== false) {
+                  validationStatus = 'BLOCKED';
+                  if (packet.source_truth_status === 'BLOCKED') issues.push('Source truth is blocked.');
+                  if (validationInput.approved_lock !== true) issues.push('Approved mockup lock is missing.');
+                  if (packet.needs_client_selection !== false) issues.push('Client/operator creative selection is still required.');
+                }
+
+                const validatorId = 'Xtreme Fault Line / factory-packet-validator-v1';
+                const receipt = {
+                  kind: 'factory_validation_receipt',
+                  validator_id: validatorId,
+                  batch_id: task.batch_id || compiled.batch_id || null,
+                  site_key: task.site_key || compiled.site_key || null,
+                  checkpoint_key: task.checkpoint_key || null,
+                  validation_status: validationStatus,
+                  issues,
+                  repair_count: Number(task.repair_count || 0),
+                  validated_at: new Date().toISOString(),
+                  note: 'This validates source-truth/build-packet readiness only. Deployed preview visual/functional validation remains separately required.'
+                };
+                result = JSON.stringify(receipt);
+                await base44.entities.AgentTask.update(task.id, {
+                  validator_id: validatorId,
+                  validation_status: validationStatus,
+                  result
+                });
+
+                if (validationStatus === 'PASS') {
+                  taskStatus = 'completed';
+                } else if (validationStatus === 'BLOCKED') {
+                  taskStatus = 'needs_approval';
+                } else {
+                  const maxRepairRounds = Math.max(0, Math.min(5, Number(validationInput.max_repair_rounds ?? 2)));
+                  const repairRound = Number(task.repair_count || 0);
+                  if (repairRound < maxRepairRounds) {
+                    await base44.entities.AgentTask.create({
+                      agent_name: 'repair_agent',
+                      swarm_role: 'bounded_repair',
+                      task_type: 'factory_repair_packet',
+                      title: `Repair compiled site packet: ${task.site_key || task.title}`,
+                      description: JSON.stringify({
+                        validation: receipt,
+                        compiled,
+                        approved_lock: validationInput.approved_lock === true,
+                        execution_mode: validationInput.execution_mode || 'shadow',
+                        max_repair_rounds: maxRepairRounds
+                      }),
+                      priority: 'high',
+                      autonomous: true,
+                      status: 'pending',
+                      batch_id: task.batch_id,
+                      client_id: task.client_id || '',
+                      project_id: task.project_id || '',
+                      site_id: task.site_id || task.site_key || '',
+                      site_key: task.site_key,
+                      source_truth_version: task.source_truth_version || '',
+                      template_version: task.template_version || '',
+                      brand_version: task.brand_version || '',
+                      mockup_version: task.mockup_version || '',
+                      git_repo: task.git_repo || '',
+                      git_branch: task.git_branch || '',
+                      git_sha: task.git_sha || '',
+                      preview_deployment_id: task.preview_deployment_id || '',
+                      rollback_pointer: task.rollback_pointer || '',
+                      phase: 'repair',
+                      checkpoint_key: task.checkpoint_key,
+                      idempotency_key: `${task.batch_id}:${task.site_id || task.site_key}:repair:${repairRound + 1}`,
+                      validation_status: 'PENDING',
+                      repair_count: repairRound + 1,
+                      domain: task.domain || ''
+                    });
+                    followupsDispatched++;
+                  }
+                  taskStatus = 'failed';
+                }
+              } catch (e) {
+                taskStatus = 'failed';
+                result = `Factory packet validation failed: ${e.message}`;
+                await base44.entities.AgentTask.update(task.id, {
+                  validator_id: 'Xtreme Fault Line / factory-packet-validator-v1',
+                  validation_status: 'FAIL',
+                  result
+                });
+              }
+              break;
+            case 'factory_repair_packet':
+              try {
+                const repairInput = task.description ? JSON.parse(task.description) : {};
+                const original = repairInput.compiled || {};
+                const aiResult = await callAIGateway({
+                  model: 'openai/gpt-5.6-sol',
+                  system: `You are the bounded repair specialist for the Strategic Minds Website Factory.
+Repair ONLY structural defects identified by the validator. Preserve verified facts exactly. Do not invent client facts, people, reviews, testimonials, awards, metrics, addresses, certifications, transactions, or approvals.
+Return the complete repaired factory_site_packet JSON object with the same batch_id and site_key.`,
+                  prompt: JSON.stringify(repairInput),
+                  jsonSchema: {
+                    type: 'object',
+                    properties: {
+                      kind: { type: 'string' },
+                      batch_id: { type: ['string','null'] },
+                      site_key: { type: ['string','null'] },
+                      compiled_at: { type: 'string' },
+                      packet: { type: 'object' }
+                    }
+                  },
+                  temperature: 0.2,
+                  maxTokens: 2200
+                });
+                const repaired = aiResult.json || original;
+                result = JSON.stringify({ kind: 'factory_packet_repair_receipt', repair_round: Number(task.repair_count || 1), repaired });
+                llmUsed = true;
+
+                await base44.entities.AgentTask.create({
+                  agent_name: 'fault_line',
+                  swarm_role: 'independent_validator',
+                  task_type: 'factory_validate_site',
+                  title: `Revalidate repaired site packet: ${task.site_key || task.title}`,
+                  description: JSON.stringify({
+                    compiled: repaired,
+                    approved_lock: repairInput.approved_lock === true,
+                    execution_mode: repairInput.execution_mode || 'shadow',
+                    max_repair_rounds: Number(repairInput.max_repair_rounds ?? 2)
+                  }),
+                  priority: 'high',
+                  autonomous: true,
+                  status: 'pending',
+                  batch_id: task.batch_id,
+                  client_id: task.client_id || '',
+                  project_id: task.project_id || '',
+                  site_id: task.site_id || task.site_key || '',
+                  site_key: task.site_key,
+                  source_truth_version: task.source_truth_version || '',
+                  template_version: task.template_version || '',
+                  brand_version: task.brand_version || '',
+                  mockup_version: task.mockup_version || '',
+                  git_repo: task.git_repo || '',
+                  git_branch: task.git_branch || '',
+                  git_sha: task.git_sha || '',
+                  preview_deployment_id: task.preview_deployment_id || '',
+                  rollback_pointer: task.rollback_pointer || '',
+                  phase: 'validate',
+                  checkpoint_key: task.checkpoint_key,
+                  idempotency_key: `${task.batch_id}:${task.site_id || task.site_key}:validate:repair-${Number(task.repair_count || 1)}`,
+                  validation_status: 'PENDING',
+                  repair_count: Number(task.repair_count || 1),
+                  domain: task.domain || ''
+                });
+                followupsDispatched++;
+                taskStatus = 'completed';
+              } catch (e) {
+                taskStatus = 'failed';
+                result = `Factory packet repair failed: ${e.message}`;
               }
               break;
             case 'factory_selection_gate':
