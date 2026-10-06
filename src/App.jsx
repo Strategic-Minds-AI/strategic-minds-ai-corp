@@ -194,9 +194,11 @@ const AuthenticatedApp = () => {
           <Route path="/swarm-nexus" element={<SwarmNexus />} />
           <Route path="/idea-engine" element={<IdeaEngine />} />
           <Route path="/gpt-package" element={<GPTPackage />} />
-          <Route path="/onboarding" element={<ClientOnboarding />} />
           <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
+        </Route>
+        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/register?returnTo=%2F" replace />} />}>
+          <Route path="/onboarding" element={<ClientOnboarding />} />
         </Route>
       </Routes>
     </Suspense>
