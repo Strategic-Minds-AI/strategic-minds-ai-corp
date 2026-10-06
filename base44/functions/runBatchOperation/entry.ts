@@ -1,5 +1,29 @@
 import { createClientFromRequest } from '../../shared/ownedClient.ts';
 
+function triageLevel(size: number): string {
+  if (size <= 1) return 'single';
+  if (size <= 25) return 'small';
+  if (size <= 250) return 'fleet';
+  if (size <= 2500) return 'mass';
+  return 'mega';
+}
+
+function recommendedWave(size: number): number {
+  if (size <= 1) return 1;
+  if (size <= 25) return 10;
+  if (size <= 250) return 25;
+  if (size <= 2500) return 50;
+  return 100;
+}
+
+function recommendedConcurrency(size: number): number {
+  if (size <= 1) return 1;
+  if (size <= 25) return 3;
+  if (size <= 250) return 5;
+  if (size <= 2500) return 8;
+  return 12;
+}
+
 export default async function(req: Request): Promise<Response> {
   try {
     const base44 = createClientFromRequest(req);
@@ -8,18 +32,27 @@ export default async function(req: Request): Promise<Response> {
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json();
-    const name = body.name || 'Batch Operation';
-    const batchSize = Math.min(body.batch_size || 10, 100);
+    const name = String(body.name || 'Batch Operation').slice(0, 200);
+    const batchSize = Math.max(1, Math.min(Number(body.batch_size || 10), 10000));
+    const executionMode = body.execution_mode === 'execute' ? 'execute' : 'shadow';
+    const swarmEnabled = body.swarm_enabled !== false;
+    const waveSize = Math.max(1, Math.min(Number(body.wave_size || recommendedWave(batchSize)), 250));
+    const concurrency = Math.max(1, Math.min(Number(body.swarm_concurrency || recommendedConcurrency(batchSize)), 20));
     const googleConnect = body.google_connect !== false;
     const socialConnect = body.social_connect !== false;
     const videoGenerate = body.video_generate === true;
     const contentOptimize = body.content_optimize !== false;
     const freeMode = body.free_mode !== false;
+    const deployTargets = Array.isArray(body.deploy_targets) ? body.deploy_targets : [];
+    const template = body.template && typeof body.template === 'object' ? body.template : {};
+    const variables = typeof body.variables === 'string' ? body.variables : JSON.stringify(body.variables || []);
 
-    // Create the batch record
     const batch = await base44.entities.BatchOperation.create({
       name,
       batch_size: batchSize,
+      template,
+      variables,
+      deploy_targets: deployTargets.join(','),
       status: 'running',
       sites: batchSize,
       tasks_dispatched: 0,
@@ -27,54 +60,53 @@ export default async function(req: Request): Promise<Response> {
       social_connect: socialConnect,
       video_generate: videoGenerate,
       content_optimize: contentOptimize,
-      free_mode: freeMode
+      free_mode: freeMode,
+      swarm_enabled: swarmEnabled,
+      execution_mode: executionMode,
+      swarm_concurrency: concurrency,
+      wave_size: waveSize,
+      source_truth_version: String(body.source_truth_version || 'Strategic_Minds_Universal_Client_Packet_v1.0'),
+      pipeline_version: 'swarm-nexus-website-factory-v1',
+      triage_level: triageLevel(batchSize),
+      sites_materialized: 0,
+      next_site_index: 1,
+      quality_gate: 'PENDING',
+      checkpoint: {
+        created_at: new Date().toISOString(),
+        commander: 'Apex / Agent Zero',
+        swarm_layer: 'Swarm Nexus',
+        mode: executionMode,
+        status: 'created',
+      },
     });
 
-    // Build the task list for each site × each phase
-    const phases: { agent: string; type: string; title: (n: number) => string; priority: string }[] = [];
-    phases.push({ agent: 'replicator', type: 'build_system', title: (n) => `Build site ${n}`, priority: 'high' });
-    if (googleConnect) phases.push({ agent: 'growth_operator', type: 'google_connect', title: (n) => `Google connect: site ${n}`, priority: 'medium' });
-    if (socialConnect) phases.push({ agent: 'social_strategist', type: 'social_connect', title: (n) => `Social connect: site ${n}`, priority: 'medium' });
-    if (videoGenerate) phases.push({ agent: 'social_strategist', type: 'video_generate', title: (n) => `Video: site ${n}`, priority: 'low' });
-    if (contentOptimize) phases.push({ agent: 'brand_guardian', type: 'content_optimize', title: (n) => `Content optimize: site ${n}`, priority: 'medium' });
-
-    // Bulk create all tasks
-    const tasksToCreate: any[] = [];
-    for (let i = 1; i <= batchSize; i++) {
-      for (const phase of phases) {
-        tasksToCreate.push({
-          agent_name: phase.agent,
-          task_type: phase.type,
-          title: phase.title(i),
-          priority: phase.priority,
-          autonomous: true,
-          status: 'pending'
-        });
-      }
+    if (!swarmEnabled) {
+      return Response.json({
+        batch_id: batch.id,
+        sites: batchSize,
+        tasks_dispatched: 0,
+        status: 'running',
+        swarm_enabled: false,
+        note: 'Batch created without Swarm Nexus materialization.'
+      });
     }
 
-    let tasksDispatched = 0;
-    // Create in chunks of 100 (bulkCreate limit)
-    for (let i = 0; i < tasksToCreate.length; i += 100) {
-      const chunk = tasksToCreate.slice(i, i + 100);
-      try {
-        await base44.entities.AgentTask.bulkCreate(chunk);
-        tasksDispatched += chunk.length;
-      } catch (e) { /* skip chunk */ }
-    }
-
-    // Update batch record
-    await base44.entities.BatchOperation.update(batch.id, {
-      status: 'complete',
-      tasks_dispatched: tasksDispatched
-    });
+    const wave = await base44.functions.invoke('advanceBatchWave', { batch_id: batch.id });
+    if (wave.data?.error) throw new Error(wave.data.error);
 
     return Response.json({
       batch_id: batch.id,
       sites: batchSize,
-      tasks_dispatched: tasksDispatched,
-      phases: phases.length,
-      status: 'complete'
+      tasks_dispatched: wave.data?.tasks_created || 0,
+      status: 'running',
+      execution_mode: executionMode,
+      triage_level: triageLevel(batchSize),
+      swarm_concurrency: concurrency,
+      wave_size: waveSize,
+      wave: wave.data || null,
+      protected_gate: executionMode === 'execute'
+        ? 'Production deploys, DNS, secrets, spend, permissions and public/customer communications remain approval-gated.'
+        : null
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
