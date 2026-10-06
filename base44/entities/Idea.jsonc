@@ -1,0 +1,116 @@
+{
+  "name": "Idea",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "feature",
+        "refactor",
+        "bugfix",
+        "research",
+        "infrastructure",
+        "content",
+        "growth",
+        "security"
+      ],
+      "default": "feature"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "github",
+        "web",
+        "metrics",
+        "agent"
+      ],
+      "default": "manual"
+    },
+    "source_ref": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Origin reference, e.g. GitHub repo full name"
+    },
+    "impact_score": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "default": 5
+    },
+    "effort_score": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "default": 5
+    },
+    "risk_score": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 10,
+      "default": 3
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "approved",
+        "rejected",
+        "building",
+        "completed",
+        "archived"
+      ],
+      "default": "proposed"
+    },
+    "swarm_run_id": {
+      "type": "string",
+      "description": "Linked SwarmRun created on approval"
+    },
+    "rationale": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Why this idea was proposed"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "title",
+    "description",
+    "category"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "name": "SwarmTask",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string"
+    },
+    "agent_id": {
+      "type": "string"
+    },
+    "agent_name": {
+      "type": "string"
+    },
+    "conversation_id": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "queued",
+        "dispatching",
+        "submitted",
+        "completed",
+        "error"
+      ],
+      "default": "queued"
+    },
+    "output": {
+      "type": "string",
+      "maxLength": 30000,
+      "description": "Agent result from an external MCP client. Plain text or Markdown, maximum 30000 characters."
+    },
+    "error": {
+      "type": "string",
+      "maxLength": 2000
+    }
+  },
+  "required": [
+    "run_id",
+    "agent_id",
+    "agent_name"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

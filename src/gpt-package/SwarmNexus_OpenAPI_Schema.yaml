@@ -1,0 +1,1389 @@
+openapi: 3.0.0
+info:
+  title: SwarmNexus Actions (MAX)
+  description: Full-capability external tool actions for the SwarmNexus Custom GPT. Includes web scraping, browser automation, desktop automation, Docker, Kubernetes, file system, shell execution, database, email, calendar, GitHub, Slack, OCR, TTS, video, vector search, and webhooks.
+  version: 3.0.0
+
+servers:
+  - url: https://your-api-endpoint.com
+    description: Replace with your API base URL
+
+paths:
+  # === WEB & DATA ===
+  /scrape:
+    post:
+      summary: Scrape a web page
+      description: Extract structured content from any URL. Used by Web Researcher agent for deep page reads.
+      operationId: scrapePage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url: { type: string, description: The URL to scrape }
+                selector: { type: string, description: Optional CSS selector to target specific content }
+              required: [url]
+      responses:
+        '200':
+          description: Scraped content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title: { type: string }
+                  content: { type: string }
+                  url: { type: string }
+
+  /search-knowledge:
+    post:
+      summary: Search private knowledge base
+      description: Search your internal knowledge base (Notion, Confluence, custom).
+      operationId: searchKnowledge
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query: { type: string }
+                limit: { type: integer, default: 5 }
+              required: [query]
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title: { type: string }
+                        content: { type: string }
+                        url: { type: string }
+                        score: { type: number }
+
+  /execute-code:
+    post:
+      summary: Execute code in a sandbox
+      description: Run code in a real execution environment. Used by Code Analyst and QA Tester for multi-file projects.
+      operationId: executeCode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                language:
+                  type: string
+                  enum: [python, javascript, typescript, bash, go, rust, java, csharp, ruby, php]
+                  default: python
+                code: { type: string }
+                files: { type: object, description: Optional map of filename to file content }
+              required: [code]
+      responses:
+        '200':
+          description: Execution result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stdout: { type: string }
+                  stderr: { type: string }
+                  exitCode: { type: integer }
+                  output_files:
+                    type: array
+                    items: { type: string }
+
+  /query-database:
+    post:
+      summary: Query a database
+      description: Run a read-only SQL query against your Supabase/PostgreSQL database.
+      operationId: queryDatabase
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query: { type: string, description: SQL query (read-only) }
+                params:
+                  type: array
+                  items: {}
+              required: [query]
+      responses:
+        '200':
+          description: Query results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  rows:
+                    type: array
+                    items: {}
+                  rowCount: { type: integer }
+
+  # === BROWSER AUTOMATION ===
+  /browser/navigate:
+    post:
+      summary: Navigate browser to URL
+      description: Open a URL in the browser automation session. Used by Computer Use Agent (Browser).
+      operationId: browserNavigate
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                url: { type: string }
+                wait_until: { type: string, enum: [load, domcontentloaded, networkidle], default: load }
+              required: [session_id, url]
+      responses:
+        '200':
+          description: Navigation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  title: { type: string }
+                  url: { type: string }
+                  screenshot: { type: string, description: Base64 screenshot }
+
+  /browser/click:
+    post:
+      summary: Click an element
+      description: Click a DOM element by selector or coordinates.
+      operationId: browserClick
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                selector: { type: string, description: CSS or XPath selector }
+                x: { type: number, description: X coordinate (alternative to selector) }
+                y: { type: number, description: Y coordinate (alternative to selector) }
+                button: { type: string, enum: [left, right, middle], default: left }
+              required: [session_id]
+      responses:
+        '200':
+          description: Click result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  screenshot: { type: string }
+
+  /browser/type:
+    post:
+      summary: Type text into a field
+      description: Type text into a form field identified by selector.
+      operationId: browserType
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                selector: { type: string }
+                text: { type: string }
+                delay: { type: integer, default: 50, description: Delay between keystrokes in ms }
+                clear_first: { type: boolean, default: true }
+              required: [session_id, selector, text]
+      responses:
+        '200':
+          description: Type result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  screenshot: { type: string }
+
+  /browser/screenshot:
+    post:
+      summary: Take a screenshot
+      description: Capture the current browser viewport or full page.
+      operationId: browserScreenshot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                full_page: { type: boolean, default: false }
+                format: { type: string, enum: [png, jpeg], default: png }
+              required: [session_id]
+      responses:
+        '200':
+          description: Screenshot
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  screenshot: { type: string, description: Base64 image }
+                  width: { type: integer }
+                  height: { type: integer }
+
+  /browser/extract:
+    post:
+      summary: Extract data from page
+      description: Extract structured data from the current page using a selector or smart detection.
+      operationId: browserExtract
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                selector: { type: string, description: CSS selector or "auto" for smart detection }
+                extract_type: { type: string, enum: [text, html, table, links, images, attributes], default: text }
+                attribute: { type: string, description: Attribute name if extract_type is attributes }
+              required: [session_id]
+      responses:
+        '200':
+          description: Extracted data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data: {}
+                  count: { type: integer }
+
+  /browser/scroll:
+    post:
+      summary: Scroll the page
+      description: Scroll the browser viewport.
+      operationId: browserScroll
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                direction: { type: string, enum: [up, down, left, right], default: down }
+                amount: { type: integer, default: 500, description: Pixels to scroll }
+                selector: { type: string, description: Scroll to element instead of by pixels }
+              required: [session_id]
+      responses:
+        '200':
+          description: Scroll result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+
+  /browser/execute-js:
+    post:
+      summary: Execute JavaScript
+      description: Execute JavaScript code in the browser context.
+      operationId: browserExecuteJs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                script: { type: string, description: JavaScript code to execute }
+              required: [session_id, script]
+      responses:
+        '200':
+          description: JS execution result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result: {}
+                  success: { type: boolean }
+
+  /browser/wait:
+    post:
+      summary: Wait for a condition
+      description: Wait for an element to appear, text to be present, or a timeout.
+      operationId: browserWait
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                condition: { type: string, enum: [element_visible, element_hidden, text_present, navigation, timeout] }
+                selector: { type: string }
+                text: { type: string }
+                timeout_ms: { type: integer, default: 10000 }
+              required: [session_id, condition]
+      responses:
+        '200':
+          description: Wait result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  condition_met: { type: boolean }
+
+  # === DESKTOP AUTOMATION ===
+  /desktop/open-app:
+    post:
+      summary: Open a desktop application
+      description: Launch a desktop application by name or path.
+      operationId: desktopOpenApp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                app_name: { type: string, description: Application name or path }
+                args: { type: array, items: { type: string }, description: Command line arguments }
+              required: [session_id, app_name]
+      responses:
+        '200':
+          description: App opened
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  pid: { type: integer }
+
+  /desktop/shortcut:
+    post:
+      summary: Execute a keyboard shortcut
+      description: Press a keyboard shortcut / key combination.
+      operationId: desktopShortcut
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                keys: { type: string, description: Key combo, e.g. "cmd+c", "ctrl+s", "alt+tab" }
+              required: [session_id, keys]
+      responses:
+        '200':
+          description: Shortcut executed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+
+  /desktop/click:
+    post:
+      summary: Click at coordinates
+      description: Click the mouse at specific screen coordinates.
+      operationId: desktopClick
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                x: { type: number }
+                y: { type: number }
+                button: { type: string, enum: [left, right, middle], default: left }
+                double: { type: boolean, default: false }
+              required: [session_id, x, y]
+      responses:
+        '200':
+          description: Click result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+
+  /desktop/type:
+    post:
+      summary: Type text on desktop
+      description: Type text using the keyboard (desktop level, not browser-specific).
+      operationId: desktopType
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                text: { type: string }
+                delay: { type: integer, default: 50 }
+              required: [session_id, text]
+      responses:
+        '200':
+          description: Type result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+
+  /desktop/screenshot:
+    post:
+      summary: Take a desktop screenshot
+      description: Capture the entire screen or a specific region.
+      operationId: desktopScreenshot
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id: { type: string }
+                region:
+                  type: object
+                  properties:
+                    x: { type: number }
+                    y: { type: number }
+                    width: { type: number }
+                    height: { type: number }
+              required: [session_id]
+      responses:
+        '200':
+          description: Screenshot
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  screenshot: { type: string, description: Base64 image }
+
+  # === FILE SYSTEM ===
+  /fs/read:
+    post:
+      summary: Read a file
+      description: Read the contents of a file.
+      operationId: fsRead
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path: { type: string }
+                encoding: { type: string, default: utf-8 }
+              required: [path]
+      responses:
+        '200':
+          description: File content
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content: { type: string }
+                  size: { type: integer }
+
+  /fs/write:
+    post:
+      summary: Write a file
+      description: Write content to a file (creates or overwrites).
+      operationId: fsWrite
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path: { type: string }
+                content: { type: string }
+                append: { type: boolean, default: false }
+              required: [path, content]
+      responses:
+        '200':
+          description: Write result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  bytes_written: { type: integer }
+
+  /fs/list:
+    post:
+      summary: List directory contents
+      description: List files and directories in a given path.
+      operationId: fsList
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path: { type: string }
+                recursive: { type: boolean, default: false }
+              required: [path]
+      responses:
+        '200':
+          description: Directory listing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  entries:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: { type: string }
+                        type: { type: string, enum: [file, directory] }
+                        size: { type: integer }
+
+  /fs/mkdir:
+    post:
+      summary: Create a directory
+      description: Create a directory (and parents if needed).
+      operationId: fsMkdir
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                path: { type: string }
+                recursive: { type: boolean, default: true }
+              required: [path]
+      responses:
+        '200':
+          description: Directory created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+
+  /fs/search:
+    post:
+      summary: Search for files
+      description: Search for files matching a pattern in a directory.
+      operationId: fsSearch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                directory: { type: string }
+                pattern: { type: string, description: Glob pattern, e.g. "*.js" }
+                recursive: { type: boolean, default: true }
+              required: [directory, pattern]
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  files:
+                    type: array
+                    items: { type: string }
+
+  # === SHELL ===
+  /shell/exec:
+    post:
+      summary: Execute a shell command
+      description: Execute a shell command in a sandbox. Destructive commands require confirmation.
+      operationId: shellExec
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                command: { type: string }
+                cwd: { type: string, description: Working directory }
+                timeout: { type: integer, default: 30, description: Timeout in seconds }
+                env:
+                  type: object
+                  description: Environment variables
+              required: [command]
+      responses:
+        '200':
+          description: Shell result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stdout: { type: string }
+                  stderr: { type: string }
+                  exit_code: { type: integer }
+
+  # === DOCKER ===
+  /docker/build:
+    post:
+      summary: Build a Docker image
+      description: Build a Docker image from a Dockerfile.
+      operationId: dockerBuild
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                dockerfile: { type: string, description: Dockerfile content or path }
+                context: { type: string, description: Build context path or URL }
+                tag: { type: string, description: Image tag, e.g. myapp:v1 }
+                build_args:
+                  type: object
+                  description: Build arguments
+                platforms: { type: string, description: Target platforms, e.g. linux/amd64,linux/arm64 }
+              required: [dockerfile, tag]
+      responses:
+        '200':
+          description: Build result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  image_id: { type: string }
+                  size: { type: integer, description: Image size in bytes }
+                  logs: { type: string }
+
+  /docker/run:
+    post:
+      summary: Run a Docker container
+      description: Run a Docker container with configuration.
+      operationId: dockerRun
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image: { type: string }
+                name: { type: string }
+                ports:
+                  type: array
+                  items: { type: string }
+                  description: Port mappings, e.g. ["8080:80"]
+                env:
+                  type: object
+                  description: Environment variables
+                volumes:
+                  type: array
+                  items: { type: string }
+                  description: Volume mappings, e.g. ["/host:/container:rw"]
+                cpus: { type: number, default: 1 }
+                memory: { type: string, default: "512m" }
+                detached: { type: boolean, default: true }
+                health_cmd: { type: string }
+                restart_policy: { type: string, enum: [no, on-failure, always, unless-stopped], default: no }
+                network: { type: string }
+              required: [image]
+      responses:
+        '200':
+          description: Container started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  container_id: { type: string }
+                  success: { type: boolean }
+
+  /docker/logs:
+    post:
+      summary: Get container logs
+      description: Stream or fetch logs from a container.
+      operationId: dockerLogs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                container: { type: string }
+                tail: { type: integer, default: 100 }
+                follow: { type: boolean, default: false }
+                since: { type: string, description: ISO timestamp }
+              required: [container]
+      responses:
+        '200':
+          description: Container logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs: { type: string }
+
+  /docker/stop:
+    post:
+      summary: Stop a container
+      description: Stop a running container gracefully.
+      operationId: dockerStop
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                container: { type: string }
+                timeout: { type: integer, default: 10, description: Grace period in seconds }
+              required: [container]
+      responses:
+        '200':
+          description: Container stopped
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+
+  /docker/exec:
+    post:
+      summary: Execute command in container
+      description: Execute a command inside a running container.
+      operationId: dockerExec
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                container: { type: string }
+                command: { type: string }
+                interactive: { type: boolean, default: false }
+              required: [container, command]
+      responses:
+        '200':
+          description: Exec result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stdout: { type: string }
+                  stderr: { type: string }
+                  exit_code: { type: integer }
+
+  /docker/compose-up:
+    post:
+      summary: Docker Compose up
+      description: Start multi-container services defined in docker-compose.yml.
+      operationId: dockerComposeUp
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                compose_file: { type: string, description: docker-compose.yml content or path }
+                detached: { type: boolean, default: true }
+                build: { type: boolean, default: false }
+              required: [compose_file]
+      responses:
+        '200':
+          description: Compose up result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  services:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: { type: string }
+                        status: { type: string }
+
+  /docker/compose-down:
+    post:
+      summary: Docker Compose down
+      description: Stop and remove containers, networks defined in docker-compose.yml.
+      operationId: dockerComposeDown
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                compose_file: { type: string }
+                remove_volumes: { type: boolean, default: false }
+              required: [compose_file]
+      responses:
+        '200':
+          description: Compose down result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+
+  /docker/prune:
+    post:
+      summary: Prune unused Docker resources
+      description: Remove unused containers, images, networks, and build cache.
+      operationId: dockerPrune
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                target: { type: string, enum: [containers, images, networks, volumes, build_cache, system], default: system }
+                force: { type: boolean, default: false }
+              required: [target]
+      responses:
+        '200':
+          description: Prune result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  space_reclaimed: { type: integer, description: Bytes reclaimed }
+                  items_deleted: { type: integer }
+
+  # === KUBERNETES ===
+  /k8s/apply:
+    post:
+      summary: Apply a Kubernetes manifest
+      description: Apply a K8s manifest file to the cluster.
+      operationId: k8sApply
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                manifest: { type: string, description: YAML manifest content }
+                namespace: { type: string, default: default }
+              required: [manifest]
+      responses:
+        '200':
+          description: Apply result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  resources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kind: { type: string }
+                        name: { type: string }
+                        status: { type: string }
+
+  /k8s/status:
+    post:
+      summary: Get Kubernetes resource status
+      description: Get status of pods, services, deployments in a namespace.
+      operationId: k8sStatus
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                namespace: { type: string, default: default }
+                resource_type: { type: string, enum: [pods, services, deployments, ingress, all] }
+                label_selector: { type: string }
+              required: [resource_type]
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resources:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: { type: string }
+                        kind: { type: string }
+                        status: { type: string }
+                        ready: { type: boolean }
+
+  /k8s/scale:
+    post:
+      summary: Scale a Kubernetes deployment
+      description: Scale a deployment to a specific number of replicas.
+      operationId: k8sScale
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deployment: { type: string }
+                namespace: { type: string, default: default }
+                replicas: { type: integer }
+              required: [deployment, replicas]
+      responses:
+        '200':
+          description: Scale result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  current_replicas: { type: integer }
+
+  /k8s/rollback:
+    post:
+      summary: Rollback a Kubernetes deployment
+      description: Rollback a deployment to a previous revision.
+      operationId: k8sRollback
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deployment: { type: string }
+                namespace: { type: string, default: default }
+                revision: { type: integer, description: Specific revision (0 = previous) }
+              required: [deployment]
+      responses:
+        '200':
+          description: Rollback result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  new_revision: { type: integer }
+
+  /k8s/logs:
+    post:
+      summary: Get pod logs
+      description: Fetch logs from a Kubernetes pod.
+      operationId: k8sLogs
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pod: { type: string }
+                namespace: { type: string, default: default }
+                container: { type: string }
+                tail: { type: integer, default: 100 }
+                follow: { type: boolean, default: false }
+              required: [pod]
+      responses:
+        '200':
+          description: Pod logs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  logs: { type: string }
+
+  # === COMMUNICATION ===
+  /send-email:
+    post:
+      summary: Send an email
+      description: Send an email via Google Workspace or SMTP.
+      operationId: sendEmail
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                to: { type: string }
+                subject: { type: string }
+                body: { type: string }
+                html: { type: string }
+              required: [to, subject, body]
+      responses:
+        '200':
+          description: Email sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  messageId: { type: string }
+
+  /create-calendar-event:
+    post:
+      summary: Create a calendar event
+      description: Create an event in Google Calendar.
+      operationId: createCalendarEvent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                start: { type: string, format: date-time }
+                end: { type: string, format: date-time }
+                attendees:
+                  type: array
+                  items: { type: string }
+                description: { type: string }
+              required: [title, start, end]
+      responses:
+        '200':
+          description: Event created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  eventId: { type: string }
+                  htmlLink: { type: string }
+
+  /notify-slack:
+    post:
+      summary: Send a Slack notification
+      description: Post a message to a Slack channel.
+      operationId: notifySlack
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                channel: { type: string }
+                message: { type: string }
+                blocks:
+                  type: array
+                  items: {}
+              required: [channel, message]
+      responses:
+        '200':
+          description: Message sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  ts: { type: string }
+
+  /notify/webhook:
+    post:
+      summary: Send a webhook notification
+      description: Send a payload to any webhook URL (Slack, Discord, Teams, custom).
+      operationId: notifyWebhook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url: { type: string, description: Webhook URL }
+                payload: { type: object }
+                headers: { type: object }
+              required: [url, payload]
+      responses:
+        '200':
+          description: Webhook sent
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  status_code: { type: integer }
+
+  # === GITHUB ===
+  /github-search:
+    get:
+      summary: Search GitHub repositories
+      description: Search repositories, issues, or code on GitHub.
+      operationId: githubSearch
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema: { type: string }
+        - name: type
+          in: query
+          schema: { type: string, enum: [repositories, issues, code], default: repositories }
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name: { type: string }
+                        full_name: { type: string }
+                        html_url: { type: string }
+                        description: { type: string }
+                        stargazers_count: { type: integer }
+
+  /github-create-issue:
+    post:
+      summary: Create a GitHub issue
+      description: Create an issue in a GitHub repository.
+      operationId: createGithubIssue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                repo: { type: string, description: "owner/repo format" }
+                title: { type: string }
+                body: { type: string }
+                labels:
+                  type: array
+                  items: { type: string }
+              required: [repo, title, body]
+      responses:
+        '200':
+          description: Issue created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  number: { type: integer }
+                  html_url: { type: string }
+
+  # === MEDIA ===
+  /ocr-image:
+    post:
+      summary: Extract text from an image
+      description: Run OCR on an image or screenshot.
+      operationId: ocrImage
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image_url: { type: string }
+                output_format: { type: string, enum: [text, markdown, json], default: text }
+              required: [image_url]
+      responses:
+        '200':
+          description: Extracted text
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  text: { type: string }
+                  confidence: { type: number }
+
+  /tts:
+    post:
+      summary: Generate speech from text
+      description: Convert text to speech audio (TTS).
+      operationId: generateSpeech
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text: { type: string, description: Max 5000 chars }
+                voice: { type: string, enum: [river, honey, sunny, storm, spark], default: river }
+                language_code: { type: string, description: ISO-639-1 code, e.g. en, es }
+              required: [text]
+      responses:
+        '200':
+          description: Speech audio
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url: { type: string, description: MP3 URL }
+
+  /video/generate:
+    post:
+      summary: Generate a video
+      description: Generate a video from a text prompt.
+      operationId: generateVideo
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt: { type: string }
+                duration: { type: integer, enum: [4, 6, 8], default: 6 }
+                aspect_ratio: { type: string, enum: ["16:9", "9:16"], default: "16:9" }
+                generate_audio: { type: boolean, default: false }
+              required: [prompt]
+      responses:
+        '200':
+          description: Video generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url: { type: string }
+
+  # === VECTOR / RAG ===
+  /vector/search:
+    post:
+      summary: Vector search
+      description: Semantic search over your vector database for RAG.
+      operationId: vectorSearch
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query: { type: string }
+                namespace: { type: string }
+                top_k: { type: integer, default: 5 }
+                filter: { type: object, description: Metadata filter }
+              required: [query]
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  matches:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string }
+                        score: { type: number }
+                        content: { type: string }
+                        metadata: { type: object }
+
+  /vector/upsert:
+    post:
+      summary: Upsert vectors
+      description: Insert or update vectors in your vector database.
+      operationId: vectorUpsert
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                namespace: { type: string }
+                documents:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id: { type: string }
+                      content: { type: string }
+                      metadata: { type: object }
+              required: [documents]
+      responses:
+        '200':
+          description: Upsert result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  count: { type: integer }
