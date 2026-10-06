@@ -10,7 +10,7 @@
     "build:vercel": "npm run build:standalone && npm --prefix .standalone install --omit=dev --ignore-scripts && node src/deployment/buildVercel.mjs",
     "start:standalone": "node .standalone/server.mjs",
     "test:gateway": "node --test src/server/gatewayCredentials.test.mjs",
-    "test:chat": "node --test src/server/chatDatabase.test.mjs",
+    "test:chat": "node --test src/server/chatDatabase.test.mjs src/server/chatHistoryContract.test.mjs src/server/accountOverview.test.mjs",
     "test:auth": "node --test src/lib/supabaseAuthSafety.test.mjs",
     "lint": "eslint . --quiet",
     "lint:fix": "eslint . --fix",
