@@ -197,7 +197,7 @@ const AuthenticatedApp = () => {
           <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
-        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/register?returnTo=%2F" replace />} />}>
+        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/register?returnTo=%2Fonboarding" replace />} />}>
           <Route path="/onboarding" element={<ClientOnboarding />} />
         </Route>
       </Routes>
