@@ -1,0 +1,113 @@
+{
+  "name": "EdenSkyeTask",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "Task title"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Detailed task description"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "callback",
+        "follow_up",
+        "appointment",
+        "reminder",
+        "email",
+        "research",
+        "admin",
+        "personal"
+      ],
+      "default": "admin"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "in_progress",
+        "completed",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "due_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "related_phone": {
+      "type": "string",
+      "description": "Phone number associated with this task"
+    },
+    "related_email": {
+      "type": "string",
+      "description": "Email address associated with this task"
+    },
+    "related_conversation_id": {
+      "type": "string",
+      "description": "Conversation this task originated from"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "voice_call",
+        "sms",
+        "whatsapp",
+        "email",
+        "manual",
+        "calendar"
+      ],
+      "default": "manual"
+    },
+    "ai_summary": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "AI-generated summary of why this task was created"
+    }
+  },
+  "required": [
+    "title",
+    "status"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

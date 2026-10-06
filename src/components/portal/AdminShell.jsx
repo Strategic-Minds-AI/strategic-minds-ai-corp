@@ -1,7 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import { ShieldCheck, LogOut, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/lib/AuthContext';
-const links = [['Dashboard', '/admin'], ['Vault', '/admin/vault'], ['Business tools', '/portal?view=dashboard']];
+const links = [['Dashboard', '/admin'], ['Eden Skye', '/eden'], ['Vault', '/admin/vault'], ['Business tools', '/portal?view=dashboard']];
 export default function AdminShell({ children }) {
   const { user, logout } = useAuth();
   if (user?.role !== 'admin') return <main className="mx-auto max-w-xl px-6 py-20 text-foreground"><ShieldCheck className="mb-5 text-primary" size={36}/><h1 className="mb-3">Admin access required</h1><p className="mb-6">This account is not an administrator. Sign in with your approved owner account to open the dashboard and vault.</p><div className="flex flex-wrap gap-4"><button type="button" onClick={() => logout()} className="agency-button">Switch account</button><Link to="/" className="inline-flex min-h-12 items-center text-primary">Back to website</Link></div></main>;
