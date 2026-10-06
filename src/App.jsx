@@ -1,7 +1,7 @@
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -87,6 +87,12 @@ const EdenSkye = lazy(() => import('@/pages/EdenSkye'));
 const VideoShowcase = lazy(() => import('@/pages/VideoShowcase'));
 // Add page imports here
 
+const CurrentRouteLoginRedirect = () => {
+  const location = useLocation();
+  const returnTo = location.pathname + location.search + location.hash;
+  return <Navigate to={`/login?returnTo=${encodeURIComponent(returnTo)}`} replace />;
+};
+
 const AuthenticatedApp = () => {
   const { isLoadingAuth } = useAuth();
 
@@ -138,7 +144,7 @@ const AuthenticatedApp = () => {
           <Route path="/admin/vault" element={<AdminVaultPage />} />
         </Route>
         <Route path="/insider" element={<InsiderApp />} />
-        <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login?returnTo=%2Fagents" replace />} />}>
+        <Route element={<ProtectedRoute unauthenticatedElement={<CurrentRouteLoginRedirect />} />}>
           <Route path="/agents" element={<AgentCommandCenter />} />
           <Route path="/agents/:agentName" element={<AgentChatPage />} />
           <Route path="/domains" element={<DomainRegistry />} />
