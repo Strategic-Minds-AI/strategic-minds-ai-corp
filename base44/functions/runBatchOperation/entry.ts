@@ -24,6 +24,18 @@ function recommendedConcurrency(size: number): number {
   return 12;
 }
 
+const PROTECTED_APPROVALS = [
+  'production_deploy',
+  'protected_branch_merge',
+  'production_db_or_rls',
+  'dns_or_domain_change',
+  'secrets_or_credentials',
+  'payments_or_spend',
+  'permission_escalation',
+  'destructive_or_irreversible_action',
+  'customer_or_public_communication',
+];
+
 export default async function(req: Request): Promise<Response> {
   try {
     const base44 = createClientFromRequest(req);
@@ -37,7 +49,11 @@ export default async function(req: Request): Promise<Response> {
     const executionMode = body.execution_mode === 'execute' ? 'execute' : 'shadow';
     const swarmEnabled = body.swarm_enabled !== false;
     const waveSize = Math.max(1, Math.min(Number(body.wave_size || recommendedWave(batchSize)), 250));
-    const concurrency = Math.max(1, Math.min(Number(body.swarm_concurrency || recommendedConcurrency(batchSize)), 20));
+    const requestedConcurrency = body.concurrency ?? body.swarm_concurrency;
+    const concurrency = Math.max(1, Math.min(Number(requestedConcurrency || recommendedConcurrency(batchSize)), 20));
+    const checkpointPolicy = body.checkpoint_policy === 'every_wave' ? 'every_wave' : 'every_wave';
+    const validatorRequired = body.validator_required !== false;
+    const maxRepairRounds = Math.max(0, Math.min(Number(body.max_repair_rounds ?? 2), 5));
     const googleConnect = body.google_connect !== false;
     const socialConnect = body.social_connect !== false;
     const videoGenerate = body.video_generate === true;
@@ -68,15 +84,29 @@ export default async function(req: Request): Promise<Response> {
       source_truth_version: String(body.source_truth_version || 'Strategic_Minds_Universal_Client_Packet_v1.0'),
       pipeline_version: 'swarm-nexus-website-factory-v1',
       triage_level: triageLevel(batchSize),
+      checkpoint_policy: checkpointPolicy,
+      validator_required: validatorRequired,
+      max_repair_rounds: maxRepairRounds,
       sites_materialized: 0,
       next_site_index: 1,
-      quality_gate: 'PENDING',
+      queued_count: 0,
+      running_count: 0,
+      blocked_count: 0,
+      pass_count: 0,
+      fail_count: 0,
+      repair_count: 0,
+      validator_state: validatorRequired ? 'PENDING' : 'UNKNOWN',
+      approval_requirements: PROTECTED_APPROVALS,
+      quality_gate: validatorRequired ? 'PENDING' : 'UNKNOWN',
       checkpoint: {
         created_at: new Date().toISOString(),
         commander: 'Apex / Agent Zero',
         swarm_layer: 'Swarm Nexus',
         mode: executionMode,
         status: 'created',
+        policy: checkpointPolicy,
+        validator_required: validatorRequired,
+        max_repair_rounds: maxRepairRounds,
       },
     });
 
@@ -101,12 +131,15 @@ export default async function(req: Request): Promise<Response> {
       status: 'running',
       execution_mode: executionMode,
       triage_level: triageLevel(batchSize),
+      concurrency,
       swarm_concurrency: concurrency,
       wave_size: waveSize,
+      checkpoint_policy: checkpointPolicy,
+      validator_required: validatorRequired,
+      max_repair_rounds: maxRepairRounds,
+      approval_requirements: PROTECTED_APPROVALS,
       wave: wave.data || null,
-      protected_gate: executionMode === 'execute'
-        ? 'Production deploys, DNS, secrets, spend, permissions and public/customer communications remain approval-gated.'
-        : null
+      protected_gate: 'Production deploys, DNS, secrets, spend, permissions, protected merges, production DB/RLS and public/customer communications remain approval-gated.'
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
