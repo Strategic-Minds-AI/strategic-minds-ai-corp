@@ -197,21 +197,72 @@ export default async function(req: Request): Promise<Response> {
       const allTasks = taskRes.items || [];
       const leaseExpiry = new Date(now.getTime() + LEASE_DURATION_MS).toISOString();
       const tasksToReturn = [];
+      const batchCache = new Map<string, any>();
+      const activeCountCache = new Map<string, number>();
+
+      const getBatchConcurrency = async (batchId: string): Promise<number> => {
+        if (!batchId) return 20;
+        if (!batchCache.has(batchId)) {
+          const batch = await base44.asServiceRole.entities.BatchOperation.get(batchId).catch(() => null);
+          batchCache.set(batchId, batch);
+        }
+        const batch = batchCache.get(batchId);
+        return Math.max(1, Math.min(20, Number(batch?.swarm_concurrency || 1)));
+      };
+
+      const getActiveCount = async (batchId: string): Promise<number> => {
+        if (!batchId) return 0;
+        if (!activeCountCache.has(batchId)) {
+          const activeRes = await base44.asServiceRole.entities.AgentTask.filter(
+            { batch_id: batchId, status: 'in_progress' },
+            { limit: 250 }
+          );
+          const active = (activeRes.items || []).filter((candidate: any) => {
+            if (!candidate.lease_expires_at) return true;
+            return new Date(candidate.lease_expires_at) > now;
+          }).length;
+          activeCountCache.set(batchId, active);
+        }
+        return activeCountCache.get(batchId) || 0;
+      };
 
       for (const task of allTasks) {
-        if (task.claimed_by_sandbox_id && task.claimed_by_sandbox_id !== sandbox.id && task.lease_expires_at) {
-          const leaseStillValid = new Date(task.lease_expires_at) > now;
-          if (leaseStillValid) continue;
+        const hasLiveLease = Boolean(task.lease_expires_at && new Date(task.lease_expires_at) > now);
+        if (task.status === 'in_progress' && hasLiveLease) continue;
+
+        if (task.batch_id) {
+          const concurrencyCap = await getBatchConcurrency(task.batch_id);
+          const activeCount = await getActiveCount(task.batch_id);
+          if (activeCount >= concurrencyCap) continue;
         }
 
         const claimToken = generateToken();
-        await base44.asServiceRole.entities.AgentTask.update(task.id, {
-          status: 'in_progress',
-          claim_token: claimToken,
-          claimed_by_sandbox_id: sandbox.id,
-          lease_expires_at: leaseExpiry,
-          started_at: task.started_at || nowIso,
-        });
+        const claimFilter = task.status === 'pending'
+          ? { id: task.id, status: 'pending', autonomous: true }
+          : {
+              id: task.id,
+              status: 'in_progress',
+              claim_token: task.claim_token || '',
+              claimed_by_sandbox_id: task.claimed_by_sandbox_id || ''
+            };
+
+        const claim = await base44.asServiceRole.entities.AgentTask.updateMany(
+          claimFilter,
+          {
+            $set: {
+              status: 'in_progress',
+              claim_token: claimToken,
+              claimed_by_sandbox_id: sandbox.id,
+              lease_expires_at: leaseExpiry,
+              started_at: task.started_at || nowIso,
+            }
+          }
+        );
+        if (!claim?.updated) continue;
+
+        if (task.batch_id) {
+          activeCountCache.set(task.batch_id, (activeCountCache.get(task.batch_id) || 0) + 1);
+        }
 
         tasksToReturn.push({
           id: task.id,
@@ -220,6 +271,10 @@ export default async function(req: Request): Promise<Response> {
           description: task.description,
           priority: task.priority,
           domain: task.domain,
+          batch_id: task.batch_id || null,
+          site_id: task.site_id || null,
+          site_key: task.site_key || null,
+          checkpoint_key: task.checkpoint_key || null,
           claim_token: claimToken,
           lease_expires_at: leaseExpiry,
         });
