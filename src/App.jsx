@@ -84,6 +84,7 @@ const ApiGenerator = lazy(() => import('@/pages/ApiGenerator'));
 const ApiVaultPage = lazy(() => import('@/pages/ApiVaultPage'));
 const VideoStudio = lazy(() => import('@/pages/VideoStudio'));
 const EdenSkye = lazy(() => import('@/pages/EdenSkye'));
+const VideoShowcase = lazy(() => import('@/pages/VideoShowcase'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -185,6 +186,7 @@ const AuthenticatedApp = () => {
           <Route path="/admin/api-vault" element={<ApiVaultPage />} />
           <Route path="/video-studio" element={<VideoStudio />} />
           <Route path="/eden" element={<EdenSkye />} />
+          <Route path="/videos" element={<VideoShowcase />} />
           <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>
