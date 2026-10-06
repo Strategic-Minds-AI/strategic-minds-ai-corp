@@ -105,6 +105,24 @@
         "mega"
       ]
     },
+    "checkpoint_policy": {
+      "type": "string",
+      "enum": [
+        "every_wave"
+      ],
+      "default": "every_wave",
+      "description": "Do not materialize the next wave until current wave tasks have settled and the validation gate has been evaluated"
+    },
+    "validator_required": {
+      "type": "boolean",
+      "default": true
+    },
+    "max_repair_rounds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "default": 2
+    },
     "sites_materialized": {
       "type": "integer",
       "default": 0
@@ -112,6 +130,49 @@
     "next_site_index": {
       "type": "integer",
       "default": 1
+    },
+    "queued_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "running_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "blocked_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "pass_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "fail_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "repair_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "validator_state": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "RUNNING",
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "UNKNOWN"
+      ],
+      "default": "PENDING"
+    },
+    "approval_requirements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Protected actions that remain operator-gated"
     },
     "quality_gate": {
       "type": "string",
