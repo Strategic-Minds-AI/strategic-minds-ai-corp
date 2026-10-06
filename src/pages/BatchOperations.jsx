@@ -13,6 +13,7 @@ export default function BatchOperations() {
     name: "", batch_size: 10, template: {}, variables: "[]", deploy_targets: ["railway"],
     google_connect: true, social_connect: true, video_generate: false, content_optimize: true,
     swarm_enabled: true, execution_mode: "shadow", swarm_concurrency: 3, wave_size: 10,
+    checkpoint_policy: "every_wave", validator_required: true, max_repair_rounds: 2,
     source_truth_version: "Strategic_Minds_Universal_Client_Packet_v1.0"
   });
   const [launching, setLaunching] = useState(false);
@@ -48,7 +49,7 @@ export default function BatchOperations() {
 
       <main className="max-w-3xl mx-auto px-4 py-6 space-y-5">
         <BatchBuilder form={form} setForm={setForm} />
-        <SwarmNexusFactory form={form} setForm={setForm} />
+        <SwarmNexusFactory form={form} setForm={setForm} batchId={result?.batch_id || null} />
         <OperationToggles form={form} setForm={setForm} />
 
         <button onClick={launch} disabled={launching || !form.name.trim()} className="xa-btn-primary w-full py-4 text-base">
