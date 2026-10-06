@@ -53,6 +53,7 @@ export default async function(req: Request): Promise<Response> {
 
     const currentCheckpoint = batch.checkpoint || {};
     const currentCheckpointKey = String(currentCheckpoint.checkpoint_key || '');
+    let checkpointPassed = currentCheckpoint.status === 'checkpoint_passed';
     if (currentCheckpointKey) {
       const approvals = await base44.entities.AgentTask.filter(
         { batch_id: batchId, checkpoint_key: currentCheckpointKey, status: 'needs_approval' },
@@ -85,11 +86,17 @@ export default async function(req: Request): Promise<Response> {
       if (batch.validator_required !== false && Number(currentCheckpoint.wave_size || 0) > 0) {
         const validations = await base44.entities.AgentTask.filter(
           { batch_id: batchId, checkpoint_key: currentCheckpointKey, task_type: 'factory_validate_site' },
-          { limit: 250 }
+          { sort: '-created_date', limit: 250 }
         );
         const items = validations.items || [];
+        const latestBySite = new Map<string, any>();
+        for (const item of items) {
+          const key = String(item.site_id || item.site_key || item.id);
+          if (!latestBySite.has(key)) latestBySite.set(key, item);
+        }
+        const latestValidators = Array.from(latestBySite.values());
         const expected = Number(currentCheckpoint.wave_size || 0);
-        if (items.length < expected) {
+        if (latestValidators.length < expected) {
           await base44.entities.BatchOperation.update(batchId, {
             validator_state: 'PENDING',
             checkpoint: {
@@ -97,7 +104,7 @@ export default async function(req: Request): Promise<Response> {
               status: 'waiting_for_validator',
               validator_state: 'PENDING',
               validators_expected: expected,
-              validators_seen: items.length,
+              validators_seen: latestValidators.length,
               checkpointed_at: new Date().toISOString(),
             },
           });
@@ -107,11 +114,11 @@ export default async function(req: Request): Promise<Response> {
             batch_id: batchId,
             checkpoint_key: currentCheckpointKey,
             validators_expected: expected,
-            validators_seen: items.length,
+            validators_seen: latestValidators.length,
           });
         }
 
-        const validationStates = items.map((item: any) => String(item.validation_status || 'UNKNOWN'));
+        const validationStates = latestValidators.map((item: any) => String(item.validation_status || 'UNKNOWN'));
         const failed = validationStates.filter((state: string) => state === 'FAIL').length;
         const blocked = validationStates.filter((state: string) => state === 'BLOCKED').length;
         const unknown = validationStates.filter((state: string) => state === 'UNKNOWN' || state === 'PENDING').length;
@@ -150,6 +157,7 @@ export default async function(req: Request): Promise<Response> {
           });
         }
 
+        checkpointPassed = true;
         await base44.entities.BatchOperation.update(batchId, {
           validator_state: 'PASS',
           pass_count: Number(batch.pass_count || 0) + passed,
@@ -169,8 +177,8 @@ export default async function(req: Request): Promise<Response> {
     if (nextSite > batchSize) {
       await base44.entities.BatchOperation.update(batchId, {
         status: batch.execution_mode === 'execute' ? 'awaiting_approval' : 'complete',
-        quality_gate: batch.quality_gate === 'PASS' ? 'PASS' : 'UNKNOWN',
-        validator_state: batch.validator_required === false ? 'UNKNOWN' : (batch.validator_state || 'UNKNOWN'),
+        quality_gate: batch.validator_required === false ? 'UNKNOWN' : (checkpointPassed ? 'PASS' : 'UNKNOWN'),
+        validator_state: batch.validator_required === false ? 'UNKNOWN' : (checkpointPassed ? 'PASS' : (batch.validator_state || 'UNKNOWN')),
         queued_count: 0,
         running_count: 0,
         checkpoint: {
@@ -185,7 +193,7 @@ export default async function(req: Request): Promise<Response> {
         status: 'all_sites_materialized',
         batch_id: batchId,
         sites_materialized: batchSize,
-        quality_gate: batch.quality_gate === 'PASS' ? 'PASS' : 'UNKNOWN',
+        quality_gate: batch.validator_required === false ? 'UNKNOWN' : (checkpointPassed ? 'PASS' : 'UNKNOWN'),
         note: 'Materialization completion is not production release certification. Final preview/deployment validation remains separately required.'
       });
     }
