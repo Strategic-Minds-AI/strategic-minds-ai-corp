@@ -88,6 +88,7 @@ const VideoShowcase = lazy(() => import('@/pages/VideoShowcase'));
 const SwarmNexus = lazy(() => import('@/pages/SwarmNexus'));
 const IdeaEngine = lazy(() => import('@/pages/IdeaEngine'));
 const GPTPackage = lazy(() => import('@/pages/GPTPackage'));
+const ClientOnboarding = lazy(() => import('@/pages/ClientOnboarding'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -193,6 +194,7 @@ const AuthenticatedApp = () => {
           <Route path="/swarm-nexus" element={<SwarmNexus />} />
           <Route path="/idea-engine" element={<IdeaEngine />} />
           <Route path="/gpt-package" element={<GPTPackage />} />
+          <Route path="/onboarding" element={<ClientOnboarding />} />
           <Route path="/provisioner" element={<SystemProvisioner />} />
           <Route path="/analytics" element={<Analytics />} />
         </Route>

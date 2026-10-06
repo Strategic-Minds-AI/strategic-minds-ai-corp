@@ -134,6 +134,10 @@ const TABLE_MAP = {
   SwarmRun: 'swarm_runs',
   SwarmTask: 'swarm_tasks',
   Idea: 'ideas',
+  OnboardingClient: 'onboarding_clients',
+  OnboardingChecklistItem: 'onboarding_checklist_items',
+  ClientTask: 'client_tasks',
+  WelcomeSequence: 'welcome_sequences',
 };
 
 export function tableName(entityName) {

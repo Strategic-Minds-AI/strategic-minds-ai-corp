@@ -1,0 +1,133 @@
+{
+  "name": "OnboardingClient",
+  "type": "object",
+  "properties": {
+    "company_name": {
+      "type": "string",
+      "description": "Company name"
+    },
+    "contact_name": {
+      "type": "string",
+      "description": "Primary contact name"
+    },
+    "contact_email": {
+      "type": "string",
+      "description": "Primary contact email"
+    },
+    "contact_phone": {
+      "type": "string",
+      "description": "Primary contact phone"
+    },
+    "service_type": {
+      "type": "string",
+      "description": "Type of service being provided"
+    },
+    "contract_value": {
+      "type": "number",
+      "description": "Value of the contract"
+    },
+    "onboarding_status": {
+      "type": "string",
+      "enum": [
+        "New Lead",
+        "Contract Sent",
+        "Contract Signed",
+        "Onboarding",
+        "Active",
+        "Paused",
+        "Completed"
+      ],
+      "default": "New Lead",
+      "description": "Current onboarding stage"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Team member assigned to this client"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "Referral",
+        "Inbound",
+        "Outbound",
+        "Repeat"
+      ],
+      "default": "Inbound",
+      "description": "How the client was acquired"
+    },
+    "google_drive_folder_id": {
+      "type": "string",
+      "description": "Google Drive folder ID for this client"
+    },
+    "google_drive_folder_url": {
+      "type": "string",
+      "description": "Google Drive folder URL"
+    },
+    "google_contact_resource": {
+      "type": "string",
+      "description": "Google Contacts resource name"
+    },
+    "google_calendar_event_id": {
+      "type": "string",
+      "description": "Google Calendar kickoff event ID"
+    },
+    "kickoff_scheduled_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled kickoff call time"
+    },
+    "ai_summary": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "AI-generated onboarding summary and recommendations"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 5000,
+      "description": "Internal notes about this client"
+    },
+    "website": {
+      "type": "string",
+      "description": "Client website URL"
+    },
+    "industry": {
+      "type": "string",
+      "description": "Client industry"
+    },
+    "priority": {
+      "type": "string",
+      "enum": [
+        "low",
+        "medium",
+        "high",
+        "urgent"
+      ],
+      "default": "medium"
+    }
+  },
+  "required": [
+    "company_name"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

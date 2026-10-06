@@ -1,0 +1,93 @@
+{
+  "name": "ClientTask",
+  "type": "object",
+  "properties": {
+    "client_id": {
+      "type": "string",
+      "description": "ID of the associated client"
+    },
+    "client_name": {
+      "type": "string",
+      "description": "Name of the associated client"
+    },
+    "checklist_item_id": {
+      "type": "string",
+      "description": "ID of the master checklist item"
+    },
+    "title": {
+      "type": "string",
+      "description": "Task title"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Admin",
+        "Discovery",
+        "Setup",
+        "Communication",
+        "Delivery"
+      ],
+      "description": "Task category"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Not Started",
+        "In Progress",
+        "Completed",
+        "Blocked"
+      ],
+      "default": "Not Started",
+      "description": "Task status"
+    },
+    "due_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Due date for the task"
+    },
+    "completed_date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date the task was completed"
+    },
+    "assigned_to": {
+      "type": "string",
+      "description": "Person assigned to this task"
+    },
+    "google_action_completed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether the Google Workspace action was triggered"
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Task notes"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "OnboardingChecklistItem",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Checklist item title"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Admin",
+        "Discovery",
+        "Setup",
+        "Communication",
+        "Delivery"
+      ],
+      "description": "Category of the checklist item"
+    },
+    "sort_order": {
+      "type": "number",
+      "description": "Display order"
+    },
+    "default_due_days": {
+      "type": "number",
+      "description": "Default number of days from start until due"
+    },
+    "is_required": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this item is required"
+    },
+    "google_workspace_action": {
+      "type": "string",
+      "enum": [
+        "none",
+        "create_drive_folder",
+        "create_contact",
+        "schedule_kickoff",
+        "create_sheet",
+        "create_doc"
+      ],
+      "default": "none",
+      "description": "Google Workspace action to trigger when this item is completed"
+    }
+  },
+  "required": [
+    "title"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

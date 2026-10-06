@@ -1,0 +1,63 @@
+{
+  "name": "WelcomeSequence",
+  "type": "object",
+  "properties": {
+    "step_number": {
+      "type": "number",
+      "description": "Order of the sequence step"
+    },
+    "subject": {
+      "type": "string",
+      "description": "Subject/title of the message"
+    },
+    "message_template": {
+      "type": "string",
+      "description": "The message content template"
+    },
+    "trigger": {
+      "type": "string",
+      "description": "When this message is triggered"
+    },
+    "channel": {
+      "type": "string",
+      "enum": [
+        "Email",
+        "Slack",
+        "SMS",
+        "In-App"
+      ],
+      "default": "Email",
+      "description": "Delivery channel"
+    },
+    "is_active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this sequence step is active"
+    }
+  },
+  "required": [
+    "subject"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
