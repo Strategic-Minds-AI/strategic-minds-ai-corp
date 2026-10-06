@@ -88,6 +88,9 @@ export default function SwarmNexusFactory({ form, setForm, batchId = null }) {
       swarm_concurrency: recommendedConcurrency,
       wave_size: recommendedWave,
       execution_mode: f.execution_mode || "shadow",
+      checkpoint_policy: "every_wave",
+      validator_required: f.validator_required !== false,
+      max_repair_rounds: f.max_repair_rounds ?? 2,
       source_truth_version: f.source_truth_version || "Strategic_Minds_Universal_Client_Packet_v1.0",
     }));
   };
@@ -104,7 +107,7 @@ export default function SwarmNexusFactory({ form, setForm, batchId = null }) {
               <h2 className="font-heading font-black text-lg text-black">Swarm Nexus Factory Engine</h2>
               <span className="text-[10px] font-black px-2 py-1 rounded-full bg-[#E6F0FF] text-[#0046FF]">{band}</span>
             </div>
-            <p className="text-xs text-black/60 mt-0.5">Apex-governed parallel execution for high-volume website production.</p>
+            <p className="text-xs text-black/60 mt-0.5">Apex-governed, parallel-safe wave orchestration for high-volume website production.</p>
           </div>
         </div>
         <button onClick={applyRecommended} className="xa-btn-outline text-xs px-3 py-2 shrink-0">
@@ -155,6 +158,19 @@ export default function SwarmNexusFactory({ form, setForm, batchId = null }) {
             <input type="number" min="1" max="250" value={form.wave_size || recommendedWave}
               onChange={e => set("wave_size", Math.max(1, Math.min(250, Number(e.target.value) || 1)))}
               className="xa-input" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-black/65 block mb-1.5">Max repair rounds</label>
+            <input type="number" min="0" max="5" value={form.max_repair_rounds ?? 2}
+              onChange={e => set("max_repair_rounds", Math.max(0, Math.min(5, Number(e.target.value) || 0)))}
+              className="xa-input" />
+          </div>
+          <div>
+            <label className="text-xs font-bold text-black/65 block mb-1.5">Independent validator</label>
+            <button type="button" onClick={() => set("validator_required", form.validator_required === false)}
+              className={`w-full rounded-xl border px-3 py-2.5 text-xs font-black ${form.validator_required === false ? "border-[#E5E7EB] bg-white text-black/55" : "border-[#16A34A]/40 bg-green-50 text-green-700"}`}>
+              {form.validator_required === false ? "Disabled" : "Required"}
+            </button>
           </div>
           <div className="col-span-2">
             <label className="text-xs font-bold text-black/65 block mb-1.5">Source-truth version</label>
