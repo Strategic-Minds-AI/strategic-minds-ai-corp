@@ -1,0 +1,26 @@
+import { useState } from 'react';
+import { Maximize2, Copy, Check, Loader2, ArrowRight, CircleDashed } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import useConversation from '@/components/swarm/useConversation';
+import AgentMessages from '@/components/swarm/AgentMessages';
+export default function AgentCard({ agent, index, task, lead, runtime }) {
+  const [expanded, setExpanded] = useState(false), [copied, setCopied] = useState(false), [copyError, setCopyError] = useState('');
+  const { messages, loading, error } = useConversation(task?.conversation_id);
+  const responses = messages.filter(m => m.role === 'assistant');
+  const text = task?.output || responses.map(m => typeof m.content === 'string' ? m.content : '').filter(Boolean).join('\n\n');
+  const active = responses.some(m => m.tool_calls?.some(t => ['pending','running','in_progress'].includes(t.status)));
+  const status = task?.status === 'error' ? 'Needs attention' : task?.status === 'completed' ? 'Complete' : active ? 'Using tools' : text ? 'Response available' : task?.status === 'dispatching' ? 'Dispatching' : task?.status === 'submitted' ? 'Awaiting response' : task ? (runtime === 'chatgpt' ? 'Awaiting ChatGPT' : 'Queued') : 'Ready';
+  async function copy() { try { await navigator.clipboard.writeText(text); setCopied(true); } catch { setCopyError('Open the full output to select and copy the text.'); } }
+  return <article className={`flex min-w-0 flex-col overflow-hidden rounded-md border bg-card ${lead ? 'md:col-span-2' : ''}`}>
+    <div className="flex items-center gap-3 border-b border-border/80 p-4"><div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md border ${lead ? 'border-primary/20 bg-primary/10 text-primary' : 'border-border bg-secondary text-foreground'}`}><agent.icon size={17}/></div><div className="min-w-0 flex-1"><p className="font-mono text-[9px] uppercase tracking-wider text-muted-foreground">Agent {String(index+1).padStart(2,'0')} {lead ? ' / lead' : ' / specialist'}</p><h3 className="mt-0.5 truncate text-xs font-medium">{agent.name}</h3></div><span className={`flex items-center gap-1.5 text-[9px] ${status === 'Needs attention' ? 'text-destructive' : active ? 'text-accent' : 'text-muted-foreground'}`}><span className={`h-1.5 w-1.5 rounded-full ${active ? 'bg-accent motion-safe:animate-pulse' : text ? 'bg-primary' : 'bg-muted-foreground'}`}/>{status}</span><button onClick={() => setExpanded(true)} className="text-muted-foreground hover:text-foreground" aria-label={`Expand ${agent.name} output`}><Maximize2 size={12}/></button></div>
+    <div className={`min-h-44 flex-1 p-4 ${text || responses.length ? 'max-h-80 overflow-y-auto' : ''}`}>
+      {task?.error || error ? <p role="alert" className="text-xs leading-5 text-destructive">{task?.error || error.message}</p> : responses.length || task?.output ? <AgentMessages messages={messages} output={task?.output}/> : <div className="flex h-full min-h-36 flex-col justify-center">
+        {loading || task?.status === 'dispatching' ? <Loader2 size={21} className="mb-4 animate-spin text-accent"/> : <CircleDashed size={23} className="mb-4 text-muted-foreground"/>}
+        <p className="text-xs font-medium">{task ? 'Waiting for agent output' : lead ? 'A plan starts with your objective' : 'Ready when you are'}</p><p className="mt-2 max-w-lg text-xs leading-5 text-muted-foreground">{task ? 'Real responses will appear here. Nothing is simulated.' : agent.description}</p>
+        {lead && !task && <div className="mt-5 flex flex-wrap items-center gap-2 font-mono text-[9px] text-muted-foreground"><span className="rounded border px-2 py-1">UNDERSTAND</span><ArrowRight size={11}/><span className="rounded border px-2 py-1">PLAN</span><ArrowRight size={11}/><span className="rounded border px-2 py-1">SYNTHESIZE</span></div>}
+      </div>}
+    </div>
+    <div className="flex items-center justify-between border-t border-border/60 px-4 py-2.5"><span className="font-mono text-[9px] text-muted-foreground">{agent.id === 'coder' ? 'CODE REASONING · NO SANDBOX' : agent.id === 'researcher' ? 'WEB SEARCH · SOURCE CITATIONS' : lead ? 'SHARED OBJECTIVE · PLANNING' : `${agent.tier.toUpperCase()} · ROLE TEMPLATE`}</span><button disabled={!text} onClick={copy} className="text-muted-foreground hover:text-primary disabled:opacity-30" aria-label={`Copy ${agent.name} output`}>{copied ? <Check size={12}/> : <Copy size={12}/>}</button></div>{copyError && <p role="status" className="px-4 pb-2 text-xs text-muted-foreground">{copyError}</p>}
+    <Dialog open={expanded} onOpenChange={setExpanded}><DialogContent className="max-w-3xl max-h-[85dvh] flex flex-col bg-background"><DialogHeader><DialogTitle>{agent.name}</DialogTitle><DialogDescription>{status} · {agent.description}</DialogDescription></DialogHeader><div className="overflow-y-auto">{text || responses.length ? <AgentMessages messages={messages} output={task?.output}/> : <p className="py-8 text-sm text-muted-foreground">{task?.error || 'No output yet. Dispatch an objective or hand off this run to ChatGPT.'}</p>}</div></DialogContent></Dialog>
+  </article>;
+}

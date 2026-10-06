@@ -1,0 +1,4 @@
+import { Network, SlidersHorizontal, ShieldCheck } from 'lucide-react';
+export default function WorkspaceFooter({ count, concurrency, onParameters }) {
+  return <footer className="hidden h-11 shrink-0 items-center justify-between gap-3 border-t px-6 text-[10px] text-muted-foreground md:flex"><div className="flex items-center gap-4"><span className="flex items-center gap-1.5"><Network size={12} className="text-primary"/>{count} agents selected</span><span className="h-3 border-l"/><span>{concurrency} concurrent dispatches</span></div><button onClick={onParameters} className="flex items-center gap-1.5 hover:text-foreground"><SlidersHorizontal size={12}/>Parameters</button><span className="hidden items-center gap-1.5 2xl:flex"><ShieldCheck size={12}/>Permissions enforced</span></footer>;
+}

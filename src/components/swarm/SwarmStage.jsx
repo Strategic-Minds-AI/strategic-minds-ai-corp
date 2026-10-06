@@ -1,0 +1,25 @@
+import { useState } from 'react';
+import { Plus, Network, ArrowUpRight, ShieldCheck, Info, X, Layers, Loader2 } from 'lucide-react';
+import { agentById } from '@/components/swarm/catalog';
+import PromptComposer from '@/components/swarm/PromptComposer';
+import AgentCard from '@/components/swarm/AgentCard';
+import SynthesisButton from '@/components/swarm/SynthesisButton';
+export default function SwarmStage({ swarm: s, onLibrary, onConnect, onParameters, onRuntime }) {
+  const [notice, setNotice] = useState(true);
+  const ids = s.run?.agent_ids || s.selected;
+  return <div id="main-content" className="flex-1 overflow-y-auto px-4 pb-72 pt-7 md:px-7 md:pb-8">
+    <div className="mb-6 flex items-start justify-between gap-3"><div><p className="mb-2 flex items-center gap-1.5 text-[9px] font-medium uppercase tracking-[0.18em] text-primary"><Network size={12}/>Intelligence, in parallel</p><h1 className="font-display text-2xl font-semibold leading-8 tracking-tight">Your mission. Your swarm.</h1><p className="mt-2 text-xs leading-5 text-muted-foreground">Give your team an objective. Let every agent bring its perspective.</p></div><span className="mt-1 hidden rounded-md border px-2 py-1 font-mono text-[9px] text-muted-foreground 2xl:block">WORKSPACE / 001</span></div>
+    <div className="fixed inset-x-3 bottom-3 z-10 md:static md:mb-4"><PromptComposer swarm={s} onParameters={onParameters} onRuntime={onRuntime}/></div>
+    {!s.run && <div className="mb-7 hidden flex-wrap gap-2 md:flex">{[['Research a topic','Research the current state of a topic I will specify, compare primary sources and produce a concise evidence-based brief. Ask which topic before researching.'],['Build something','Help me plan and implement a project. First ask for the requirements, then propose an architecture, implementation steps and tests.'],['Explore an idea','Help me explore an idea. Ask me to describe it, then evaluate feasibility, risks and practical next steps.']].map(([label,prompt]) => <button key={label} disabled={s.busy} onClick={() => s.setPrompt(prompt)} className="flex items-center gap-2 rounded-md border px-2.5 py-1.5 text-[10px] text-muted-foreground hover:bg-card hover:text-foreground">{label}<ArrowUpRight size={11}/></button>)}</div>}
+    {notice && <div className="mb-6 flex items-start gap-2.5 rounded-md border bg-card/50 px-3 py-3"><Info size={14} className="mt-0.5 shrink-0 text-muted-foreground"/><p className="flex-1 text-[11px] leading-5 text-muted-foreground"><span className="font-medium text-foreground">Choose your runtime.</span> Native agents use workspace credits. ChatGPT handoffs require publishing and authorizing MCP; they do not run inside this app.</p><button aria-label="Dismiss runtime notice" onClick={() => setNotice(false)} className="text-muted-foreground hover:text-foreground"><X size={13}/></button></div>}
+    {s.run?.runtime === 'chatgpt' && <button onClick={onConnect} className="mb-5 flex w-full items-center justify-between rounded-md border border-primary/30 bg-primary/5 p-3 text-left text-xs text-primary"><span>Run saved. Copy the handoff prompt to your connected ChatGPT.</span><ArrowUpRight size={15} className="shrink-0"/></button>}
+    <div className="mb-4 flex items-center justify-between"><div className="flex items-center gap-2"><h2 className="text-sm font-medium">Agent workspace</h2><span className="rounded border bg-card px-1.5 font-mono text-[9px] text-muted-foreground">{ids.length}</span></div><button disabled={s.busy} onClick={onLibrary} className="flex items-center gap-1.5 text-[11px] text-muted-foreground hover:text-primary"><Plus size={13}/>Manage agents</button></div>
+    {s.run && <div className="mb-3 flex min-w-0 items-center gap-2 text-[10px] text-muted-foreground"><Layers size={12}/><span className="truncate">{s.run.title}</span><span className="ml-auto shrink-0 font-mono">{s.run.status.replaceAll('_',' ')}</span></div>}
+    {s.loadError && <p role="alert" className="mb-4 text-xs text-destructive">Could not load saved work: {s.loadError.message}</p>}
+    {s.loading && s.run && <p className="mb-4 flex items-center gap-2 text-xs text-muted-foreground"><Loader2 size={12} className="animate-spin"/>Loading saved tasks…</p>}
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">{ids.map((id,i) => { const agent = agentById(id); return agent && <AgentCard key={`${s.run?.id || 'draft'}-${id}`} agent={agent} index={i} task={s.tasks.find(t => t.agent_id === id)} lead={id === 'orchestrator'} runtime={s.run?.runtime || s.runtime}/>; })}</div>
+    {!ids.length && <button onClick={onLibrary} className="flex min-h-48 w-full flex-col items-center justify-center gap-3 rounded-md border border-dashed text-muted-foreground hover:border-primary/50"><Plus size={24}/><span>Select agents to assemble your swarm</span></button>}
+    <SynthesisButton tasks={s.tasks} runtime={s.run?.runtime} busy={s.busy}/>
+    <p className="mt-5 flex items-center justify-center gap-1.5 text-[9px] text-muted-foreground"><ShieldCheck size={11}/>Private by default. Only real responses. Always in your control.</p>
+  </div>;
+}

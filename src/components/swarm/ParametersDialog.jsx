@@ -1,0 +1,9 @@
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { presets } from '@/components/swarm/catalog';
+export default function ParametersDialog({ open, onOpenChange, swarm: s }) {
+  return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="max-w-md bg-background"><DialogHeader><DialogTitle>System parameters</DialogTitle><DialogDescription>Applied to the next swarm you dispatch.</DialogDescription></DialogHeader>
+    <label className="space-y-2 text-sm"><span>Concurrent dispatches</span><select value={s.concurrency} disabled={s.busy} onChange={e => s.setConcurrency(Number(e.target.value))} className="block h-10 w-full rounded-md border bg-card px-3">{[1,2,3,4,5].map(n => <option key={n} value={n}>{n} at a time</option>)}</select></label><p className="text-xs leading-5 text-muted-foreground">Limits simultaneous native dispatch requests, not provider-side execution. All selected agents receive the same objective; each works independently.</p>
+    <label className="space-y-2 text-sm"><span>System prompt preset</span><select value={s.preset} disabled={s.busy} onChange={e => s.setPreset(e.target.value)} className="block h-10 w-full rounded-md border bg-card px-3">{Object.entries(presets).map(([key,p]) => <option key={key} value={key}>{p.name}</option>)}</select></label><p className="rounded-md border bg-card p-3 text-xs leading-5 text-muted-foreground">{presets[s.preset]?.instructions}</p>
+    <button onClick={() => onOpenChange(false)} className="h-10 rounded-md bg-primary font-medium text-primary-foreground">Done</button>
+  </DialogContent></Dialog>;
+}

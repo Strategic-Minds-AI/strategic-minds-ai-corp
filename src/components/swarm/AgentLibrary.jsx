@@ -1,0 +1,15 @@
+import { useState } from 'react';
+import { Check, Search, ArrowUpRight } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { catalog } from '@/components/swarm/catalog';
+export default function AgentLibrary({ open, onOpenChange, selected, onToggle, busy }) {
+  const [search, setSearch] = useState('');
+  const agents = catalog.filter(a => `${a.name} ${a.description} ${a.tier}`.toLowerCase().includes(search.toLowerCase()));
+  return <Dialog open={open} onOpenChange={onOpenChange}><DialogContent className="max-w-3xl max-h-[85dvh] flex flex-col bg-background p-6">
+    <DialogHeader><DialogTitle className="text-2xl font-semibold">Build your team</DialogTitle><DialogDescription>30 OpenFang-inspired roles. Independent sessions, one shared objective.</DialogDescription></DialogHeader>
+    <p className="rounded-md border bg-card p-3 text-xs leading-5 text-muted-foreground">These are app-native role adaptations, not OpenFang’s runtime or tools. Web research is available; shell access, code execution, external accounts and autonomous Hands are not connected.</p>
+    <label className="flex items-center gap-3 rounded-md border bg-card px-3"><Search size={16} className="text-muted-foreground"/><span className="sr-only">Search agents</span><input value={search} onChange={e => setSearch(e.target.value)} placeholder="Find an agent…" className="h-10 w-full bg-transparent text-sm"/></label>
+    <div className="grid gap-2 overflow-y-auto sm:grid-cols-2">{agents.map(a => <button key={a.id} disabled={busy} aria-pressed={selected.includes(a.id)} onClick={() => onToggle(a.id)} className={`flex items-start gap-3 rounded-md border p-3 text-left hover:bg-secondary ${selected.includes(a.id) ? 'border-primary/50 bg-primary/5' : 'bg-card'}`}><a.icon size={18} className="mt-1 shrink-0 text-primary"/><div className="min-w-0 flex-1"><p className="text-sm font-medium">{a.name}</p><p className="mt-1 text-xs leading-5 text-muted-foreground">{a.description}</p><span className="mt-2 block font-mono text-[9px] uppercase text-muted-foreground">{a.tier}</span></div>{selected.includes(a.id) && <Check size={15} className="shrink-0 text-primary"/>}</button>)}{!agents.length && <p className="py-6 text-muted-foreground">No agents match your search.</p>}</div>
+    <div className="flex items-center justify-between border-t pt-4 text-xs"><a href="https://www.openfang.sh/docs/agent-templates" target="_blank" rel="noreferrer" className="flex items-center gap-1 text-muted-foreground hover:text-foreground">Original template catalog<ArrowUpRight size={13}/></a><button onClick={() => onOpenChange(false)} className="rounded-md bg-primary px-4 py-2 font-medium text-primary-foreground">Use {selected.length} agents</button></div>
+  </DialogContent></Dialog>;
+}
