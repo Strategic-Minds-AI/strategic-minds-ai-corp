@@ -12,8 +12,8 @@ export default function useSwarm() {
   const [selected, setSelected] = useState(defaultAgents), [preset, setPreset] = useState('general');
   const [runtime, setRuntime] = useState('native'), [concurrency, setConcurrency] = useState(3);
   const [busy, setBusy] = useState(false), [error, setError] = useState('');
-  const runsQuery = useQuery({ queryKey: ['swarm-runs', user?.id], enabled: !!user, queryFn: () => base44.entities.SwarmRun.filter({ created_by_id: user.id }, '-created_date', 100) });
-  const tasksQuery = useQuery({ queryKey: ['swarm-tasks', active], enabled: !!active, queryFn: () => base44.entities.SwarmTask.filter({ run_id: active }, 'created_date', 100), refetchInterval: active ? 10000 : false });
+  const runsQuery = useQuery({ queryKey: ['swarm-runs', user?.id], enabled: !!user, queryFn: () => base44.entities.SwarmRun.filter({ created_by: user.id }, '-created_at', 100) });
+  const tasksQuery = useQuery({ queryKey: ['swarm-tasks', active], enabled: !!active, queryFn: () => base44.entities.SwarmTask.filter({ run_id: active }, 'created_at', 100), refetchInterval: active ? 10000 : false });
   const run = runsQuery.data?.find(r => r.id === active);
   useEffect(() => {
     const offRuns = base44.entities.SwarmRun.subscribe(() => qc.invalidateQueries({ queryKey: ['swarm-runs'] }));

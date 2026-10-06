@@ -131,6 +131,9 @@ const TABLE_MAP = {
   OperatorSchedule: 'operator_schedule',
   OperatorAudit: 'operator_audit',
   OperatorDecision: 'operator_decision',
+  SwarmRun: 'swarm_runs',
+  SwarmTask: 'swarm_tasks',
+  Idea: 'ideas',
 };
 
 export function tableName(entityName) {

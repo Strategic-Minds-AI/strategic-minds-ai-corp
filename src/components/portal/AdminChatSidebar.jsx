@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, SquarePen, Search, Settings2, X, LayoutGrid, ChevronDown, Plus, PanelLeftClose, PanelLeftOpen, Cpu, Vault, ShieldCheck } from 'lucide-react';
+import { Menu, SquarePen, Search, Settings2, X, LayoutGrid, ChevronDown, Plus, PanelLeftClose, PanelLeftOpen, Cpu, Vault, ShieldCheck, Network, Lightbulb, Package } from 'lucide-react';
 import AdminChatQuickTasks from './AdminChatQuickTasks';
 import AdminDriveFolderCreator from './AdminDriveFolderCreator';
 const groups = [
@@ -35,6 +35,9 @@ export default function AdminChatSidebar({ chats, selectedId, view, onView, onNe
         <button type="button" aria-expanded={toolsOpen} aria-controls="agency-tools-list" onClick={() => setToolsOpen(value => !value)} className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-medium text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><LayoutGrid size={17}/>Agency tools<ChevronDown size={16} className={`ml-auto transition-transform ${toolsOpen ? 'rotate-180' : ''}`}/></button>
         {toolsOpen && <div id="agency-tools-list" className="max-h-56 overflow-y-auto pl-2">{groups.map(([heading, items]) => <div key={heading}><p className="px-3 pb-1 pt-2 text-xs font-semibold text-muted-foreground">{heading}</p>{items.map(([id,label]) => <button key={id} type="button" onClick={() => choose(() => onView(id))} className={`block w-full rounded-lg px-3 py-1.5 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground ${view === id ? 'bg-muted font-medium' : ''}`}>{label}</button>)}{heading === 'Projects & files' && <button type="button" onClick={() => setCreateOpen(true)} className="flex w-full items-center gap-2 rounded-lg px-3 py-1.5 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Plus size={16}/>Create Drive folder</button>}</div>)}</div>}
       </div>
+      <Link to="/swarm-nexus" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Network size={17}/> Swarm Nexus</Link>
+      <Link to="/idea-engine" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Lightbulb size={17}/> Idea Engine</Link>
+      <Link to="/gpt-package" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Package size={17}/> GPT Package</Link>
       <Link to="/agents" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Cpu size={17}/> Super Agents Command Center</Link>
       <button type="button" onClick={() => choose(onSettings)} className="flex items-center gap-3 rounded-lg border-t border-border px-3 py-4 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Settings2 size={17}/> Settings</button>
       <AdminDriveFolderCreator open={createOpen} onOpenChange={setCreateOpen} projects={projects}/>
