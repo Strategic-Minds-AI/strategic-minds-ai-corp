@@ -1,5 +1,6 @@
-import React, { useMemo } from "react";
-import { Brain, Layers3, ShieldCheck, Workflow, Zap } from "lucide-react";
+import React, { useEffect, useMemo, useState } from "react";
+import { base44 } from "@/api/base44Client";
+import { Activity, AlertTriangle, Brain, CheckCircle2, Layers3, RefreshCw, ShieldCheck, Workflow } from "lucide-react";
 
 const STAGES = [
   ["1", "Source Truth", "Apex resolves verified client/project inputs"],
@@ -35,9 +36,50 @@ function triage(count) {
   return ["MEGA", 12, 100];
 }
 
-export default function SwarmNexusFactory({ form, setForm }) {
+export default function SwarmNexusFactory({ form, setForm, batchId = null }) {
   const [band, recommendedConcurrency, recommendedWave] = useMemo(() => triage(form.batch_size), [form.batch_size]);
+  const [runtime, setRuntime] = useState(null);
+  const [taskSummary, setTaskSummary] = useState({ queued: 0, running: 0, blocked: 0, pass: 0, fail: 0, repairs: 0, activeWorkers: 0 });
+  const [loadingRuntime, setLoadingRuntime] = useState(false);
   const set = (key, value) => setForm(f => ({ ...f, [key]: value }));
+
+  const loadRuntime = async () => {
+    if (!batchId) {
+      setRuntime(null);
+      setTaskSummary({ queued: 0, running: 0, blocked: 0, pass: 0, fail: 0, repairs: 0, activeWorkers: 0 });
+      return;
+    }
+    setLoadingRuntime(true);
+    try {
+      const [batch, taskRes] = await Promise.all([
+        base44.entities.BatchOperation.get(batchId),
+        base44.entities.AgentTask.filter({ batch_id: batchId }, { sort: "-created_date", limit: 500 })
+      ]);
+      const tasks = taskRes.items || [];
+      const workers = new Set(tasks.filter(t => t.status === "in_progress" && t.claimed_by_sandbox_id).map(t => t.claimed_by_sandbox_id));
+      setRuntime(batch || null);
+      setTaskSummary({
+        queued: tasks.filter(t => t.status === "pending").length,
+        running: tasks.filter(t => t.status === "in_progress").length,
+        blocked: tasks.filter(t => t.status === "needs_approval" || t.validation_status === "BLOCKED").length,
+        pass: tasks.filter(t => t.validation_status === "PASS").length,
+        fail: tasks.filter(t => t.status === "failed" || t.validation_status === "FAIL").length,
+        repairs: tasks.reduce((sum, t) => sum + Number(t.repair_count || 0), 0),
+        activeWorkers: workers.size
+      });
+    } catch {
+      setRuntime(null);
+    } finally {
+      setLoadingRuntime(false);
+    }
+  };
+
+  useEffect(() => {
+    loadRuntime();
+    if (!batchId) return undefined;
+    const timer = setInterval(loadRuntime, 5000);
+    return () => clearInterval(timer);
+  }, [batchId]);
 
   const applyRecommended = () => {
     setForm(f => ({
@@ -119,6 +161,71 @@ export default function SwarmNexusFactory({ form, setForm }) {
             <input value={form.source_truth_version || "Strategic_Minds_Universal_Client_Packet_v1.0"}
               onChange={e => set("source_truth_version", e.target.value)}
               className="xa-input text-xs" />
+          </div>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-[#E5E7EB] bg-white p-3 mb-4">
+        <div className="flex items-center justify-between gap-2 mb-3">
+          <div className="flex items-center gap-2">
+            <Activity className="w-4 h-4 text-[#0046FF]" />
+            <div>
+              <div className="text-xs font-black text-black">Live swarm checkpoint</div>
+              <div className="text-[10px] text-black/50">{batchId ? `Batch ${batchId}` : "Launch a batch to activate runtime telemetry"}</div>
+            </div>
+          </div>
+          {batchId && (
+            <button onClick={loadRuntime} className="text-black/45 hover:text-black" aria-label="Refresh swarm runtime">
+              <RefreshCw className={`w-4 h-4 ${loadingRuntime ? "animate-spin" : ""}`} />
+            </button>
+          )}
+        </div>
+
+        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2">
+          {[
+            ["Queued", taskSummary.queued],
+            ["Running", taskSummary.running],
+            ["Blocked", taskSummary.blocked],
+            ["Pass", taskSummary.pass],
+            ["Fail", taskSummary.fail],
+            ["Workers", taskSummary.activeWorkers],
+          ].map(([label, value]) => (
+            <div key={label} className="rounded-lg bg-[#FAFAFA] border border-[#EEEEEE] p-2">
+              <div className="text-[9px] font-bold uppercase tracking-wide text-black/45">{label}</div>
+              <div className="text-base font-black text-black mt-0.5">{value}</div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid sm:grid-cols-3 gap-2 mt-3">
+          <div className="rounded-lg bg-[#FAFAFA] border border-[#EEEEEE] p-2.5">
+            <div className="text-[9px] font-bold uppercase text-black/45">Checkpoint</div>
+            <div className="text-[11px] font-black text-black mt-1">{runtime?.checkpoint?.status || "IDLE"}</div>
+            <div className="text-[9px] text-black/45 mt-1">{runtime?.checkpoint?.checkpoint_key || "No active wave"}</div>
+          </div>
+          <div className="rounded-lg bg-[#FAFAFA] border border-[#EEEEEE] p-2.5">
+            <div className="text-[9px] font-bold uppercase text-black/45">Validator</div>
+            <div className="flex items-center gap-1.5 mt-1">
+              {(runtime?.validator_state === "PASS") ? <CheckCircle2 className="w-3.5 h-3.5 text-green-600" /> : <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />}
+              <span className="text-[11px] font-black text-black">{runtime?.validator_state || "PENDING"}</span>
+            </div>
+            <div className="text-[9px] text-black/45 mt-1">Final release QA remains separate.</div>
+          </div>
+          <div className="rounded-lg bg-[#FAFAFA] border border-[#EEEEEE] p-2.5">
+            <div className="text-[9px] font-bold uppercase text-black/45">Repairs</div>
+            <div className="text-[11px] font-black text-black mt-1">{taskSummary.repairs} / max {runtime?.max_repair_rounds ?? form.max_repair_rounds ?? 2} per task</div>
+            <div className="text-[9px] text-black/45 mt-1">Bounded, then BLOCKED/FAIL.</div>
+          </div>
+        </div>
+
+        <div className="mt-3 rounded-lg bg-[#FFF7ED] border border-[#FED7AA] p-2.5">
+          <div className="text-[10px] font-black text-[#9A3412]">Protected approvals</div>
+          <div className="text-[9px] leading-4 text-[#9A3412]/80 mt-1">
+            {(runtime?.approval_requirements || [
+              "production_deploy", "protected_branch_merge", "production_db_or_rls", "dns_or_domain_change",
+              "secrets_or_credentials", "payments_or_spend", "permission_escalation", "destructive_or_irreversible_action",
+              "customer_or_public_communication"
+            ]).join(" · ")}
           </div>
         </div>
       </div>
