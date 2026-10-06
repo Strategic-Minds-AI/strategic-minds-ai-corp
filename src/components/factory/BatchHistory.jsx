@@ -54,12 +54,16 @@ export default function BatchHistory({ refreshKey }) {
                   </div>
                   <span className="text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0" style={{ background: meta.bg, color: meta.color }}>{meta.label}</span>
                 </div>
-                <div className="flex gap-3 mt-2 text-[10px] text-black/50">
-                  {b.google_connect && <span>🔍 Google</span>}
-                  {b.social_connect && <span>📱 Social</span>}
-                  {b.video_generate && <span>🎬 Video</span>}
-                  {b.content_optimize && <span>✨ Content</span>}
-                  {b.swarm_enabled && <span>🧠 Swarm {b.execution_mode || "shadow"} · wave {b.wave_size || 10}</span>}
+                <div className="flex flex-wrap gap-x-3 gap-y-1 mt-2 text-[10px] text-black/50">
+                  {b.google_connect && <span>Google</span>}
+                  {b.social_connect && <span>Social</span>}
+                  {b.video_generate && <span>Video</span>}
+                  {b.content_optimize && <span>Content</span>}
+                  {b.swarm_enabled && <span>Swarm {b.execution_mode || "shadow"} · wave {b.wave_size || 10}</span>}
+                  <span>Gate {b.quality_gate || "PENDING"}</span>
+                  <span>Validator {b.validator_state || "PENDING"}</span>
+                  <span>Pass {b.pass_count || 0} · Fail {b.fail_count || 0} · Blocked {b.blocked_count || 0}</span>
+                  <span>Repairs {b.repair_count || 0}</span>
                 </div>
               </div>
             );
