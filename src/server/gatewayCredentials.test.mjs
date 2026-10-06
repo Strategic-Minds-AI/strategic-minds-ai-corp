@@ -2,11 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { getGatewayCredential, withGatewayCredentials } from './gatewayCredentials.mjs';
 
-test('Gateway credentials use request identity without leaking between requests', async () => {
-  const original = { key: process.env.AI_GATEWAY_API_KEY, oidc: process.env.VERCEL_OIDC_TOKEN, host: process.env.VERCEL };
+test('Gateway credentials prefer configured keys and isolate request identity', async () => {
+  const original = { key: process.env.AI_GATEWAY_API_KEY, vercelKey: process.env.VERCEL_AI_GATEWAY_API_KEY, oidc: process.env.VERCEL_OIDC_TOKEN, host: process.env.VERCEL };
   const request = token => new Request('https://runtime.example.test', { headers: { 'x-vercel-oidc-token': token } });
   try {
     delete process.env.AI_GATEWAY_API_KEY;
+    delete process.env.VERCEL_AI_GATEWAY_API_KEY;
     delete process.env.VERCEL_OIDC_TOKEN;
     process.env.VERCEL = '1';
     assert.equal(getGatewayCredential(), undefined);
@@ -20,15 +21,22 @@ test('Gateway credentials use request identity without leaking between requests'
     })));
     assert.deepEqual(scoped, ['first-token', 'second-token']);
     assert.equal(getGatewayCredential(), undefined);
+    process.env.VERCEL_AI_GATEWAY_API_KEY = 'vercel-test-key';
+    process.env.VERCEL_OIDC_TOKEN = 'fallback-test-token';
+    assert.equal(getGatewayCredential(), 'vercel-test-key');
+    assert.equal(withGatewayCredentials(request('request-token'), getGatewayCredential), 'vercel-test-key');
     process.env.AI_GATEWAY_API_KEY = 'explicit-test-key';
     assert.equal(withGatewayCredentials(request('request-token'), getGatewayCredential), 'explicit-test-key');
     delete process.env.AI_GATEWAY_API_KEY;
+    assert.equal(getGatewayCredential(), 'vercel-test-key');
+    delete process.env.VERCEL_AI_GATEWAY_API_KEY;
+    delete process.env.VERCEL_OIDC_TOKEN;
     delete process.env.VERCEL;
     assert.equal(withGatewayCredentials(request('untrusted-token'), getGatewayCredential), undefined);
     process.env.VERCEL_OIDC_TOKEN = 'local-development-token';
     assert.equal(getGatewayCredential(), 'local-development-token');
   } finally {
-    for (const [name, value] of [['AI_GATEWAY_API_KEY', original.key], ['VERCEL_OIDC_TOKEN', original.oidc], ['VERCEL', original.host]]) {
+    for (const [name, value] of [['AI_GATEWAY_API_KEY', original.key], ['VERCEL_AI_GATEWAY_API_KEY', original.vercelKey], ['VERCEL_OIDC_TOKEN', original.oidc], ['VERCEL', original.host]]) {
       if (value === undefined) delete process.env[name]; else process.env[name] = value;
     }
   }

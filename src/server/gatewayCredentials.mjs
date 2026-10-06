@@ -7,5 +7,5 @@ export function withGatewayCredentials(request, callback) {
   return credentials.run(token, callback);
 }
 export function getGatewayCredential() {
-  return process.env.AI_GATEWAY_API_KEY || credentials.getStore() || process.env.VERCEL_OIDC_TOKEN;
+  return process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_AI_GATEWAY_API_KEY || credentials.getStore() || process.env.VERCEL_OIDC_TOKEN;
 }
