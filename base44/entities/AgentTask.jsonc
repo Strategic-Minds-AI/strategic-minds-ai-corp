@@ -79,9 +79,67 @@
       "type": "string",
       "description": "Owning BatchOperation"
     },
+    "client_id": {
+      "type": "string"
+    },
+    "project_id": {
+      "type": "string"
+    },
+    "site_id": {
+      "type": "string"
+    },
     "site_key": {
       "type": "string",
       "description": "Stable site identifier within a batch"
+    },
+    "source_truth_version": {
+      "type": "string"
+    },
+    "template_version": {
+      "type": "string"
+    },
+    "brand_version": {
+      "type": "string"
+    },
+    "mockup_version": {
+      "type": "string"
+    },
+    "git_repo": {
+      "type": "string"
+    },
+    "git_branch": {
+      "type": "string"
+    },
+    "git_sha": {
+      "type": "string"
+    },
+    "preview_deployment_id": {
+      "type": "string"
+    },
+    "validator_id": {
+      "type": "string"
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "PASS",
+        "FAIL",
+        "BLOCKED",
+        "UNKNOWN"
+      ],
+      "default": "PENDING"
+    },
+    "repair_count": {
+      "type": "integer",
+      "default": 0
+    },
+    "rollback_pointer": {
+      "type": "string"
+    },
+    "idempotency_key": {
+      "type": "string",
+      "description": "Stable key used to prevent duplicate work for the same batch/site/phase"
     },
     "phase": {
       "type": "string",
