@@ -48,7 +48,7 @@ test('The deployed Vercel identity produces a real AI reply', { skip: process.en
   const response = await fetch('https://ai-gateway.vercel.sh/v1/chat/completions', {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ model: 'openai/gpt-5-mini', max_completion_tokens: 512, reasoning_effort: 'minimal', messages: [{ role: 'user', content: 'Connection check: reply with the single word READY.' }] }),
+    body: JSON.stringify({ model: process.env.AI_GATEWAY_MODEL || 'anthropic/claude-sonnet-4-5', max_tokens: 64, messages: [{ role: 'user', content: 'Connection check: reply with the single word READY.' }] }),
   });
   const result = await response.json();
   assert.equal(response.status, 200, result.error?.message || 'AI Gateway must accept the deployment identity');

@@ -9,7 +9,9 @@ export default async function(req: Request): Promise<Response> {
     if (user.role !== 'admin') return Response.json({ error: 'Forbidden' }, { status: 403 });
 
     const body = await req.json();
-    const maxCycles = Math.min(body.max_cycles || 5, 20);
+    const maxCycles = body.max_cycles ?? 5;
+    if (!Number.isSafeInteger(maxCycles) || maxCycles < 1 || maxCycles > 20) return Response.json({ error: 'Choose 1–20 execution cycles.' }, { status: 400 });
+    if (body.task_ids !== undefined && (!Array.isArray(body.task_ids) || !body.task_ids.length || body.task_ids.length > 10 || body.task_ids.some(id => typeof id !== 'string' || !/^[A-Za-z0-9-]{8,100}$/.test(id)))) return Response.json({ error: 'Provide up to 10 valid task references.' }, { status: 400 });
     const trigger = body.trigger || 'manual';
 
     const trace: any[] = [];
@@ -22,7 +24,7 @@ export default async function(req: Request): Promise<Response> {
     for (let cycle = 0; cycle < maxCycles; cycle++) {
       cyclesRun++;
       const pending = await base44.entities.AgentTask.filter(
-        { status: 'pending', autonomous: true },
+        { status: 'pending', autonomous: true, ...(body.task_ids ? { id: { $in: body.task_ids } } : {}) },
         { sort: '-created_date', limit: 10 }
       );
       const tasks = pending.items || [];
@@ -37,18 +39,19 @@ export default async function(req: Request): Promise<Response> {
         trace.push({ phase: 'execute', cycle, task_id: task.id, task_type: task.task_type, agent: task.agent_name });
 
         let result = '';
+        let taskStatus = 'completed';
         let shouldFollowup = false;
         let followupType = '';
 
         try {
           switch (task.task_type) {
             case 'google_connect':
-              result = `Search Console connection initiated for ${task.domain}. Property verification requires manual GSC setup.`;
-              shouldFollowup = true;
-              followupType = 'index_check';
+              taskStatus = 'needs_approval';
+              result = `No Search Console connection was executed for ${task.domain}. A configured connection and a real execution receipt are required.`;
               break;
             case 'index_check':
-              result = `Index coverage check queued. Run growth mission to get live sitemap data for ${task.domain}.`;
+              taskStatus = 'needs_approval';
+              result = `No live index coverage check was executed for ${task.domain}. Run the configured growth mission before marking this task complete.`;
               break;
             case 'competitor_scan':
               // LLM-powered competitor analysis via Vercel AI Gateway
@@ -64,21 +67,26 @@ export default async function(req: Request): Promise<Response> {
                 result = `Competitor intelligence generated via AI Gateway: ${JSON.stringify(aiResult.json?.competitors || [])}. Gaps: ${JSON.stringify(aiResult.json?.gaps || [])}`;
                 llmUsed = true;
               } catch (e) {
-                result = `Competitor intelligence scan queued for ${task.domain} (AI Gateway unavailable: ${e.message}).`;
+                taskStatus = 'failed';
+                result = `Competitor intelligence failed for ${task.domain}: ${e.message}`;
               }
               break;
             case 'social_connect':
-              result = `Social account connection initiated for ${task.domain}.`;
+              taskStatus = 'needs_approval';
+              result = `No social account connection was executed for ${task.domain}. Complete the provider authorization before marking this task complete.`;
               break;
             case 'build_system':
-              result = `System build task processed. Spec recorded for autonomous worker pickup.`;
+              taskStatus = 'needs_approval';
+              result = 'No source repair or deployment was executed. This task requires a configured code worker and successful validation evidence.';
               break;
             case 'growth_audit':
               // Run the growth mission inline
               try {
                 const growthRes = await base44.functions.invoke('runGrowthMission', { domain: task.domain });
-                result = `Growth mission complete. Health score: ${growthRes.data?.result?.health_score || 'N/A'}`;
+                if (growthRes.data?.error || growthRes.data?.ok === false) throw new Error(growthRes.data.error || 'Growth mission reported failure');
+                result = `Growth mission complete. Health score: ${growthRes.data?.result?.health_score ?? 'N/A'}`;
               } catch (e) {
+                taskStatus = 'failed';
                 result = `Growth mission failed: ${e.message}`;
               }
               break;
@@ -96,19 +104,21 @@ export default async function(req: Request): Promise<Response> {
                 result = `Content plan generated via AI Gateway: ${aiResult.json?.headline_suggestions?.length || 0} headlines, meta description ready.`;
                 llmUsed = true;
               } catch (e) {
-                result = `Content optimization queued (AI Gateway unavailable: ${e.message}).`;
+                taskStatus = 'failed';
+                result = `Content optimization failed: ${e.message}`;
               }
               break;
             default:
-              result = `Task executed: ${task.title}`;
+              taskStatus = 'needs_approval';
+              result = `No executor is configured for task type ${task.task_type || 'general'}. ${task.title} has not been performed.`;
           }
         } catch (e) {
+          taskStatus = 'failed';
           result = `Error: ${e.message}`;
         }
 
-        // Mark completed
-        await base44.entities.AgentTask.update(task.id, { status: 'completed', result });
-        actionsExecuted++;
+        await base44.entities.AgentTask.update(task.id, { status: taskStatus, result, ...(taskStatus === 'completed' || taskStatus === 'failed' ? { completed_at: new Date().toISOString() } : {}) });
+        if (taskStatus === 'completed') actionsExecuted++;
 
         // Dispatch follow-up if needed
         if (shouldFollowup && followupType) {
@@ -127,7 +137,7 @@ export default async function(req: Request): Promise<Response> {
           } catch (e) { /* skip */ }
         }
 
-        trace.push({ phase: 'complete', task_id: task.id, result: result.substring(0, 100) });
+        trace.push({ phase: taskStatus, task_id: task.id, result: result.substring(0, 100) });
       }
     }
 

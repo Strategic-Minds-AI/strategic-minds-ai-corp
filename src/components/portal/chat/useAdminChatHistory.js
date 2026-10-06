@@ -1,17 +1,20 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { historyRequest, loadHistory } from '@/components/portal/chat/chatHistoryApi';
-import { enqueueOperation, readOutbox } from '@/components/portal/chat/chatHistoryOutbox';
+import { enqueueOperation, readOutbox, removeOperation } from '@/components/portal/chat/chatHistoryOutbox';
 import projectChatOutbox from '@/components/portal/chat/projectChatOutbox';
 import synchronizeChatOutbox from '@/components/portal/chat/synchronizeChatOutbox';
 import migrateChatHistory from '@/components/portal/chat/migrateChatHistory';
 import { readChatCache, writeChatCache, clearChatCache } from '@/components/portal/chat/chatHistoryCache';
+import chatHistoryRecovery, { loadChatSnapshot } from '@/components/portal/chat/chatHistoryRecovery';
 export default function useAdminChatHistory(ownerId) {
   const [chats,setChats] = useState(() => { const cached = readChatCache(ownerId); return cached ? cached.chats : []; }); const [scope,setScope] = useState(ownerId); const [loading,setLoading] = useState(true); const [ready,setReady] = useState(false); const [error,setError] = useState(''); const [busy,setBusy] = useState(0);
   const ticket = useRef(0); const hydrated = useRef(false); const flushing = useRef(null);
   const refresh = useCallback(async () => {
-    const request = ++ticket.current; const snapshot = await loadHistory(ownerId);
-    if (request === ticket.current) { const projected = projectChatOutbox(snapshot, readOutbox(ownerId)); setChats(projected); writeChatCache(ownerId, projected); }
+    const request = ++ticket.current;
+    const snapshot = await loadChatSnapshot(() => loadHistory(ownerId), rows => projectChatOutbox(rows, readOutbox(ownerId)));
+    if (request === ticket.current) { setChats(snapshot.chats); writeChatCache(ownerId, snapshot.chats); }
+    return snapshot.warning;
   },[ownerId]);
   const flush = useCallback(() => {
     if (!flushing.current) flushing.current = synchronizeChatOutbox(ownerId).finally(() => { flushing.current = null; });
@@ -19,8 +22,11 @@ export default function useAdminChatHistory(ownerId) {
   },[ownerId]);
   const synchronize = useCallback(async () => {
     if (!ownerId) return; setLoading(true); setError('');
-    try { await migrateChatHistory(ownerId); await flush(); await refresh(); hydrated.current = true; setReady(true); setError(''); }
-    catch (failure) { setError(failure.response?.data?.error || failure.message || 'History synchronization failed. Your cached conversations are still visible below.'); }
+    try {
+      const warning = await chatHistoryRecovery(refresh, [() => migrateChatHistory(ownerId), flush]);
+      hydrated.current = true; setReady(true); setError(warning);
+    }
+    catch (failure) { hydrated.current = false; setReady(false); setError(failure.response?.data?.error || failure.message || 'History synchronization failed. Your cached conversations are still visible below.'); }
     finally { setLoading(false); }
   },[ownerId,flush,refresh]);
   useEffect(() => {
@@ -41,9 +47,14 @@ export default function useAdminChatHistory(ownerId) {
     finally { setBusy(count => count - 1); }
   }
   async function queued(payload) {
-    return work(async () => { enqueueOperation(ownerId,payload); setChats(previous => projectChatOutbox(previous,readOutbox(ownerId))); const discarded = await flush(); if (discarded.some(item => item.chatKey === payload.chatKey && item.turnKey === payload.turnKey)) throw new Error('This conversation was deleted on another device; its unsaved response was discarded.'); });
+    return work(async () => {
+      enqueueOperation(ownerId,payload); setChats(previous => projectChatOutbox(previous,readOutbox(ownerId)));
+      await historyRequest(ownerId,payload.action,payload); removeOperation(ownerId,payload);
+      try { await flush(); }
+      catch (failure) { setError(`Your latest change is saved; older history still needs synchronization: ${failure.response?.data?.error || failure.message}`); }
+    });
   }
-  return { chats: scope === ownerId ? chats : [], loading: loading || scope !== ownerId, ready: ready && !loading && !error && scope === ownerId, busy: busy > 0, error, retry: synchronize,
+  return { chats: scope === ownerId ? chats : [], loading: loading || scope !== ownerId, ready: ready && !loading && scope === ownerId, busy: busy > 0, error, retry: synchronize,
     begin: payload => work(() => historyRequest(ownerId,'begin',payload)),
     complete: payload => queued({ ...payload,action:'complete' }),
     fail: async payload => { try { await work(() => historyRequest(ownerId,'fail',payload)); } catch { /* The visible synchronization error preserves the failure; no model retry. */ } },

@@ -2,7 +2,7 @@
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
-const checks = spawnSync(process.execPath, ['--test', 'src/server/gatewayCredentials.test.mjs', 'src/server/chatDatabase.test.mjs'], { stdio: 'inherit' });
+const checks = spawnSync(process.execPath, ['--test', 'src/server/gatewayCredentials.test.mjs', 'src/server/chatDatabase.test.mjs', 'src/components/portal/chat/chatHistoryRecovery.test.mjs', 'src/server/agentExecution.test.mjs'], { stdio: 'inherit', env: { ...process.env, ...(process.env.VERCEL === '1' ? { RUN_GATEWAY_SELF_CHECK: 'true' } : {}) } });
 if (checks.status !== 0) throw new Error('Chat database or gateway authentication regression checks failed.');
 const release = resolve('.standalone');
 const output = resolve('.vercel/output');
