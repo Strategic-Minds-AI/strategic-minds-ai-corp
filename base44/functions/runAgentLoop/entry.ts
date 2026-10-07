@@ -108,6 +108,103 @@ export default async function(req: Request): Promise<Response> {
                 result = `Content optimization failed: ${e.message}`;
               }
               break;
+            case 'factory_compile_site':
+              try {
+                const payload = task.description ? JSON.parse(task.description) : {};
+                const aiResult = await callAIGateway({
+                  model: 'openai/gpt-5.6-sol',
+                  system: `You are the Strategic Minds Website Factory compilation specialist operating under Apex / Agent Zero.
+Compile a reviewable site packet from ONLY the supplied source truth. Never invent people, reviews, testimonials, awards, business history, addresses, metrics, certifications, transactions, or customer claims.
+Return JSON with:
+- source_truth_status: VERIFIED | PARTIAL | BLOCKED
+- verified_inputs: object
+- unknowns: array of strings
+- needs_client_selection: boolean
+- creative_brief: object with positioning, visual_direction, content_direction
+- build_spec: object with pages, sections, conversion_goal, integrations, responsive_notes
+- validation_plan: array of strings
+- growth_plan: array of strings
+- blockers: array of strings
+If an approved mockup/reference is absent, needs_client_selection must be true and the build may not be treated as approved.`,
+                  prompt: JSON.stringify(payload),
+                  jsonSchema: {
+                    type: 'object',
+                    properties: {
+                      source_truth_status: { type: 'string' },
+                      verified_inputs: { type: 'object' },
+                      unknowns: { type: 'array', items: { type: 'string' } },
+                      needs_client_selection: { type: 'boolean' },
+                      creative_brief: { type: 'object' },
+                      build_spec: { type: 'object' },
+                      validation_plan: { type: 'array', items: { type: 'string' } },
+                      growth_plan: { type: 'array', items: { type: 'string' } },
+                      blockers: { type: 'array', items: { type: 'string' } }
+                    }
+                  },
+                  temperature: 0.35,
+                  maxTokens: 2200
+                });
+                const packet = aiResult.json || {};
+                result = JSON.stringify({
+                  kind: 'factory_site_packet',
+                  batch_id: task.batch_id || payload.batch_id || null,
+                  site_key: task.site_key || payload.site_key || null,
+                  compiled_at: new Date().toISOString(),
+                  packet
+                });
+                llmUsed = true;
+
+                const approvedLock = Boolean(
+                  payload?.variables?.mockup_locked ||
+                  payload?.variables?.approved_mockup_lock ||
+                  payload?.template?.mockup_locked ||
+                  payload?.template?.approved_mockup_lock
+                );
+
+                if (!approvedLock || packet.needs_client_selection !== false) {
+                  await base44.entities.AgentTask.create({
+                    agent_name: 'orchestrator',
+                    swarm_role: 'apex',
+                    task_type: 'factory_selection_gate',
+                    title: `Selection / mockup lock required: ${task.site_key || task.title}`,
+                    description: result,
+                    priority: 'high',
+                    autonomous: false,
+                    status: 'needs_approval',
+                    batch_id: task.batch_id,
+                    site_key: task.site_key,
+                    phase: 'mockup_lock',
+                    checkpoint_key: task.checkpoint_key,
+                    domain: task.domain || ''
+                  });
+                  followupsDispatched++;
+                } else if (payload.execution_mode === 'execute') {
+                  await base44.entities.AgentTask.create({
+                    agent_name: 'replicator',
+                    swarm_role: 'site_factory_manager',
+                    task_type: 'build_system',
+                    title: `Build approved site: ${task.site_key || task.title}`,
+                    description: result,
+                    priority: 'high',
+                    autonomous: false,
+                    status: 'needs_approval',
+                    batch_id: task.batch_id,
+                    site_key: task.site_key,
+                    phase: 'build',
+                    checkpoint_key: task.checkpoint_key,
+                    domain: task.domain || ''
+                  });
+                  followupsDispatched++;
+                }
+              } catch (e) {
+                taskStatus = 'failed';
+                result = `Factory site compilation failed: ${e.message}`;
+              }
+              break;
+            case 'factory_selection_gate':
+              taskStatus = 'needs_approval';
+              result = task.result || task.description || 'Client selection / approved mockup lock is required before build.';
+              break;
             default:
               taskStatus = 'needs_approval';
               result = `No executor is configured for task type ${task.task_type || 'general'}. ${task.title} has not been performed.`;
@@ -141,6 +238,26 @@ export default async function(req: Request): Promise<Response> {
       }
     }
 
+    // Swarm Nexus wave progression: after current autonomous work settles,
+    // materialize the next bounded website wave. This preserves one durable queue.
+    const waveAdvances: any[] = [];
+    try {
+      const runningBatches = await base44.entities.BatchOperation.filter(
+        { status: 'running', swarm_enabled: true },
+        { sort: 'created_date', limit: 10 }
+      );
+      for (const batch of (runningBatches.items || [])) {
+        try {
+          const advanced = await base44.functions.invoke('advanceBatchWave', { batch_id: batch.id });
+          waveAdvances.push({ batch_id: batch.id, ...(advanced.data || {}) });
+        } catch (e) {
+          waveAdvances.push({ batch_id: batch.id, status: 'advance_failed', error: e.message });
+        }
+      }
+    } catch (e) {
+      waveAdvances.push({ status: 'batch_scan_failed', error: e.message });
+    }
+
     return Response.json({
       cycles_run: cyclesRun,
       actions_executed: actionsExecuted,
@@ -148,7 +265,8 @@ export default async function(req: Request): Promise<Response> {
       emails_sent: emailsSent,
       llm_used: llmUsed,
       trigger,
-      trace
+      trace,
+      wave_advances: waveAdvances
     });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });

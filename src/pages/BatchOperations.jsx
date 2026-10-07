@@ -5,12 +5,15 @@ import { Loader2, Rocket } from "lucide-react";
 import BatchBuilder from "@/components/factory/BatchBuilder";
 import OperationToggles from "@/components/factory/OperationToggles";
 import BatchHistory from "@/components/factory/BatchHistory";
+import SwarmNexusFactory from "@/components/factory/SwarmNexusFactory";
 
 export default function BatchOperations() {
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "", batch_size: 10, template: {}, variables: "[]", deploy_targets: ["railway"],
-    google_connect: true, social_connect: true, video_generate: false, content_optimize: true
+    google_connect: true, social_connect: true, video_generate: false, content_optimize: true,
+    swarm_enabled: true, execution_mode: "shadow", swarm_concurrency: 3, wave_size: 10,
+    source_truth_version: "Strategic_Minds_Universal_Client_Packet_v1.0"
   });
   const [launching, setLaunching] = useState(false);
   const [result, setResult] = useState(null);
@@ -45,6 +48,7 @@ export default function BatchOperations() {
 
       <main className="max-w-3xl mx-auto px-4 py-6 space-y-5">
         <BatchBuilder form={form} setForm={setForm} />
+        <SwarmNexusFactory form={form} setForm={setForm} />
         <OperationToggles form={form} setForm={setForm} />
 
         <button onClick={launch} disabled={launching || !form.name.trim()} className="xa-btn-primary w-full py-4 text-base">
