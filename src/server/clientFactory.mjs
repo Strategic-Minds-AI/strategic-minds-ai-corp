@@ -86,7 +86,7 @@ function deterministicTurn(answers, first = false) {
   return { reply: first ? QUESTIONS[field] : QUESTIONS[field], next_field: field, completed: false, extracted: {} };
 }
 async function findClient(email) {
-  const q = `contact_email=eq.${encodeURIComponent(email)}&select=*&order=created_date.desc&limit=1`;
+  const q = `contact_email=eq.${encodeURIComponent(email)}&select=*&order=created_at.desc&limit=1`;
   return (await queryRows('onboarding_clients', q))?.[0] || null;
 }
 function notesPayload(existing, answers, transcript, tokenPayload) {
