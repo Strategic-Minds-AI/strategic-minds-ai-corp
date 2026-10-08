@@ -152,11 +152,18 @@ async function ensureBuildQueued(client, answers) {
       'build_preview',
       'independent_validation',
       'drive_sync',
-      'release_approval',
-      'client_delivery_email',
+      'prepare_release_candidate',
     ],
+    next_protected_gates: ['release_approval', 'client_delivery_email'],
     delivery_email: answers.email || client.contact_email,
     provider_targets: { github: true, vercel_preview: true, supabase: true, drive: true },
+    agent_route: [
+      'Swarm Orchestrator & Copilot',
+      'Brand & Creative Specialist',
+      'Code Generation & Website Builder',
+      'QA & Validation Agent',
+      'Infrastructure Provisioning Specialist',
+    ],
     live_release_requires_approval: true,
   };
   const job = (await insertRows('generation_jobs', {
@@ -285,6 +292,12 @@ async function enqueueFactoryBatch(request) {
         batch_id: batchId,
         target: normalized,
         pipeline: ['research','business_genome','visual_system','web_pack','build','validate','preview'],
+        agent_route: [
+          'Swarm Orchestrator & Copilot',
+          'Brand & Creative Specialist',
+          'Code Generation & Website Builder',
+          'QA & Validation Agent',
+        ],
         release_mode: 'preview_only',
         production_requires_approval: true,
       }),
@@ -314,6 +327,11 @@ async function enqueueSocial(request) {
       asset_modes: ['image','carousel','short_video'],
       video_provider: 'heygen',
       scheduler_provider: 'metricool',
+      agent_route: [
+        'Swarm Orchestrator & Copilot',
+        'Brand & Creative Specialist',
+        'QA & Validation Agent',
+      ],
       approval_mode: 'review_required',
       analytics_loop: true,
       engagement_mode: 'draft_or_policy_scoped_only',
@@ -322,11 +340,146 @@ async function enqueueSocial(request) {
   return jsonResponse({ ok: true, status: 'queued_for_review', job_id: job?.id || null });
 }
 
+function workerSecret() {
+  const value = process.env.FACTORY_WORKER_TOKEN;
+  if (!value) throw notConfigured('FACTORY_WORKER_TOKEN');
+  return value;
+}
+function requireWorker(request) {
+  const auth = request.headers.get('Authorization') || '';
+  const supplied = auth.replace(/^Bearer\s+/i, '');
+  const expected = workerSecret();
+  const a = Buffer.from(supplied);
+  const b = Buffer.from(expected);
+  if (!supplied || a.length !== b.length || !timingSafeEqual(a, b)) {
+    throw Object.assign(new Error('Unauthorized worker'), { status: 401 });
+  }
+}
+async function claimFactoryJob(request) {
+  requireWorker(request);
+  const body = await request.json().catch(() => ({}));
+  const allowedTypes = Array.isArray(body.job_types)
+    ? body.job_types.map((v) => clean(v, 80)).filter(Boolean).slice(0, 20)
+    : [];
+
+  const staleBefore = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+  await updateRows(
+    'generation_jobs',
+    `status=eq.running&started_at=lt.${encodeURIComponent(staleBefore)}`,
+    {
+      status: 'dead_letter',
+      error: 'Worker lease expired. Manual review required before replaying possible side effects.',
+      finished_at: new Date().toISOString(),
+    }
+  ).catch(() => null);
+
+  let query = 'status=eq.queued&select=*&order=created_date.asc&limit=10';
+  if (allowedTypes.length) {
+    query += `&job_type=in.(${allowedTypes.map((v) => encodeURIComponent(v)).join(',')})`;
+  }
+  const candidates = await queryRows('generation_jobs', query);
+  for (const job of candidates || []) {
+    if (job.next_attempt_at && new Date(job.next_attempt_at).getTime() > Date.now()) continue;
+    const attemptCount = Number(job.attempt_count || 0) + 1;
+    if (attemptCount > 3) {
+      await updateRows('generation_jobs', `id=eq.${encodeURIComponent(job.id)}&status=eq.queued`, {
+        status: 'dead_letter',
+        error: 'Maximum attempt count exceeded before claim.',
+        finished_at: new Date().toISOString(),
+      });
+      continue;
+    }
+    const claimed = await updateRows(
+      'generation_jobs',
+      `id=eq.${encodeURIComponent(job.id)}&status=eq.queued`,
+      {
+        status: 'running',
+        attempt_count: attemptCount,
+        started_at: new Date().toISOString(),
+        error: null,
+      }
+    );
+    const row = claimed?.[0];
+    if (!row) continue;
+    let input = {};
+    try { input = JSON.parse(row.input_ref || '{}'); } catch {}
+    return jsonResponse({
+      ok: true,
+      claimed: true,
+      job: {
+        id: row.id,
+        build_id: row.build_id || null,
+        generator_id: row.generator_id,
+        job_type: row.job_type,
+        attempt_count: row.attempt_count,
+        idempotency_key: row.idempotency_key,
+        input,
+      },
+    });
+  }
+  return jsonResponse({ ok: true, claimed: false, job: null });
+}
+async function recordFactoryReceipt(request) {
+  requireWorker(request);
+  const body = await request.json().catch(() => ({}));
+  const jobId = clean(body.job_id, 120);
+  if (!jobId) return jsonResponse({ error: 'job_id is required' }, 400);
+  const job = (await queryRows('generation_jobs', `id=eq.${encodeURIComponent(jobId)}&select=*&limit=1`))?.[0];
+  if (!job) return jsonResponse({ error: 'Job not found' }, 404);
+  if (job.status !== 'running') return jsonResponse({ error: `Job is not running (status=${job.status})` }, 409);
+
+  const outcome = clean(body.outcome, 20).toLowerCase();
+  const result = body.result && typeof body.result === 'object' ? body.result : {};
+  const summary = clean(body.summary || result.summary, 3000);
+  const error = clean(body.error, 4000);
+  const now = new Date().toISOString();
+
+  if (outcome === 'failed' && body.retriable === true && Number(job.attempt_count || 0) < 3) {
+    const delayMinutes = Math.min(30, Math.pow(2, Math.max(0, Number(job.attempt_count || 1) - 1)) * 2);
+    const next = new Date(Date.now() + delayMinutes * 60000).toISOString();
+    await updateRows('generation_jobs', `id=eq.${encodeURIComponent(job.id)}&status=eq.running`, {
+      status: 'queued',
+      output_ref: JSON.stringify(result).slice(0, 20000),
+      result_summary: summary || 'Retriable failure',
+      error: error || 'Worker reported a retriable failure',
+      next_attempt_at: next,
+      finished_at: null,
+    });
+    return jsonResponse({ ok: true, status: 'queued', next_attempt_at: next });
+  }
+
+  const finalStatus = outcome === 'failed' ? 'failed' : 'done';
+  await updateRows('generation_jobs', `id=eq.${encodeURIComponent(job.id)}&status=eq.running`, {
+    status: finalStatus,
+    output_ref: JSON.stringify(result).slice(0, 20000),
+    result_summary: summary || (finalStatus === 'done' ? 'Worker completed job' : 'Worker failed job'),
+    error: finalStatus === 'failed' ? (error || 'Worker reported failure') : null,
+    finished_at: now,
+  });
+
+  if (job.build_id) {
+    const buildStatus = finalStatus === 'done' ? 'validated' : 'failed';
+    await updateRows('build_projects', `id=eq.${encodeURIComponent(job.build_id)}`, {
+      status: buildStatus,
+      ...(result.preview_url ? { preview_url: clean(result.preview_url, 1000) } : {}),
+    }).catch(() => null);
+  }
+
+  return jsonResponse({
+    ok: true,
+    status: finalStatus,
+    release_ready: finalStatus === 'done',
+    release_requires_approval: true,
+  });
+}
+
 export async function handleClientFactory(path, request) {
   if (request.method !== 'POST') return jsonResponse({ error: 'POST required' }, 405);
   if (path === '/client-factory/token') return issueClientToken(request);
   if (path === '/client-factory/chat') return chatWithEden(request);
   if (path === '/client-factory/batch') return enqueueFactoryBatch(request);
   if (path === '/client-factory/social') return enqueueSocial(request);
+  if (path === '/client-factory/worker/claim') return claimFactoryJob(request);
+  if (path === '/client-factory/worker/receipt') return recordFactoryReceipt(request);
   return jsonResponse({ error: 'Unknown client factory route' }, 404);
 }
