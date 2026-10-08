@@ -251,7 +251,7 @@ async function chatWithEden(request) {
   }
 
   const missing = nextMissing(answers);
-  const completed = !missing || turn.completed === true;
+  const completed = !missing;
   const reply = clean(turn.reply || (completed ? 'Perfect. I have everything I need.' : QUESTIONS[missing]), 1200);
   transcript.push({ role: 'assistant', content: reply });
 
@@ -488,7 +488,104 @@ async function recordFactoryReceipt(request) {
   });
 }
 
+
+function verifyPreviewSelfTest(request) {
+  if (process.env.VERCEL_ENV !== 'preview') {
+    throw Object.assign(new Error('Preview self-test is disabled outside Vercel preview'), { status: 404 });
+  }
+  const url = new URL(request.url);
+  const ts = Number(url.searchParams.get('ts') || 0);
+  const nonce = clean(url.searchParams.get('nonce'), 120);
+  const supplied = clean(url.searchParams.get('sig'), 256);
+  if (!Number.isFinite(ts) || !nonce || !supplied || Math.abs(Date.now() - ts) > 5 * 60 * 1000) {
+    throw Object.assign(new Error('Invalid or expired preview self-test signature'), { status: 401 });
+  }
+  const expected = createHmac('sha256', workerSecret()).update(String(ts) + ':' + nonce).digest('hex');
+  const a = Buffer.from(supplied);
+  const b = Buffer.from(expected);
+  if (a.length !== b.length || !timingSafeEqual(a, b)) {
+    throw Object.assign(new Error('Invalid preview self-test signature'), { status: 401 });
+  }
+  return { ts, nonce };
+}
+
+async function runPreviewSelfTest(request) {
+  const { nonce } = verifyPreviewSelfTest(request);
+  const email = `synthetic.unified.factory.${nonce}@example.com`;
+  const tokenPayload = {
+    email,
+    name: 'Alex Synthetic',
+    order_id: `UFV1-${nonce}`,
+    source: 'approved_preview_selftest',
+    issued_by: 'unified-factory-preview-selftest',
+    iat: Date.now(),
+    exp: Date.now() + 30 * 60 * 1000,
+    nonce,
+  };
+  const token = issueTokenPayload(tokenPayload);
+  let answers = normalizeAnswers({}, tokenPayload);
+  let currentField = nextMissing(answers);
+  const transcript = [];
+  const turns = [
+    ['address', '100 Test Harbor Drive, Fort Lauderdale, FL 33301'],
+    ['phone', '954-555-0108'],
+    ['business_stage', 'Existing business ready to scale with a new digital presence.'],
+    ['business', 'Harbor Peak Roofing, a synthetic South Florida roofing company for preview validation only.'],
+    ['vision', 'Modern premium local-service website with immediate trust, emergency-response CTA, strong project imagery, concise service sections, financing and estimate conversion paths.'],
+    ['colors', 'Deep navy, clean white, electric cyan accents. Avoid orange and brown.'],
+    ['special_requests', 'Use clearly synthetic testimonials and project examples, strong mobile call-to-action, FAQ, service-area section, and no production publishing.'],
+  ];
+  let last = null;
+
+  const invoke = async (message, field) => {
+    const syntheticRequest = new Request('https://preview.internal/api/runtime/client-factory/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token,
+        message,
+        current_field: field,
+        answers,
+        transcript,
+      }),
+    });
+    const response = await chatWithEden(syntheticRequest);
+    const body = await response.json();
+    if (!response.ok) throw Object.assign(new Error(body.error || 'Synthetic Eden turn failed'), { status: response.status });
+    answers = body.answers || answers;
+    currentField = body.next_field || '';
+    if (message) transcript.push({ role: 'user', content: message });
+    transcript.push({ role: 'assistant', content: body.reply || '' });
+    last = body;
+    return body;
+  };
+
+  await invoke('', currentField);
+  for (const [field, message] of turns) {
+    await invoke(message, field);
+  }
+
+  if (!last?.completed || !last?.job_id || !last?.build_id || !last?.client_id) {
+    throw new Error('Synthetic Eden pipeline did not reach queued build state');
+  }
+
+  return jsonResponse({
+    ok: true,
+    synthetic: true,
+    email,
+    completed: last.completed,
+    client_id: last.client_id,
+    build_id: last.build_id,
+    job_id: last.job_id,
+    next: 'ZERO_BRIDGE_ACCEPTANCE',
+    production_mutation: false,
+    customer_messages_sent: false,
+    live_publish: false,
+  });
+}
+
 export async function handleClientFactory(path, request) {
+  if (path === '/client-factory/selftest') return runPreviewSelfTest(request);
   if (request.method !== 'POST') return jsonResponse({ error: 'POST required' }, 405);
   if (path === '/client-factory/token') return issueClientToken(request);
   if (path === '/client-factory/chat') return chatWithEden(request);
