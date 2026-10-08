@@ -39,7 +39,7 @@ const options={bundle:true,platform:'node',format:'esm',target:'node22',plugins:
 const server=await build({...options,entryPoints:['src/server/start.mjs'],outfile:resolve(output,'server.mjs')});
 const api=await build({...options,entryPoints:['src/server/handler.mjs'],outfile:resolve(output,'api/runtime.mjs')});
 for(const result of [server,api])for(const file of Object.keys(result.metafile.inputs))if(file.includes('node_modules/@base44/'))throw new Error('Forbidden platform dependency in standalone build');
-const pkg={name:'strategic-minds-owned-runtime',private:true,type:'module',engines:{node:'22.x'},scripts:{start:'node server.mjs'},dependencies:{stripe:'^17.7.0',jose:'^6.1.0',nodemailer:'^6.9.16'}};
+const pkg={name:'strategic-minds-owned-runtime',private:true,type:'module',engines:{node:'>=22'},scripts:{start:'node server.mjs'},dependencies:{stripe:'^17.7.0',jose:'^6.1.0',nodemailer:'^10.0.9'}};
 await writeFile(resolve(output,'package.json'),JSON.stringify(pkg,null,2));
 await writeFile(resolve(output,'schema.sql'),await buildSchema(schemas,tables,entityJobs));
 await writeFile(resolve(output,'vercel.json'),JSON.stringify({version:2,buildCommand:'',outputDirectory:'dist',functions:{'api/runtime.mjs':{maxDuration:300}},rewrites:[{source:'/api/runtime/:path*',destination:'/api/runtime?route=:path*'},{source:'/((?!api/|assets/).*)',destination:'/index.html'}],...(process.env.ENABLE_VERCEL_CRON==='true' && process.env.CRON_SECRET && process.env.JOB_OWNER_ID?{crons:[{path:'/api/runtime/jobs/tick',schedule:'*/5 * * * *'}]}:{})},null,2));
