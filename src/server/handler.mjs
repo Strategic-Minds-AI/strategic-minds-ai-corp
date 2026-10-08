@@ -8,6 +8,7 @@ import { conversationAction } from './conversations.mjs';
 import { connectAccount, completeConnection, disconnectAccount } from './connections.mjs';
 import { tickJobs } from './jobs.mjs';
 import { createHmac, timingSafeEqual } from 'node:crypto';
+import { handleClientFactory } from './clientFactory.mjs';
 const publicFunctions = new Set(['getAuthConfig','commerceCheckout','commerceQuote','captureAgencyLead','commerceWebhook','twilioWebhook','sandboxAuth','benchmarkCostRenewal','vaultDirectory']);
 async function checkTwilio(request) {
   if(!process.env.TWILIO_AUTH_TOKEN || !process.env.API_URL) throw notConfigured('Twilio webhook configuration');
@@ -27,6 +28,7 @@ export async function handleRequest(request) {
     if(path==='/connections/callback') return completeConnection(request);
     if(path==='/jobs/tick') { if(!process.env.CRON_SECRET || request.headers.get('Authorization')!==`Bearer ${process.env.CRON_SECRET}`) return Response.json({error:'Unauthorized'},{status:401});return Response.json(await tickJobs()); }
     if(path==='/channels/whatsapp') { if(!process.env.WHATSAPP_ASSISTANT_NUMBER) throw notConfigured('Twilio WhatsApp assistant channel');return Response.redirect(`https://wa.me/${process.env.WHATSAPP_ASSISTANT_NUMBER.replace(/\D/g,'')}`); }
+    if(path.startsWith('/client-factory/')) return handleClientFactory(path, request);
     const name=/^\/functions\/([\w-]+)$/.exec(path)?.[1];
     if(name) {
       if(name==='getAuthConfig') { if(!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) throw notConfigured('Supabase');return Response.json({supabaseUrl:process.env.SUPABASE_URL,supabaseAnonKey:process.env.SUPABASE_ANON_KEY}); }
