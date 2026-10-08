@@ -1,0 +1,21 @@
+{
+  "schema_version": "unified-factory.synthetic-site.v1",
+  "synthetic": true,
+  "noindex": true,
+  "project": "Harbor Peak Roofing",
+  "source_job_id": "946dc362-5b3f-4558-bf67-13e796f23364",
+  "build_id": "8d9856fe-0de5-4fac-b9ae-bf17efd7abb7",
+  "zero_command_id": "BWA-c9bff80643d1a2f533fb685e",
+  "selected_direction": "ui-01",
+  "production_release_allowed": false,
+  "customer_messages_allowed": false,
+  "live_publish_allowed": false,
+  "acceptance": [
+    "responsive at mobile/tablet/desktop",
+    "no real testimonials or customer claims",
+    "synthetic banner visible",
+    "form cannot transmit leads",
+    "noindex/nofollow",
+    "preview-only deployment"
+  ]
+}
