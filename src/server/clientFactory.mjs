@@ -584,6 +584,87 @@ async function runPreviewSelfTest(request) {
   });
 }
 
+function syntheticCanaryEnabled() {
+  return process.env.VERCEL_ENV !== 'production' && process.env.SYNTHETIC_FACTORY_CANARY === 'true';
+}
+async function ensureSyntheticFactoryCanary() {
+  if (!syntheticCanaryEnabled()) return jsonResponse({ error: 'Synthetic canary is disabled' }, 404);
+
+  const answers = {
+    first_name: 'Avery',
+    address: '100 Preview Lane, Fort Lauderdale, FL',
+    phone: '555-0100',
+    email: 'synthetic-unified-factory-v1@strategicmindsai.invalid',
+    business_stage: 'Existing business',
+    business: 'Atlantic Horizon Roofing',
+    vision: 'A premium high-trust roofing website with a cinematic dark hero, bright white service sections, electric blue accents, clear emergency response calls to action, strong local proof, and a clean mobile experience.',
+    colors: 'Midnight black, bright white, metallic silver, electric blue',
+    special_requests: 'Show emergency roof repair, residential roofing, commercial roofing, storm damage, financing, reviews, service areas, and a fast quote path.',
+  };
+  const tokenPayload = {
+    email: answers.email,
+    name: answers.first_name,
+    order_id: 'SYNTHETIC-UFV1-001',
+    source: 'synthetic_preview_canary',
+  };
+
+  const existing = await findClient(answers.email);
+  const transcript = [
+    { role: 'assistant', content: QUESTIONS.first_name },
+    { role: 'user', content: answers.first_name },
+    { role: 'assistant', content: 'Synthetic preview intake completed deterministically.' },
+  ];
+  const client = await persistClient(existing, answers, transcript, tokenPayload);
+
+  let build = (await queryRows('build_projects', `business_id=eq.${encodeURIComponent(client.id)}&select=*&order=created_date.desc&limit=1`))?.[0];
+  if (!build) {
+    build = (await insertRows('build_projects', {
+      business_id: client.id,
+      business_name: answers.business,
+      approved_concept: 'synthetic-unified-factory-v1',
+      generator_chain: ['research','visual_directions','website','qa','preview'],
+      status: 'composed',
+    }))?.[0];
+  }
+
+  const idempotencyKey = 'synthetic:unified-factory-v1:website';
+  let job = (await queryRows('generation_jobs', `idempotency_key=eq.${encodeURIComponent(idempotencyKey)}&select=*&limit=1`))?.[0];
+  if (!job) {
+    job = (await insertRows('generation_jobs', {
+      build_id: build.id,
+      generator_id: 'apex',
+      job_type: 'synthetic_client_e2e',
+      idempotency_key: idempotencyKey,
+      status: 'queued',
+      attempt_count: 0,
+      input_ref: JSON.stringify({
+        synthetic: true,
+        client_id: client.id,
+        build_id: build.id,
+        business_name: answers.business,
+        onboarding: answers,
+        pipeline: ['research_dossier','visual_system','web_pack','build_preview','independent_validation','receipt'],
+        agent_route: ['Swarm Orchestrator & Copilot','Brand & Creative Specialist','Code Generation & Website Builder','QA & Validation Agent'],
+        release_mode: 'preview_only',
+        production_requires_approval: true,
+        customer_message: false,
+        paid_provisioning: false,
+      }),
+    }))?.[0];
+  }
+
+  return jsonResponse({
+    ok: true,
+    synthetic: true,
+    client_id: client.id,
+    build_id: build.id,
+    job_id: job.id,
+    job_status: job.status,
+    idempotency_key: idempotencyKey,
+    protected_actions_gated: true,
+  });
+}
+
 export async function handleClientFactory(path, request) {
   if (path === '/client-factory/selftest') return runPreviewSelfTest(request);
   if (request.method !== 'POST') return jsonResponse({ error: 'POST required' }, 405);
