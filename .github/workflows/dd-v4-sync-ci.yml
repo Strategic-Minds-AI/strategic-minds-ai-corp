@@ -1,0 +1,29 @@
+name: DD V4 Sync Gateway CI
+on:
+  push:
+    branches:
+      - feature/dd-v4-universal-sync-contract
+    paths:
+      - 'integrations/dd-v4-sync/**'
+      - '.github/workflows/dd-v4-sync-ci.yml'
+  pull_request:
+    paths:
+      - 'integrations/dd-v4-sync/**'
+      - '.github/workflows/dd-v4-sync-ci.yml'
+permissions:
+  contents: read
+jobs:
+  test-gateway:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: integrations/dd-v4-sync
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: npm run check
+      - name: Unit tests
+        run: npm test
