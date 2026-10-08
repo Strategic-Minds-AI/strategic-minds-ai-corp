@@ -434,6 +434,21 @@ async function recordFactoryReceipt(request) {
   const error = clean(body.error, 4000);
   const now = new Date().toISOString();
 
+  if (outcome === 'accepted') {
+    await updateRows('generation_jobs', `id=eq.${encodeURIComponent(job.id)}&status=eq.running`, {
+      output_ref: JSON.stringify(result).slice(0, 20000),
+      result_summary: summary || 'External executor accepted the job',
+      error: null,
+    });
+    return jsonResponse({
+      ok: true,
+      status: 'running',
+      bridge_accepted: true,
+      release_ready: false,
+      release_requires_approval: true,
+    });
+  }
+
   if (outcome === 'failed' && body.retriable === true && Number(job.attempt_count || 0) < 3) {
     const delayMinutes = Math.min(30, Math.pow(2, Math.max(0, Number(job.attempt_count || 1) - 1)) * 2);
     const next = new Date(Date.now() + delayMinutes * 60000).toISOString();
