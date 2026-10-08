@@ -1,0 +1,82 @@
+{
+  "synthetic": true,
+  "project": "Harbor Peak Roofing",
+  "generated_for": "Unified Factory V1 preview validation",
+  "directions": [
+    {
+      "id": "ui-01",
+      "name": "Stormline Premium",
+      "composition": "dark editorial hero + luminous roof geometry + operational trust dashboard",
+      "conversion": "emergency CTA plus fast estimate",
+      "type": "wide grotesk + compact technical labels"
+    },
+    {
+      "id": "ui-02",
+      "name": "Coastal Editorial",
+      "composition": "bright coastal photography grid + magazine typography",
+      "conversion": "visual proof then estimate",
+      "type": "editorial serif + clean sans"
+    },
+    {
+      "id": "ui-03",
+      "name": "Response Command",
+      "composition": "emergency command-center layout + incident cards",
+      "conversion": "storm intake first",
+      "type": "condensed industrial sans"
+    },
+    {
+      "id": "ui-04",
+      "name": "Residential Calm",
+      "composition": "warm residential storytelling + airy cards",
+      "conversion": "homeowner education to consultation",
+      "type": "humanist sans"
+    },
+    {
+      "id": "ui-05",
+      "name": "Blueprint Technical",
+      "composition": "architectural grid + exploded roof-system diagrams",
+      "conversion": "system comparison to quote",
+      "type": "mono labels + geometric sans"
+    },
+    {
+      "id": "ui-06",
+      "name": "Metal Luxury",
+      "composition": "minimal black/white + metallic roof closeups",
+      "conversion": "premium metal consultation",
+      "type": "high-contrast serif + modern sans"
+    },
+    {
+      "id": "ui-07",
+      "name": "Local Proof",
+      "composition": "map-led local service area + review/proof modules",
+      "conversion": "local confidence to estimate",
+      "type": "friendly bold sans"
+    },
+    {
+      "id": "ui-08",
+      "name": "Project Timeline",
+      "composition": "scrolling process timeline + project phase visuals",
+      "conversion": "certainty to booking",
+      "type": "large utilitarian sans"
+    },
+    {
+      "id": "ui-09",
+      "name": "Insurance Clarity",
+      "composition": "documentation workflow + claim-readiness education",
+      "conversion": "inspection request",
+      "type": "trust-oriented sans"
+    },
+    {
+      "id": "ui-10",
+      "name": "Mobile First Responder",
+      "composition": "phone-first sticky action rail + short modular sections",
+      "conversion": "tap-to-intake",
+      "type": "compact mobile UI sans"
+    }
+  ],
+  "selection": {
+    "mode": "AUTOSELECT",
+    "selected_id": "ui-01",
+    "reason": "Best synthetic match for requested premium, urgent, trust-heavy local-service brief."
+  }
+}
