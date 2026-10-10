@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, SquarePen, Search, Settings2, X, LayoutGrid, ChevronDown, Plus, PanelLeftClose, PanelLeftOpen, Cpu, Vault, ShieldCheck, Network, Lightbulb, Package, UserPlus } from 'lucide-react';
+import { Menu, SquarePen, Search, Settings2, X, LayoutGrid, ChevronDown, Plus, PanelLeftClose, PanelLeftOpen, Cpu, Vault, ShieldCheck, Network, Lightbulb, Package, UserPlus, Rocket } from 'lucide-react';
 import AdminChatQuickTasks from './AdminChatQuickTasks';
 import AdminDriveFolderCreator from './AdminDriveFolderCreator';
 const groups = [
@@ -39,6 +39,7 @@ export default function AdminChatSidebar({ chats, selectedId, view, onView, onNe
       <Link to="/idea-engine" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Lightbulb size={17}/> Idea Engine</Link>
       <Link to="/gpt-package" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Package size={17}/> GPT Package</Link>
       <Link to="/onboarding" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><UserPlus size={17}/> Client Onboarding</Link>
+      <Link to="/mass-launch" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Rocket size={17}/> Mass Launch Console</Link>
       <Link to="/agents" className="flex items-center gap-3 rounded-lg px-3 py-3 text-left text-sm font-semibold text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Cpu size={17}/> Super Agents Command Center</Link>
       <button type="button" onClick={() => choose(onSettings)} className="flex items-center gap-3 rounded-lg border-t border-border px-3 py-4 text-left text-sm text-foreground hover:bg-consoleAccent hover:text-primary-foreground"><Settings2 size={17}/> Settings</button>
       <AdminDriveFolderCreator open={createOpen} onOpenChange={setCreateOpen} projects={projects}/>
