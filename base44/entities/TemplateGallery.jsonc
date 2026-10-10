@@ -98,6 +98,33 @@
         "type": "string"
       },
       "description": "Searchable tags"
+    },
+    "brand_tokens": {
+      "type": "object",
+      "description": "Approved GPT design tokens (JSON)"
+    },
+    "manifest": {
+      "type": "object",
+      "description": "Approved immutable source manifest (JSON)"
+    },
+    "version": {
+      "type": "string",
+      "maxLength": 48,
+      "description": "Approved content version"
+    },
+    "content_sha256": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "Content digest for idempotent imports"
+    },
+    "batch_id": {
+      "type": "string",
+      "maxLength": 128,
+      "description": "GPT approval batch receipt ID"
+    },
+    "approval_receipt": {
+      "type": "object",
+      "description": "Declared operator approval in ChatGPT UI; token authenticated but not cryptographically user attested"
     }
   },
   "required": [
