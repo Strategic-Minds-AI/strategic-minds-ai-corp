@@ -1,5 +1,4 @@
 import { createClientFromRequest } from '../../shared/ownedClient.ts';
-import { getSupabaseUser } from '../../shared/supabaseAuth.ts';
 
 // ============================================================
 // INGEST PACK — Server-to-server endpoint for GPT (and other
