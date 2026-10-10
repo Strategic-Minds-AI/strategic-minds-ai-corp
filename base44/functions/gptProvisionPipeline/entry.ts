@@ -138,11 +138,25 @@ async function verifySecrets(base44: any): Promise<any> {
   } catch { results.github = { ok: false }; }
 
   try {
-    const r = await fetch('https://api.godaddy.com/v1/domains?statuses=ACTIVE', {
-      headers: { Authorization: `sso-key ${secrets.get('GODADDY_API_KEY')}:${secrets.get('GODADDY_API_SECRET')}` },
-    });
-    results.godaddy = { ok: r.ok };
-  } catch { results.godaddy = { ok: false }; }
+    const gdKey = secrets.get('GODADDY_API_KEY');
+    const gdSecret = secrets.get('GODADDY_API_SECRET');
+    if (!gdKey || !gdSecret) {
+      results.godaddy = { ok: false, configured: false };
+    } else {
+      // Test both production and OTE (test) endpoints — GoDaddy keys only work on one
+      const gdResults: any[] = [];
+      for (const ep of ['https://api.godaddy.com/v1/domains?statuses=ACTIVE', 'https://api.ote-godaddy.com/v1/domains?statuses=ACTIVE']) {
+        try {
+          const r = await fetch(ep, { headers: { Authorization: `sso-key ${gdKey}:${gdSecret}` }, signal: AbortSignal.timeout(8000) });
+          gdResults.push({ endpoint: ep.includes('ote') ? 'ote' : 'production', status: r.status, ok: r.ok });
+        } catch (e: any) {
+          gdResults.push({ endpoint: ep.includes('ote') ? 'ote' : 'production', ok: false, error: e.message });
+        }
+      }
+      const working = gdResults.find(r => r.ok);
+      results.godaddy = { ok: Boolean(working), configured: true, endpoints: gdResults, working_endpoint: working?.endpoint || null };
+    }
+  } catch (e: any) { results.godaddy = { ok: false, error: e.message }; }
 
   try {
     const r = await fetch('https://api.stripe.com/v1/balance', { headers: { Authorization: `Bearer ${secrets.get('STRIPE_SECRET_KEY')}` } });
