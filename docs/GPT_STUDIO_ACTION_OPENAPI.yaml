@@ -7,7 +7,7 @@ info:
     the human operator explicitly approves the exact items in ChatGPT.
     Library storage never means publication, domain changes, or launch.
 servers:
-  - url: https://strategicmindsai.com
+  - url: https://strategic-minds-ai-corp.vercel.app
 paths:
   /api/runtime/functions/ingestPack:
     post:
