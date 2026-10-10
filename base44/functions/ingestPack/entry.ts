@@ -1,116 +1,92 @@
 import { createClientFromRequest } from '../../shared/ownedClient.ts';
+import { secrets } from '../../shared/runtimeSecrets.ts';
+import { GALLERIES, MAX_BATCH, MAX_REQUEST_BYTES, bytes, safeToken, reply, isObject, normalizePack, digest, type Pack } from '../../shared/gptStudioPack.ts';
 
-// ============================================================
-// INGEST PACK — Server-to-server endpoint for GPT (and other
-// external systems) to upload generated website packs.
-//
-// Auth: Bearer token matching SERVER_SIDE_SYNC_TOKEN or WORKER_SECRET.
-// This is NOT a user-auth endpoint — it's a machine-to-machine sync.
-//
-// Payload:
-//   name               — website label
-//   kind               — "web_pack" (future: "logo_pack", "brand_pack")
-//   preview_html       — full HTML content of the generated site
-//   brand_tokens       — design tokens (colors, fonts, spacing)
-//   manifest           — file manifest (pages, assets, routes)
-//   source             — "gpt_sync" | "manual" | "api"
-//   submitted_by_label — who submitted (e.g. "ChatGPT")
-//   status             — "pending_review" | "auto_deploy"
-//   gallery_id         — optional: which of the 20 galleries to file into
-//   category           — optional: business category
-//   city               — optional: target city
-//
-// Stores the pack as a WebPack record. If gallery_id is provided,
-// also creates a TemplateGallery record so it appears in the studio.
-// ============================================================
-
-export default async function(req: Request): Promise<Response> {
-  try {
-    // ── Verify server-side sync token ──
-    const auth = req.headers.get('authorization') || '';
-    const token = auth.replace(/^Bearer\s+/i, '');
-    const validToken = process.env.SERVER_SIDE_SYNC_TOKEN || process.env.WORKER_SECRET;
-    if (!validToken || token !== validToken) {
-      return Response.json({ error: 'Invalid sync token' }, { status: 401 });
-    }
-
-    const base44 = createClientFromRequest(req);
-    const svc = base44.asServiceRole;
-    const body = await req.json().catch(() => ({}));
-
-    const {
-      name,
-      kind,
-      preview_html,
-      brand_tokens,
-      manifest,
-      source,
-      submitted_by_label,
-      status,
-      gallery_id,
-      category,
-      city,
-    } = body;
-
-    if (!name || !preview_html) {
-      return Response.json({ error: 'name and preview_html are required' }, { status: 400 });
-    }
-
-    // ── Store as WebPack record ──
-    const pack = await svc.entities.WebPack.create({
-      name,
-      image_url: '', // HTML-based pack, no design image
-      status: status === 'auto_deploy' ? 'queued' : 'queued',
-      generated_html: preview_html,
-      logs: [
-        `[${new Date().toISOString()}] Pack ingested from ${source || 'external'}`,
-        `Submitted by: ${submitted_by_label || 'unknown'}`,
-        `Kind: ${kind || 'web_pack'}`,
-        `HTML size: ${preview_html.length} chars`,
-        `Brand tokens: ${brand_tokens ? Object.keys(brand_tokens).length : 0} keys`,
-        `Manifest entries: ${manifest ? (Array.isArray(manifest) ? manifest.length : Object.keys(manifest).length) : 0}`,
-      ],
-    });
-
-    // ── If gallery_id is provided, also file into TemplateGallery ──
-    let templateId: string | null = null;
-    if (gallery_id) {
-      const galleryNames: Record<string, string> = {
-        aurora: 'Aurora', fortress: 'Fortress', serenity: 'Serenity', momentum: 'Momentum',
-        heritage: 'Heritage', pulse: 'Pulse', summit: 'Summit', bloom: 'Bloom',
-        forge: 'Forge', lumin: 'Lumin', terra: 'Terra', velocity: 'Velocity',
-        haven: 'Haven', crystal: 'Crystal', sage: 'Sage', apex: 'Apex',
-        beacon: 'Beacon', prism: 'Prism', grid: 'Grid', wave: 'Wave',
-      };
-
-      const gallery = await svc.entities.TemplateGallery.create({
-        gallery_id,
-        gallery_name: galleryNames[gallery_id] || gallery_id,
-        title: name,
-        category: category || 'general',
-        city: city || '',
-        description: `Uploaded via ${source || 'sync'} by ${submitted_by_label || 'external'}`,
-        html_content: preview_html,
-        css_content: '',
-        js_content: '',
-        upload_source: 'gpt',
-        design_style: brand_tokens?.style || '',
-        color_scheme: brand_tokens?.primaryColor || '',
-        status: 'draft',
-        tags: [source || 'sync', submitted_by_label || 'external', category, city].filter(Boolean),
-        quality_score: 0,
-      });
-      templateId = gallery.id;
-    }
-
-    return Response.json({
-      ok: true,
-      pack_id: pack.id,
-      template_id: templateId,
-      status: 'queued',
-      message: `Pack "${name}" ingested successfully. ${templateId ? `Filed into gallery "${gallery_id}".` : 'No gallery specified — stored as standalone pack.'}`,
-    });
-  } catch (error: any) {
-    return Response.json({ error: error.message }, { status: 500 });
+export default async function ingestPack(request: Request): Promise<Response> {
+  if (request.method !== 'POST') return reply('POST required', 405);
+  const configured = secrets.get('SERVER_SIDE_SYNC_TOKEN');
+  if (!configured) return reply('SERVER_SIDE_SYNC_TOKEN is not configured', 503);
+  const match = (request.headers.get('authorization') || '').match(/^Bearer ([^\s]+)$/i);
+  if (!(await safeToken(match?.[1] || '', configured))) return reply('Unauthorized', 401);
+  const raw = await request.text();
+  if (bytes(raw) > MAX_REQUEST_BYTES) return reply('Payload exceeds 3.5 MB', 413);
+  let body: any;
+  try { body = JSON.parse(raw); } catch { return reply('Invalid JSON'); }
+  if (!isObject(body)) return reply('JSON object required');
+  const approval = body.approval;
+  if (!isObject(approval) || approval.state !== 'approved'
+    || approval.channel !== 'chatgpt_ui'
+    || typeof approval.approval_id !== 'string'
+    || !/^[a-zA-Z0-9_-]{8,128}$/.test(approval.approval_id)
+    || typeof approval.approved_by !== 'string'
+    || !approval.approved_by.trim()) {
+    return reply('Explicit ChatGPT operator approval receipt required', 403);
   }
+  // The machine credential authenticates the submitter; this receipt records
+  // user intent but is not a cryptographic ChatGPT identity assertion.
+  const rawItems = Array.isArray(body.items) ? body.items : [body];
+  if (!rawItems.length || rawItems.length > MAX_BATCH) return reply('Batch size must be 1 to 100');
+  let items: Pack[];
+  try { items = rawItems.map(normalizePack); }
+  catch (error: any) { return reply(String(error.message || 'Invalid pack')); }
+  const client = createClientFromRequest(request);
+  const store = client.asServiceRole.entities.TemplateGallery;
+  const results: any[] = [];
+  const seen = new Map<string, string>();
+  const batch_id = String(body.batch_id || approval.approval_id).slice(0, 128);
+  try {
+    for (const item of items) {
+      const hash = await digest(JSON.stringify(item));
+      const key = item.gallery_id + ':' + hash;
+      if (seen.has(key)) {
+        results.push({ gallery_id: item.gallery_id, template_id: seen.get(key), duplicate: true, sha256: hash });
+        continue;
+      }
+      const existing = await store.filter({ gallery_id: item.gallery_id, title: item.title }, { sort: '-created_date', limit: 100 });
+      const rows = Array.isArray(existing) ? existing : (existing?.items || []);
+      const duplicate = rows.find((row: any) => Array.isArray(row.tags) && row.tags.includes('sha256:' + hash));
+      if (duplicate) {
+        seen.set(key, duplicate.id);
+        results.push({ gallery_id: item.gallery_id, template_id: duplicate.id, duplicate: true, sha256: hash });
+        continue;
+      }
+      const saved = await store.create({
+        gallery_id: item.gallery_id,
+        gallery_name: GALLERIES[item.gallery_id],
+        title: item.title,
+        category: item.category,
+        city: item.city,
+        description: item.description,
+        html_content: item.html_content,
+        css_content: item.css_content,
+        js_content: item.js_content,
+        upload_source: 'gpt',
+        design_style: String((item.brand_tokens as any).style || '').slice(0, 200),
+        color_scheme: String((item.brand_tokens as any).primaryColor || '').slice(0, 80),
+        brand_tokens: item.brand_tokens,
+        manifest: item.manifest,
+        version: item.version,
+        content_sha256: hash,
+        approval_receipt: {
+          channel: approval.channel,
+          approval_id: approval.approval_id,
+          approved_by: approval.approved_by.slice(0, 160),
+          approved_at: String(approval.approved_at || new Date().toISOString()).slice(0, 60),
+        },
+        batch_id,
+        status: 'draft',
+        quality_score: 0,
+        tags: [item.kind, 'approved-in-chatgpt', 'sha256:' + hash, 'batch:' + batch_id],
+      });
+      seen.set(key, saved.id);
+      results.push({ gallery_id: item.gallery_id, template_id: saved.id, duplicate: false, sha256: hash });
+    }
+  } catch (error: any) {
+    return Response.json({ ok: false, error: 'Library storage failed', saved: results.length, total: items.length, results, detail: String(error.message || '').slice(0, 160) }, { status: 503 });
+  }
+  return Response.json({
+    ok: true, batch_id, total: items.length, saved: results.filter(r => !r.duplicate).length,
+    duplicates: results.filter(r => r.duplicate).length, results,
+    library_status: 'draft', published: false, launch_queued: false,
+  }, { status: 201 });
 }
