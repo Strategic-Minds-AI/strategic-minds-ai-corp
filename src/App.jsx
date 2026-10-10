@@ -91,6 +91,7 @@ const GPTPackage = lazy(() => import('@/pages/GPTPackage'));
 const ClientOnboarding = lazy(() => import('@/pages/ClientOnboarding'));
 const MassLaunchConsole = lazy(() => import('@/pages/MassLaunchConsole'));
 const TemplateStudio = lazy(() => import('@/pages/TemplateStudio'));
+const LaunchPreview = lazy(() => import('@/pages/LaunchPreview'));
 // Add page imports here
 
 const AuthenticatedApp = () => {
@@ -200,6 +201,7 @@ const AuthenticatedApp = () => {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/mass-launch" element={<MassLaunchConsole />} />
           <Route path="/template-studio" element={<TemplateStudio />} />
+          <Route path="/launch-preview/:campaignId" element={<LaunchPreview />} />
         </Route>
         <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/register?returnTo=%2Fonboarding" replace />} />}>
           <Route path="/onboarding" element={<ClientOnboarding />} />

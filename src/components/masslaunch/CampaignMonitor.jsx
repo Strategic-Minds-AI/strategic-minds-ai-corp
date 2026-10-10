@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
-import { RefreshCw, CheckCircle2, Loader2, AlertCircle, ExternalLink, Globe, Zap } from 'lucide-react';
+import { RefreshCw, CheckCircle2, Loader2, AlertCircle, ExternalLink, Globe, Zap, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 
 export default function CampaignMonitor({ batchId, onReset }) {
@@ -79,6 +80,9 @@ export default function CampaignMonitor({ batchId, onReset }) {
                 <div className={`h-full rounded-full ${c.status === 'completed' ? 'bg-green-500' : 'bg-primary'}`} style={{ width: `${c.progress_percent || 0}%` }} />
               </div>
             </div>
+            <Link to={`/launch-preview/${c.campaign_id}`} className="shrink-0 rounded-lg border border-border p-2 text-foreground hover:bg-muted" title="Preview website">
+              <Eye className="h-4 w-4" />
+            </Link>
             {c.vercel_deployment_url && (
               <a href={c.vercel_deployment_url} target="_blank" rel="noopener noreferrer" className="shrink-0 rounded-lg border border-border p-2 text-foreground hover:bg-muted">
                 <ExternalLink className="h-4 w-4" />

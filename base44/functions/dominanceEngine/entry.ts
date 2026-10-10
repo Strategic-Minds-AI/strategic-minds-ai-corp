@@ -280,15 +280,63 @@ Return JSON: { "pages": [{ "type": "home|service|location|blog|faq", "slug": "..
 
   const pageTypes = [...new Set(pageSpecs.map(p => p.type))];
 
+  // ── Generate actual homepage HTML ──
+  let generatedHtml = '';
+  try {
+    const htmlResult = await callAIGateway({
+      system: 'You are a world-class web developer. Generate a complete, self-contained, production-quality HTML page. Return ONLY the HTML — no markdown, no explanation, no code fences.',
+      prompt: `Generate a complete, beautiful, modern, responsive homepage HTML for "${campaign.business_name}", a ${campaign.keyword} company in ${campaign.city || ''} ${campaign.state || ''}.
+
+Requirements:
+- Full <!doctype html> document with inline <style> in the <head>
+- Modern, professional design with a hero section, services grid, about section, testimonials, CTA, and footer
+- Mobile-responsive with CSS media queries
+- Include a contact phone number: 772-209-0266
+- Use a blue color scheme (#0066FF primary, #004CE6 accent)
+- SEO-optimized: proper title, meta description, semantic HTML, h1/h2 tags
+- Include these services: ${(pageSpecs.filter(s => s.type === 'service').map(s => s.title).slice(0, 6).join(', ')) || 'Professional services'}
+- Include a call-to-action button linking to #contact
+- Self-contained: no external CSS/JS files, no external images (use CSS gradients or inline SVG)
+- Keep the HTML under 30000 characters
+
+Return ONLY the raw HTML. Start with <!doctype html> and end with </html>.`,
+    });
+    generatedHtml = (htmlResult.content || '').trim();
+    // Strip markdown code fences if the model added them
+    generatedHtml = generatedHtml.replace(/^```html?\s*/i, '').replace(/```\s*$/i, '').trim();
+  } catch (e: any) {
+    // Fallback: generate a basic HTML page from the page specs
+    const services = pageSpecs.filter(s => s.type === 'service').slice(0, 6).map(s => s.title);
+    generatedHtml = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${campaign.business_name} | ${campaign.keyword} in ${campaign.city || ''} ${campaign.state || ''}</title><style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;color:#0d121c;line-height:1.6}
+.hero{background:linear-gradient(135deg,#0066FF,#004CE6);color:#fff;padding:80px 20px;text-align:center}
+.hero h1{font-size:2.5rem;margin-bottom:16px}.hero p{font-size:1.2rem;opacity:.9;max-width:600px;margin:0 auto 24px}
+.btn{display:inline-block;background:#fff;color:#0066FF;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700}
+.services{max-width:1000px;margin:0 auto;padding:60px 20px}.services h2{text-align:center;font-size:2rem;margin-bottom:40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+.card{border:1px solid #e5e7eb;border-radius:12px;padding:24px}.card h3{color:#0066FF;margin-bottom:8px}
+.cta{background:#f5f9ff;padding:60px 20px;text-align:center}.cta h2{font-size:2rem;margin-bottom:16px}
+.cta a{background:#0066FF;color:#fff;padding:14px 32px;border-radius:8px;text-decoration:none;font-weight:700;display:inline-block}
+footer{background:#0d121c;color:#fff;padding:40px 20px;text-align:center}footer a{color:#6ab8ff}
+@media(max-width:600px){.hero h1{font-size:1.8rem}.grid{grid-template-columns:1fr}}
+</style></head><body>
+<div class="hero"><h1>${campaign.business_name}</h1><p>Professional ${campaign.keyword} services in ${campaign.city || ''} ${campaign.state || ''}. Quality work, competitive pricing, fast turnaround.</p><a href="#contact" class="btn">Get a Free Quote</a></div>
+<div class="services"><h2>Our Services</h2><div class="grid">${services.map(s => `<div class="card"><h3>${s}</h3><p>Expert ${s.toLowerCase()} solutions tailored to your needs.</p></div>`).join('')}</div></div>
+<div class="cta" id="contact"><h2>Ready to Get Started?</h2><p>Call us today at <a href="tel:7722090266" style="color:#0066FF;font-weight:700">772-209-0266</a></p><a href="tel:7722090266">Call Now</a></div>
+<footer><p>&copy; ${new Date().getFullYear()} ${campaign.business_name}. All rights reserved.</p><p>Phone: 772-209-0266</p></footer>
+</body></html>`;
+  }
+
   await svc.entities.DominanceCampaign.update(campaign.id, {
     'phase_status.content_flood': 'completed',
     pages_generated: pageSpecs.length,
     page_types: pageTypes,
+    generated_html: generatedHtml.slice(0, 200000),
     progress_percent: 55,
-    current_step_description: `Content flood: ${pageSpecs.length} pages generated (${pageTypes.join(', ')})`,
+    current_step_description: `Content flood: ${pageSpecs.length} pages generated, homepage HTML ready (${generatedHtml.length} chars)`,
   });
 
-  return { pages_generated: pageSpecs.length, page_types: pageTypes };
+  return { pages_generated: pageSpecs.length, page_types: pageTypes, html_generated: true };
 }
 
 // ── Phase 5: Persona & Fame ──

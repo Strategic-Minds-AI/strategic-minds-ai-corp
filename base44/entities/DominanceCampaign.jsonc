@@ -38,6 +38,11 @@
     "vercel_deployment_url": {
       "type": "string"
     },
+    "generated_html": {
+      "type": "string",
+      "description": "Full HTML of the generated homepage, viewable in the preview page",
+      "maxLength": 200000
+    },
     "phase": {
       "type": "string",
       "enum": [
