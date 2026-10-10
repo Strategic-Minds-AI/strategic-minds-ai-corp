@@ -1,7 +1,7 @@
 {
   "name": "WebPack",
   "type": "object",
-  "description": "A design mockup image uploaded to the Web Pack Queue. The auto builder ingests the image, uses vision AI to generate pixel-perfect HTML/CSS that reproduces the design exactly, then deploys it as a static site to Vercel. The result is a live website that looks exactly like the uploaded design image.",
+  "description": "A website pack uploaded for ingestion. Can be either a design mockup image (vision AI generates HTML) or a full HTML pack uploaded directly by GPT/external systems.",
   "properties": {
     "description": {
       "type": "string",
@@ -10,11 +10,66 @@
     },
     "name": {
       "type": "string",
-      "description": "Name/label for this web pack design"
+      "description": "Name/label for this web pack"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "design_image",
+        "web_pack",
+        "logo_pack",
+        "brand_pack"
+      ],
+      "default": "design_image",
+      "description": "Type of pack: design_image = mockup to convert, web_pack = full HTML upload"
     },
     "image_url": {
       "type": "string",
-      "description": "URL of the uploaded design mockup image"
+      "description": "URL of the uploaded design mockup image (for design_image packs)"
+    },
+    "preview_html": {
+      "type": "string",
+      "description": "Full HTML content for web_pack uploads from GPT/external"
+    },
+    "brand_tokens": {
+      "type": "object",
+      "description": "Design tokens: colors, fonts, spacing, etc.",
+      "properties": {
+        "primaryColor": {
+          "type": "string"
+        },
+        "accentColor": {
+          "type": "string"
+        },
+        "fontHeading": {
+          "type": "string"
+        },
+        "fontBody": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string"
+        }
+      }
+    },
+    "manifest": {
+      "type": "object",
+      "description": "File manifest: pages, assets, routes included in the pack"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "manual",
+        "gpt_sync",
+        "api",
+        "auto_build"
+      ],
+      "default": "manual",
+      "description": "How this pack was submitted"
+    },
+    "submitted_by_label": {
+      "type": "string",
+      "description": "Label identifying who submitted (e.g. ChatGPT, admin name)"
     },
     "status": {
       "type": "string",
@@ -24,14 +79,15 @@
         "generating",
         "deploying",
         "deployed",
-        "failed"
+        "failed",
+        "pending_review"
       ],
       "default": "queued",
-      "description": "Build status \u2014 queued = uploaded waiting to build, analyzing = vision AI reading the design, generating = HTML being generated, deploying = pushing to Vercel, deployed = live, failed = errored"
+      "description": "Build status"
     },
     "generated_html": {
       "type": "string",
-      "description": "The pixel-perfect HTML generated from the design image by the vision AI"
+      "description": "The HTML content (generated from design image, or uploaded directly for web_pack)"
     },
     "vercel_url": {
       "type": "string",
@@ -54,8 +110,7 @@
     }
   },
   "required": [
-    "name",
-    "image_url"
+    "name"
   ],
   "rls": {
     "read": {
