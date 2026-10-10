@@ -1,0 +1,130 @@
+{
+  "name": "TemplateGallery",
+  "type": "object",
+  "properties": {
+    "gallery_id": {
+      "type": "string",
+      "description": "Slug identifying which of the 20 galleries this belongs to"
+    },
+    "gallery_name": {
+      "type": "string",
+      "description": "Display name of the gallery"
+    },
+    "title": {
+      "type": "string",
+      "description": "Website title"
+    },
+    "category": {
+      "type": "string",
+      "description": "Business category this template is built for"
+    },
+    "city": {
+      "type": "string",
+      "description": "City this template is localized for (if applicable)"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "Template description"
+    },
+    "html_content": {
+      "type": "string",
+      "maxLength": 500000,
+      "description": "Full HTML content of the uploaded website"
+    },
+    "css_content": {
+      "type": "string",
+      "maxLength": 200000,
+      "description": "CSS styles for the template"
+    },
+    "js_content": {
+      "type": "string",
+      "maxLength": 200000,
+      "description": "JavaScript for the template"
+    },
+    "preview_url": {
+      "type": "string",
+      "description": "Public URL to preview the template"
+    },
+    "thumbnail_url": {
+      "type": "string",
+      "description": "Thumbnail image URL"
+    },
+    "upload_source": {
+      "type": "string",
+      "enum": [
+        "gpt",
+        "manual",
+        "ai_gateway"
+      ],
+      "default": "gpt",
+      "description": "How this template was uploaded"
+    },
+    "gpt_thread_id": {
+      "type": "string",
+      "description": "ChatGPT thread ID that generated this template"
+    },
+    "design_style": {
+      "type": "string",
+      "description": "Design style tag (modern, classic, bold, minimalist, etc.)"
+    },
+    "color_scheme": {
+      "type": "string",
+      "description": "Primary color scheme used"
+    },
+    "is_featured": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether this template is featured in the gallery"
+    },
+    "quality_score": {
+      "type": "number",
+      "default": 0,
+      "description": "AI-assigned quality score 0-100"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published",
+        "archived"
+      ],
+      "default": "draft",
+      "description": "Publication status"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Searchable tags"
+    }
+  },
+  "required": [
+    "gallery_id",
+    "gallery_name",
+    "title"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

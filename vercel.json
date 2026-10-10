@@ -3,5 +3,35 @@
   "framework": null,
   "buildCommand": "npm run build:vercel",
   "outputDirectory": null,
-  "installCommand": "npm install"
+  "installCommand": "npm install",
+  "crons": [
+    {
+      "path": "/api/cron/autonomous-build",
+      "schedule": "*/10 * * * *"
+    },
+    {
+      "path": "/api/cron/autobuild-recovery",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/evolution-loop",
+      "schedule": "0 * * * *"
+    },
+    {
+      "path": "/api/cron/crm-followups",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/vault-backup",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/operator-schedules",
+      "schedule": "*/15 * * * *"
+    },
+    {
+      "path": "/api/cron/dominance-continuous",
+      "schedule": "0 */4 * * *"
+    }
+  ]
 }
