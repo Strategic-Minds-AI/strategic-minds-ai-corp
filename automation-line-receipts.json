@@ -1,0 +1,2732 @@
+{
+  "schema_version": 1,
+  "contract": "INDEPENDENT_LINE_GATE_V1",
+  "validator_process": "separate_node_process",
+  "source_sha": "196a202f9b86548ef05c811e9558f834a61eac18",
+  "total_lines": 299,
+  "files": [
+    {
+      "path": "base44/shared/credentialCapabilityPolicy.ts",
+      "file_sha256": "34c85b338a9908469d30a0b1eae79e299df4158f948e970ac7cfc641e6fdf65f",
+      "final_chain_sha256": "21186adf71f04f8c9e5a0fe1c474930d706b9fb77254b446cf73f28dcd1758b3",
+      "trailing_newline": true,
+      "lines": [
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 1,
+          "line_sha256": "58f7aa1295f956e7ddf11abf5bcc2390a5b1d711939fd1e789fca380a742002e",
+          "previous_chain": "0000000000000000000000000000000000000000000000000000000000000000",
+          "chain_sha256": "8ed08ce0f40dd57335dbeb8d973d5e0e97eccb95cb5cfbbcc712782f9234bae0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 2,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "8ed08ce0f40dd57335dbeb8d973d5e0e97eccb95cb5cfbbcc712782f9234bae0",
+          "chain_sha256": "c57f4ee6eb6df9f08eae3d233427b1e38c941e7264442e9aac1e93172dd3658d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 3,
+          "line_sha256": "35bc77f5279fef9de33d8d5caa8aafecde0e9bc655e3ce3b2b8d30cde931f118",
+          "previous_chain": "c57f4ee6eb6df9f08eae3d233427b1e38c941e7264442e9aac1e93172dd3658d",
+          "chain_sha256": "d559b0c5f7f1a9f1aad51cfa82c9d7ddede416b53512927c0f89965c498e7a89"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 4,
+          "line_sha256": "2e7aeb92cae6b87149eeacbbd614c20d7f3b28570bcd1eb209863c0a30e106e3",
+          "previous_chain": "d559b0c5f7f1a9f1aad51cfa82c9d7ddede416b53512927c0f89965c498e7a89",
+          "chain_sha256": "988631d18da0b4ae6128b56720d01b958bfd4118c7833a81de10fc37d35da67b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 5,
+          "line_sha256": "8546998aaa944da1c02799dbf9105aa4de115082cfaa0e4dbdd0dec097b200a0",
+          "previous_chain": "988631d18da0b4ae6128b56720d01b958bfd4118c7833a81de10fc37d35da67b",
+          "chain_sha256": "077ec60099ceb7bb4b47e87e0c3e272e9c60e3318486c93a633bdfb4ed204cdf"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 6,
+          "line_sha256": "5490f08ad4fead880a90bc1c0ee09c656e23dbe4112521bb094a5642fcba743d",
+          "previous_chain": "077ec60099ceb7bb4b47e87e0c3e272e9c60e3318486c93a633bdfb4ed204cdf",
+          "chain_sha256": "f43a39977eb670f46e1efb983406c149dca5a2358c9dc20b492d33bbc734529d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 7,
+          "line_sha256": "2e78486ed62b0264697b6bea94c364afc04f018e94416eec5c1a905e5d1fff0a",
+          "previous_chain": "f43a39977eb670f46e1efb983406c149dca5a2358c9dc20b492d33bbc734529d",
+          "chain_sha256": "05be0a85c8af206ee418b362a35ae9a5a5731aafca241f350fd91fbe10ff246b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 8,
+          "line_sha256": "ba9801d22e0a4c850a6197b4a4127fd02bf4d9e7c10f9d31d797605a540c1065",
+          "previous_chain": "05be0a85c8af206ee418b362a35ae9a5a5731aafca241f350fd91fbe10ff246b",
+          "chain_sha256": "a7a6047a489e043d6f1c58737a5395a5bf3b597cd9c9df2bc28c4bd0a1f52ba0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 9,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "a7a6047a489e043d6f1c58737a5395a5bf3b597cd9c9df2bc28c4bd0a1f52ba0",
+          "chain_sha256": "b5c509fec2d750585fe93520a9e948f2f49f430d1023c4b0cddb60aeb9782754"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 10,
+          "line_sha256": "dc1ecebeec6bc3b706ffae552e2519de998aea3636697af89d21c12c10260318",
+          "previous_chain": "b5c509fec2d750585fe93520a9e948f2f49f430d1023c4b0cddb60aeb9782754",
+          "chain_sha256": "a4a659e1fd1e60529818485a3c26d9348c0b3b541992018da5ca05fbc64a17bb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 11,
+          "line_sha256": "d4a2821a496709f4d0c32f1e9f9b3e98a3e23f5c4397bded15ab877ce2f3bc17",
+          "previous_chain": "a4a659e1fd1e60529818485a3c26d9348c0b3b541992018da5ca05fbc64a17bb",
+          "chain_sha256": "1bc01ea9d6944f74ff4c6615be6f9c3fe7a0edc9b56904fcd3b0b7fee5591550"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 12,
+          "line_sha256": "37656cdf6b6f299359e0f7202851a6458523acd11f55731fa98f29b598a8b8ff",
+          "previous_chain": "1bc01ea9d6944f74ff4c6615be6f9c3fe7a0edc9b56904fcd3b0b7fee5591550",
+          "chain_sha256": "cf3f21bee6ec92f0d9a8078f9c98f4a890e8304188589bdf3283b2a3af213685"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 13,
+          "line_sha256": "290634e1e0cafef33b5fcb0128cb6f4395db6761bccee3d322e969c480976c64",
+          "previous_chain": "cf3f21bee6ec92f0d9a8078f9c98f4a890e8304188589bdf3283b2a3af213685",
+          "chain_sha256": "dbc3392de83a052f4243d0181a74f4bdfc6f30f62912f8d2c4204ede6a1ca798"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 14,
+          "line_sha256": "3a73d1845c3cfd9b53ac6e103c8235cd697b2d820c02aa36691e08a4d86efc32",
+          "previous_chain": "dbc3392de83a052f4243d0181a74f4bdfc6f30f62912f8d2c4204ede6a1ca798",
+          "chain_sha256": "aba2ca91298e94dfd58cf6b8545fda017841acfa91d67d3daef58ecbf722d31b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 15,
+          "line_sha256": "0ae47a13980fb259002db6257e354e5c8994a535462bf8ac0c952fcdf5444e69",
+          "previous_chain": "aba2ca91298e94dfd58cf6b8545fda017841acfa91d67d3daef58ecbf722d31b",
+          "chain_sha256": "ef1a3663810e293cb47cd27678e67b76af5f06e5feb262ef0aecc781118af688"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 16,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "ef1a3663810e293cb47cd27678e67b76af5f06e5feb262ef0aecc781118af688",
+          "chain_sha256": "3850d2d912fec1a243ffda7a4a450006adcb65d1501395a30eb4f867f5d2ee74"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 17,
+          "line_sha256": "83f1131022c3512d88d55a7173b902184287ff426186cd52d9fd5bd7bc0d91ae",
+          "previous_chain": "3850d2d912fec1a243ffda7a4a450006adcb65d1501395a30eb4f867f5d2ee74",
+          "chain_sha256": "18bcd1fa4356c572a5031e0559f0755a7368210ccad6b7d2e3884cfa05752952"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 18,
+          "line_sha256": "6c38702bd53a8399124dc0b98053efec1cd9073525ff22ec474f7ff7c369371c",
+          "previous_chain": "18bcd1fa4356c572a5031e0559f0755a7368210ccad6b7d2e3884cfa05752952",
+          "chain_sha256": "bb4177b4f846b344cca87d5e17d19f1a1e209578509b86f2b973e42327f783b7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 19,
+          "line_sha256": "061916b9ed6476699c54b538e02f25755658e5cea66ef7d2bdbee0c4291467a1",
+          "previous_chain": "bb4177b4f846b344cca87d5e17d19f1a1e209578509b86f2b973e42327f783b7",
+          "chain_sha256": "7e629017bf0c2a76fc7afa0b65ca6076979bb9a9242b4b921138d85f650e38af"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 20,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "7e629017bf0c2a76fc7afa0b65ca6076979bb9a9242b4b921138d85f650e38af",
+          "chain_sha256": "68ba72809fb9bf1ef8d1fe7b21a2e50776a2837bf7f20a55eafb44a0beeb112c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 21,
+          "line_sha256": "57361bb21c6bac58bb43e6db44ea141cd4ee8c840cde4110ea5e9a7eab56b926",
+          "previous_chain": "68ba72809fb9bf1ef8d1fe7b21a2e50776a2837bf7f20a55eafb44a0beeb112c",
+          "chain_sha256": "d1788a877a6315fb8f32d0568e91701ce22dbd1181e31709dc91684f58fe6e34"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 22,
+          "line_sha256": "f5bf984bffb135f2142c233ef2106d95f10745c70dcdd8b140bb9390b05a11a7",
+          "previous_chain": "d1788a877a6315fb8f32d0568e91701ce22dbd1181e31709dc91684f58fe6e34",
+          "chain_sha256": "09b3f723b69a2658e58cf33a2e2bc063fe5aacbb16ace06bcbe1a152d69a4b86"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 23,
+          "line_sha256": "23861bb8fecf6f44f6ccb7a7dd03fefe01056b8e3d5bc292bd7fe940b2452b6c",
+          "previous_chain": "09b3f723b69a2658e58cf33a2e2bc063fe5aacbb16ace06bcbe1a152d69a4b86",
+          "chain_sha256": "fc084595683fa7287b7ba6fb2941bda0185765fa50fe108f447c25d224aa43bb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 24,
+          "line_sha256": "9135db80d2b5770432597ed4517e92ee807df43402019ddd90794e60ba6d0f5f",
+          "previous_chain": "fc084595683fa7287b7ba6fb2941bda0185765fa50fe108f447c25d224aa43bb",
+          "chain_sha256": "c3b9feab7eb81015d68316f4a708cce6e7da6ac4f1f302264778a537412bccd9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 25,
+          "line_sha256": "5c0254acd0251619029b7742ce33ed692f1099571cf182117eb4e87b71bcf031",
+          "previous_chain": "c3b9feab7eb81015d68316f4a708cce6e7da6ac4f1f302264778a537412bccd9",
+          "chain_sha256": "b3ecbee99d80fe264c26e3ad2ab6870902d1e6f0a205f739deecd9fafbaa4596"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 26,
+          "line_sha256": "30febddd9b6885986ccc99e6713d0b10f9ca19f70d1ca24d9376fe2e05a2a088",
+          "previous_chain": "b3ecbee99d80fe264c26e3ad2ab6870902d1e6f0a205f739deecd9fafbaa4596",
+          "chain_sha256": "d18760e035fb1d1edbd91d2e2c70672f576196d6bfe149922b69f51dedd4f39d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 27,
+          "line_sha256": "8f1aa0ff6f5c2fa70e4ed40030f0848f997abfa7223ce52ea176a842449e73a9",
+          "previous_chain": "d18760e035fb1d1edbd91d2e2c70672f576196d6bfe149922b69f51dedd4f39d",
+          "chain_sha256": "3a1efc034d34841eef5e0bed380f610ed6a65367736128ad67b6583e4d15ce55"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 28,
+          "line_sha256": "51896b33f23f64bf8d1236168f728c65dd1c9121078181e25f44d094b1a783c1",
+          "previous_chain": "3a1efc034d34841eef5e0bed380f610ed6a65367736128ad67b6583e4d15ce55",
+          "chain_sha256": "83f611d978dccd91efa6f64c9bb47bfe99ad9c64d7e07017e7cdc47e5177173d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 29,
+          "line_sha256": "248a85269cf55fb2646658cb20936966e223a151c1c48d3a28950bbdc199d05d",
+          "previous_chain": "83f611d978dccd91efa6f64c9bb47bfe99ad9c64d7e07017e7cdc47e5177173d",
+          "chain_sha256": "e5720f7422a948b7d6ba0e45707a08db82aa9afbfc95b672d53ae6c106da93de"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 30,
+          "line_sha256": "737db166c79ae98e44bbe5ad43e03bf3774f7b3696068842d56a72e863dfeb20",
+          "previous_chain": "e5720f7422a948b7d6ba0e45707a08db82aa9afbfc95b672d53ae6c106da93de",
+          "chain_sha256": "37497f9d80c05720007b01eac8309034d011d036358381af3ace78af62fbf3c7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 31,
+          "line_sha256": "16766aa3913c819cde85614a0ab8d5eaf4c462b970d03d6d12a35f0d9150827b",
+          "previous_chain": "37497f9d80c05720007b01eac8309034d011d036358381af3ace78af62fbf3c7",
+          "chain_sha256": "e5dda6d6d94bfdf5cff8aaa754563e0cc58937b84fdf505d605210b1d3219922"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 32,
+          "line_sha256": "e7231eb27b251952348d39360618752028e9466ca6400300afec9e5188cf34db",
+          "previous_chain": "e5dda6d6d94bfdf5cff8aaa754563e0cc58937b84fdf505d605210b1d3219922",
+          "chain_sha256": "2d1fe7c7ec05d6437ce5052e8e1b95a69d17c9e15bedfb16210c2ccd0df67e0a"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 33,
+          "line_sha256": "5aa09b04db3c4d879652338a2c0d25ad96728db42c01ffcb4f8ca3371f4b0ca4",
+          "previous_chain": "2d1fe7c7ec05d6437ce5052e8e1b95a69d17c9e15bedfb16210c2ccd0df67e0a",
+          "chain_sha256": "0f41c27b3a1272183ddeb589c328fe0fcbaa60a0833a428be78f0ecc70f943af"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 34,
+          "line_sha256": "006c1e17d61af09ea6319145163a61ba88346d3f083eccee420025f2748ab6bd",
+          "previous_chain": "0f41c27b3a1272183ddeb589c328fe0fcbaa60a0833a428be78f0ecc70f943af",
+          "chain_sha256": "b574a4d64b0aac42ee927fdc39587246bf7f295c1d860a959beffbb87bc5968f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 35,
+          "line_sha256": "a92b13ad0e4c2f569ae301a1463e9150ab783af857674599807f71c97da6232f",
+          "previous_chain": "b574a4d64b0aac42ee927fdc39587246bf7f295c1d860a959beffbb87bc5968f",
+          "chain_sha256": "2e12ace62636a5f2b8d2c43315789ec4f10a55f1ce5ef4349989e273df77602e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 36,
+          "line_sha256": "3c720edb05232538ef27d454f6e1a1b402edfea65962f068593e8f44d4e873f2",
+          "previous_chain": "2e12ace62636a5f2b8d2c43315789ec4f10a55f1ce5ef4349989e273df77602e",
+          "chain_sha256": "926791d3c8a063886995a06511718e09e8cd0bd9f7e74a57d9e5038ee9a96045"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 37,
+          "line_sha256": "c1f452130c8c5b088a31faf4bafcec452dc10c54cdb31cd3d9aaeddc10839c88",
+          "previous_chain": "926791d3c8a063886995a06511718e09e8cd0bd9f7e74a57d9e5038ee9a96045",
+          "chain_sha256": "931848462d51c454bad0720c5a4a1c7e053805e0e6415cf4d7ae6ab34c1e69ea"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 38,
+          "line_sha256": "5c0254acd0251619029b7742ce33ed692f1099571cf182117eb4e87b71bcf031",
+          "previous_chain": "931848462d51c454bad0720c5a4a1c7e053805e0e6415cf4d7ae6ab34c1e69ea",
+          "chain_sha256": "20e11316259999c0f5b1c1276b3adac69dbd4614914a25c85df227dc9cdf9f24"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 39,
+          "line_sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2",
+          "previous_chain": "20e11316259999c0f5b1c1276b3adac69dbd4614914a25c85df227dc9cdf9f24",
+          "chain_sha256": "21186adf71f04f8c9e5a0fe1c474930d706b9fb77254b446cf73f28dcd1758b3"
+        }
+      ]
+    },
+    {
+      "path": "base44/functions/credentialBroker/entry.ts",
+      "file_sha256": "1570fa31186071501cb842081f111c9ba838aa1454446070dd56ffdce7d496d8",
+      "final_chain_sha256": "9bd168010949666dae85af246498bc8beb856dead9b0689b98b8625df1445a1d",
+      "trailing_newline": true,
+      "lines": [
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 1,
+          "line_sha256": "6e74ff10881d8af81d7fd786947423d11916a344a26eda12bf98024af2a91244",
+          "previous_chain": "0000000000000000000000000000000000000000000000000000000000000000",
+          "chain_sha256": "3a386cd05382c40b05f03cac3034028f338f77d56e33447b0589d361ab1b6009"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 2,
+          "line_sha256": "6727acdcebfd46a220b04db7bcf22bf439d150963ec28b78bf81d7d5b80e639d",
+          "previous_chain": "3a386cd05382c40b05f03cac3034028f338f77d56e33447b0589d361ab1b6009",
+          "chain_sha256": "5ed17cd75784ec3f2cbce8fea8aaef28ae53970e8bbf97d2ef230c3fdf2578de"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 3,
+          "line_sha256": "86ff1a33818e64294a49f62154bbd50c7c248c98a062bb616af10f5aa2ea66f7",
+          "previous_chain": "5ed17cd75784ec3f2cbce8fea8aaef28ae53970e8bbf97d2ef230c3fdf2578de",
+          "chain_sha256": "ac3a5160b9970dd5a86f1b1f27b30265ca789e685134124e4ca6b893195dc1b4"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 4,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "ac3a5160b9970dd5a86f1b1f27b30265ca789e685134124e4ca6b893195dc1b4",
+          "chain_sha256": "fd37dfad24f1578b5eb0ba7bf18487cdfbcefc70d5fe9f0500fc6682b947fbb0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 5,
+          "line_sha256": "a492bbbbf128e3524d12e7a0ef8a75f676eb069b958bec638c09b2395dbaa7e4",
+          "previous_chain": "fd37dfad24f1578b5eb0ba7bf18487cdfbcefc70d5fe9f0500fc6682b947fbb0",
+          "chain_sha256": "83337044f1dc8ae0481451c51aa37787b1f62adc07bb55e4cff8f90069e75d90"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 6,
+          "line_sha256": "f15d1a753f2e1ffc4aab0a6aba47c8342d69eaf44089379e1767cee706a5a2d6",
+          "previous_chain": "83337044f1dc8ae0481451c51aa37787b1f62adc07bb55e4cff8f90069e75d90",
+          "chain_sha256": "618e9dbc87ad092820a308d28f4225a94103d60ce1b30b16e29984d2738416ed"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 7,
+          "line_sha256": "3852fa46a23c6432fa6e451d290a88e937a414bd8ec2e52cbaa9236780960dc8",
+          "previous_chain": "618e9dbc87ad092820a308d28f4225a94103d60ce1b30b16e29984d2738416ed",
+          "chain_sha256": "b6ed083a0d90a1a57916bd6a39eaf518b2a3673c8ddda4c3a4a422b65a1c6bb6"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 8,
+          "line_sha256": "ba0ed6248c3c2e2871ba1515d47e76787c4f52b9c97884c1c48f9ce8fbe46387",
+          "previous_chain": "b6ed083a0d90a1a57916bd6a39eaf518b2a3673c8ddda4c3a4a422b65a1c6bb6",
+          "chain_sha256": "c8fa96dedcb467661de82b6a9718fb3b62cd471280bbcc27f4009c23d22fbcf3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 9,
+          "line_sha256": "fae3bdb50c68f757d210a2fb168f4ccc90a1b046216c167defc887bf68bf04d3",
+          "previous_chain": "c8fa96dedcb467661de82b6a9718fb3b62cd471280bbcc27f4009c23d22fbcf3",
+          "chain_sha256": "62f68f6e81fee77882db5b67d542357e312b4ab26c3958ea92babf5094bd1911"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 10,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "62f68f6e81fee77882db5b67d542357e312b4ab26c3958ea92babf5094bd1911",
+          "chain_sha256": "5ff87e12bc375cc7b058a06b6a4d44a80972bab7a7d13dc2d0a39a90c999eb56"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 11,
+          "line_sha256": "dff3b8238b7cf594040f5e1c67066b633440f61c89f9d25f9af73786e4c72dd1",
+          "previous_chain": "5ff87e12bc375cc7b058a06b6a4d44a80972bab7a7d13dc2d0a39a90c999eb56",
+          "chain_sha256": "ff9c10984e68f954d68d4355313f0e3e8f249931244973ded848ecbedede5833"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 12,
+          "line_sha256": "3e80ec1e9a482beb686b8db2eefb3116140c65b1c20f40d96b1864f94ffe82df",
+          "previous_chain": "ff9c10984e68f954d68d4355313f0e3e8f249931244973ded848ecbedede5833",
+          "chain_sha256": "d566aaf237238e1c9638ee9074cfa9ec53e844a761412fd3463a8e77c189ee8c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 13,
+          "line_sha256": "6e01c341f980d3d7546c066f24a64db4a5fe0c9a84f262c8e0c144674c6f7bc3",
+          "previous_chain": "d566aaf237238e1c9638ee9074cfa9ec53e844a761412fd3463a8e77c189ee8c",
+          "chain_sha256": "5d391a5ef0aae3656d511b827e57d0bb145d0f6e09dc2001d0eec7007ee3d781"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 14,
+          "line_sha256": "6646c46cc82640fefb420888bd75e66da01291902a6242deb1fc01e97d62085c",
+          "previous_chain": "5d391a5ef0aae3656d511b827e57d0bb145d0f6e09dc2001d0eec7007ee3d781",
+          "chain_sha256": "6ecbc4563d58c29987d2016a92b64d9f4c32d18187fcda5cd68266b5852832d8"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 15,
+          "line_sha256": "61b573b82f46c3ee5d6706da923d0476e72d2104efcfc5efab4dac9212fb10f4",
+          "previous_chain": "6ecbc4563d58c29987d2016a92b64d9f4c32d18187fcda5cd68266b5852832d8",
+          "chain_sha256": "f65975f1c15a590375a232f0c32f09f23f2d828bdcc2579ba4d2620b0170dda2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 16,
+          "line_sha256": "ab46647f8205a1f01f07915e93e7641dffcaa6ca7aed3af2c35f5a03c24e1b6c",
+          "previous_chain": "f65975f1c15a590375a232f0c32f09f23f2d828bdcc2579ba4d2620b0170dda2",
+          "chain_sha256": "b2dcf8c7bba1e366a97f5a94f6f823e0d678df3a3c2f6840c996fcd7368bb66b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 17,
+          "line_sha256": "867a15ea68ee2c66f05b557805979fcb1afb3e84e40537f3fd99e9f0120f912d",
+          "previous_chain": "b2dcf8c7bba1e366a97f5a94f6f823e0d678df3a3c2f6840c996fcd7368bb66b",
+          "chain_sha256": "e67bfb8e1f3b07ff81f37139b203340c9232386e7f096e89086a140893526d82"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 18,
+          "line_sha256": "507fda2c6f8d7f14519e926f87c76dbd086e2d78b5fc3641e6b871943e38b09f",
+          "previous_chain": "e67bfb8e1f3b07ff81f37139b203340c9232386e7f096e89086a140893526d82",
+          "chain_sha256": "c00c44fb929b9019378ce5d060007b63a0905023a0469b2cf251be19be0a7704"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 19,
+          "line_sha256": "03bbf874aba4c834d84369766762aa980d0c490d08f70d82f8aabe06b4cf6723",
+          "previous_chain": "c00c44fb929b9019378ce5d060007b63a0905023a0469b2cf251be19be0a7704",
+          "chain_sha256": "01d0ad235579a36d619f55d818b05c8653156c9c974d40c2e63844a60769b7d7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 20,
+          "line_sha256": "801b233bd1bfa8bff9efc41f24dfae5ada6c6f612a1944e6dc5a5f97ef10bb4d",
+          "previous_chain": "01d0ad235579a36d619f55d818b05c8653156c9c974d40c2e63844a60769b7d7",
+          "chain_sha256": "a9f43f35d0fe01310cec678a606107eecea17685ec7f43348b9fa9dba44346d0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 21,
+          "line_sha256": "e034f83e3d701e96c100e36ab210a83e0a6b591de9819b78318fe0fea15b9169",
+          "previous_chain": "a9f43f35d0fe01310cec678a606107eecea17685ec7f43348b9fa9dba44346d0",
+          "chain_sha256": "308dae6db771c79cef6b1f576c8a42d0a9b2c355f1692fbbc92cabf3aa716f29"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 22,
+          "line_sha256": "b36b21f4d3c3b27c8826c8950e50277212214996250428f520542b8ddd8cb957",
+          "previous_chain": "308dae6db771c79cef6b1f576c8a42d0a9b2c355f1692fbbc92cabf3aa716f29",
+          "chain_sha256": "28f4812f53156201b34b8754f68b0f7048ce42d8e36baaa9842b209b05b1e8c0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 23,
+          "line_sha256": "f9d27f925f1bb7216591d4e2b31408d8966964aabf80778cabf808c5ca860dac",
+          "previous_chain": "28f4812f53156201b34b8754f68b0f7048ce42d8e36baaa9842b209b05b1e8c0",
+          "chain_sha256": "19049a90441cb5158a2ad314af049df516fce98cfc2601a2c11804946cf69263"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 24,
+          "line_sha256": "cbdb0ed3d39d9a156df1ac0feed45e948d978265c804c677cee7104589037faa",
+          "previous_chain": "19049a90441cb5158a2ad314af049df516fce98cfc2601a2c11804946cf69263",
+          "chain_sha256": "37f4b041561d2bafc81965a5eb57bf054642254de89d9f32a407cf86ceb87ad6"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 25,
+          "line_sha256": "c715338cfec9f873e1b61a541fa5456c8d0355ff9d1f0ea9860e055f25d8f1b6",
+          "previous_chain": "37f4b041561d2bafc81965a5eb57bf054642254de89d9f32a407cf86ceb87ad6",
+          "chain_sha256": "6485092da38daf40af05b6506074928849e6f36b6f4d8824ba5e83761b8e3144"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 26,
+          "line_sha256": "8918205c87aec718d8ed26668abe0962b53a36e38887e5434ec02d59639e3ec1",
+          "previous_chain": "6485092da38daf40af05b6506074928849e6f36b6f4d8824ba5e83761b8e3144",
+          "chain_sha256": "af5b7a5720da37fa3db29b2d7a75895fa135a08a25963f220acbeeeb4a73bf01"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 27,
+          "line_sha256": "ddce15082648b65b554ff0b8d54f5f789d73aabe13affc91d3f922919160ea9d",
+          "previous_chain": "af5b7a5720da37fa3db29b2d7a75895fa135a08a25963f220acbeeeb4a73bf01",
+          "chain_sha256": "5411a78b942f08d2c1a3cf8fcde4f1cb3bcc90fbef1a5a939e25e7fc6f4b6895"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 28,
+          "line_sha256": "b7e2e75536c91a9da224c656f843e1553b379225352ee094231d9e434282cea7",
+          "previous_chain": "5411a78b942f08d2c1a3cf8fcde4f1cb3bcc90fbef1a5a939e25e7fc6f4b6895",
+          "chain_sha256": "32a1b427fd17e6db91409ce464438aab124a91411807b515d3180ed7e246fbf2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 29,
+          "line_sha256": "978ee92f893b877cf9cccade3c830369059216c71cd47b332368a487e7b277b5",
+          "previous_chain": "32a1b427fd17e6db91409ce464438aab124a91411807b515d3180ed7e246fbf2",
+          "chain_sha256": "8ba54302f6c9ad0db43365bd0458fcc8533cc39e0dd4fec73ad6a3a81c30feb5"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 30,
+          "line_sha256": "95ff1e5bd9441f71a24bb528d7b6979dbac08ffcf57151765a6f745a7e3321ad",
+          "previous_chain": "8ba54302f6c9ad0db43365bd0458fcc8533cc39e0dd4fec73ad6a3a81c30feb5",
+          "chain_sha256": "096babdd878ed116eeb2a1b952eda2af28801c785b07ae3d00df3de163719cf2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 31,
+          "line_sha256": "f071dfadb1f7b2e094eb23a963be1126c24f86121bc20c74d9d1ba0305aaea12",
+          "previous_chain": "096babdd878ed116eeb2a1b952eda2af28801c785b07ae3d00df3de163719cf2",
+          "chain_sha256": "c335df037fa0fd980e573846382c869217d7cb3ba58ba074442cc220dc226624"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 32,
+          "line_sha256": "2df0848e5a2fff7a5362b8a1c4194ba673c402913a6b4b33f7408c1482e4e21c",
+          "previous_chain": "c335df037fa0fd980e573846382c869217d7cb3ba58ba074442cc220dc226624",
+          "chain_sha256": "e23f178e21617848f7eb28e1b8ba74e2239a51fb71247092fbeb00fd5afffb51"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 33,
+          "line_sha256": "5d01537f2a2a88642294c56af94d72f6df84c468660872131dfda12d1bede20f",
+          "previous_chain": "e23f178e21617848f7eb28e1b8ba74e2239a51fb71247092fbeb00fd5afffb51",
+          "chain_sha256": "176a786036c98da188873d0056a541ae43c880e928d41d11f3072134dd9e2dba"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 34,
+          "line_sha256": "efc6855c4d1490db2c7bac25899fb64da83ceab00afa823bd9524326c6ea1344",
+          "previous_chain": "176a786036c98da188873d0056a541ae43c880e928d41d11f3072134dd9e2dba",
+          "chain_sha256": "988d889789eb208274d693297c74922c57d7c2b109835faa393a6de1084195e0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 35,
+          "line_sha256": "737db166c79ae98e44bbe5ad43e03bf3774f7b3696068842d56a72e863dfeb20",
+          "previous_chain": "988d889789eb208274d693297c74922c57d7c2b109835faa393a6de1084195e0",
+          "chain_sha256": "97f4ae2fee4f22bc48426e77b19c3366920bf524e1d84e4b9dbbd6889ff2d7e3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 36,
+          "line_sha256": "2191c469f5cfb00c3c7240303b15b8708a001d0cfbe7651bbbefee1e5c7c4d33",
+          "previous_chain": "97f4ae2fee4f22bc48426e77b19c3366920bf524e1d84e4b9dbbd6889ff2d7e3",
+          "chain_sha256": "c687293f53b23019bdea6db3d7976d64c9321fc65b8da30d0926268c0a3408c0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 37,
+          "line_sha256": "3a671bb2fae6eda173c205af31766953fe18e58e620af45c7b3fe3ad47eb649e",
+          "previous_chain": "c687293f53b23019bdea6db3d7976d64c9321fc65b8da30d0926268c0a3408c0",
+          "chain_sha256": "812659a55f1f5f5093419707c62e00ee7f6217f4511fe34f84246302cad86976"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 38,
+          "line_sha256": "ace3e1ec12734881e6e41e8b74a6bab6187b3a1d7c7a66f69512067f6d0dcc00",
+          "previous_chain": "812659a55f1f5f5093419707c62e00ee7f6217f4511fe34f84246302cad86976",
+          "chain_sha256": "32f5d32defeb47d6e787ac356825e7f3f05b577366c8a5ee91e637a92b54772c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 39,
+          "line_sha256": "f2d9729302c7e8603a448946c2e9f42fc2cdfb4d7c95930dc97a8f7364d45b8b",
+          "previous_chain": "32f5d32defeb47d6e787ac356825e7f3f05b577366c8a5ee91e637a92b54772c",
+          "chain_sha256": "d6bbdad575a3ac78ef8546cd5578c89d6c6a574c7d78d6e4e8fa9322d48c05f1"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 40,
+          "line_sha256": "dee69b9753dbf4ba62bea50929fb17083f1c0cabca4bc7b7ed356e2daf96a762",
+          "previous_chain": "d6bbdad575a3ac78ef8546cd5578c89d6c6a574c7d78d6e4e8fa9322d48c05f1",
+          "chain_sha256": "be8f8b5c9c7e21a8aef59191684f64059e9a52b532a52bdf4617531e339ab771"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 41,
+          "line_sha256": "14a3d15fbf50863d0bb60a28033e29974569553be4d0dba51f9dd92ca39ce7ec",
+          "previous_chain": "be8f8b5c9c7e21a8aef59191684f64059e9a52b532a52bdf4617531e339ab771",
+          "chain_sha256": "695cfcdc209efba656d0dafc21148c11208b952dac891cbfe14f3f2443338e42"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 42,
+          "line_sha256": "340187df66b2191b3a3cd836b971b2f82fd3d051f721268087f6ca63aff4fd2a",
+          "previous_chain": "695cfcdc209efba656d0dafc21148c11208b952dac891cbfe14f3f2443338e42",
+          "chain_sha256": "b83b0d0f0b2d20ae7291d62a05967931cade7a1ebd62635f6c4d3396d00a4d6b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 43,
+          "line_sha256": "8921c029b5cfdc579f3919ab062c2399406e7db5e4dd980eab349e381126e289",
+          "previous_chain": "b83b0d0f0b2d20ae7291d62a05967931cade7a1ebd62635f6c4d3396d00a4d6b",
+          "chain_sha256": "a51faf03694730a3446802d8b76d48f490d2e6b0efade43cab1e84fa70820cde"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 44,
+          "line_sha256": "f61f5bbc379fd349ffd484746f91dcd132c4bb0b0a919ca7ec94604bf9ca2435",
+          "previous_chain": "a51faf03694730a3446802d8b76d48f490d2e6b0efade43cab1e84fa70820cde",
+          "chain_sha256": "0693ff45f561912b01caf607105caf0998ffd9dc7ba4b802b98d71054c0502d9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 45,
+          "line_sha256": "5bbc15e91f04a67077edb247a3261a93af6a0dd7b11c9a02a9751da7e5187bcc",
+          "previous_chain": "0693ff45f561912b01caf607105caf0998ffd9dc7ba4b802b98d71054c0502d9",
+          "chain_sha256": "2d5b68af1bade9fee1c562219911fea59f489e7851bcdc9041f0e200a52ea060"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 46,
+          "line_sha256": "76b07e19206d89eb8174174394a053ea17ac5f3d5d8c1fd20e563cdc88004686",
+          "previous_chain": "2d5b68af1bade9fee1c562219911fea59f489e7851bcdc9041f0e200a52ea060",
+          "chain_sha256": "6ce01530262625ddf5851cbe30d291a22adb79372282296f30d63cdfc6ddf006"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 47,
+          "line_sha256": "92cc565088965f7bbf0cb3d4b2961870b9b2677f9278eba707bf7ca20a67b915",
+          "previous_chain": "6ce01530262625ddf5851cbe30d291a22adb79372282296f30d63cdfc6ddf006",
+          "chain_sha256": "5269f942817456ca6805c93f1c64f4c68580a708785b9573d2ad89ad8308f237"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 48,
+          "line_sha256": "b543f0c1f32d4a2b73d79d7cd0684b9243f6e9826f5cb1cf1cd595304b24f74f",
+          "previous_chain": "5269f942817456ca6805c93f1c64f4c68580a708785b9573d2ad89ad8308f237",
+          "chain_sha256": "6702d947272db36474462fa625bed006d5ca2be7e01681efda773f312546b88f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 49,
+          "line_sha256": "27d84295815422563f2d718aac33d34717be82ec4a8dfa3900cbdcfe1ee4815c",
+          "previous_chain": "6702d947272db36474462fa625bed006d5ca2be7e01681efda773f312546b88f",
+          "chain_sha256": "4d20066954a9cc6674d8481e638586a19ea975f9b052ed35d5955ed37200c941"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 50,
+          "line_sha256": "49ecdcd1c7828358601fbe0dda676d8ec5bf0d23986c4d61ea965ce733dcbb4f",
+          "previous_chain": "4d20066954a9cc6674d8481e638586a19ea975f9b052ed35d5955ed37200c941",
+          "chain_sha256": "b69b46f8d61b55ef05aa4d5886e9ab9ff56ffc319ef89313c4c4a09bb50943ea"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 51,
+          "line_sha256": "3afada3c9d07121ad6fa38190f97a1e1c954d768b64dce4744ec521d7d6c3a9b",
+          "previous_chain": "b69b46f8d61b55ef05aa4d5886e9ab9ff56ffc319ef89313c4c4a09bb50943ea",
+          "chain_sha256": "0548ad9eb5a4005db44dc63d09a62a6770cf006f9b89ca186dffa4b491475510"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 52,
+          "line_sha256": "af665522a3342653355db6804e07c1888f36022dc1db7ff2f9ffc477572a02c4",
+          "previous_chain": "0548ad9eb5a4005db44dc63d09a62a6770cf006f9b89ca186dffa4b491475510",
+          "chain_sha256": "2695b61ad7e2fbf269be3d3654f77dd0f2ded0377ee7f2d696a8e3388ee9a780"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 53,
+          "line_sha256": "c9fd367c6033810f0abc172c5d5de56530306f1085244525d9794ecd6b027b53",
+          "previous_chain": "2695b61ad7e2fbf269be3d3654f77dd0f2ded0377ee7f2d696a8e3388ee9a780",
+          "chain_sha256": "218c47e0b175ede8fe791eada06a99106a9af61c4a0f9545dd3db1f40ec80a19"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 54,
+          "line_sha256": "28d86778615f6af47bb1bc4f40face756749768e5111f114cfa234a5060c25af",
+          "previous_chain": "218c47e0b175ede8fe791eada06a99106a9af61c4a0f9545dd3db1f40ec80a19",
+          "chain_sha256": "41c785d59a18e598db2e106233d3775ea53460a96fe51f227f20da9dc41d42dc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 55,
+          "line_sha256": "498d0082005432fb6da7a7f20cbca71caa00014729189920f53225d718133be8",
+          "previous_chain": "41c785d59a18e598db2e106233d3775ea53460a96fe51f227f20da9dc41d42dc",
+          "chain_sha256": "4866acb738d732160b73269c607f46f2af6c9d9f0608c0edd3215a21edc1dc07"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 56,
+          "line_sha256": "7ea13070d3d6d54272dd3fd9edfadb932a5d7c204719a9f7602b1e2e55e4c024",
+          "previous_chain": "4866acb738d732160b73269c607f46f2af6c9d9f0608c0edd3215a21edc1dc07",
+          "chain_sha256": "b58798863fa7ed943d4e055a9e90825de88585a0a005b8999a599f9f88a7425d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 57,
+          "line_sha256": "367a16a1aaf0dd0ae7e20d55dd0357f20b8eaa343bf41fdd6614726394f938cc",
+          "previous_chain": "b58798863fa7ed943d4e055a9e90825de88585a0a005b8999a599f9f88a7425d",
+          "chain_sha256": "b786c4976721c310af7526e369271ca2d0cd65e220827f0cb3dc3649b151cb3c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 58,
+          "line_sha256": "27d84295815422563f2d718aac33d34717be82ec4a8dfa3900cbdcfe1ee4815c",
+          "previous_chain": "b786c4976721c310af7526e369271ca2d0cd65e220827f0cb3dc3649b151cb3c",
+          "chain_sha256": "eba46ec439297b10aef2da5122f662d313a134be95c3ef0eae6ebe052ed9c013"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 59,
+          "line_sha256": "af665522a3342653355db6804e07c1888f36022dc1db7ff2f9ffc477572a02c4",
+          "previous_chain": "eba46ec439297b10aef2da5122f662d313a134be95c3ef0eae6ebe052ed9c013",
+          "chain_sha256": "5a618489ec40b3d918e074337bf9d131f2be6a7c7086357151b0bbad57db364b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 60,
+          "line_sha256": "b860d0a25cd1c040119771b2d20a4f5cdcd1068a71b0f4fba67002ee80d5a661",
+          "previous_chain": "5a618489ec40b3d918e074337bf9d131f2be6a7c7086357151b0bbad57db364b",
+          "chain_sha256": "029b70fc9d70f5e536ce60ecfabee7177b3cf509cbf9c920bc21d32ca6965ca2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 61,
+          "line_sha256": "a01862449876fd3b73ce3d388de2aa33f6e47cd094604f5ae34b7e8a8ea0b988",
+          "previous_chain": "029b70fc9d70f5e536ce60ecfabee7177b3cf509cbf9c920bc21d32ca6965ca2",
+          "chain_sha256": "e32878180ae0334ddf04ec3feccd552a9f31cd9eb7ca9511359d5a801d6b7ab7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 62,
+          "line_sha256": "efad088c9ff258394adebfeadc2c0b44580471e3dbfdbee8db8411400b48f1f9",
+          "previous_chain": "e32878180ae0334ddf04ec3feccd552a9f31cd9eb7ca9511359d5a801d6b7ab7",
+          "chain_sha256": "8d1cff1faf0696f62a3b86e8c0a66764b6cf7c04d9b3a0ab806eb9396eff215c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 63,
+          "line_sha256": "27d84295815422563f2d718aac33d34717be82ec4a8dfa3900cbdcfe1ee4815c",
+          "previous_chain": "8d1cff1faf0696f62a3b86e8c0a66764b6cf7c04d9b3a0ab806eb9396eff215c",
+          "chain_sha256": "6f925922033ee9735def5231d50168be0e561478dbf96a8220aca4223a24fb23"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 64,
+          "line_sha256": "28d86778615f6af47bb1bc4f40face756749768e5111f114cfa234a5060c25af",
+          "previous_chain": "6f925922033ee9735def5231d50168be0e561478dbf96a8220aca4223a24fb23",
+          "chain_sha256": "20a6c2b58e36772093cd4b4de5573363473727a2d0326ba6143294099946f079"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 65,
+          "line_sha256": "b3599f41bdbd2fd03d1112fffd10d143487f9206df50ff5f88a5ebf7f07b930c",
+          "previous_chain": "20a6c2b58e36772093cd4b4de5573363473727a2d0326ba6143294099946f079",
+          "chain_sha256": "1ba5d78d6c3b1d0fb73d7559e5faa63a1a68a08b2ef4c1f1ebd998c937ee5d3d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 66,
+          "line_sha256": "10fa2c363ee68d8c3d6448d2faf086bd2716a06e27d3dab5f9cd197056c89d3f",
+          "previous_chain": "1ba5d78d6c3b1d0fb73d7559e5faa63a1a68a08b2ef4c1f1ebd998c937ee5d3d",
+          "chain_sha256": "97a176b332ebd466e9a92410dc2ed7a594e7e831d13078939b52fa45c1bc9041"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 67,
+          "line_sha256": "737db166c79ae98e44bbe5ad43e03bf3774f7b3696068842d56a72e863dfeb20",
+          "previous_chain": "97a176b332ebd466e9a92410dc2ed7a594e7e831d13078939b52fa45c1bc9041",
+          "chain_sha256": "6dbafb6c6f2974aa4e12775d429d720313fc27b4f64c14f06e22aaa72e8d33a4"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 68,
+          "line_sha256": "0208253c3eb49b615d16a5f38ae482d2c9857151c09c4c341a93cbb63bf97469",
+          "previous_chain": "6dbafb6c6f2974aa4e12775d429d720313fc27b4f64c14f06e22aaa72e8d33a4",
+          "chain_sha256": "d576d7edfa5ed3606f3acea1a2a14014a8862d9dd69d8ac3179119fd2a53b9e5"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 69,
+          "line_sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2",
+          "previous_chain": "d576d7edfa5ed3606f3acea1a2a14014a8862d9dd69d8ac3179119fd2a53b9e5",
+          "chain_sha256": "9bd168010949666dae85af246498bc8beb856dead9b0689b98b8625df1445a1d"
+        }
+      ]
+    },
+    {
+      "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+      "file_sha256": "9925557962dcea3d7a9206fb0ca20cc17971dcb0a02fdd6afae9028e8fe329dc",
+      "final_chain_sha256": "eedcb45a52eefc7bb079e35d915b618c736ea8059dd821a5510c4949a30ba5c3",
+      "trailing_newline": true,
+      "lines": [
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 1,
+          "line_sha256": "3f6ce5b6c164a5a5715e4c17cf8de388e5ebcf5febd9a752b55bbd8246fe0a2e",
+          "previous_chain": "0000000000000000000000000000000000000000000000000000000000000000",
+          "chain_sha256": "aa638935ab8a72142c206a6c1739034a8818dd9d9cc11d2b4079be0bf3ef7746"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 2,
+          "line_sha256": "4759cc7bc0339c8f6591c875ca805ab6f093034f99fec6234926a862f75b6508",
+          "previous_chain": "aa638935ab8a72142c206a6c1739034a8818dd9d9cc11d2b4079be0bf3ef7746",
+          "chain_sha256": "6678228afd192ae2fd301ab3573914245e1a4217c28c3536267cfdcdc4295a58"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 3,
+          "line_sha256": "2efb2b036a505b7b69947c68ac7e8bdb2d5eae3b0093822cf9491a90f71f1bdc",
+          "previous_chain": "6678228afd192ae2fd301ab3573914245e1a4217c28c3536267cfdcdc4295a58",
+          "chain_sha256": "654c9e04d9b4ec691fb015d3d0eaa50ed4bd5ff857215734542c0a32410ef39e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 4,
+          "line_sha256": "f8a61509e35176576aede89910e0515b681cf08ae17850fb9667215d4200b2c0",
+          "previous_chain": "654c9e04d9b4ec691fb015d3d0eaa50ed4bd5ff857215734542c0a32410ef39e",
+          "chain_sha256": "a7de654f9c792164c95e200205fa09d87d9f329ad614454f7972032b03e4c864"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 5,
+          "line_sha256": "a9333046fe1357f26d9c9f1460045084c43bc7d3a54009c1c5ff6797441e54a4",
+          "previous_chain": "a7de654f9c792164c95e200205fa09d87d9f329ad614454f7972032b03e4c864",
+          "chain_sha256": "e19368339258cc22562dad7b07c60995729fce3a1a1655dea8b4500b5cf07baa"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 6,
+          "line_sha256": "81ddfc748aa736240a180e217bdd2008e677da4a9835b972c301d874c4ddb5eb",
+          "previous_chain": "e19368339258cc22562dad7b07c60995729fce3a1a1655dea8b4500b5cf07baa",
+          "chain_sha256": "412f76f443f242001eda7d6ae62202a542237bc5387e6ffbe4a55e74d0c89c78"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 7,
+          "line_sha256": "06a423f6286385984cf8193e4f17f0eebc2b60413d31cffd98d92c6d3e71b720",
+          "previous_chain": "412f76f443f242001eda7d6ae62202a542237bc5387e6ffbe4a55e74d0c89c78",
+          "chain_sha256": "7a8482dc3b58089c5c263ffddc27ffccee7d2a41355cea38958b5b657d962c01"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 8,
+          "line_sha256": "d815871d8c63f02e4bb36c53c4fadeb916e8a7720c1e5d4eda2ce91e41d3f691",
+          "previous_chain": "7a8482dc3b58089c5c263ffddc27ffccee7d2a41355cea38958b5b657d962c01",
+          "chain_sha256": "66f618288f457762bfd030cd8032753304d33581b1ec765a1c33c63e954cdaac"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 9,
+          "line_sha256": "df3982fd610173599241fca93c7c866683f58f541eced1c2098102145477164c",
+          "previous_chain": "66f618288f457762bfd030cd8032753304d33581b1ec765a1c33c63e954cdaac",
+          "chain_sha256": "c3c1b7a880359eeee74ee6920d7752b5d12ae891302c80296bfb9832403a34d4"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 10,
+          "line_sha256": "e36b286474f11850ec60d123e4a0562b5754f2c7b471333e45ffa7a31fe1b3bc",
+          "previous_chain": "c3c1b7a880359eeee74ee6920d7752b5d12ae891302c80296bfb9832403a34d4",
+          "chain_sha256": "6f4c38f108acd4173e1b4afca6fe5c7b64f832d4e86392bf59784d383d3b0709"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 11,
+          "line_sha256": "9cbbc7135581e2d648734a6c76dd9462f6bf43bf33ad28b1bb9eafa9f0ebff5d",
+          "previous_chain": "6f4c38f108acd4173e1b4afca6fe5c7b64f832d4e86392bf59784d383d3b0709",
+          "chain_sha256": "5c90e007fa69c4d5e8ec03b3d56b9cdbe0ea71253768c2bd6e446c83bb5a3008"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 12,
+          "line_sha256": "ec6ba616c434987e3e7f5dd8c22adae94bf7cbe3f8e45f14b2057fd9e9bb144c",
+          "previous_chain": "5c90e007fa69c4d5e8ec03b3d56b9cdbe0ea71253768c2bd6e446c83bb5a3008",
+          "chain_sha256": "a317e2525dd980a4070633fe8ba05a85b2977bfe1f931ddcda5479d75c5560a8"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 13,
+          "line_sha256": "1dee74529742e460b55e50537cc3dc8efcff0456616ac2a134930923c8e04b7c",
+          "previous_chain": "a317e2525dd980a4070633fe8ba05a85b2977bfe1f931ddcda5479d75c5560a8",
+          "chain_sha256": "3c3b67f2feadae09a2c6f05f8e7ad86b610ac87e999bbac46cef69cd37fb758c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 14,
+          "line_sha256": "bced7ba773d401b10bc82bfb3000e1eead407a4ea4db56c0e4305d369671d976",
+          "previous_chain": "3c3b67f2feadae09a2c6f05f8e7ad86b610ac87e999bbac46cef69cd37fb758c",
+          "chain_sha256": "03541ff623cdc8cdba01aaa75c2708e50839065e59f21cf8498c7631904c341a"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 15,
+          "line_sha256": "9c7068a576a37b829b6f1c97c7fb819e101568f067c62cc6af45784f847b1129",
+          "previous_chain": "03541ff623cdc8cdba01aaa75c2708e50839065e59f21cf8498c7631904c341a",
+          "chain_sha256": "fad587e9123c6ee7ce63141000af6008e75df5cbb26f64bf18ef9105560c1711"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 16,
+          "line_sha256": "f3ef58b9110239f76652d09df928cc9789f35e716c37ea884fa1473076f99d08",
+          "previous_chain": "fad587e9123c6ee7ce63141000af6008e75df5cbb26f64bf18ef9105560c1711",
+          "chain_sha256": "a2685922239543f28f2390af5f27128257b2396aa5366443c7db53e907b47b4b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 17,
+          "line_sha256": "20dbfa7e5569f1d3b9c5b753d2e977d7d9e5f3cefca69a999478e3b7a32b5e85",
+          "previous_chain": "a2685922239543f28f2390af5f27128257b2396aa5366443c7db53e907b47b4b",
+          "chain_sha256": "6974199f590a392d1fdd0da608f69e2d10993bcaabcd21639a8bb7f77e274704"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 18,
+          "line_sha256": "9e513d398a6ccfb46182297c856967e6235e94575ec57c27e426d13e5bafa3c9",
+          "previous_chain": "6974199f590a392d1fdd0da608f69e2d10993bcaabcd21639a8bb7f77e274704",
+          "chain_sha256": "10e6c832e088bf6c0a7a791dad19bf67c40801057cd10b14d30bafc6b8bbc7b5"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 19,
+          "line_sha256": "5d642f28a5cdc0e7ff346c14538f7665b17969dd19cc7e33169cf5666669d740",
+          "previous_chain": "10e6c832e088bf6c0a7a791dad19bf67c40801057cd10b14d30bafc6b8bbc7b5",
+          "chain_sha256": "17e727b8cb8375c7ac3f5f2b74412440e89dace68b3725b596807a1e3ec27312"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 20,
+          "line_sha256": "b41769ead53e776893ab5c4ecb3dfc68851f764dd074cc9f775dc695c339f232",
+          "previous_chain": "17e727b8cb8375c7ac3f5f2b74412440e89dace68b3725b596807a1e3ec27312",
+          "chain_sha256": "6cacee2eb2695aaaeae1c124045a811629c4e32b12472b1a2fb6d7f6ac2a33de"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 21,
+          "line_sha256": "f60fa6b59fdebc7a8213219be22e8b90a9d1c4193458dea94a342fce372c5de1",
+          "previous_chain": "6cacee2eb2695aaaeae1c124045a811629c4e32b12472b1a2fb6d7f6ac2a33de",
+          "chain_sha256": "b79c920fa8cb28910930d07f79500a36ab5014a309f099e68d8b02d7975094f1"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 22,
+          "line_sha256": "a81b7b631b690041ca68810dd323ebf8cb4b1e00185da99af511bce82f6dd017",
+          "previous_chain": "b79c920fa8cb28910930d07f79500a36ab5014a309f099e68d8b02d7975094f1",
+          "chain_sha256": "203af9b19362e6236d338a4061f2072b475c6920805f47ff59612425af1952e8"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 23,
+          "line_sha256": "74dd2dc8b2855dc2965ca7eac56478135599c18009f9ab8e6897a5e7ed658c85",
+          "previous_chain": "203af9b19362e6236d338a4061f2072b475c6920805f47ff59612425af1952e8",
+          "chain_sha256": "43c79dc3d3e129b5fb13159b93358c1ece27743754778a2b49cead6b7faae847"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 24,
+          "line_sha256": "5491f70e47dc8f96195219172d5969dfbbc3b89ba88210c26f0ada0a767f7274",
+          "previous_chain": "43c79dc3d3e129b5fb13159b93358c1ece27743754778a2b49cead6b7faae847",
+          "chain_sha256": "9c9282db573cc0f006c913145e5170fb2587fbbae2256059173ac0559e27bdcd"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 25,
+          "line_sha256": "3a20550dca4d8639b0f1205b4dc4373fc0624efa551efb2ee6c4c4f7d8d44352",
+          "previous_chain": "9c9282db573cc0f006c913145e5170fb2587fbbae2256059173ac0559e27bdcd",
+          "chain_sha256": "9f6a7cd63449d737326d470af912dd2e820b9346ee6b3ea830a3f0000d0439d1"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 26,
+          "line_sha256": "79e5fb3e482da76307ab442454a100d59a3ce4c64d4a07e977dfcd67fa89199b",
+          "previous_chain": "9f6a7cd63449d737326d470af912dd2e820b9346ee6b3ea830a3f0000d0439d1",
+          "chain_sha256": "b6729d0eecb6dde9b4fda3446c7ced7de4afdf3c329b93f27b28928ab6566cf2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 27,
+          "line_sha256": "a4c0b0eb38ad3e53709afffd069663df7d1171b911e6f416b36e61c5be36c670",
+          "previous_chain": "b6729d0eecb6dde9b4fda3446c7ced7de4afdf3c329b93f27b28928ab6566cf2",
+          "chain_sha256": "b9df5dd055610730701f87ec4dd9ee730a2877b9952a2fcdbf9e0ed186a36a83"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 28,
+          "line_sha256": "f6f8d14f133863e2a66eb0f3149b45e16544ae5b54b9524fe2b451525815322f",
+          "previous_chain": "b9df5dd055610730701f87ec4dd9ee730a2877b9952a2fcdbf9e0ed186a36a83",
+          "chain_sha256": "7f153a8ee2b9779b06109aa5dc1955c6c474981b0a6a4bac73788e35f01d21ad"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 29,
+          "line_sha256": "668d23cc6cd64fb081e53d9dc3a53955d372cfe9e37259a17e31e1c6d8a5c4a7",
+          "previous_chain": "7f153a8ee2b9779b06109aa5dc1955c6c474981b0a6a4bac73788e35f01d21ad",
+          "chain_sha256": "0ed9b4cf2957220fcc45b47ec13da4d627c884a0854de23c67d44cc1682a43f0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 30,
+          "line_sha256": "5d642f28a5cdc0e7ff346c14538f7665b17969dd19cc7e33169cf5666669d740",
+          "previous_chain": "0ed9b4cf2957220fcc45b47ec13da4d627c884a0854de23c67d44cc1682a43f0",
+          "chain_sha256": "939c6538f3a455ccf738430839ee5578a97abb8d1bf25ba0400ef618cc3e8988"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 31,
+          "line_sha256": "4717980ca7a0c2313e09dbc326570df87feaab6161901417c8dc70fe85a62450",
+          "previous_chain": "939c6538f3a455ccf738430839ee5578a97abb8d1bf25ba0400ef618cc3e8988",
+          "chain_sha256": "2ceab85f6d127f109c8bb343e6ee3cbf683eed23fc0a15a94bfe72f638ca63f6"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 32,
+          "line_sha256": "5338c01d9f85453fd0d8fef80bfbb78e81a93af57c4341af7da862109fdabdb9",
+          "previous_chain": "2ceab85f6d127f109c8bb343e6ee3cbf683eed23fc0a15a94bfe72f638ca63f6",
+          "chain_sha256": "046833962ca76d3056d8930ee45755bbf70c9c4f833c13eecc6550f68aa4b0a3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 33,
+          "line_sha256": "9644cc3e61e59bb0aaba18a752c25789afe5e5660c9556f979138ec5ad9309ef",
+          "previous_chain": "046833962ca76d3056d8930ee45755bbf70c9c4f833c13eecc6550f68aa4b0a3",
+          "chain_sha256": "5557fd3b51faa38c0fccf4ee29c32a671945dfeede28b400c5745f997587eeb3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 34,
+          "line_sha256": "84b3f2efa3d078f005f848d02458b6386d3ada67367f12148871c0ee5abb7f82",
+          "previous_chain": "5557fd3b51faa38c0fccf4ee29c32a671945dfeede28b400c5745f997587eeb3",
+          "chain_sha256": "78fdd7824ef058172626c3b0523db451a875f6d04b067ff01c05d900c84e3a10"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 35,
+          "line_sha256": "5c0254acd0251619029b7742ce33ed692f1099571cf182117eb4e87b71bcf031",
+          "previous_chain": "78fdd7824ef058172626c3b0523db451a875f6d04b067ff01c05d900c84e3a10",
+          "chain_sha256": "abd96898d49c8a81ad1aa76b154be20ac9cfeb062d8afa2555346805ec123fdb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 36,
+          "line_sha256": "d9e3e874723aee5f53714c8ab15a0abc64ef5543779bd4d55bdf8a6f9cd87b55",
+          "previous_chain": "abd96898d49c8a81ad1aa76b154be20ac9cfeb062d8afa2555346805ec123fdb",
+          "chain_sha256": "501d6c03cb49669767545f73cd12fb453e92590e76c0ee04e9545261c70c19f2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 37,
+          "line_sha256": "f384a560ae4d5337eccc7844047383cd9b8afad74c35d65301676e6773de3fe9",
+          "previous_chain": "501d6c03cb49669767545f73cd12fb453e92590e76c0ee04e9545261c70c19f2",
+          "chain_sha256": "d641910b7c608a0e2cf8522356b8d24184f5f3a3946b50980f952487fef65090"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 38,
+          "line_sha256": "2bdeb21b5f86903dbc3e682daf0b81195a5c882ac6f38c67028bd47f7aa4bc60",
+          "previous_chain": "d641910b7c608a0e2cf8522356b8d24184f5f3a3946b50980f952487fef65090",
+          "chain_sha256": "2390be6d78e43087ada60db8f871589d7c2f279467bc415761705e470a9fd56f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 39,
+          "line_sha256": "1a2470b6e66d12737a1e677698efedfe25d23291038c277fc1a74ccfbfe91f35",
+          "previous_chain": "2390be6d78e43087ada60db8f871589d7c2f279467bc415761705e470a9fd56f",
+          "chain_sha256": "bf9044b37300f1086ca7c06635fe4e18f25ea5c3ef01e63aa21e9965ed2e7455"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 40,
+          "line_sha256": "adef823707c54fed777b12140c5a611608a367161abb2104609cbd94c2239b86",
+          "previous_chain": "bf9044b37300f1086ca7c06635fe4e18f25ea5c3ef01e63aa21e9965ed2e7455",
+          "chain_sha256": "feb61201037ad208ebc0191e4937e0dd62265ba9a915f727665b32a50f4e2c71"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 41,
+          "line_sha256": "9044068db8683edb18188b75ada2573f62dc641310028e59b947873800a783a7",
+          "previous_chain": "feb61201037ad208ebc0191e4937e0dd62265ba9a915f727665b32a50f4e2c71",
+          "chain_sha256": "47df1842a143b22ca33c68af6b0db2718370a34a4b9879f8f3b1029e850fcdd9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 42,
+          "line_sha256": "d66c1910b77ed5e7a4e134c4b4a480775c9ee8fb6387f3952a5dfb9d7c9614c1",
+          "previous_chain": "47df1842a143b22ca33c68af6b0db2718370a34a4b9879f8f3b1029e850fcdd9",
+          "chain_sha256": "21cc742938c300576527dc7f3cec2c86a861441640e7b63cdd22208924d08258"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 43,
+          "line_sha256": "3c9df456c0fe6b01a77b8a9b8c3a2cfe43d94a63479292751f5df1994798edc2",
+          "previous_chain": "21cc742938c300576527dc7f3cec2c86a861441640e7b63cdd22208924d08258",
+          "chain_sha256": "b6541d68359f2de1b33388d8fa0689f3807a941ec61c60eda05d579874d6ec7b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 44,
+          "line_sha256": "36ed5059f1805160533d8454ae825d838019420f2f48f68e34b1758877958d56",
+          "previous_chain": "b6541d68359f2de1b33388d8fa0689f3807a941ec61c60eda05d579874d6ec7b",
+          "chain_sha256": "29ee1763418e29b0b8955e48c667aa1a5319203f54e592492652fd8ca0a19cad"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 45,
+          "line_sha256": "722209a7c90fb7cc0e94db80102895e679b6b9c414062909d0ab7449ba756289",
+          "previous_chain": "29ee1763418e29b0b8955e48c667aa1a5319203f54e592492652fd8ca0a19cad",
+          "chain_sha256": "7e61864b298c3689ef20ce280bbe5aea694b4ee169cded45c74136d82bccc9f0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 46,
+          "line_sha256": "18a26ac7ece324a554c6cd541a9b6eadabc9b88ef07f673f95392e3e8cfe4afa",
+          "previous_chain": "7e61864b298c3689ef20ce280bbe5aea694b4ee169cded45c74136d82bccc9f0",
+          "chain_sha256": "2190af55a18b67fa087c9f8cc4f49a0deca40353da42f1e03edf73ae6a39d6b3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 47,
+          "line_sha256": "9c370fbe57d1d10503c7d54daa245e263e252b0f99413b957c46bd68ab1850ec",
+          "previous_chain": "2190af55a18b67fa087c9f8cc4f49a0deca40353da42f1e03edf73ae6a39d6b3",
+          "chain_sha256": "77ffde302b10f7677a12bd086e57ff3b76df6397e10fc8bd38e3db22ed635f89"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 48,
+          "line_sha256": "c1886c562abd9d097f4733058a7a3d7814e65ba2f8adadfd6e2e065800e18f99",
+          "previous_chain": "77ffde302b10f7677a12bd086e57ff3b76df6397e10fc8bd38e3db22ed635f89",
+          "chain_sha256": "3c6419eb4e9fe7b60c951018531f0e589224d4f81c1a08eebe4162faaba18411"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 49,
+          "line_sha256": "239fc251d03209129f7ef2cb0d5107322663bb5bf5258dd2a2ecc568289c7647",
+          "previous_chain": "3c6419eb4e9fe7b60c951018531f0e589224d4f81c1a08eebe4162faaba18411",
+          "chain_sha256": "5c137c5e373f32538081ef7b77e0c3817941755ad3366f56f9c67ff3485afcbd"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 50,
+          "line_sha256": "65c68da902cfa5cb9e03e3ea59a6f11f9c154a7b8fdc4a1530ecb80f13c4dc2d",
+          "previous_chain": "5c137c5e373f32538081ef7b77e0c3817941755ad3366f56f9c67ff3485afcbd",
+          "chain_sha256": "e1541ab72d6100b0080252efb6588d2870859f86943ba2eaf8738a68a09b07a9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 51,
+          "line_sha256": "d0e339c0d126d133b9e8c101bd0ccbec051933bff73a98087aa45fdb316b7b74",
+          "previous_chain": "e1541ab72d6100b0080252efb6588d2870859f86943ba2eaf8738a68a09b07a9",
+          "chain_sha256": "7a92877ce349a4220488f440f7cde2dd471cd0acad90d1d45733ffd2ea5b8444"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 52,
+          "line_sha256": "478115aafd93163c8dbb740f8573025ae8e2ac99c7523936bbccd5e322446856",
+          "previous_chain": "7a92877ce349a4220488f440f7cde2dd471cd0acad90d1d45733ffd2ea5b8444",
+          "chain_sha256": "15880605760fc655405851e6a1e43f93efadfea77a62928f5b685c438bcf31db"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 53,
+          "line_sha256": "06471e0747d173c84aa7b2dda92a82e0275190c2e3ab17467763826c0e070ae0",
+          "previous_chain": "15880605760fc655405851e6a1e43f93efadfea77a62928f5b685c438bcf31db",
+          "chain_sha256": "38e8538c31af9689705c5edead1ec808121385883bdc0527ad4a0fd11ab49802"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 54,
+          "line_sha256": "8db7335fb672bfd38fa34abe94f3f0a7b20f0b5c1175753b8be393c3e9140ea2",
+          "previous_chain": "38e8538c31af9689705c5edead1ec808121385883bdc0527ad4a0fd11ab49802",
+          "chain_sha256": "a182e3c11aa6b35072250e16693e72dda95ab5c03b580bbc616e65bc4567b740"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 55,
+          "line_sha256": "652d7fa1ff25619ccdb09c2dbd4aadb85c2e62fbd5c1dbc44f22cf6269152dcd",
+          "previous_chain": "a182e3c11aa6b35072250e16693e72dda95ab5c03b580bbc616e65bc4567b740",
+          "chain_sha256": "982d906af51550ef46c31fcab46fc14604f7cf024ba07b0a458ee06fe7d0b521"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 56,
+          "line_sha256": "d0e339c0d126d133b9e8c101bd0ccbec051933bff73a98087aa45fdb316b7b74",
+          "previous_chain": "982d906af51550ef46c31fcab46fc14604f7cf024ba07b0a458ee06fe7d0b521",
+          "chain_sha256": "1591478eb7ba083568843b0c2083e6b0b54b266f1f4bd68ea0ab4bf6b62f0f7d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 57,
+          "line_sha256": "aa9f395159aad15d02315869f24bff81082384e198cee6c29eae19eaa5125166",
+          "previous_chain": "1591478eb7ba083568843b0c2083e6b0b54b266f1f4bd68ea0ab4bf6b62f0f7d",
+          "chain_sha256": "d49b4c716b67791ea948672621c7400e15f1114b2c37ffd6d690157ac86cd3d9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 58,
+          "line_sha256": "582222090495c938a0003c3c3ba4e1384b41f42f88b23532f969b4c8ce56c4ed",
+          "previous_chain": "d49b4c716b67791ea948672621c7400e15f1114b2c37ffd6d690157ac86cd3d9",
+          "chain_sha256": "098481638de392ec7289246b7cb95606a773ebd714f70dcf954ec2e068f1b24d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 59,
+          "line_sha256": "0afb40d37fdff28d6cb2f641e6d554b13e46c1ddb82f16d59ece48ba5146d007",
+          "previous_chain": "098481638de392ec7289246b7cb95606a773ebd714f70dcf954ec2e068f1b24d",
+          "chain_sha256": "77be1e807aae4d900af57979ff45b89a9806d0831aac27700a12c05d53f7d432"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 60,
+          "line_sha256": "7a9cd9567ac4f3a1f4158ee34e6c11f7593b0ec5512a53b06d692b9a5fead814",
+          "previous_chain": "77be1e807aae4d900af57979ff45b89a9806d0831aac27700a12c05d53f7d432",
+          "chain_sha256": "7c451534853f848e78c417edddefee7434216dc1d44374e5a882ba3f5e6db437"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 61,
+          "line_sha256": "00221b725d05f9d422b4085a0b3d6a5b4d10d233ec61bc8762ecdf3bd1425870",
+          "previous_chain": "7c451534853f848e78c417edddefee7434216dc1d44374e5a882ba3f5e6db437",
+          "chain_sha256": "cc9979ac757c579836c13dcd41bf07905c50a22a3ce513e9ff9d8db04dcbccaa"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 62,
+          "line_sha256": "4d7b46a8d63715d2ccd3f1e176a7c39291feabe880dd0dfc9c543e4d84de339c",
+          "previous_chain": "cc9979ac757c579836c13dcd41bf07905c50a22a3ce513e9ff9d8db04dcbccaa",
+          "chain_sha256": "32e7b960312235f4d289fc7872c69c194a2a27b4ac9fc3f3834d64b475c162e8"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 63,
+          "line_sha256": "58ebeb7d8281d526f79353e485f971974552689fed3a6001b13996aa78a6089f",
+          "previous_chain": "32e7b960312235f4d289fc7872c69c194a2a27b4ac9fc3f3834d64b475c162e8",
+          "chain_sha256": "3f35ad15255aa6fef366cad1548bbe8cf155bd38064dc0c4489e1ac0a3b3dc87"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 64,
+          "line_sha256": "c140f91fd63ebc76d8d6048087496223f02fa31dbcf349ab8ac409f6c62198a4",
+          "previous_chain": "3f35ad15255aa6fef366cad1548bbe8cf155bd38064dc0c4489e1ac0a3b3dc87",
+          "chain_sha256": "03e3831001043272136f722f34ba2ba8f5f1d100902cb04f0b7ca4f94e480016"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 65,
+          "line_sha256": "75bb900165e33f227732ef26506656e3d150a00c313ed9d0c73c6ab3d5144200",
+          "previous_chain": "03e3831001043272136f722f34ba2ba8f5f1d100902cb04f0b7ca4f94e480016",
+          "chain_sha256": "7d48fb30bf793e1945692c293947ebade423b85918649d5d7c8c0f4b1eedc87e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 66,
+          "line_sha256": "df1f9fa56d55e21212695794f5beb88017d129f986adaae74bed63e77a78ed17",
+          "previous_chain": "7d48fb30bf793e1945692c293947ebade423b85918649d5d7c8c0f4b1eedc87e",
+          "chain_sha256": "1fc0c827d2c34b77b00c72146d47270f41334634ed85e7141534246e19219de4"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 67,
+          "line_sha256": "6e9f37a539b2d013d07b8703b584d0cdf19ea3c5beeace2cfc47715f70dd5268",
+          "previous_chain": "1fc0c827d2c34b77b00c72146d47270f41334634ed85e7141534246e19219de4",
+          "chain_sha256": "2e97cb12d0ffcab00d5bc0f7f5a4ca29f950c9a1efde6314a707326b1de3eb18"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 68,
+          "line_sha256": "7043af2ba2c5b1fdb57f5c70ba938f1ccf915ec240652b050360b3682e32b04a",
+          "previous_chain": "2e97cb12d0ffcab00d5bc0f7f5a4ca29f950c9a1efde6314a707326b1de3eb18",
+          "chain_sha256": "88d80efaeea3bf2922d1cd806b34a0061a8e1502b09207183c8e7ef920546cdd"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 69,
+          "line_sha256": "2aca5eb9c33515dabf56171fe8d6490cd1a97c6e51116f883d1de814f06d8b31",
+          "previous_chain": "88d80efaeea3bf2922d1cd806b34a0061a8e1502b09207183c8e7ef920546cdd",
+          "chain_sha256": "fe62a5ddcfa1ceb2eb9fbd34681e96792bbce54ee0e7f377c986cc123e0a4e4c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 70,
+          "line_sha256": "a2cfda40d29848fc4950e37b986dff8244b7e243968849eeccccfddbb5f9a3e1",
+          "previous_chain": "fe62a5ddcfa1ceb2eb9fbd34681e96792bbce54ee0e7f377c986cc123e0a4e4c",
+          "chain_sha256": "a4d0c5f74745d8f53311eaa6187b13e620222b6217bf0999ec03819223828df9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 71,
+          "line_sha256": "bcfe39ff2ce3dca0287645f9e789734e0ebccbdd327196d5d71dbfb18fe5698c",
+          "previous_chain": "a4d0c5f74745d8f53311eaa6187b13e620222b6217bf0999ec03819223828df9",
+          "chain_sha256": "21f6af6265ea04445cc697efc845a260fdad9ccf716719a83d197391594edc10"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 72,
+          "line_sha256": "a84ac74da38ec48f6315e172b704375b102728d82bdd6b6b2980be418eeec9bf",
+          "previous_chain": "21f6af6265ea04445cc697efc845a260fdad9ccf716719a83d197391594edc10",
+          "chain_sha256": "3795ed678fb095cb946cb72d27908e1e1d3496b1fdddb7838cb1ef3c401a6fdc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 73,
+          "line_sha256": "16de4a06ebea92b2900cd2bb1e9f55766338534e978f99ca9ec78e15db78f2aa",
+          "previous_chain": "3795ed678fb095cb946cb72d27908e1e1d3496b1fdddb7838cb1ef3c401a6fdc",
+          "chain_sha256": "ac3b17367dd3487a8cd406a44a294920ee8f1ceb35495dd264d9e8f1396add35"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 74,
+          "line_sha256": "18a26ac7ece324a554c6cd541a9b6eadabc9b88ef07f673f95392e3e8cfe4afa",
+          "previous_chain": "ac3b17367dd3487a8cd406a44a294920ee8f1ceb35495dd264d9e8f1396add35",
+          "chain_sha256": "dccc736a7db0007380cadcab11fcd65c1848dd300b6263d66194ab9cf8fedd06"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 75,
+          "line_sha256": "f153540ccd835792c42b1fb8c56bf7d9c6acdbc16f5588355b12931d89af6178",
+          "previous_chain": "dccc736a7db0007380cadcab11fcd65c1848dd300b6263d66194ab9cf8fedd06",
+          "chain_sha256": "691304c7c9bee5e5791e6480057cf8cee94a73e067443d123d2590488f9a34e2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 76,
+          "line_sha256": "d0e339c0d126d133b9e8c101bd0ccbec051933bff73a98087aa45fdb316b7b74",
+          "previous_chain": "691304c7c9bee5e5791e6480057cf8cee94a73e067443d123d2590488f9a34e2",
+          "chain_sha256": "27548793c5d9edaebe68d695acf16f73dca248d3a96391c8d4b84535116d6c9a"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 77,
+          "line_sha256": "9b822b51eb0c7b5602e730d513349f65bfe6455c09a90bbeb35425bdb611c07b",
+          "previous_chain": "27548793c5d9edaebe68d695acf16f73dca248d3a96391c8d4b84535116d6c9a",
+          "chain_sha256": "976819450fb721255eba1559dda4ae7161c21eae85f0cebd1eba92b6be7a77fb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 78,
+          "line_sha256": "6042c63d6847d042ad155378030d8a824299578dc0848f6c9bf3836cfbb3976a",
+          "previous_chain": "976819450fb721255eba1559dda4ae7161c21eae85f0cebd1eba92b6be7a77fb",
+          "chain_sha256": "8c566a0f67713de0de011528ac7684a6d36f89e64c41e14ccb6286b4ba365b22"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 79,
+          "line_sha256": "97e6c9eb32a0ed731909c1d9afba2bb259dfe78a98b5685f9559793beb8a0ff7",
+          "previous_chain": "8c566a0f67713de0de011528ac7684a6d36f89e64c41e14ccb6286b4ba365b22",
+          "chain_sha256": "92640f42becc7408abbe144e2b2fce508a156e865793974819e737261e81b81b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 80,
+          "line_sha256": "7d912dcd7c7e1575ec628f29d8ac8f9b744f82892aeeb409fc9be093dd411840",
+          "previous_chain": "92640f42becc7408abbe144e2b2fce508a156e865793974819e737261e81b81b",
+          "chain_sha256": "7d5d6972759774bba2c62438e1ae0ffc17b2b9295bef8460259ef579c2b7f593"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 81,
+          "line_sha256": "5d377b2b31c93e1db03560025fc64a9e860b62e13da3031c610c7ec37e96ab31",
+          "previous_chain": "7d5d6972759774bba2c62438e1ae0ffc17b2b9295bef8460259ef579c2b7f593",
+          "chain_sha256": "4563ad5261405bf0e30d2af40f3c294a8e5300adbb8c5c2d7ea3dca4b54fb7c8"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 82,
+          "line_sha256": "d57e7a2697d9de7675ef2ed7720ee2204de47954e45c2e797262acc85f22343f",
+          "previous_chain": "4563ad5261405bf0e30d2af40f3c294a8e5300adbb8c5c2d7ea3dca4b54fb7c8",
+          "chain_sha256": "f1f0b30cf794f98cb8d6516c1bd7d75f799ea9995a01ad0de7ba44860578d2cd"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 83,
+          "line_sha256": "45d9f7317028e1dabd30fc62b0cd43cc2d60ca088f6e96758b69fefb07f2b0d0",
+          "previous_chain": "f1f0b30cf794f98cb8d6516c1bd7d75f799ea9995a01ad0de7ba44860578d2cd",
+          "chain_sha256": "22937eaa37eeec3d56b3b454d02c2fc7e9a2c8c190e6a4c9d7b17ecac23c20f7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 84,
+          "line_sha256": "3a5d0b9c2fd82493b66bba108059e333b190a7c3f488eab80fbab6a853f4473a",
+          "previous_chain": "22937eaa37eeec3d56b3b454d02c2fc7e9a2c8c190e6a4c9d7b17ecac23c20f7",
+          "chain_sha256": "f9fedb80ee370c0c46b936a0a3e3071af72f0e2e498a8e6bc9ec1fbbbed4a185"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/CapabilityBrokerPanel.jsx",
+          "line_number": 85,
+          "line_sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2",
+          "previous_chain": "f9fedb80ee370c0c46b936a0a3e3071af72f0e2e498a8e6bc9ec1fbbbed4a185",
+          "chain_sha256": "eedcb45a52eefc7bb079e35d915b618c736ea8059dd821a5510c4949a30ba5c3"
+        }
+      ]
+    },
+    {
+      "path": "src/components/portal/ChatGPTConnection.jsx",
+      "file_sha256": "b570346885b948cc921f64d71dedc487932e57811ce3398439f0c70d968526ff",
+      "final_chain_sha256": "bdc8a29e37d3507e5373f9810a4e52fa4e9d2700486b8f2066231a89aa5e7766",
+      "trailing_newline": false,
+      "lines": [
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 1,
+          "line_sha256": "a8908d0f508edfc11572a67d7412958f8a4f443b5a3cd2e263de3c55e6e8ff32",
+          "previous_chain": "0000000000000000000000000000000000000000000000000000000000000000",
+          "chain_sha256": "7736fb169769d01fb6475bbefe27103ed3f6b5c4b522e2c03e76125be7c08ffc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 2,
+          "line_sha256": "5f2ba0fccae10aefafeecc7d2e01b72706fc16cd42a168036a1943211cc88635",
+          "previous_chain": "7736fb169769d01fb6475bbefe27103ed3f6b5c4b522e2c03e76125be7c08ffc",
+          "chain_sha256": "f2ca25da7a286d522a4bff5d5478f71213a7328adefdd86c7cdde54e293245ac"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 3,
+          "line_sha256": "2efb2b036a505b7b69947c68ac7e8bdb2d5eae3b0093822cf9491a90f71f1bdc",
+          "previous_chain": "f2ca25da7a286d522a4bff5d5478f71213a7328adefdd86c7cdde54e293245ac",
+          "chain_sha256": "e59fb1a23a235205907a5c88f607f2fe2ee7bde67e48638e9a0e0c30e45f5e0e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 4,
+          "line_sha256": "8e6b596d6eb86689c377f2eab6f540a40c66fbbf0a4bc221344976407f471e58",
+          "previous_chain": "e59fb1a23a235205907a5c88f607f2fe2ee7bde67e48638e9a0e0c30e45f5e0e",
+          "chain_sha256": "429e5fe81f079f7ab5e61b3572f835bbb33425dc9fc6c015d318ffaa25b6ed82"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 5,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "429e5fe81f079f7ab5e61b3572f835bbb33425dc9fc6c015d318ffaa25b6ed82",
+          "chain_sha256": "7fa82a2527852e227ebe8e395d45b03e00e375581be288aea067a97ad025015e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 6,
+          "line_sha256": "cccb0a50bb5c74af0380a06a8f4f05df13f51c8441095558b29f15f058b155a5",
+          "previous_chain": "7fa82a2527852e227ebe8e395d45b03e00e375581be288aea067a97ad025015e",
+          "chain_sha256": "8f92830d728f3703be87490aa4ecfcca43f97ab1ec52453f6c08cf9fba2b2bd4"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 7,
+          "line_sha256": "84bd1e1535c000a1a97f7dd19008d9b4758643b8e9d93c0a63b91fd52c35c7a4",
+          "previous_chain": "8f92830d728f3703be87490aa4ecfcca43f97ab1ec52453f6c08cf9fba2b2bd4",
+          "chain_sha256": "be605de64ed6a3c84c6cd14bda8dec6dec79c39f6aa643d2d2ed05f121019adb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 8,
+          "line_sha256": "158fadc586a2be56ca935f82337f128bcfd695c43cd5d332d2b760f3b2bc00c6",
+          "previous_chain": "be605de64ed6a3c84c6cd14bda8dec6dec79c39f6aa643d2d2ed05f121019adb",
+          "chain_sha256": "7577f9d8d2da302b1e732d078f3ef5420f672629bc81d15672b0dd49da307a7b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 9,
+          "line_sha256": "4a0507b1ba4821e2552b9a96eaa53d7d5ffd95dcb8bf38d9b06c7523703dcd40",
+          "previous_chain": "7577f9d8d2da302b1e732d078f3ef5420f672629bc81d15672b0dd49da307a7b",
+          "chain_sha256": "d8ed08ab4e16b8b11d7d47b4937ac09218a6b232d31861628accf6ddc900311f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 10,
+          "line_sha256": "4e90550df2d19fb62d1f66adc0f1b3edb96c652b15f626bd2be7e60cc1b31dff",
+          "previous_chain": "d8ed08ab4e16b8b11d7d47b4937ac09218a6b232d31861628accf6ddc900311f",
+          "chain_sha256": "46970559d00cc987a5e927f17e9f95afc90116de65ee7872fd72420fd15ea834"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 11,
+          "line_sha256": "f45cb99eed45a6c6d99cc8c18240794d0abdc375e756bf1f9f4058a8792ff74f",
+          "previous_chain": "46970559d00cc987a5e927f17e9f95afc90116de65ee7872fd72420fd15ea834",
+          "chain_sha256": "e4f33b11af708243a92f7c3a2b2cf7061961e63047680a194e1fb011fcb58897"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 12,
+          "line_sha256": "153ee176df7a3ec1d6ed525cdfbb4a8b163fd771fca9168863a6e4f8da19b409",
+          "previous_chain": "e4f33b11af708243a92f7c3a2b2cf7061961e63047680a194e1fb011fcb58897",
+          "chain_sha256": "c7cd1299f8b38a5b4f2b45da47ecf77c7c0e89dd2b0121fd40339f64ab44fd6e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 13,
+          "line_sha256": "1dee74529742e460b55e50537cc3dc8efcff0456616ac2a134930923c8e04b7c",
+          "previous_chain": "c7cd1299f8b38a5b4f2b45da47ecf77c7c0e89dd2b0121fd40339f64ab44fd6e",
+          "chain_sha256": "77b2a4c028c72ad618e6d48badbbdde205084c08a5564eafe9d1b999f0554b94"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 14,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "77b2a4c028c72ad618e6d48badbbdde205084c08a5564eafe9d1b999f0554b94",
+          "chain_sha256": "9931cc2b0e3d890108c21caad3b299704542bd0b585db7835da7fb62345ee0f2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 15,
+          "line_sha256": "56a17bf95294582da458d7bfe28d9a1b4e8ae71ee5e6f1030870fadee57a93c8",
+          "previous_chain": "9931cc2b0e3d890108c21caad3b299704542bd0b585db7835da7fb62345ee0f2",
+          "chain_sha256": "c7794254006c21915a4722a6b5d5b00ebbf82350e9837012b466e65db45fe83d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 16,
+          "line_sha256": "3694cd0b8efb0d97e043fe1ff7d64e3a552884766781e32b8e57edfdc1ff5c6f",
+          "previous_chain": "c7794254006c21915a4722a6b5d5b00ebbf82350e9837012b466e65db45fe83d",
+          "chain_sha256": "d2bfc7fdc5b51ec8d794244a5631c41e8539f5d077783eda22fc83c2cdb65aae"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 17,
+          "line_sha256": "5d642f28a5cdc0e7ff346c14538f7665b17969dd19cc7e33169cf5666669d740",
+          "previous_chain": "d2bfc7fdc5b51ec8d794244a5631c41e8539f5d077783eda22fc83c2cdb65aae",
+          "chain_sha256": "314f82fd4b344fb7f0310b2ba1b9938b37113c9b67f7aa982a159b53784a041f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 18,
+          "line_sha256": "36a67c507bd7fdb555dd953aaf1bbf33ec54626e7fbe0e6d158ea6202c82888b",
+          "previous_chain": "314f82fd4b344fb7f0310b2ba1b9938b37113c9b67f7aa982a159b53784a041f",
+          "chain_sha256": "9f017e27c82f5ba1869d8fb36aa25bec649a3e6c322ffc86370dd76968c8d777"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 19,
+          "line_sha256": "c8d9da71c49370e4f91d289a9f113c7ae1f87abbc24df3fb8e69cba575a39a95",
+          "previous_chain": "9f017e27c82f5ba1869d8fb36aa25bec649a3e6c322ffc86370dd76968c8d777",
+          "chain_sha256": "ae7fdeab5c90907e24fb6178b835018d4c8f617865ef3d6a1b6c4b527863bff3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 20,
+          "line_sha256": "14933fba7e521a2c08b0966c279bac6fd849bf715e6ce668fff485916ef2d861",
+          "previous_chain": "ae7fdeab5c90907e24fb6178b835018d4c8f617865ef3d6a1b6c4b527863bff3",
+          "chain_sha256": "cf884eaa47a92b7e7024451d142844cb63db60851efb0ac9d13211c6189ed9ab"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 21,
+          "line_sha256": "c7b5087d8c5425fab4d3b9d1f6f3b02a09937eb65925f8a9560c77791817335b",
+          "previous_chain": "cf884eaa47a92b7e7024451d142844cb63db60851efb0ac9d13211c6189ed9ab",
+          "chain_sha256": "19fac4784b32b7c21e5839ecea27e3333c23187920288c1ec96846a2d64ceda6"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 22,
+          "line_sha256": "79e5fb3e482da76307ab442454a100d59a3ce4c64d4a07e977dfcd67fa89199b",
+          "previous_chain": "19fac4784b32b7c21e5839ecea27e3333c23187920288c1ec96846a2d64ceda6",
+          "chain_sha256": "42a1e9365e0aa7a9bb1f792849b43deeaf62864ae46083dcfa610ecb96f2322c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 23,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "42a1e9365e0aa7a9bb1f792849b43deeaf62864ae46083dcfa610ecb96f2322c",
+          "chain_sha256": "5ff9a25597ba6914ed85b34995391f765484e70e120423c0d0c1eb4828c6ff56"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 24,
+          "line_sha256": "efbd5b947f8241ceffb98e6f1e609275bd64d51a8e80ff0a4ba01b4f3c37a732",
+          "previous_chain": "5ff9a25597ba6914ed85b34995391f765484e70e120423c0d0c1eb4828c6ff56",
+          "chain_sha256": "bd7b54ed98579487b5aee296ebce4a5946c7c415d8734a8904603b23b18f90b3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 25,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "bd7b54ed98579487b5aee296ebce4a5946c7c415d8734a8904603b23b18f90b3",
+          "chain_sha256": "6b399451f309abd76dac1885c4ec9ab968c9f60367f5e9dd3da27f7bbf009abc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 26,
+          "line_sha256": "97d1e5bf0d6a5076fb283a5b250feefe2ef24b21a2150b4139fc967694f6fd32",
+          "previous_chain": "6b399451f309abd76dac1885c4ec9ab968c9f60367f5e9dd3da27f7bbf009abc",
+          "chain_sha256": "c02506d9f6c83a4cb2b46b9fd003b42571785294503323e0f968add78766b8a3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 27,
+          "line_sha256": "ac6d6b81a02c54345d1a939d2d04b85ab78cd3521a45b110677adeaf82c34aeb",
+          "previous_chain": "c02506d9f6c83a4cb2b46b9fd003b42571785294503323e0f968add78766b8a3",
+          "chain_sha256": "0b7d9497adc183d0d604b938dca078c160687fa1c045f6793e01de6e12ffec10"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 28,
+          "line_sha256": "544720f9e9f6559997c0ccbdb8833007674c5b600251973cda23c046f3d87ece",
+          "previous_chain": "0b7d9497adc183d0d604b938dca078c160687fa1c045f6793e01de6e12ffec10",
+          "chain_sha256": "e63d79a60fb1d2ed8f88ea4ce41f76b4e6408a8a48abb8838daa26bef44951f8"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 29,
+          "line_sha256": "8a74fdf349df97dd3486c8d2eebf940d3cabe7f5fceb323a2f0193a26fbc2c39",
+          "previous_chain": "e63d79a60fb1d2ed8f88ea4ce41f76b4e6408a8a48abb8838daa26bef44951f8",
+          "chain_sha256": "bf5c99a8311f37a140bed45e56ed0a61d2ab48d30b1cc7ccbbff2bffa9027974"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 30,
+          "line_sha256": "d52fc0f55a7c1aa1ccb50131f2ab0f5a24e5de71f20bd3ad66cc51c210d79022",
+          "previous_chain": "bf5c99a8311f37a140bed45e56ed0a61d2ab48d30b1cc7ccbbff2bffa9027974",
+          "chain_sha256": "e5fed6c368db2aaa47969193d444ffc2ad4fb39fc8cf4aad6e065b2db4cd8bff"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 31,
+          "line_sha256": "5d642f28a5cdc0e7ff346c14538f7665b17969dd19cc7e33169cf5666669d740",
+          "previous_chain": "e5fed6c368db2aaa47969193d444ffc2ad4fb39fc8cf4aad6e065b2db4cd8bff",
+          "chain_sha256": "4c24cfa589bfd376ec828018eb5c7ab91720db01440d65a3daa61665db991951"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 32,
+          "line_sha256": "3a0b48b664d909e6744ef4cf9e012c246c8cbcac242e0f5784297013d5645510",
+          "previous_chain": "4c24cfa589bfd376ec828018eb5c7ab91720db01440d65a3daa61665db991951",
+          "chain_sha256": "cd78ef1a103d80efc50da171d98e7d930649be8f896c289bd1a57e1c009a6e11"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 33,
+          "line_sha256": "6aa0bba180da2934ebb9fc0eaea1f826693ba0668dd75fc085fe541767cb9fe2",
+          "previous_chain": "cd78ef1a103d80efc50da171d98e7d930649be8f896c289bd1a57e1c009a6e11",
+          "chain_sha256": "798f329c5e8733642f4348d096c44bf7aae062878fe3457b265f8ad49352468c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 34,
+          "line_sha256": "fec3edf36f1a61da182f77117229bd8bd2f8d70a26102deb19a4a472972e8acc",
+          "previous_chain": "798f329c5e8733642f4348d096c44bf7aae062878fe3457b265f8ad49352468c",
+          "chain_sha256": "73964e3058cc5855c36462b6dec599efcbcb0bb496d3c28c85f8f38a1087c9fc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 35,
+          "line_sha256": "1a7136796b87d6ec41642bb5a8afaf74a0273566bca998e0fe884c074ff0a322",
+          "previous_chain": "73964e3058cc5855c36462b6dec599efcbcb0bb496d3c28c85f8f38a1087c9fc",
+          "chain_sha256": "737b4cb419897496342b0c74d9c1adde461940bbca01f13d80e93be4e67efedc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 36,
+          "line_sha256": "b3ca3c8ba74ba83335c78142cd531d30170ee218c9522fd83e06a00edfb4ee40",
+          "previous_chain": "737b4cb419897496342b0c74d9c1adde461940bbca01f13d80e93be4e67efedc",
+          "chain_sha256": "1ca5c170890e0fd352c306cf79cc65a65b054291341b67c0f3c9ea3a37fcd37a"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 37,
+          "line_sha256": "57c35af34b5aa900b14d67d7b1c772c112bf8320c59eb49a68a479a1583fec0f",
+          "previous_chain": "1ca5c170890e0fd352c306cf79cc65a65b054291341b67c0f3c9ea3a37fcd37a",
+          "chain_sha256": "5ff39a48b98e078b95e2a939eb7b6c85657aaa1c42faaedfd5b89b35b843c5eb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 38,
+          "line_sha256": "18e2478199a1afda8f015387f63120dbe1925feef312ff9c42a640b51297bd08",
+          "previous_chain": "5ff39a48b98e078b95e2a939eb7b6c85657aaa1c42faaedfd5b89b35b843c5eb",
+          "chain_sha256": "6c95121f41adfc3485c3411de6168206fa72deb3c5afa2791d2462f68a7426be"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 39,
+          "line_sha256": "737db166c79ae98e44bbe5ad43e03bf3774f7b3696068842d56a72e863dfeb20",
+          "previous_chain": "6c95121f41adfc3485c3411de6168206fa72deb3c5afa2791d2462f68a7426be",
+          "chain_sha256": "299cf3e2e5ea763bdc34f361e79edb3a5e4826c529df1952dc003d3e01ce7036"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 40,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "299cf3e2e5ea763bdc34f361e79edb3a5e4826c529df1952dc003d3e01ce7036",
+          "chain_sha256": "d0255b9dcb2d3a602bb1b35ee835c9000ab669e1775255bbabe542251df6c664"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 41,
+          "line_sha256": "f384a560ae4d5337eccc7844047383cd9b8afad74c35d65301676e6773de3fe9",
+          "previous_chain": "d0255b9dcb2d3a602bb1b35ee835c9000ab669e1775255bbabe542251df6c664",
+          "chain_sha256": "569c2cb02c8fdc261f3ef55e8b0842ead172696ffe7f26583cf28babe2ed53b7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 42,
+          "line_sha256": "f70ab1c4436b58b2f0d8fe2108b3f4c286df2d3fcde3e452b7445f467c1d65c6",
+          "previous_chain": "569c2cb02c8fdc261f3ef55e8b0842ead172696ffe7f26583cf28babe2ed53b7",
+          "chain_sha256": "fc75bb81f62c4bf8cbea37ed0867f426c279db024af64c0964eeeacb75371437"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 43,
+          "line_sha256": "69a9e34fba1cd04abb55b4ba3e554fdec7a4b7c4fb86f07437b3fda5c91a1860",
+          "previous_chain": "fc75bb81f62c4bf8cbea37ed0867f426c279db024af64c0964eeeacb75371437",
+          "chain_sha256": "eacf56155b9867a5c2b7ec7f87464f94e3b94e7d7b87ec17590d8dd5c5ad5852"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 44,
+          "line_sha256": "697acd0f4b3a122df2913fd87aca8f2974d48d8eb2b47c86b4d1b7f171205703",
+          "previous_chain": "eacf56155b9867a5c2b7ec7f87464f94e3b94e7d7b87ec17590d8dd5c5ad5852",
+          "chain_sha256": "30ef5046ba741c9a017fb272674ca128923ad8f31e3c5436feb84743e0f1f174"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 45,
+          "line_sha256": "ec3e51ad188eb9d6d4dbe2fa2a306e9b905373f843a59a205b89b6c384178000",
+          "previous_chain": "30ef5046ba741c9a017fb272674ca128923ad8f31e3c5436feb84743e0f1f174",
+          "chain_sha256": "06399e9b1efb7cee734ddbf3408d3dc86f822dc63bd42676428ba67ff36fad88"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 46,
+          "line_sha256": "797ce45eb1f031b919fb7ca9a9b207c83feceb0b7cd7e6d598f1d4e6d3a37ad1",
+          "previous_chain": "06399e9b1efb7cee734ddbf3408d3dc86f822dc63bd42676428ba67ff36fad88",
+          "chain_sha256": "3e6dfaec18beba6eb5a905b41505f83bfd242ca3534d8437e3b325809294a3f4"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 47,
+          "line_sha256": "d66c1910b77ed5e7a4e134c4b4a480775c9ee8fb6387f3952a5dfb9d7c9614c1",
+          "previous_chain": "3e6dfaec18beba6eb5a905b41505f83bfd242ca3534d8437e3b325809294a3f4",
+          "chain_sha256": "8c99ddec81fef270e942d2f6729db9b867f5dc8a8971eececc2498c0b8fdaea5"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 48,
+          "line_sha256": "f05aa9fa31828778082a421de82210bb48bcb9bebfda1d21413c7e9e6b8fae67",
+          "previous_chain": "8c99ddec81fef270e942d2f6729db9b867f5dc8a8971eececc2498c0b8fdaea5",
+          "chain_sha256": "f5c70fc575c5d0c0fc25952283ce4aa97090d9e68f10693b6682ab790e2978f7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 49,
+          "line_sha256": "2c1d357433b5228219c992bc68df3734ee18c4cdf488b9e8e32894964f4580d8",
+          "previous_chain": "f5c70fc575c5d0c0fc25952283ce4aa97090d9e68f10693b6682ab790e2978f7",
+          "chain_sha256": "cc921aecb76abfb370f4d0d1d617105ac1b907bb45e71042eb9372d41bec8395"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 50,
+          "line_sha256": "250a096c6c8806f018cfd4a61f42fc007e17ba955e3dee3057d77fd800dd40e3",
+          "previous_chain": "cc921aecb76abfb370f4d0d1d617105ac1b907bb45e71042eb9372d41bec8395",
+          "chain_sha256": "dc3700511d32e4d35d303021cee759b79e5e67e50bbe27a62cc87387d62e4ad2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 51,
+          "line_sha256": "18a26ac7ece324a554c6cd541a9b6eadabc9b88ef07f673f95392e3e8cfe4afa",
+          "previous_chain": "dc3700511d32e4d35d303021cee759b79e5e67e50bbe27a62cc87387d62e4ad2",
+          "chain_sha256": "3300e5baa1fb1880f6944d40b078792256226acdc13edf142f4c96d30db3e799"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 52,
+          "line_sha256": "9c370fbe57d1d10503c7d54daa245e263e252b0f99413b957c46bd68ab1850ec",
+          "previous_chain": "3300e5baa1fb1880f6944d40b078792256226acdc13edf142f4c96d30db3e799",
+          "chain_sha256": "b0ab46d38d556d35cdb15e0c713b7a41eb72ec8673784e64f80f8bc375aca435"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 53,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "b0ab46d38d556d35cdb15e0c713b7a41eb72ec8673784e64f80f8bc375aca435",
+          "chain_sha256": "c469e3a1f6b075ed63c7872b9aa2945ff356fc2aad82642dbb0cc61e854c5c29"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 54,
+          "line_sha256": "f0614ad73c28f617d1805fd0ed543173d1125121716f935b963dead9ef71c8bd",
+          "previous_chain": "c469e3a1f6b075ed63c7872b9aa2945ff356fc2aad82642dbb0cc61e854c5c29",
+          "chain_sha256": "738cc8e59778e985079642d095beeb6f1dde892d1be52da8a500e137f09709fb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 55,
+          "line_sha256": "a5f1f8bef123b64dac6d05239c350bff21ca6c03f143d70618e5702deb0fc97e",
+          "previous_chain": "738cc8e59778e985079642d095beeb6f1dde892d1be52da8a500e137f09709fb",
+          "chain_sha256": "be0e5b389e08385fb291557e41afca6378ecf45fe0e3def491b478ab10ff2d9c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 56,
+          "line_sha256": "a1caf73acb51a577039cb6e72faf068af66d61c53cd57ceba3ebee66df973cff",
+          "previous_chain": "be0e5b389e08385fb291557e41afca6378ecf45fe0e3def491b478ab10ff2d9c",
+          "chain_sha256": "604646a195625f02735793449b329e96f7c64b9eb119647def137a9620abaf26"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 57,
+          "line_sha256": "2e17d02beec7f572fecc8fd47c35af21d094f0ebe488114377d489060528f808",
+          "previous_chain": "604646a195625f02735793449b329e96f7c64b9eb119647def137a9620abaf26",
+          "chain_sha256": "b763fdb04cbd9833becf7bd31fd53c5bc603fe6452cbb8b39961ae8270417f50"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 58,
+          "line_sha256": "938edd03c51b99eab36aeb9d5a5d025959fd80222dfccdbeaa1d14db4cf270f5",
+          "previous_chain": "b763fdb04cbd9833becf7bd31fd53c5bc603fe6452cbb8b39961ae8270417f50",
+          "chain_sha256": "65f751f71b2f49e535b8bf5f9802f1288718cc472e6859ae61215ced3e42a06d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 59,
+          "line_sha256": "18a26ac7ece324a554c6cd541a9b6eadabc9b88ef07f673f95392e3e8cfe4afa",
+          "previous_chain": "65f751f71b2f49e535b8bf5f9802f1288718cc472e6859ae61215ced3e42a06d",
+          "chain_sha256": "ad933f5d602629124b15adbdbd4f241512326f21e79e0e295f4e0f4d7752ecbd"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 60,
+          "line_sha256": "0ec3ce07dcf9b4baea0a0e0b3a640b5af1b5cabf8e00eb4df9b6f4a305321084",
+          "previous_chain": "ad933f5d602629124b15adbdbd4f241512326f21e79e0e295f4e0f4d7752ecbd",
+          "chain_sha256": "bf7455c5aa9239b87863155d99f533e9963597bdfc1d1db7d42e47fe783daa9f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 61,
+          "line_sha256": "9c370fbe57d1d10503c7d54daa245e263e252b0f99413b957c46bd68ab1850ec",
+          "previous_chain": "bf7455c5aa9239b87863155d99f533e9963597bdfc1d1db7d42e47fe783daa9f",
+          "chain_sha256": "a39491414962e37a28778e7b29a61c58eb70b54a4a3d1015f1df8826b24610ad"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 62,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "a39491414962e37a28778e7b29a61c58eb70b54a4a3d1015f1df8826b24610ad",
+          "chain_sha256": "ebd49f80b3c5faae27709a1ac584606db4ab6e5d60506e72f2dbd5102c95f486"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 63,
+          "line_sha256": "60097b0ae2c4092a7959317de2d78f609f50f96596f10aab469774cf1f343c9a",
+          "previous_chain": "ebd49f80b3c5faae27709a1ac584606db4ab6e5d60506e72f2dbd5102c95f486",
+          "chain_sha256": "495dcddc3e2daa0aa2d36b63a8b0f9af64b2de1b99ff6beee1ce56c69b918f17"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 64,
+          "line_sha256": "82b9cd1fcfc2ea40d25b32556cac4dca2dc1a940652c979bb0b9c6921f37a422",
+          "previous_chain": "495dcddc3e2daa0aa2d36b63a8b0f9af64b2de1b99ff6beee1ce56c69b918f17",
+          "chain_sha256": "ab498f95ebf1618e81e7cc62b7ae602a48851cbf9bd537b2150b3c83bc4e4542"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 65,
+          "line_sha256": "7576d7a841d71fd3e2320882eb426d79972a4f66c73fcf0ee3641678e34bff2a",
+          "previous_chain": "ab498f95ebf1618e81e7cc62b7ae602a48851cbf9bd537b2150b3c83bc4e4542",
+          "chain_sha256": "418c7e2993c04133c9412b61b1aabfc2dfda2f9abcaeb45e60d33b3add07535d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 66,
+          "line_sha256": "ad697b3b5c39fdef84ea0de74c636deb3dde01a2512f6c16347f39cd5dd808d0",
+          "previous_chain": "418c7e2993c04133c9412b61b1aabfc2dfda2f9abcaeb45e60d33b3add07535d",
+          "chain_sha256": "8bac30fbfae6405aabf67d8f11a20d7f6d22cd26d7736bae52b4d0f513487f87"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 67,
+          "line_sha256": "42e90dccce7e84c974ece10adac1404bffeb077c1784338ffc1e89c432b77bf6",
+          "previous_chain": "8bac30fbfae6405aabf67d8f11a20d7f6d22cd26d7736bae52b4d0f513487f87",
+          "chain_sha256": "60c403d510613ee93297a4bde6b30ccc3ee9ddb17af7bce932bb71466249f8bc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 68,
+          "line_sha256": "6d95e286209c3ce736adb1ae164cd42a4cf5c1855ba6a7a939966c134c4b84a1",
+          "previous_chain": "60c403d510613ee93297a4bde6b30ccc3ee9ddb17af7bce932bb71466249f8bc",
+          "chain_sha256": "d400143f5844ecea8cd51c8b5e114e5101774297e4b35cb63ce1a4007cb11550"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 69,
+          "line_sha256": "e37142f6769c48f4b9f2ce21419ae4817cda4d966e9bf37df89f72402ce61512",
+          "previous_chain": "d400143f5844ecea8cd51c8b5e114e5101774297e4b35cb63ce1a4007cb11550",
+          "chain_sha256": "1cc598ee280ec10597911c830a0bfdbb844da20273d89b24cbae648c60f86028"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 70,
+          "line_sha256": "a2650f3f3188c43df9f2979aae9bc3ad8260da2a548cf2a059cd0b69ac2aebb5",
+          "previous_chain": "1cc598ee280ec10597911c830a0bfdbb844da20273d89b24cbae648c60f86028",
+          "chain_sha256": "11916d4c0f960926803c6c27992d64b0403b699cb8078aba8fcd6e87d7dd4661"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 71,
+          "line_sha256": "fa63f37eba15f26a1b2c33a97f949b96ba681a33efd1220201d10b5e673e02f7",
+          "previous_chain": "11916d4c0f960926803c6c27992d64b0403b699cb8078aba8fcd6e87d7dd4661",
+          "chain_sha256": "d16a30261e80912a280ab5e0752578819c8896c5f5435e5847d8a0a28a8c5072"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 72,
+          "line_sha256": "995f8fc2fbe9688be5d62188f3df85d5e36cab336ea29f69e7f7525b6d6064f6",
+          "previous_chain": "d16a30261e80912a280ab5e0752578819c8896c5f5435e5847d8a0a28a8c5072",
+          "chain_sha256": "39ab0ff3fb97cbf59c4f38bc47929c255ede72f33d0209f503faec0c2b5bfd4b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 73,
+          "line_sha256": "3571fdbb39bf3fff9e158a72699e3ebbbcb76fc61dddce3999ebaf8596228b2d",
+          "previous_chain": "39ab0ff3fb97cbf59c4f38bc47929c255ede72f33d0209f503faec0c2b5bfd4b",
+          "chain_sha256": "3c65c8cc2ad9f34838614cdb8a48862d6181965ff41b07418dbb5ca4d742b1ad"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 74,
+          "line_sha256": "7af9b983c3ba75507d2a8bd0fdb3ad12dcaf2deeaac74829ecffff6d5e6fa797",
+          "previous_chain": "3c65c8cc2ad9f34838614cdb8a48862d6181965ff41b07418dbb5ca4d742b1ad",
+          "chain_sha256": "ca1df74421488d22d923cb240d612ed1a58cb6770f45942efbba84d6c07dc24e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 75,
+          "line_sha256": "e414bd128ae7e649a30564ffb6bb135eecec6da4b37c8ae7f758ab1b62494ad0",
+          "previous_chain": "ca1df74421488d22d923cb240d612ed1a58cb6770f45942efbba84d6c07dc24e",
+          "chain_sha256": "8061d25a5fd1e3615e979f8532426b0a9e52e58ec10f274f5688140ad46fc4b2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 76,
+          "line_sha256": "59032ef4596201d7c36c6258d7aef0bc8369edf1fd9974a02559cd1151cafcf1",
+          "previous_chain": "8061d25a5fd1e3615e979f8532426b0a9e52e58ec10f274f5688140ad46fc4b2",
+          "chain_sha256": "31f6989b8952a4a8fffdfa623625ebde383ca431e7f23fde2cb11eea05d1d9fc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 77,
+          "line_sha256": "16de4a06ebea92b2900cd2bb1e9f55766338534e978f99ca9ec78e15db78f2aa",
+          "previous_chain": "31f6989b8952a4a8fffdfa623625ebde383ca431e7f23fde2cb11eea05d1d9fc",
+          "chain_sha256": "f6ec89de26fd2073d38ab5d20c077f9b0f5eda10e5720fcabb7cfa1b634b83d2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 78,
+          "line_sha256": "18a26ac7ece324a554c6cd541a9b6eadabc9b88ef07f673f95392e3e8cfe4afa",
+          "previous_chain": "f6ec89de26fd2073d38ab5d20c077f9b0f5eda10e5720fcabb7cfa1b634b83d2",
+          "chain_sha256": "68a6eabb1fb0330a444d712055eee00421151f09c7c41c40a83fabab2913e0bd"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 79,
+          "line_sha256": "27502a7e5e5d60ca4c49b27e2aefc1ee4cc9d4761a342cafd4254813fce9e6dd",
+          "previous_chain": "68a6eabb1fb0330a444d712055eee00421151f09c7c41c40a83fabab2913e0bd",
+          "chain_sha256": "625517b82511a0ee126e38af3ae582dafacc4fd67cd4458a4803a30c64b0ef8c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 80,
+          "line_sha256": "2e2a0d931d1d934bc7409a1ce0e59ec1f51eb5b3d3efab6a61f6ff21d65ff6b7",
+          "previous_chain": "625517b82511a0ee126e38af3ae582dafacc4fd67cd4458a4803a30c64b0ef8c",
+          "chain_sha256": "accb7db9e792df55966060c50d4916e6aad28b227c95a460719e148dac0cd28d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 81,
+          "line_sha256": "8f829a37ab26e77c2688a0d1baa55391c58b76f7479841e099d5313871fb3a03",
+          "previous_chain": "accb7db9e792df55966060c50d4916e6aad28b227c95a460719e148dac0cd28d",
+          "chain_sha256": "32a7057b9d9091c3d67340157168b86d368fabf81131bd1a157a866169e9c597"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 82,
+          "line_sha256": "4d5c87a406620f56eae314f372e4963eacbf24f505866bfac60cf19717fe2eda",
+          "previous_chain": "32a7057b9d9091c3d67340157168b86d368fabf81131bd1a157a866169e9c597",
+          "chain_sha256": "0f00b2e4ef88385a6a4d2734beff3bc287acf8be64e25abab353f4af51f349e7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 83,
+          "line_sha256": "b3ffb78e5388c937ea443e594463852594ac4ae370b9cde54ce75d5c3600961c",
+          "previous_chain": "0f00b2e4ef88385a6a4d2734beff3bc287acf8be64e25abab353f4af51f349e7",
+          "chain_sha256": "a9a86292d1d410d165d30ab6373beba2d3d1b0fd1493ab11e9cdf41bbd78b488"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 84,
+          "line_sha256": "bcd4f5d21baf6e4dba65c5c1a6ab4774816683712dba7a3a6ff3ab13e81c5f47",
+          "previous_chain": "a9a86292d1d410d165d30ab6373beba2d3d1b0fd1493ab11e9cdf41bbd78b488",
+          "chain_sha256": "a6973edb616b37b9b005a2965612f8176c5fb036ad07845c366906101279c630"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 85,
+          "line_sha256": "18a26ac7ece324a554c6cd541a9b6eadabc9b88ef07f673f95392e3e8cfe4afa",
+          "previous_chain": "a6973edb616b37b9b005a2965612f8176c5fb036ad07845c366906101279c630",
+          "chain_sha256": "85eb1fa52cd7cb7c7a54903c2fe6d941ae5851e609de5e707d6bd7b27c9bd1b5"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 86,
+          "line_sha256": "8b3bc187fa776e757f307cdd388ec5b11e335296b49326d309d817f5c09bdf7a",
+          "previous_chain": "85eb1fa52cd7cb7c7a54903c2fe6d941ae5851e609de5e707d6bd7b27c9bd1b5",
+          "chain_sha256": "505b96c7b15949aa326cbbec1a33968cfc81e57ad2b7bafa994c435c32c588cf"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 87,
+          "line_sha256": "9c370fbe57d1d10503c7d54daa245e263e252b0f99413b957c46bd68ab1850ec",
+          "previous_chain": "505b96c7b15949aa326cbbec1a33968cfc81e57ad2b7bafa994c435c32c588cf",
+          "chain_sha256": "cf97339137e6f00764dad04d673504bfb8eea83008c21ea39a7c4cc733ce8b26"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 88,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "cf97339137e6f00764dad04d673504bfb8eea83008c21ea39a7c4cc733ce8b26",
+          "chain_sha256": "3a67be342106ee3ca59da40055fba4726b9c91f11ad82fa4298c4e1492d1142f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 89,
+          "line_sha256": "69a1324fa7563f847e5a609b2a1aaccdcf5a0f7274e9cecb09eef881e7cc06dd",
+          "previous_chain": "3a67be342106ee3ca59da40055fba4726b9c91f11ad82fa4298c4e1492d1142f",
+          "chain_sha256": "f4bcb6374523f0cb7149825c5654b29ba5ed63c8bc9bb35850806cb3c741d7da"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 90,
+          "line_sha256": "58fd6d6d6edaaa435d8987832363dd29895815583d7355cbaec851535fb8773e",
+          "previous_chain": "f4bcb6374523f0cb7149825c5654b29ba5ed63c8bc9bb35850806cb3c741d7da",
+          "chain_sha256": "2a060a83fcc90b8bb19006f87099124cb2cf5de71b380ec3d4e2fd555150947e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 91,
+          "line_sha256": "c68626ac47583ad11f843dc8e8375eeab819afb7be06178d3135e9c54dfe764a",
+          "previous_chain": "2a060a83fcc90b8bb19006f87099124cb2cf5de71b380ec3d4e2fd555150947e",
+          "chain_sha256": "704cc46fd954c689f2c880a73ee8530b0fed2d77760236cc1b60bd8e80974dc9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 92,
+          "line_sha256": "1e8f834a224d4c04f1a4c6c2bfee88e733183a9f07efd7ef94b1f4ebd8430a7a",
+          "previous_chain": "704cc46fd954c689f2c880a73ee8530b0fed2d77760236cc1b60bd8e80974dc9",
+          "chain_sha256": "08104feab081ec3a8fc93e5904bf96617f49dfe879d0d6dd3f6f9efc5976f8b0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 93,
+          "line_sha256": "5771915e854f74a9f2d0dcd80cd2ac80165af43f6c94f4fa01304f2a4fa8684c",
+          "previous_chain": "08104feab081ec3a8fc93e5904bf96617f49dfe879d0d6dd3f6f9efc5976f8b0",
+          "chain_sha256": "965ad6760bc7c6f60ad6cac8db637e4f8eec6155ebe3bcf77c3cc553478157b3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 94,
+          "line_sha256": "6bede0b0fa206e05c433ebf56d1cfdfc871d1e43fc7c86d29451f212388260b6",
+          "previous_chain": "965ad6760bc7c6f60ad6cac8db637e4f8eec6155ebe3bcf77c3cc553478157b3",
+          "chain_sha256": "e742f231ced835041194c27f38f4238ff8d1b562ac35c6a5f3837bcc7353aaea"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 95,
+          "line_sha256": "4abd6de806e8717bcd1dd5f303f720961084cede201ae0af39d2438aa4b00199",
+          "previous_chain": "e742f231ced835041194c27f38f4238ff8d1b562ac35c6a5f3837bcc7353aaea",
+          "chain_sha256": "ed85010d76026cd1cc1e2baa0c085c38b5efa04edc6d9207989e8d594aa86d92"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 96,
+          "line_sha256": "8b8270573540de5ab0c6eada0b0080a933a61f66ffcaca370e982ab1b2998fdb",
+          "previous_chain": "ed85010d76026cd1cc1e2baa0c085c38b5efa04edc6d9207989e8d594aa86d92",
+          "chain_sha256": "93bdaad11bdd369480c60b74cf9b3dbaf59a6736dc47dd8842629d6217b9d8f5"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 97,
+          "line_sha256": "7f05273da7828283c340d081c90b5ef6b180e4fc8be84d8116057b5d81db3e2e",
+          "previous_chain": "93bdaad11bdd369480c60b74cf9b3dbaf59a6736dc47dd8842629d6217b9d8f5",
+          "chain_sha256": "d73faabf32eceb482d061d16007ecae751587995a4b3bf647d2124ede4e1a628"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 98,
+          "line_sha256": "8ef2beb579cf05e0b3aa4d7ab54417200fc1c781c60d16e9b7fea304776bac13",
+          "previous_chain": "d73faabf32eceb482d061d16007ecae751587995a4b3bf647d2124ede4e1a628",
+          "chain_sha256": "d3a11c7142496f5de5a7d4813dca20566e334dd966c23b0dff4a07687ce0f9bf"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 99,
+          "line_sha256": "18a26ac7ece324a554c6cd541a9b6eadabc9b88ef07f673f95392e3e8cfe4afa",
+          "previous_chain": "d3a11c7142496f5de5a7d4813dca20566e334dd966c23b0dff4a07687ce0f9bf",
+          "chain_sha256": "ac208377b2aaa3a8315effb92e3d855ca6f6679ec6f91d2feff230a83f785131"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 100,
+          "line_sha256": "9c370fbe57d1d10503c7d54daa245e263e252b0f99413b957c46bd68ab1850ec",
+          "previous_chain": "ac208377b2aaa3a8315effb92e3d855ca6f6679ec6f91d2feff230a83f785131",
+          "chain_sha256": "03aed93a9d6230bc57ee1789207010ed3adbabbc7d757fff9b365d75d1693e3d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 101,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "03aed93a9d6230bc57ee1789207010ed3adbabbc7d757fff9b365d75d1693e3d",
+          "chain_sha256": "a279b3fa00928e9264af86691cdf5e115615c7b7dba7b9064077de8a82dcd63b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 102,
+          "line_sha256": "5666331e9a09ba34558ef10d844676213e56f783ab58b7d81f4e576200122007",
+          "previous_chain": "a279b3fa00928e9264af86691cdf5e115615c7b7dba7b9064077de8a82dcd63b",
+          "chain_sha256": "64f6977bd5f3654e304d5c27254109766b93ea00b23ee6134879f577b7b543be"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 103,
+          "line_sha256": "d0e339c0d126d133b9e8c101bd0ccbec051933bff73a98087aa45fdb316b7b74",
+          "previous_chain": "64f6977bd5f3654e304d5c27254109766b93ea00b23ee6134879f577b7b543be",
+          "chain_sha256": "db5f2eadaa7c5f6ec15226c2ffba3dcdf7be0a4cca79b4431cf76583bc62f431"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 104,
+          "line_sha256": "45d9f7317028e1dabd30fc62b0cd43cc2d60ca088f6e96758b69fefb07f2b0d0",
+          "previous_chain": "db5f2eadaa7c5f6ec15226c2ffba3dcdf7be0a4cca79b4431cf76583bc62f431",
+          "chain_sha256": "502e45c4a3e6b2eda5a03d5601cfee5db0b7cae33a0b9ca5fcd05482994c77e0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 105,
+          "line_sha256": "3a5d0b9c2fd82493b66bba108059e333b190a7c3f488eab80fbab6a853f4473a",
+          "previous_chain": "502e45c4a3e6b2eda5a03d5601cfee5db0b7cae33a0b9ca5fcd05482994c77e0",
+          "chain_sha256": "0619efee054cb43e6bb5a21e1aa3dd402e358436dccaafa9368c15c1b740fdec"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "src/components/portal/ChatGPTConnection.jsx",
+          "line_number": 106,
+          "line_sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2",
+          "previous_chain": "0619efee054cb43e6bb5a21e1aa3dd402e358436dccaafa9368c15c1b740fdec",
+          "chain_sha256": "bdc8a29e37d3507e5373f9810a4e52fa4e9d2700486b8f2066231a89aa5e7766"
+        }
+      ]
+    }
+  ]
+}

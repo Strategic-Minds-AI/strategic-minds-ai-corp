@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ArrowUpRight, Link2, ShieldCheck, RefreshCw, Send, Check, X, Zap, MessageSquare } from 'lucide-react';
 import { functions } from '@/lib/functionClient';
+import CapabilityBrokerPanel from '@/components/portal/CapabilityBrokerPanel';
 
 export default function ChatGPTConnection() {
   const [status, setStatus] = useState(null);
@@ -39,6 +40,7 @@ export default function ChatGPTConnection() {
 
   return (
     <section aria-labelledby="chatgpt-connection-title" className="space-y-6">
+      <CapabilityBrokerPanel />
       <div className="rounded-xl border border-border bg-card p-6 md:p-9">
         <div className="mb-7 flex items-start gap-4">
           <span className="rounded-lg bg-muted p-3 text-primary"><Link2 size={23} /></span>
