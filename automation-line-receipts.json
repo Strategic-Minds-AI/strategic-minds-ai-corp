@@ -1,0 +1,997 @@
+{
+  "schema_version": 1,
+  "contract": "INDEPENDENT_LINE_GATE_V1",
+  "validator_process": "separate_node_process",
+  "source_sha": "196a202f9b86548ef05c811e9558f834a61eac18",
+  "total_lines": 108,
+  "files": [
+    {
+      "path": "base44/shared/credentialCapabilityPolicy.ts",
+      "file_sha256": "34c85b338a9908469d30a0b1eae79e299df4158f948e970ac7cfc641e6fdf65f",
+      "final_chain_sha256": "21186adf71f04f8c9e5a0fe1c474930d706b9fb77254b446cf73f28dcd1758b3",
+      "trailing_newline": true,
+      "lines": [
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 1,
+          "line_sha256": "58f7aa1295f956e7ddf11abf5bcc2390a5b1d711939fd1e789fca380a742002e",
+          "previous_chain": "0000000000000000000000000000000000000000000000000000000000000000",
+          "chain_sha256": "8ed08ce0f40dd57335dbeb8d973d5e0e97eccb95cb5cfbbcc712782f9234bae0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 2,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "8ed08ce0f40dd57335dbeb8d973d5e0e97eccb95cb5cfbbcc712782f9234bae0",
+          "chain_sha256": "c57f4ee6eb6df9f08eae3d233427b1e38c941e7264442e9aac1e93172dd3658d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 3,
+          "line_sha256": "35bc77f5279fef9de33d8d5caa8aafecde0e9bc655e3ce3b2b8d30cde931f118",
+          "previous_chain": "c57f4ee6eb6df9f08eae3d233427b1e38c941e7264442e9aac1e93172dd3658d",
+          "chain_sha256": "d559b0c5f7f1a9f1aad51cfa82c9d7ddede416b53512927c0f89965c498e7a89"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 4,
+          "line_sha256": "2e7aeb92cae6b87149eeacbbd614c20d7f3b28570bcd1eb209863c0a30e106e3",
+          "previous_chain": "d559b0c5f7f1a9f1aad51cfa82c9d7ddede416b53512927c0f89965c498e7a89",
+          "chain_sha256": "988631d18da0b4ae6128b56720d01b958bfd4118c7833a81de10fc37d35da67b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 5,
+          "line_sha256": "8546998aaa944da1c02799dbf9105aa4de115082cfaa0e4dbdd0dec097b200a0",
+          "previous_chain": "988631d18da0b4ae6128b56720d01b958bfd4118c7833a81de10fc37d35da67b",
+          "chain_sha256": "077ec60099ceb7bb4b47e87e0c3e272e9c60e3318486c93a633bdfb4ed204cdf"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 6,
+          "line_sha256": "5490f08ad4fead880a90bc1c0ee09c656e23dbe4112521bb094a5642fcba743d",
+          "previous_chain": "077ec60099ceb7bb4b47e87e0c3e272e9c60e3318486c93a633bdfb4ed204cdf",
+          "chain_sha256": "f43a39977eb670f46e1efb983406c149dca5a2358c9dc20b492d33bbc734529d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 7,
+          "line_sha256": "2e78486ed62b0264697b6bea94c364afc04f018e94416eec5c1a905e5d1fff0a",
+          "previous_chain": "f43a39977eb670f46e1efb983406c149dca5a2358c9dc20b492d33bbc734529d",
+          "chain_sha256": "05be0a85c8af206ee418b362a35ae9a5a5731aafca241f350fd91fbe10ff246b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 8,
+          "line_sha256": "ba9801d22e0a4c850a6197b4a4127fd02bf4d9e7c10f9d31d797605a540c1065",
+          "previous_chain": "05be0a85c8af206ee418b362a35ae9a5a5731aafca241f350fd91fbe10ff246b",
+          "chain_sha256": "a7a6047a489e043d6f1c58737a5395a5bf3b597cd9c9df2bc28c4bd0a1f52ba0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 9,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "a7a6047a489e043d6f1c58737a5395a5bf3b597cd9c9df2bc28c4bd0a1f52ba0",
+          "chain_sha256": "b5c509fec2d750585fe93520a9e948f2f49f430d1023c4b0cddb60aeb9782754"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 10,
+          "line_sha256": "dc1ecebeec6bc3b706ffae552e2519de998aea3636697af89d21c12c10260318",
+          "previous_chain": "b5c509fec2d750585fe93520a9e948f2f49f430d1023c4b0cddb60aeb9782754",
+          "chain_sha256": "a4a659e1fd1e60529818485a3c26d9348c0b3b541992018da5ca05fbc64a17bb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 11,
+          "line_sha256": "d4a2821a496709f4d0c32f1e9f9b3e98a3e23f5c4397bded15ab877ce2f3bc17",
+          "previous_chain": "a4a659e1fd1e60529818485a3c26d9348c0b3b541992018da5ca05fbc64a17bb",
+          "chain_sha256": "1bc01ea9d6944f74ff4c6615be6f9c3fe7a0edc9b56904fcd3b0b7fee5591550"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 12,
+          "line_sha256": "37656cdf6b6f299359e0f7202851a6458523acd11f55731fa98f29b598a8b8ff",
+          "previous_chain": "1bc01ea9d6944f74ff4c6615be6f9c3fe7a0edc9b56904fcd3b0b7fee5591550",
+          "chain_sha256": "cf3f21bee6ec92f0d9a8078f9c98f4a890e8304188589bdf3283b2a3af213685"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 13,
+          "line_sha256": "290634e1e0cafef33b5fcb0128cb6f4395db6761bccee3d322e969c480976c64",
+          "previous_chain": "cf3f21bee6ec92f0d9a8078f9c98f4a890e8304188589bdf3283b2a3af213685",
+          "chain_sha256": "dbc3392de83a052f4243d0181a74f4bdfc6f30f62912f8d2c4204ede6a1ca798"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 14,
+          "line_sha256": "3a73d1845c3cfd9b53ac6e103c8235cd697b2d820c02aa36691e08a4d86efc32",
+          "previous_chain": "dbc3392de83a052f4243d0181a74f4bdfc6f30f62912f8d2c4204ede6a1ca798",
+          "chain_sha256": "aba2ca91298e94dfd58cf6b8545fda017841acfa91d67d3daef58ecbf722d31b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 15,
+          "line_sha256": "0ae47a13980fb259002db6257e354e5c8994a535462bf8ac0c952fcdf5444e69",
+          "previous_chain": "aba2ca91298e94dfd58cf6b8545fda017841acfa91d67d3daef58ecbf722d31b",
+          "chain_sha256": "ef1a3663810e293cb47cd27678e67b76af5f06e5feb262ef0aecc781118af688"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 16,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "ef1a3663810e293cb47cd27678e67b76af5f06e5feb262ef0aecc781118af688",
+          "chain_sha256": "3850d2d912fec1a243ffda7a4a450006adcb65d1501395a30eb4f867f5d2ee74"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 17,
+          "line_sha256": "83f1131022c3512d88d55a7173b902184287ff426186cd52d9fd5bd7bc0d91ae",
+          "previous_chain": "3850d2d912fec1a243ffda7a4a450006adcb65d1501395a30eb4f867f5d2ee74",
+          "chain_sha256": "18bcd1fa4356c572a5031e0559f0755a7368210ccad6b7d2e3884cfa05752952"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 18,
+          "line_sha256": "6c38702bd53a8399124dc0b98053efec1cd9073525ff22ec474f7ff7c369371c",
+          "previous_chain": "18bcd1fa4356c572a5031e0559f0755a7368210ccad6b7d2e3884cfa05752952",
+          "chain_sha256": "bb4177b4f846b344cca87d5e17d19f1a1e209578509b86f2b973e42327f783b7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 19,
+          "line_sha256": "061916b9ed6476699c54b538e02f25755658e5cea66ef7d2bdbee0c4291467a1",
+          "previous_chain": "bb4177b4f846b344cca87d5e17d19f1a1e209578509b86f2b973e42327f783b7",
+          "chain_sha256": "7e629017bf0c2a76fc7afa0b65ca6076979bb9a9242b4b921138d85f650e38af"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 20,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "7e629017bf0c2a76fc7afa0b65ca6076979bb9a9242b4b921138d85f650e38af",
+          "chain_sha256": "68ba72809fb9bf1ef8d1fe7b21a2e50776a2837bf7f20a55eafb44a0beeb112c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 21,
+          "line_sha256": "57361bb21c6bac58bb43e6db44ea141cd4ee8c840cde4110ea5e9a7eab56b926",
+          "previous_chain": "68ba72809fb9bf1ef8d1fe7b21a2e50776a2837bf7f20a55eafb44a0beeb112c",
+          "chain_sha256": "d1788a877a6315fb8f32d0568e91701ce22dbd1181e31709dc91684f58fe6e34"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 22,
+          "line_sha256": "f5bf984bffb135f2142c233ef2106d95f10745c70dcdd8b140bb9390b05a11a7",
+          "previous_chain": "d1788a877a6315fb8f32d0568e91701ce22dbd1181e31709dc91684f58fe6e34",
+          "chain_sha256": "09b3f723b69a2658e58cf33a2e2bc063fe5aacbb16ace06bcbe1a152d69a4b86"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 23,
+          "line_sha256": "23861bb8fecf6f44f6ccb7a7dd03fefe01056b8e3d5bc292bd7fe940b2452b6c",
+          "previous_chain": "09b3f723b69a2658e58cf33a2e2bc063fe5aacbb16ace06bcbe1a152d69a4b86",
+          "chain_sha256": "fc084595683fa7287b7ba6fb2941bda0185765fa50fe108f447c25d224aa43bb"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 24,
+          "line_sha256": "9135db80d2b5770432597ed4517e92ee807df43402019ddd90794e60ba6d0f5f",
+          "previous_chain": "fc084595683fa7287b7ba6fb2941bda0185765fa50fe108f447c25d224aa43bb",
+          "chain_sha256": "c3b9feab7eb81015d68316f4a708cce6e7da6ac4f1f302264778a537412bccd9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 25,
+          "line_sha256": "5c0254acd0251619029b7742ce33ed692f1099571cf182117eb4e87b71bcf031",
+          "previous_chain": "c3b9feab7eb81015d68316f4a708cce6e7da6ac4f1f302264778a537412bccd9",
+          "chain_sha256": "b3ecbee99d80fe264c26e3ad2ab6870902d1e6f0a205f739deecd9fafbaa4596"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 26,
+          "line_sha256": "30febddd9b6885986ccc99e6713d0b10f9ca19f70d1ca24d9376fe2e05a2a088",
+          "previous_chain": "b3ecbee99d80fe264c26e3ad2ab6870902d1e6f0a205f739deecd9fafbaa4596",
+          "chain_sha256": "d18760e035fb1d1edbd91d2e2c70672f576196d6bfe149922b69f51dedd4f39d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 27,
+          "line_sha256": "8f1aa0ff6f5c2fa70e4ed40030f0848f997abfa7223ce52ea176a842449e73a9",
+          "previous_chain": "d18760e035fb1d1edbd91d2e2c70672f576196d6bfe149922b69f51dedd4f39d",
+          "chain_sha256": "3a1efc034d34841eef5e0bed380f610ed6a65367736128ad67b6583e4d15ce55"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 28,
+          "line_sha256": "51896b33f23f64bf8d1236168f728c65dd1c9121078181e25f44d094b1a783c1",
+          "previous_chain": "3a1efc034d34841eef5e0bed380f610ed6a65367736128ad67b6583e4d15ce55",
+          "chain_sha256": "83f611d978dccd91efa6f64c9bb47bfe99ad9c64d7e07017e7cdc47e5177173d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 29,
+          "line_sha256": "248a85269cf55fb2646658cb20936966e223a151c1c48d3a28950bbdc199d05d",
+          "previous_chain": "83f611d978dccd91efa6f64c9bb47bfe99ad9c64d7e07017e7cdc47e5177173d",
+          "chain_sha256": "e5720f7422a948b7d6ba0e45707a08db82aa9afbfc95b672d53ae6c106da93de"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 30,
+          "line_sha256": "737db166c79ae98e44bbe5ad43e03bf3774f7b3696068842d56a72e863dfeb20",
+          "previous_chain": "e5720f7422a948b7d6ba0e45707a08db82aa9afbfc95b672d53ae6c106da93de",
+          "chain_sha256": "37497f9d80c05720007b01eac8309034d011d036358381af3ace78af62fbf3c7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 31,
+          "line_sha256": "16766aa3913c819cde85614a0ab8d5eaf4c462b970d03d6d12a35f0d9150827b",
+          "previous_chain": "37497f9d80c05720007b01eac8309034d011d036358381af3ace78af62fbf3c7",
+          "chain_sha256": "e5dda6d6d94bfdf5cff8aaa754563e0cc58937b84fdf505d605210b1d3219922"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 32,
+          "line_sha256": "e7231eb27b251952348d39360618752028e9466ca6400300afec9e5188cf34db",
+          "previous_chain": "e5dda6d6d94bfdf5cff8aaa754563e0cc58937b84fdf505d605210b1d3219922",
+          "chain_sha256": "2d1fe7c7ec05d6437ce5052e8e1b95a69d17c9e15bedfb16210c2ccd0df67e0a"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 33,
+          "line_sha256": "5aa09b04db3c4d879652338a2c0d25ad96728db42c01ffcb4f8ca3371f4b0ca4",
+          "previous_chain": "2d1fe7c7ec05d6437ce5052e8e1b95a69d17c9e15bedfb16210c2ccd0df67e0a",
+          "chain_sha256": "0f41c27b3a1272183ddeb589c328fe0fcbaa60a0833a428be78f0ecc70f943af"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 34,
+          "line_sha256": "006c1e17d61af09ea6319145163a61ba88346d3f083eccee420025f2748ab6bd",
+          "previous_chain": "0f41c27b3a1272183ddeb589c328fe0fcbaa60a0833a428be78f0ecc70f943af",
+          "chain_sha256": "b574a4d64b0aac42ee927fdc39587246bf7f295c1d860a959beffbb87bc5968f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 35,
+          "line_sha256": "a92b13ad0e4c2f569ae301a1463e9150ab783af857674599807f71c97da6232f",
+          "previous_chain": "b574a4d64b0aac42ee927fdc39587246bf7f295c1d860a959beffbb87bc5968f",
+          "chain_sha256": "2e12ace62636a5f2b8d2c43315789ec4f10a55f1ce5ef4349989e273df77602e"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 36,
+          "line_sha256": "3c720edb05232538ef27d454f6e1a1b402edfea65962f068593e8f44d4e873f2",
+          "previous_chain": "2e12ace62636a5f2b8d2c43315789ec4f10a55f1ce5ef4349989e273df77602e",
+          "chain_sha256": "926791d3c8a063886995a06511718e09e8cd0bd9f7e74a57d9e5038ee9a96045"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 37,
+          "line_sha256": "c1f452130c8c5b088a31faf4bafcec452dc10c54cdb31cd3d9aaeddc10839c88",
+          "previous_chain": "926791d3c8a063886995a06511718e09e8cd0bd9f7e74a57d9e5038ee9a96045",
+          "chain_sha256": "931848462d51c454bad0720c5a4a1c7e053805e0e6415cf4d7ae6ab34c1e69ea"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 38,
+          "line_sha256": "5c0254acd0251619029b7742ce33ed692f1099571cf182117eb4e87b71bcf031",
+          "previous_chain": "931848462d51c454bad0720c5a4a1c7e053805e0e6415cf4d7ae6ab34c1e69ea",
+          "chain_sha256": "20e11316259999c0f5b1c1276b3adac69dbd4614914a25c85df227dc9cdf9f24"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/shared/credentialCapabilityPolicy.ts",
+          "line_number": 39,
+          "line_sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2",
+          "previous_chain": "20e11316259999c0f5b1c1276b3adac69dbd4614914a25c85df227dc9cdf9f24",
+          "chain_sha256": "21186adf71f04f8c9e5a0fe1c474930d706b9fb77254b446cf73f28dcd1758b3"
+        }
+      ]
+    },
+    {
+      "path": "base44/functions/credentialBroker/entry.ts",
+      "file_sha256": "1570fa31186071501cb842081f111c9ba838aa1454446070dd56ffdce7d496d8",
+      "final_chain_sha256": "9bd168010949666dae85af246498bc8beb856dead9b0689b98b8625df1445a1d",
+      "trailing_newline": true,
+      "lines": [
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 1,
+          "line_sha256": "6e74ff10881d8af81d7fd786947423d11916a344a26eda12bf98024af2a91244",
+          "previous_chain": "0000000000000000000000000000000000000000000000000000000000000000",
+          "chain_sha256": "3a386cd05382c40b05f03cac3034028f338f77d56e33447b0589d361ab1b6009"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 2,
+          "line_sha256": "6727acdcebfd46a220b04db7bcf22bf439d150963ec28b78bf81d7d5b80e639d",
+          "previous_chain": "3a386cd05382c40b05f03cac3034028f338f77d56e33447b0589d361ab1b6009",
+          "chain_sha256": "5ed17cd75784ec3f2cbce8fea8aaef28ae53970e8bbf97d2ef230c3fdf2578de"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 3,
+          "line_sha256": "86ff1a33818e64294a49f62154bbd50c7c248c98a062bb616af10f5aa2ea66f7",
+          "previous_chain": "5ed17cd75784ec3f2cbce8fea8aaef28ae53970e8bbf97d2ef230c3fdf2578de",
+          "chain_sha256": "ac3a5160b9970dd5a86f1b1f27b30265ca789e685134124e4ca6b893195dc1b4"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 4,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "ac3a5160b9970dd5a86f1b1f27b30265ca789e685134124e4ca6b893195dc1b4",
+          "chain_sha256": "fd37dfad24f1578b5eb0ba7bf18487cdfbcefc70d5fe9f0500fc6682b947fbb0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 5,
+          "line_sha256": "a492bbbbf128e3524d12e7a0ef8a75f676eb069b958bec638c09b2395dbaa7e4",
+          "previous_chain": "fd37dfad24f1578b5eb0ba7bf18487cdfbcefc70d5fe9f0500fc6682b947fbb0",
+          "chain_sha256": "83337044f1dc8ae0481451c51aa37787b1f62adc07bb55e4cff8f90069e75d90"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 6,
+          "line_sha256": "f15d1a753f2e1ffc4aab0a6aba47c8342d69eaf44089379e1767cee706a5a2d6",
+          "previous_chain": "83337044f1dc8ae0481451c51aa37787b1f62adc07bb55e4cff8f90069e75d90",
+          "chain_sha256": "618e9dbc87ad092820a308d28f4225a94103d60ce1b30b16e29984d2738416ed"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 7,
+          "line_sha256": "3852fa46a23c6432fa6e451d290a88e937a414bd8ec2e52cbaa9236780960dc8",
+          "previous_chain": "618e9dbc87ad092820a308d28f4225a94103d60ce1b30b16e29984d2738416ed",
+          "chain_sha256": "b6ed083a0d90a1a57916bd6a39eaf518b2a3673c8ddda4c3a4a422b65a1c6bb6"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 8,
+          "line_sha256": "ba0ed6248c3c2e2871ba1515d47e76787c4f52b9c97884c1c48f9ce8fbe46387",
+          "previous_chain": "b6ed083a0d90a1a57916bd6a39eaf518b2a3673c8ddda4c3a4a422b65a1c6bb6",
+          "chain_sha256": "c8fa96dedcb467661de82b6a9718fb3b62cd471280bbcc27f4009c23d22fbcf3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 9,
+          "line_sha256": "fae3bdb50c68f757d210a2fb168f4ccc90a1b046216c167defc887bf68bf04d3",
+          "previous_chain": "c8fa96dedcb467661de82b6a9718fb3b62cd471280bbcc27f4009c23d22fbcf3",
+          "chain_sha256": "62f68f6e81fee77882db5b67d542357e312b4ab26c3958ea92babf5094bd1911"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 10,
+          "line_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "previous_chain": "62f68f6e81fee77882db5b67d542357e312b4ab26c3958ea92babf5094bd1911",
+          "chain_sha256": "5ff87e12bc375cc7b058a06b6a4d44a80972bab7a7d13dc2d0a39a90c999eb56"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 11,
+          "line_sha256": "dff3b8238b7cf594040f5e1c67066b633440f61c89f9d25f9af73786e4c72dd1",
+          "previous_chain": "5ff87e12bc375cc7b058a06b6a4d44a80972bab7a7d13dc2d0a39a90c999eb56",
+          "chain_sha256": "ff9c10984e68f954d68d4355313f0e3e8f249931244973ded848ecbedede5833"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 12,
+          "line_sha256": "3e80ec1e9a482beb686b8db2eefb3116140c65b1c20f40d96b1864f94ffe82df",
+          "previous_chain": "ff9c10984e68f954d68d4355313f0e3e8f249931244973ded848ecbedede5833",
+          "chain_sha256": "d566aaf237238e1c9638ee9074cfa9ec53e844a761412fd3463a8e77c189ee8c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 13,
+          "line_sha256": "6e01c341f980d3d7546c066f24a64db4a5fe0c9a84f262c8e0c144674c6f7bc3",
+          "previous_chain": "d566aaf237238e1c9638ee9074cfa9ec53e844a761412fd3463a8e77c189ee8c",
+          "chain_sha256": "5d391a5ef0aae3656d511b827e57d0bb145d0f6e09dc2001d0eec7007ee3d781"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 14,
+          "line_sha256": "6646c46cc82640fefb420888bd75e66da01291902a6242deb1fc01e97d62085c",
+          "previous_chain": "5d391a5ef0aae3656d511b827e57d0bb145d0f6e09dc2001d0eec7007ee3d781",
+          "chain_sha256": "6ecbc4563d58c29987d2016a92b64d9f4c32d18187fcda5cd68266b5852832d8"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 15,
+          "line_sha256": "61b573b82f46c3ee5d6706da923d0476e72d2104efcfc5efab4dac9212fb10f4",
+          "previous_chain": "6ecbc4563d58c29987d2016a92b64d9f4c32d18187fcda5cd68266b5852832d8",
+          "chain_sha256": "f65975f1c15a590375a232f0c32f09f23f2d828bdcc2579ba4d2620b0170dda2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 16,
+          "line_sha256": "ab46647f8205a1f01f07915e93e7641dffcaa6ca7aed3af2c35f5a03c24e1b6c",
+          "previous_chain": "f65975f1c15a590375a232f0c32f09f23f2d828bdcc2579ba4d2620b0170dda2",
+          "chain_sha256": "b2dcf8c7bba1e366a97f5a94f6f823e0d678df3a3c2f6840c996fcd7368bb66b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 17,
+          "line_sha256": "867a15ea68ee2c66f05b557805979fcb1afb3e84e40537f3fd99e9f0120f912d",
+          "previous_chain": "b2dcf8c7bba1e366a97f5a94f6f823e0d678df3a3c2f6840c996fcd7368bb66b",
+          "chain_sha256": "e67bfb8e1f3b07ff81f37139b203340c9232386e7f096e89086a140893526d82"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 18,
+          "line_sha256": "507fda2c6f8d7f14519e926f87c76dbd086e2d78b5fc3641e6b871943e38b09f",
+          "previous_chain": "e67bfb8e1f3b07ff81f37139b203340c9232386e7f096e89086a140893526d82",
+          "chain_sha256": "c00c44fb929b9019378ce5d060007b63a0905023a0469b2cf251be19be0a7704"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 19,
+          "line_sha256": "03bbf874aba4c834d84369766762aa980d0c490d08f70d82f8aabe06b4cf6723",
+          "previous_chain": "c00c44fb929b9019378ce5d060007b63a0905023a0469b2cf251be19be0a7704",
+          "chain_sha256": "01d0ad235579a36d619f55d818b05c8653156c9c974d40c2e63844a60769b7d7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 20,
+          "line_sha256": "801b233bd1bfa8bff9efc41f24dfae5ada6c6f612a1944e6dc5a5f97ef10bb4d",
+          "previous_chain": "01d0ad235579a36d619f55d818b05c8653156c9c974d40c2e63844a60769b7d7",
+          "chain_sha256": "a9f43f35d0fe01310cec678a606107eecea17685ec7f43348b9fa9dba44346d0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 21,
+          "line_sha256": "e034f83e3d701e96c100e36ab210a83e0a6b591de9819b78318fe0fea15b9169",
+          "previous_chain": "a9f43f35d0fe01310cec678a606107eecea17685ec7f43348b9fa9dba44346d0",
+          "chain_sha256": "308dae6db771c79cef6b1f576c8a42d0a9b2c355f1692fbbc92cabf3aa716f29"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 22,
+          "line_sha256": "b36b21f4d3c3b27c8826c8950e50277212214996250428f520542b8ddd8cb957",
+          "previous_chain": "308dae6db771c79cef6b1f576c8a42d0a9b2c355f1692fbbc92cabf3aa716f29",
+          "chain_sha256": "28f4812f53156201b34b8754f68b0f7048ce42d8e36baaa9842b209b05b1e8c0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 23,
+          "line_sha256": "f9d27f925f1bb7216591d4e2b31408d8966964aabf80778cabf808c5ca860dac",
+          "previous_chain": "28f4812f53156201b34b8754f68b0f7048ce42d8e36baaa9842b209b05b1e8c0",
+          "chain_sha256": "19049a90441cb5158a2ad314af049df516fce98cfc2601a2c11804946cf69263"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 24,
+          "line_sha256": "cbdb0ed3d39d9a156df1ac0feed45e948d978265c804c677cee7104589037faa",
+          "previous_chain": "19049a90441cb5158a2ad314af049df516fce98cfc2601a2c11804946cf69263",
+          "chain_sha256": "37f4b041561d2bafc81965a5eb57bf054642254de89d9f32a407cf86ceb87ad6"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 25,
+          "line_sha256": "c715338cfec9f873e1b61a541fa5456c8d0355ff9d1f0ea9860e055f25d8f1b6",
+          "previous_chain": "37f4b041561d2bafc81965a5eb57bf054642254de89d9f32a407cf86ceb87ad6",
+          "chain_sha256": "6485092da38daf40af05b6506074928849e6f36b6f4d8824ba5e83761b8e3144"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 26,
+          "line_sha256": "8918205c87aec718d8ed26668abe0962b53a36e38887e5434ec02d59639e3ec1",
+          "previous_chain": "6485092da38daf40af05b6506074928849e6f36b6f4d8824ba5e83761b8e3144",
+          "chain_sha256": "af5b7a5720da37fa3db29b2d7a75895fa135a08a25963f220acbeeeb4a73bf01"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 27,
+          "line_sha256": "ddce15082648b65b554ff0b8d54f5f789d73aabe13affc91d3f922919160ea9d",
+          "previous_chain": "af5b7a5720da37fa3db29b2d7a75895fa135a08a25963f220acbeeeb4a73bf01",
+          "chain_sha256": "5411a78b942f08d2c1a3cf8fcde4f1cb3bcc90fbef1a5a939e25e7fc6f4b6895"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 28,
+          "line_sha256": "b7e2e75536c91a9da224c656f843e1553b379225352ee094231d9e434282cea7",
+          "previous_chain": "5411a78b942f08d2c1a3cf8fcde4f1cb3bcc90fbef1a5a939e25e7fc6f4b6895",
+          "chain_sha256": "32a1b427fd17e6db91409ce464438aab124a91411807b515d3180ed7e246fbf2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 29,
+          "line_sha256": "978ee92f893b877cf9cccade3c830369059216c71cd47b332368a487e7b277b5",
+          "previous_chain": "32a1b427fd17e6db91409ce464438aab124a91411807b515d3180ed7e246fbf2",
+          "chain_sha256": "8ba54302f6c9ad0db43365bd0458fcc8533cc39e0dd4fec73ad6a3a81c30feb5"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 30,
+          "line_sha256": "95ff1e5bd9441f71a24bb528d7b6979dbac08ffcf57151765a6f745a7e3321ad",
+          "previous_chain": "8ba54302f6c9ad0db43365bd0458fcc8533cc39e0dd4fec73ad6a3a81c30feb5",
+          "chain_sha256": "096babdd878ed116eeb2a1b952eda2af28801c785b07ae3d00df3de163719cf2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 31,
+          "line_sha256": "f071dfadb1f7b2e094eb23a963be1126c24f86121bc20c74d9d1ba0305aaea12",
+          "previous_chain": "096babdd878ed116eeb2a1b952eda2af28801c785b07ae3d00df3de163719cf2",
+          "chain_sha256": "c335df037fa0fd980e573846382c869217d7cb3ba58ba074442cc220dc226624"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 32,
+          "line_sha256": "2df0848e5a2fff7a5362b8a1c4194ba673c402913a6b4b33f7408c1482e4e21c",
+          "previous_chain": "c335df037fa0fd980e573846382c869217d7cb3ba58ba074442cc220dc226624",
+          "chain_sha256": "e23f178e21617848f7eb28e1b8ba74e2239a51fb71247092fbeb00fd5afffb51"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 33,
+          "line_sha256": "5d01537f2a2a88642294c56af94d72f6df84c468660872131dfda12d1bede20f",
+          "previous_chain": "e23f178e21617848f7eb28e1b8ba74e2239a51fb71247092fbeb00fd5afffb51",
+          "chain_sha256": "176a786036c98da188873d0056a541ae43c880e928d41d11f3072134dd9e2dba"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 34,
+          "line_sha256": "efc6855c4d1490db2c7bac25899fb64da83ceab00afa823bd9524326c6ea1344",
+          "previous_chain": "176a786036c98da188873d0056a541ae43c880e928d41d11f3072134dd9e2dba",
+          "chain_sha256": "988d889789eb208274d693297c74922c57d7c2b109835faa393a6de1084195e0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 35,
+          "line_sha256": "737db166c79ae98e44bbe5ad43e03bf3774f7b3696068842d56a72e863dfeb20",
+          "previous_chain": "988d889789eb208274d693297c74922c57d7c2b109835faa393a6de1084195e0",
+          "chain_sha256": "97f4ae2fee4f22bc48426e77b19c3366920bf524e1d84e4b9dbbd6889ff2d7e3"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 36,
+          "line_sha256": "2191c469f5cfb00c3c7240303b15b8708a001d0cfbe7651bbbefee1e5c7c4d33",
+          "previous_chain": "97f4ae2fee4f22bc48426e77b19c3366920bf524e1d84e4b9dbbd6889ff2d7e3",
+          "chain_sha256": "c687293f53b23019bdea6db3d7976d64c9321fc65b8da30d0926268c0a3408c0"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 37,
+          "line_sha256": "3a671bb2fae6eda173c205af31766953fe18e58e620af45c7b3fe3ad47eb649e",
+          "previous_chain": "c687293f53b23019bdea6db3d7976d64c9321fc65b8da30d0926268c0a3408c0",
+          "chain_sha256": "812659a55f1f5f5093419707c62e00ee7f6217f4511fe34f84246302cad86976"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 38,
+          "line_sha256": "ace3e1ec12734881e6e41e8b74a6bab6187b3a1d7c7a66f69512067f6d0dcc00",
+          "previous_chain": "812659a55f1f5f5093419707c62e00ee7f6217f4511fe34f84246302cad86976",
+          "chain_sha256": "32f5d32defeb47d6e787ac356825e7f3f05b577366c8a5ee91e637a92b54772c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 39,
+          "line_sha256": "f2d9729302c7e8603a448946c2e9f42fc2cdfb4d7c95930dc97a8f7364d45b8b",
+          "previous_chain": "32f5d32defeb47d6e787ac356825e7f3f05b577366c8a5ee91e637a92b54772c",
+          "chain_sha256": "d6bbdad575a3ac78ef8546cd5578c89d6c6a574c7d78d6e4e8fa9322d48c05f1"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 40,
+          "line_sha256": "dee69b9753dbf4ba62bea50929fb17083f1c0cabca4bc7b7ed356e2daf96a762",
+          "previous_chain": "d6bbdad575a3ac78ef8546cd5578c89d6c6a574c7d78d6e4e8fa9322d48c05f1",
+          "chain_sha256": "be8f8b5c9c7e21a8aef59191684f64059e9a52b532a52bdf4617531e339ab771"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 41,
+          "line_sha256": "14a3d15fbf50863d0bb60a28033e29974569553be4d0dba51f9dd92ca39ce7ec",
+          "previous_chain": "be8f8b5c9c7e21a8aef59191684f64059e9a52b532a52bdf4617531e339ab771",
+          "chain_sha256": "695cfcdc209efba656d0dafc21148c11208b952dac891cbfe14f3f2443338e42"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 42,
+          "line_sha256": "340187df66b2191b3a3cd836b971b2f82fd3d051f721268087f6ca63aff4fd2a",
+          "previous_chain": "695cfcdc209efba656d0dafc21148c11208b952dac891cbfe14f3f2443338e42",
+          "chain_sha256": "b83b0d0f0b2d20ae7291d62a05967931cade7a1ebd62635f6c4d3396d00a4d6b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 43,
+          "line_sha256": "8921c029b5cfdc579f3919ab062c2399406e7db5e4dd980eab349e381126e289",
+          "previous_chain": "b83b0d0f0b2d20ae7291d62a05967931cade7a1ebd62635f6c4d3396d00a4d6b",
+          "chain_sha256": "a51faf03694730a3446802d8b76d48f490d2e6b0efade43cab1e84fa70820cde"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 44,
+          "line_sha256": "f61f5bbc379fd349ffd484746f91dcd132c4bb0b0a919ca7ec94604bf9ca2435",
+          "previous_chain": "a51faf03694730a3446802d8b76d48f490d2e6b0efade43cab1e84fa70820cde",
+          "chain_sha256": "0693ff45f561912b01caf607105caf0998ffd9dc7ba4b802b98d71054c0502d9"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 45,
+          "line_sha256": "5bbc15e91f04a67077edb247a3261a93af6a0dd7b11c9a02a9751da7e5187bcc",
+          "previous_chain": "0693ff45f561912b01caf607105caf0998ffd9dc7ba4b802b98d71054c0502d9",
+          "chain_sha256": "2d5b68af1bade9fee1c562219911fea59f489e7851bcdc9041f0e200a52ea060"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 46,
+          "line_sha256": "76b07e19206d89eb8174174394a053ea17ac5f3d5d8c1fd20e563cdc88004686",
+          "previous_chain": "2d5b68af1bade9fee1c562219911fea59f489e7851bcdc9041f0e200a52ea060",
+          "chain_sha256": "6ce01530262625ddf5851cbe30d291a22adb79372282296f30d63cdfc6ddf006"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 47,
+          "line_sha256": "92cc565088965f7bbf0cb3d4b2961870b9b2677f9278eba707bf7ca20a67b915",
+          "previous_chain": "6ce01530262625ddf5851cbe30d291a22adb79372282296f30d63cdfc6ddf006",
+          "chain_sha256": "5269f942817456ca6805c93f1c64f4c68580a708785b9573d2ad89ad8308f237"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 48,
+          "line_sha256": "b543f0c1f32d4a2b73d79d7cd0684b9243f6e9826f5cb1cf1cd595304b24f74f",
+          "previous_chain": "5269f942817456ca6805c93f1c64f4c68580a708785b9573d2ad89ad8308f237",
+          "chain_sha256": "6702d947272db36474462fa625bed006d5ca2be7e01681efda773f312546b88f"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 49,
+          "line_sha256": "27d84295815422563f2d718aac33d34717be82ec4a8dfa3900cbdcfe1ee4815c",
+          "previous_chain": "6702d947272db36474462fa625bed006d5ca2be7e01681efda773f312546b88f",
+          "chain_sha256": "4d20066954a9cc6674d8481e638586a19ea975f9b052ed35d5955ed37200c941"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 50,
+          "line_sha256": "49ecdcd1c7828358601fbe0dda676d8ec5bf0d23986c4d61ea965ce733dcbb4f",
+          "previous_chain": "4d20066954a9cc6674d8481e638586a19ea975f9b052ed35d5955ed37200c941",
+          "chain_sha256": "b69b46f8d61b55ef05aa4d5886e9ab9ff56ffc319ef89313c4c4a09bb50943ea"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 51,
+          "line_sha256": "3afada3c9d07121ad6fa38190f97a1e1c954d768b64dce4744ec521d7d6c3a9b",
+          "previous_chain": "b69b46f8d61b55ef05aa4d5886e9ab9ff56ffc319ef89313c4c4a09bb50943ea",
+          "chain_sha256": "0548ad9eb5a4005db44dc63d09a62a6770cf006f9b89ca186dffa4b491475510"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 52,
+          "line_sha256": "af665522a3342653355db6804e07c1888f36022dc1db7ff2f9ffc477572a02c4",
+          "previous_chain": "0548ad9eb5a4005db44dc63d09a62a6770cf006f9b89ca186dffa4b491475510",
+          "chain_sha256": "2695b61ad7e2fbf269be3d3654f77dd0f2ded0377ee7f2d696a8e3388ee9a780"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 53,
+          "line_sha256": "c9fd367c6033810f0abc172c5d5de56530306f1085244525d9794ecd6b027b53",
+          "previous_chain": "2695b61ad7e2fbf269be3d3654f77dd0f2ded0377ee7f2d696a8e3388ee9a780",
+          "chain_sha256": "218c47e0b175ede8fe791eada06a99106a9af61c4a0f9545dd3db1f40ec80a19"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 54,
+          "line_sha256": "28d86778615f6af47bb1bc4f40face756749768e5111f114cfa234a5060c25af",
+          "previous_chain": "218c47e0b175ede8fe791eada06a99106a9af61c4a0f9545dd3db1f40ec80a19",
+          "chain_sha256": "41c785d59a18e598db2e106233d3775ea53460a96fe51f227f20da9dc41d42dc"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 55,
+          "line_sha256": "498d0082005432fb6da7a7f20cbca71caa00014729189920f53225d718133be8",
+          "previous_chain": "41c785d59a18e598db2e106233d3775ea53460a96fe51f227f20da9dc41d42dc",
+          "chain_sha256": "4866acb738d732160b73269c607f46f2af6c9d9f0608c0edd3215a21edc1dc07"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 56,
+          "line_sha256": "7ea13070d3d6d54272dd3fd9edfadb932a5d7c204719a9f7602b1e2e55e4c024",
+          "previous_chain": "4866acb738d732160b73269c607f46f2af6c9d9f0608c0edd3215a21edc1dc07",
+          "chain_sha256": "b58798863fa7ed943d4e055a9e90825de88585a0a005b8999a599f9f88a7425d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 57,
+          "line_sha256": "367a16a1aaf0dd0ae7e20d55dd0357f20b8eaa343bf41fdd6614726394f938cc",
+          "previous_chain": "b58798863fa7ed943d4e055a9e90825de88585a0a005b8999a599f9f88a7425d",
+          "chain_sha256": "b786c4976721c310af7526e369271ca2d0cd65e220827f0cb3dc3649b151cb3c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 58,
+          "line_sha256": "27d84295815422563f2d718aac33d34717be82ec4a8dfa3900cbdcfe1ee4815c",
+          "previous_chain": "b786c4976721c310af7526e369271ca2d0cd65e220827f0cb3dc3649b151cb3c",
+          "chain_sha256": "eba46ec439297b10aef2da5122f662d313a134be95c3ef0eae6ebe052ed9c013"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 59,
+          "line_sha256": "af665522a3342653355db6804e07c1888f36022dc1db7ff2f9ffc477572a02c4",
+          "previous_chain": "eba46ec439297b10aef2da5122f662d313a134be95c3ef0eae6ebe052ed9c013",
+          "chain_sha256": "5a618489ec40b3d918e074337bf9d131f2be6a7c7086357151b0bbad57db364b"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 60,
+          "line_sha256": "b860d0a25cd1c040119771b2d20a4f5cdcd1068a71b0f4fba67002ee80d5a661",
+          "previous_chain": "5a618489ec40b3d918e074337bf9d131f2be6a7c7086357151b0bbad57db364b",
+          "chain_sha256": "029b70fc9d70f5e536ce60ecfabee7177b3cf509cbf9c920bc21d32ca6965ca2"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 61,
+          "line_sha256": "a01862449876fd3b73ce3d388de2aa33f6e47cd094604f5ae34b7e8a8ea0b988",
+          "previous_chain": "029b70fc9d70f5e536ce60ecfabee7177b3cf509cbf9c920bc21d32ca6965ca2",
+          "chain_sha256": "e32878180ae0334ddf04ec3feccd552a9f31cd9eb7ca9511359d5a801d6b7ab7"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 62,
+          "line_sha256": "efad088c9ff258394adebfeadc2c0b44580471e3dbfdbee8db8411400b48f1f9",
+          "previous_chain": "e32878180ae0334ddf04ec3feccd552a9f31cd9eb7ca9511359d5a801d6b7ab7",
+          "chain_sha256": "8d1cff1faf0696f62a3b86e8c0a66764b6cf7c04d9b3a0ab806eb9396eff215c"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 63,
+          "line_sha256": "27d84295815422563f2d718aac33d34717be82ec4a8dfa3900cbdcfe1ee4815c",
+          "previous_chain": "8d1cff1faf0696f62a3b86e8c0a66764b6cf7c04d9b3a0ab806eb9396eff215c",
+          "chain_sha256": "6f925922033ee9735def5231d50168be0e561478dbf96a8220aca4223a24fb23"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 64,
+          "line_sha256": "28d86778615f6af47bb1bc4f40face756749768e5111f114cfa234a5060c25af",
+          "previous_chain": "6f925922033ee9735def5231d50168be0e561478dbf96a8220aca4223a24fb23",
+          "chain_sha256": "20a6c2b58e36772093cd4b4de5573363473727a2d0326ba6143294099946f079"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 65,
+          "line_sha256": "b3599f41bdbd2fd03d1112fffd10d143487f9206df50ff5f88a5ebf7f07b930c",
+          "previous_chain": "20a6c2b58e36772093cd4b4de5573363473727a2d0326ba6143294099946f079",
+          "chain_sha256": "1ba5d78d6c3b1d0fb73d7559e5faa63a1a68a08b2ef4c1f1ebd998c937ee5d3d"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 66,
+          "line_sha256": "10fa2c363ee68d8c3d6448d2faf086bd2716a06e27d3dab5f9cd197056c89d3f",
+          "previous_chain": "1ba5d78d6c3b1d0fb73d7559e5faa63a1a68a08b2ef4c1f1ebd998c937ee5d3d",
+          "chain_sha256": "97a176b332ebd466e9a92410dc2ed7a594e7e831d13078939b52fa45c1bc9041"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 67,
+          "line_sha256": "737db166c79ae98e44bbe5ad43e03bf3774f7b3696068842d56a72e863dfeb20",
+          "previous_chain": "97a176b332ebd466e9a92410dc2ed7a594e7e831d13078939b52fa45c1bc9041",
+          "chain_sha256": "6dbafb6c6f2974aa4e12775d429d720313fc27b4f64c14f06e22aaa72e8d33a4"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 68,
+          "line_sha256": "0208253c3eb49b615d16a5f38ae482d2c9857151c09c4c341a93cbb63bf97469",
+          "previous_chain": "6dbafb6c6f2974aa4e12775d429d720313fc27b4f64c14f06e22aaa72e8d33a4",
+          "chain_sha256": "d576d7edfa5ed3606f3acea1a2a14014a8862d9dd69d8ac3179119fd2a53b9e5"
+        },
+        {
+          "passed": true,
+          "code": "PASS",
+          "path": "base44/functions/credentialBroker/entry.ts",
+          "line_number": 69,
+          "line_sha256": "d10b36aa74a59bcf4a88185837f658afaf3646eff2bb16c3928d0e9335e945d2",
+          "previous_chain": "d576d7edfa5ed3606f3acea1a2a14014a8862d9dd69d8ac3179119fd2a53b9e5",
+          "chain_sha256": "9bd168010949666dae85af246498bc8beb856dead9b0689b98b8625df1445a1d"
+        }
+      ]
+    }
+  ]
+}
