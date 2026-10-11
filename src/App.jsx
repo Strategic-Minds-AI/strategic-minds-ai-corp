@@ -19,7 +19,7 @@ import ResetPassword from '@/pages/ResetPassword';
 import AuthCallback from '@/pages/AuthCallback';
 import Admin from '@/pages/Admin';
 import AdminVaultPage from '@/pages/AdminVaultPage';
-import OAuthConsent from '@/pages/OAuthConsent';
+import OAuthConsentRouter from '@/components/auth/OAuthConsentRouter';
 import { Toaster as LegacyToaster } from 'sonner';
 const HomeSEOAgency = lazy(() => import('@/pages/home-seo-agency'));
 const HomeConsulting = lazy(() => import('@/pages/home-consulting'));
@@ -113,7 +113,7 @@ const AuthenticatedApp = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
-        <Route path="/oauth/consent" element={<OAuthConsent />} />
+        <Route path="/oauth/consent" element={<OAuthConsentRouter />} />
         <Route element={<AgencyLayout />}>
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<AgencyContact />} />
