@@ -1,0 +1,125 @@
+{
+  "schema_version": "1.0.0",
+  "packet_id": "DOCKER-BRIDGE-RECONCILE-20261017",
+  "status": "PASS_ISOLATED_WITH_3_SOURCE_GATES",
+  "project": "strategic-minds-website-factory",
+  "time_utc": "2026-10-17",
+  "source": "JARVIS-COMMAND authorized C:\\_Strategic_Minds_AI_OS",
+  "plugin": {
+    "id": "Plugin_617e030bff088191a7f10e00df5682dd",
+    "version": "1.2.2",
+    "release": "pluginrel_6ad2f3ddf8f8819184291eb4534586b7",
+    "scope": "WORKSPACE",
+    "discoverability": "PRIVATE"
+  },
+  "inventory": {
+    "total": 87,
+    "excluded": 7,
+    "present_original": 72,
+    "missing_original": 8,
+    "present_candidate": 78,
+    "missing_candidate": 2,
+    "source_sha256": "1eae40fde5f1bba4374c8234cedeae169cc04a20c0fac6cc86e86bbc077ef0ef",
+    "candidate_sha256": "c04e01e3d2b1cf775fd3d13d639aef2d58ae53ff9c319446f11869d3d7367a5a",
+    "live_registry_mutated": false,
+    "candidate_mappings": [
+      {
+        "id": "ESTATE-004",
+        "from": "00 Source Truth",
+        "to": "00_Source_Truth",
+        "confidence": "VERIFIED_PATH"
+      },
+      {
+        "id": "ESTATE-009",
+        "from": "03 Bridge Receipts",
+        "to": "03_Bridge_Receipts",
+        "confidence": "VERIFIED_PATH"
+      },
+      {
+        "id": "ESTATE-021",
+        "from": "11_Projects",
+        "to": "40_PROJECTS",
+        "confidence": "VERIFIED_CHILD_LINEAGE"
+      },
+      {
+        "id": "ESTATE-022",
+        "from": "12_Stratetegic_Minds_AI_Website",
+        "to": "12_Stratetegic_Minds_AI_CORPERATE SITE",
+        "confidence": "INFERRED_LINEAGE_NOT_APPROVED"
+      },
+      {
+        "id": "ESTATE-083",
+        "from": "11_Projects\\00_Index",
+        "to": "40_PROJECTS\\00_Index",
+        "confidence": "VERIFIED_PATH"
+      },
+      {
+        "id": "ESTATE-084",
+        "from": "11_Projects\\01_Property_Systems",
+        "to": "40_PROJECTS\\01_Property_Systems",
+        "confidence": "VERIFIED_PATH"
+      }
+    ],
+    "unresolved": [
+      {
+        "id": "ESTATE-001",
+        "path": "-y",
+        "classification": "QUARANTINE_UNVERIFIED_ARGUMENT_ARTIFACT"
+      },
+      {
+        "id": "ESTATE-013",
+        "path": "05_Receipts",
+        "classification": "UNRESOLVED_DO_NOT_MERGE_WITH_BRIDGE_RECEIPTS"
+      }
+    ]
+  },
+  "canary": {
+    "id": "DOCKER-X1-READONLY-REGISTRY-20261017-001",
+    "status": "PASS_READ_ONLY_X1_CANARY",
+    "action_class": "READ",
+    "packet_sha256": "871e9e987415912983e114055a658dbac7238a6102da6618c00e4b033f5b56cd",
+    "offline_cases_passed": 19,
+    "negative_cases": 10,
+    "workflow_count": 7,
+    "local_task_counts_pre": {
+      "all": 15,
+      "pending": 0,
+      "in_progress": 0,
+      "blocked": 1,
+      "completed": 14
+    },
+    "local_task_counts_post": {
+      "all": 15,
+      "pending": 0,
+      "in_progress": 0,
+      "blocked": 1,
+      "completed": 14
+    },
+    "repeat_result": "PASS_IDEMPOTENT_NOOP",
+    "replay_api_calls": 0,
+    "task_mutations": 0,
+    "new_schedulers": 0
+  },
+  "external_state": {
+    "supabase_production_job_ids": [
+      "wp_1792074943951_41oduirc",
+      "wp_1792048166217_a32x03rr"
+    ],
+    "both_pending": true,
+    "both_attempts": 0,
+    "staging_queue": "58 COMPLETED, 17 BLOCKED, 20 DEAD_LETTER",
+    "active_lease_status_groups": 0
+  },
+  "evidence_paths": [
+    "C:\\_Strategic_Minds_AI_OS\\09_Integrations\\Plugins\\STRATEGIC_MINDS_DOCKER_WORKFLOW_BRIDGE\\candidate-registry-reconciliation-20261017\\asset-reconciliation-receipt.json",
+    "C:\\_Strategic_Minds_AI_OS\\03_Bridge_Receipts\\mcp\\DOCKER-X1-READONLY-CANARY-20261017.json",
+    "C:\\_Strategic_Minds_AI_OS\\09_Integrations\\Plugins\\STRATEGIC_MINDS_DOCKER_WORKFLOW_BRIDGE\\isolated-X1-packet-test-20261017\\idempotent-replay-receipt.json"
+  ],
+  "gates": [
+    "Do not overwrite the live registry; changed fingerprints may enqueue operational tasks.",
+    "Resolve ESTATE-001 and ESTATE-013 source truth and ESTATE-022 website identity before live promotion.",
+    "Do not enable unattended multi-plugin writes: isolated READ canary does not prove the protected authorization path.",
+    "No protected merges or production database, secrets, DNS, scheduler, spend or customer communication changes."
+  ],
+  "rollback_pointer": "Original registry SHA preserved; candidate lives in isolated JARVIS plugin folder; docker stopped-duplicate rollback saved locally"
+}
