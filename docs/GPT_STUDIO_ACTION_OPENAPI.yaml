@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: Strategic Minds AI Approved Template Studio
+  version: 1.0.0
+  description: >
+    Upload a website or batch to the 20-gallery Template Studio only after
+    the human operator explicitly approves the exact items in ChatGPT.
+    Library storage never means publication, domain changes, or launch.
+servers:
+  - url: https://strategic-minds-ai-corp.vercel.app
+paths:
+  /api/runtime/functions/ingestPack:
+    post:
+      operationId: uploadApprovedStudioBatch
+      summary: Save operator-approved templates directly into the Studio library
+      description: >
+        Only call after the owner explicitly approves this exact single pack
+        or batch in the GPT conversation. Do not infer approval from creation,
+        previewing, prior sessions, or generic build instructions. The approval
+        receipt records that operator decision but is not a cryptographic
+        assertion of ChatGPT account identity. Never send a secret in a message.
+      security:
+        - SyncToken: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [approval, items]
+              properties:
+                approval:
+                  type: object
+                  required: [state, channel, approval_id, approved_by]
+                  properties:
+                    state:
+                      type: string
+                      const: approved
+                    channel:
+                      type: string
+                      const: chatgpt_ui
+                    approval_id:
+                      type: string
+                      minLength: 8
+                      description: Unique approval ID for this exact batch
+                    approved_by:
+                      type: string
+                      description: Operator label, not an identity-proof token
+                    approved_at:
+                      type: string
+                      format: date-time
+                batch_id:
+                  type: string
+                items:
+                  type: array
+                  minItems: 1
+                  maxItems: 100
+                  items:
+                    type: object
+                    required: [gallery_id, title, html_content]
+                    properties:
+                      gallery_id:
+                        type: string
+                        enum: [aurora, fortress, serenity, momentum, heritage, pulse, summit, bloom, forge, lumin, terra, velocity, haven, crystal, sage, apex, beacon, prism, grid, wave]
+                      title:
+                        type: string
+                      kind:
+                        type: string
+                        enum: [web_pack, mockup, logo_pack, brand_pack]
+                      html_content:
+                        type: string
+                        description: Full HTML website or design HTML
+                      css_content:
+                        type: string
+                      js_content:
+                        type: string
+                      category:
+                        type: string
+                      city:
+                        type: string
+                      description:
+                        type: string
+                      version:
+                        type: string
+                      brand_tokens:
+                        type: object
+                        additionalProperties: true
+                      manifest:
+                        type: object
+                        additionalProperties: true
+      responses:
+        '201':
+          description: Approved templates stored as drafts in the selected galleries
+        '400':
+          description: Invalid gallery, pack, or batch
+        '401':
+          description: Missing or invalid sync credential
+        '403':
+          description: Missing operator approval receipt
+        '413':
+          description: Request exceeds size limit
+        '503':
+          description: Secret or library database unavailable
+components:
+  securitySchemes:
+    SyncToken:
+      type: http
+      scheme: bearer
+      description: Set the server-side sync token in the GPT Action secret storage, not in chat or source code.
