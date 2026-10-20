@@ -1,0 +1,17 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFile } from 'node:fs/promises';
+import { consentProtocol, validAuthorizationId, consentLoginPath, requestedScopes, approvedOAuthRedirect } from '../src/lib/supabaseOAuthConsentPolicy.js';
+test('legacy ctx remains selected',()=> assert.equal(consentProtocol('?ctx=legacy'),'legacy'));
+test('Supabase authorization id selected',()=> assert.equal(consentProtocol('?authorization_id=12345678'),'supabase'));
+test('new id takes precedence',()=> assert.equal(consentProtocol('?ctx=legacy&authorization_id=12345678'),'supabase'));
+test('reject missing and malicious ids',()=>{ for (const v of [undefined, '', '../evil', 'bad?url=x', 'x'.repeat(1025)]) assert.equal(validAuthorizationId(v),false); });
+test('allow opaque ids',()=>assert.equal(validAuthorizationId('e6213c00-08ba-456e-9d58-9615386f1b91'),true));
+test('only valid id gets same-origin login link',()=>{const link=consentLoginPath('authorization_12345678');assert.equal(new URL(link,'https://strategicmindsai.com').searchParams.get('returnTo'),'/oauth/consent?authorization_id=authorization_12345678');assert.equal(consentLoginPath('../evil'),null);});
+test('dedupe OAuth scopes',()=>assert.deepEqual(requestedScopes('openid  profile email email'),['openid','profile','email']));
+test('bad scopes return empty',()=>assert.deepEqual(requestedScopes(null),[]));
+test('allow https redirect returned by Supabase',()=>assert.equal(approvedOAuthRedirect('https://chatgpt.com/callback?code=1','https://strategicmindsai.com'),'https://chatgpt.com/callback?code=1'));
+test('reject unsafe redirect schemes and credentials',()=>{for(const v of ['javascript:alert(1)','data:text/html,x','file:///etc/passwd','https://bob:secret@example.org','//evil.example.com'])assert.equal(approvedOAuthRedirect(v,'https://strategicmindsai.com'),null);});
+test('localhost redirects only in development',()=>{assert.equal(approvedOAuthRedirect('http://localhost:3000/a','https://strategicmindsai.com'),null);assert.equal(approvedOAuthRedirect('http://localhost:3000/a','http://localhost:5173'),'http://localhost:3000/a');});
+test('Supabase component uses OAuth methods and never Base44 MCP grant',async()=>{const src=await readFile(new URL('../src/pages/SupabaseOAuthConsent.jsx',import.meta.url),'utf8');for(const name of ['getAuthorizationDetails','approveAuthorization','denyAuthorization'])assert.match(src,new RegExp(name));assert.doesNotMatch(src,/authorize-grant|consent-info|appParams/);});
+test('legacy component remains routed',async()=>{const src=await readFile(new URL('../src/components/auth/OAuthConsentRouter.jsx',import.meta.url),'utf8');assert.match(src,/LegacyOAuthConsent/);assert.match(src,/SupabaseOAuthConsent/);});
