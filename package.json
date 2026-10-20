@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@ai-sdk/gateway": "^4.0.104",
-    "@base44/sdk": "^0.8.53",
-    "@base44/vite-plugin": "^1.0.44",
+    "@base44/sdk": "^0.8.54",
+    "@base44/vite-plugin": "^1.0.47",
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-brands-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
