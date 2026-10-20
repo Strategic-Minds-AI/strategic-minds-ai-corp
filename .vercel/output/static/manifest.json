@@ -1,0 +1,16 @@
+{
+  "name": "Strategic Minds Insider",
+  "short_name": "Insider",
+  "description": "Insider tips, tricks, and wealth-building strategies from Strategic Minds AI.",
+  "start_url": "/insider",
+  "scope": "/insider/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#0059ff",
+  "icons": [
+    { "src": "/brand-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" },
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any" }
+  ],
+  "categories": ["business", "education", "productivity"]
+}

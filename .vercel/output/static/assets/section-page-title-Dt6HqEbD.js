@@ -1,0 +1,1 @@
+import{j as S,P as a}from"./index-xhrgwNix.js";const n=({children:e,subtitle:t,titleClasses:o,subtitleClasses:s,ctaLabel:i,ctaHref:r})=>S.jsx(a,{eyebrow:"STRATEGIC MINDS AI / REAL BUSINESS IMPACT",title:e,description:t,titleClasses:o,subtitleClasses:s,ctaLabel:i,ctaHref:r});export{n as S};

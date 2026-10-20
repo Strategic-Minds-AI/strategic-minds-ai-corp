@@ -1,0 +1,1 @@
+import{r as o}from"./index-xhrgwNix.js";function p(e,s){const[n,c]=o.useState(()=>{try{const t=sessionStorage.getItem(e);if(t!==null)return JSON.parse(t)}catch{}return typeof s=="function"?s():s}),u=o.useCallback(t=>{c(a=>{const r=typeof t=="function"?t(a):t;try{sessionStorage.setItem(e,JSON.stringify(r))}catch{}return r})},[e]);return[n,u]}export{p as u};

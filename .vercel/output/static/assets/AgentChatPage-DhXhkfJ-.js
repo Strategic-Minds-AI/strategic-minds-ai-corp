@@ -1,0 +1,1 @@
+import{k as e,j as r}from"./index-xhrgwNix.js";import a from"./AgentCommandCenter-RWhC-uWC.js";import"./useSessionState-BXH2uR5D.js";import"./circle-alert-wQMtYmbO.js";import"./circle-check-big-BQNcxlRl.js";function p(){const{agentName:t}=e();return r.jsx(a,{initialAgent:t})}export{p as default};
