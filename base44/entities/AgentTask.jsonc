@@ -74,6 +74,33 @@
       "type": "string",
       "format": "date-time",
       "description": "When the sandbox finished executing this task"
+    },
+    "batch_id": {
+      "type": "string",
+      "description": "Owning BatchOperation"
+    },
+    "site_key": {
+      "type": "string",
+      "description": "Stable site identifier within a batch"
+    },
+    "phase": {
+      "type": "string",
+      "description": "Factory stage: source_truth, research, creative, mockup_lock, build, validate, repair, grow, receipt"
+    },
+    "depends_on": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Task IDs that must complete before this task is eligible"
+    },
+    "swarm_role": {
+      "type": "string",
+      "description": "Swarm Nexus specialist role"
+    },
+    "checkpoint_key": {
+      "type": "string",
+      "description": "Wave/checkpoint identifier"
     }
   },
   "required": [

@@ -5,6 +5,7 @@ import { Loader2, RefreshCw, Layers } from "lucide-react";
 const STATUS_META = {
   queued: { color: "#0046FF", bg: "#E6F0FF", label: "Queued" },
   running: { color: "#2563EB", bg: "#DBEAFE", label: "Running" },
+  awaiting_approval: { color: "#B45309", bg: "#FEF3C7", label: "Awaiting approval" },
   complete: { color: "#16A34A", bg: "#DCFCE7", label: "Complete" },
   failed: { color: "#DC2626", bg: "#FEE2E2", label: "Failed" }
 };
@@ -49,7 +50,7 @@ export default function BatchHistory({ refreshKey }) {
                 <div className="flex items-center justify-between gap-2">
                   <div className="min-w-0 flex-1">
                     <div className="font-bold text-black text-sm truncate">{b.name}</div>
-                    <div className="text-xs text-black/45">{b.batch_size} sites · {b.tasks_dispatched || 0} tasks</div>
+                    <div className="text-xs text-black/45">{b.batch_size} sites · {b.tasks_dispatched || 0} tasks · {b.sites_materialized || 0} materialized</div>
                   </div>
                   <span className="text-[10px] font-bold px-2.5 py-1 rounded-full shrink-0" style={{ background: meta.bg, color: meta.color }}>{meta.label}</span>
                 </div>
@@ -58,6 +59,7 @@ export default function BatchHistory({ refreshKey }) {
                   {b.social_connect && <span>📱 Social</span>}
                   {b.video_generate && <span>🎬 Video</span>}
                   {b.content_optimize && <span>✨ Content</span>}
+                  {b.swarm_enabled && <span>🧠 Swarm {b.execution_mode || "shadow"} · wave {b.wave_size || 10}</span>}
                 </div>
               </div>
             );
